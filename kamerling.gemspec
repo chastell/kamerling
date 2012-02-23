@@ -10,7 +10,10 @@ Gem::Specification.new do |gem|
   gem.executables = `git ls-files -z -- bin/*`.split("\0").map { |file| File.basename file }
   gem.test_files  = `git ls-files -z -- spec/*`.split "\0"
 
+  gem.add_dependency 'eventmachine'
+
   gem.add_development_dependency 'bundler'
+  gem.add_development_dependency 'em-minitest-spec'
   gem.add_development_dependency 'minitest', '>= 2.11.1'
   gem.add_development_dependency 'rake'
 end
