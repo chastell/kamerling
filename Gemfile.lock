@@ -10,7 +10,7 @@ GEM
     em-minitest-spec (1.1.1)
       eventmachine
     eventmachine (0.12.10)
-    minitest (2.11.3)
+    minitest (2.12.1)
     rake (0.9.2.2)
 
 PLATFORMS
@@ -20,5 +20,5 @@ DEPENDENCIES
   bundler
   em-minitest-spec
   kamerling!
-  minitest (>= 2.11.1)
+  minitest (>= 2.12)
   rake
