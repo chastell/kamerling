@@ -2,36 +2,36 @@
 
 require_relative '../spec_helper'
 
-module Kamerling describe Jordan do
-  let(:jordan) { Jordan.new }
+require 'em-ventually'
+require 'socket'
 
-  def with_jordan_running
-    EM.run do
-      yield
-      EM.stop
-    end
+module Kamerling describe Jordan do
+  include EM::Ventually
+
+  def with_jordan
+    EM.run { yield Jordan.new }
   end
 
   describe '.new' do
     it 'starts the server on the given host and port' do
-      with_jordan_running do
-        TCPSocket.new(jordan.host, jordan.port).close
+      with_jordan do |jordan|
+        eventually { TCPSocket.new(jordan.host, jordan.port).close.nil? }
       end
     end
   end
 
   describe '#host' do
     it 'returns the server’s host (127.0.0.1 by default)' do
-      with_jordan_running do
-        jordan.host.must_equal '127.0.0.1'
+      with_jordan do |jordan|
+        eventually { jordan.host == '127.0.0.1' }
       end
     end
   end
 
   describe '#port' do
     it 'returns the server’s port (random available by default)' do
-      with_jordan_running do
-        (1024..65535).must_include jordan.port
+      with_jordan do |jordan|
+        eventually { (1024..65535).include? jordan.port }
       end
     end
   end
