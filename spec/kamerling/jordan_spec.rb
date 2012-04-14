@@ -8,14 +8,14 @@ require 'socket'
 module Kamerling describe Jordan do
   include EM::Ventually
 
-  def with_jordan
-    EM.run { yield Jordan.new }
+  def with_jordan opts = {}
+    EM.run { yield Jordan.new opts }
   end
 
   describe '.new' do
     it 'starts the server on the given host and port' do
-      with_jordan do |jordan|
-        eventually { TCPSocket.new(jordan.host, jordan.port).close.nil? }
+      with_jordan host: '0.0.0.0', port: 1981 do |jordan|
+        eventually { TCPSocket.new('0.0.0.0', 1981).close.nil? }
       end
     end
   end
