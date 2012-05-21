@@ -7,8 +7,8 @@ Gem::Specification.new do |gem|
   gem.email    = 'p.szotkowski@tele.pw.edu.pl'
 
   gem.files       = `git ls-files -z`.split "\0"
-  gem.executables = `git ls-files -z -- bin/*`.split("\0").map { |file| File.basename file }
-  gem.test_files  = `git ls-files -z -- spec/*`.split "\0"
+  gem.executables = gem.files.grep(%r{^bin/}).map { |path| File.basename path }
+  gem.test_files  = gem.files.grep %r{^spec/.*\.rb$}
 
   gem.add_dependency 'eventmachine'
 
