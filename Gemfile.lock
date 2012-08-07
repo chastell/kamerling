@@ -22,5 +22,5 @@ DEPENDENCIES
   bundler
   em-ventually
   kamerling!
-  minitest (>= 2.12)
+  minitest (~> 3.0)
   rake

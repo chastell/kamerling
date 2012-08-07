@@ -14,6 +14,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'em-ventually'
-  gem.add_development_dependency 'minitest', '>= 2.12'
+  gem.add_development_dependency 'minitest', '~> 3.0'
   gem.add_development_dependency 'rake'
 end
