@@ -16,4 +16,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'em-ventually'
   gem.add_development_dependency 'minitest', '~> 3.0'
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rb-inotify'
+  gem.add_development_dependency 'rerun'
 end
