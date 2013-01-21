@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    kamerling (0.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (4.7.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  kamerling!
+  minitest (~> 4.0)
