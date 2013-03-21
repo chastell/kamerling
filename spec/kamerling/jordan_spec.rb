@@ -20,4 +20,14 @@ module Kamerling describe Jordan do
       TCPSocket.open j2.host, j2.port
     end
   end
+
+  describe '#serve' do
+    it 'passes the received input to the handler' do
+      handler = MiniTest::Mock.new.expect :handle, nil, ['message']
+      jordan  = Jordan.new handler: handler
+      TCPSocket.open(jordan.host, jordan.port) { |socket| socket << 'message' }
+      sleep 0.001
+      handler.verify
+    end
+  end
 end end
