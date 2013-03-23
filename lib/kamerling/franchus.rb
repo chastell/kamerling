@@ -1,8 +1,9 @@
 module Kamerling class Franchus
-  Messages       = []
   UnknownMessage = Class.new RuntimeError
 
-  def handle message
-    raise UnknownMessage unless Messages.include? message[0..3]
+  def handle string
+    send "handle_#{string[0..3]}", string
+  rescue NoMethodError
+    raise UnknownMessage, string
   end
 end end
