@@ -1,8 +1,9 @@
 module Kamerling class Rainierus
-  MessageTypes   = []
   UnknownMessage = Class.new RuntimeError
 
   def decipher input
-    raise UnknownMessage, input unless MessageTypes.include? input[0..3]
+    Messages.const_get(input[0..3]).new
+  rescue NameError
+    raise UnknownMessage, input
   end
 end end

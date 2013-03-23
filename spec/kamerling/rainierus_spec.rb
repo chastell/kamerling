@@ -6,5 +6,9 @@ module Kamerling describe Rainierus do
       rainierus = Rainierus.new
       -> { rainierus.decipher 'MESS age' }.must_raise Rainierus::UnknownMessage
     end
+
+    it 'deciphers known messages' do
+      Rainierus.new.decipher('RGST').must_equal Messages::RGST.new
+    end
   end
 end end
