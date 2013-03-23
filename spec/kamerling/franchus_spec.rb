@@ -7,9 +7,12 @@ module Kamerling describe Franchus do
     end
 
     it 'handles known messages' do
+      scribe   = double decipher: -> _ { double type: 'MESS' }
       franchus = Franchus.new
-      def franchus.handle_MESS(msg); msg[5..-1]; end
-      franchus.handle('MESS age').must_equal 'age'
+      def franchus.handle_MESS message
+        message.type
+      end
+      franchus.handle('MESSage', scribe: scribe).must_equal 'MESS'
     end
   end
 end end
