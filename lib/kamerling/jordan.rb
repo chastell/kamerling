@@ -1,7 +1,7 @@
 require 'gserver'
 
 module Kamerling class Jordan < GServer
-  def initialize(handler: nil, host: DEFAULT_HOST, port: 0)
+  def initialize(handler: Franchus.new, host: DEFAULT_HOST, port: 0)
     @handler = handler
     super port, host
     start
