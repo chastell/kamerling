@@ -8,7 +8,7 @@ module Kamerling describe Rainierus do
     end
 
     it 'deciphers known messages' do
-      Rainierus.new.decipher('RGST').must_equal Messages::RGST.new
+      Rainierus.new.decipher('RGST').must_equal Messages::RGST.new 'RGST'
     end
   end
 end end

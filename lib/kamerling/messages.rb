@@ -1,1 +1,1 @@
-require_relative 'messages/RGST'
+require_relative 'messages/rgst'
