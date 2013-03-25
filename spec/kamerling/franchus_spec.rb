@@ -14,5 +14,15 @@ module Kamerling describe Franchus do
       end
       franchus.handle('MESSage', scribe: scribe).must_equal 'MESS'
     end
+
+    it 'handles RGST messages' do
+      cuuid = '16 B client UUID'
+      puuid = '16 B projectUUID'
+      prepo = { puuid => project = double }
+      crepo = MiniTest::Mock.new.expect :[]=, double, [cuuid, project]
+      message = "RGST" + "\0" * 12 + cuuid + puuid
+      Franchus.new(client_repo: crepo, project_repo: prepo).handle message
+      crepo.verify
+    end
   end
 end end
