@@ -17,6 +17,7 @@ module Kamerling class Franchus
   private
 
   def handle_RGST message
-    client_repo[message.client_uuid] = project_repo[message.project_uuid]
+    client = client_repo[message.client_uuid]
+    client.project = project_repo[message.project_uuid]
   end
 end end
