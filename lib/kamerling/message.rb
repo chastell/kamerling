@@ -16,11 +16,11 @@ module Kamerling class Message
   end
 
   def project_uuid
-    input[32..48]
+    input[32..47]
   end
 
   def task_uuid
-    input[48..64]
+    input[48..63]
   end
 
   def type
