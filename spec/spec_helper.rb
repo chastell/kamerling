@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'minitest/autorun'
-
+require 'ostruct'
 require 'kamerling'
 
 class Double < OpenStruct
