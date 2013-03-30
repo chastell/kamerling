@@ -16,13 +16,15 @@ module Kamerling describe Franchus do
     end
 
     it 'handles RGST messages' do
-      cuuid = '16B client UUID '
-      puuid = '16B project UUID'
-      prepo = { puuid => project = double }
-      crepo = MiniTest::Mock.new.expect :register, nil, [cuuid, project]
-      message = "RGST" + "\0" * 12 + cuuid + puuid
-      Franchus.new(client_repo: crepo, project_repo: prepo).handle message
-      crepo.verify
+      cuuid    = '16B client UUID '
+      puuid    = '16B project UUID'
+      cr       = { cuuid => client  = double }
+      pr       = { puuid => project = double }
+      reg      = MiniTest::Mock.new.expect :register, nil, [client, project]
+      message  = "RGST" + "\0" * 12 + cuuid + puuid
+      franchus = Franchus.new client_repo: cr, project_repo: pr, registrar: reg
+      franchus.handle message
+      reg.verify
     end
   end
 end end
