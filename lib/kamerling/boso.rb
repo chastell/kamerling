@@ -1,5 +1,5 @@
 module Kamerling class Boso
-  def receive(client: client, repos: repos, result: result, task: task)
-    repos[:result].add client: client, result: result, task: task
+  def receive(client: client, data: data, repos: repos, task: task)
+    repos[:result].add client: client, data: data, task: task
   end
 end end
