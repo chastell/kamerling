@@ -5,8 +5,8 @@ module Kamerling class Franchus
     @repos     = repos
   end
 
-  def handle input, scribe: Rainierus.new
-    message = scribe.decipher input
+  def handle input
+    message = Rainierus.new.decipher input
     send "handle_#{message.type}", message
   end
 
