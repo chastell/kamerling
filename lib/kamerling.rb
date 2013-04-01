@@ -5,6 +5,7 @@ require_relative 'kamerling/message'
 require_relative 'kamerling/messages'
 require_relative 'kamerling/rainierus'
 require_relative 'kamerling/registration'
+require_relative 'kamerling/result'
 require_relative 'kamerling/yngo'
 
 module Kamerling
