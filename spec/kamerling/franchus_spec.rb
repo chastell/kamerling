@@ -26,7 +26,8 @@ module Kamerling describe Franchus do
         task:    { tuuid => task    = double },
       }
       receiver = MiniTest::Mock.new
-      receiver.expect :receive, nil, [{ client: client, project: project, task: task }]
+      receiver.expect :receive, nil,
+        [{ client: client, project: project, task: task, result: 'data' }]
       input = "RSLT" + "\0" * 12 + cuuid + puuid + tuuid + 'data'
       Franchus.new(repos: repos, receiver: receiver).handle input
       receiver.verify
