@@ -27,5 +27,20 @@ module Kamerling describe Franchus do
       Franchus.new(registrar: registrar, repos: repos).handle message
       registrar.verify
     end
+
+    it 'handles RSLT messages' do
+      cuuid = '16B client UUID '
+      puuid = '16B project UUID'
+      tuuid = '16B task UUID   '
+      repos = {
+        client:  { cuuid => client  = double },
+        project: { puuid => project = double },
+        task:    { tuuid => task    = double },
+      }
+      receiver = MiniTest::Mock.new.expect :receive, nil, [client, project, task]
+      message = "RSLT" + "\0" * 12 + cuuid + puuid + tuuid + 'data'
+      Franchus.new(repos: repos, receiver: receiver).handle message
+      receiver.verify
+    end
   end
 end end

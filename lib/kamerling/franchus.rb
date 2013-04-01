@@ -1,7 +1,8 @@
 module Kamerling class Franchus
-  def initialize(registrar: nil, repos: nil)
-    @repos     = repos
+  def initialize(receiver: nil, registrar: nil, repos: nil)
+    @receiver  = receiver
     @registrar = registrar
+    @repos     = repos
   end
 
   def handle input, scribe: Rainierus.new
@@ -11,8 +12,8 @@ module Kamerling class Franchus
     raise UnknownMessage, input
   end
 
-  attr_reader :registrar, :repos
-  private     :registrar, :repos
+  attr_reader :receiver, :registrar, :repos
+  private     :receiver, :registrar, :repos
 
   private
 
@@ -20,5 +21,12 @@ module Kamerling class Franchus
     client  = repos.fetch(:client).fetch message.client_uuid
     project = repos.fetch(:project).fetch message.project_uuid
     registrar.register client, project
+  end
+
+  def handle_RSLT message
+    client  = repos.fetch(:client).fetch message.client_uuid
+    project = repos.fetch(:project).fetch message.project_uuid
+    task    = repos.fetch(:task).fetch message.task_uuid
+    receiver.receive client, project, task
   end
 end end
