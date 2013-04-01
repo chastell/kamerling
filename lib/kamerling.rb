@@ -1,3 +1,4 @@
+require_relative 'kamerling/boso'
 require_relative 'kamerling/franchus'
 require_relative 'kamerling/jordan'
 require_relative 'kamerling/message'
