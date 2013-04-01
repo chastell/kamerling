@@ -25,7 +25,7 @@ module Kamerling class Franchus
     client  = repos.fetch(:client).fetch message.client_uuid
     project = repos.fetch(:project).fetch message.project_uuid
     task    = repos.fetch(:task).fetch message.task_uuid
-    receiver.receive client: client, project: project, task: task,
-      result: message.data
+    receiver.receive client: client, project: project, result: message.data,
+      task: task
   end
 end end
