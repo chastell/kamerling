@@ -16,14 +16,14 @@ module Kamerling class Franchus
   private
 
   def handle_RGST message
-    client  = repos[:client][message.client_uuid]
-    project = repos[:project][message.project_uuid]
+    client  = repos[:clients][message.client_uuid]
+    project = repos[:projects][message.project_uuid]
     registrar.register client: client, project: project
   end
 
   def handle_RSLT message
-    client = repos[:client][message.client_uuid]
-    task   = repos[:task][message.task_uuid]
+    client = repos[:clients][message.client_uuid]
+    task   = repos[:tasks][message.task_uuid]
     receiver.receive client: client, data: message.data, task: task
   end
 end end

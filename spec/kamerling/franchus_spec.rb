@@ -6,9 +6,9 @@ module Kamerling describe Franchus do
     let(:project) { double }
     let(:task)    { double }
     let(:repos) { {
-      client:  { '16B client UUID ' => client  },
-      project: { '16B project UUID' => project },
-      task:    { '16B task UUID   ' => task    },
+      clients:  { '16B client UUID ' => client  },
+      projects: { '16B project UUID' => project },
+      tasks:    { '16B task UUID   ' => task    },
     } }
 
     it 'handles RGST inputs' do

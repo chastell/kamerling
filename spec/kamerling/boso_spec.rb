@@ -5,7 +5,7 @@ module Kamerling describe Boso do
     it 'processes the result for a given task' do
       repo = MiniTest::Mock.new.expect :<<, nil,
         [Result.new(client = double, task = double, data = double)]
-      Boso.new.receive client: client, data: data, repos: { result: repo },
+      Boso.new.receive client: client, data: data, repos: { results: repo },
         task: task
       repo.verify
     end
