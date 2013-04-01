@@ -2,11 +2,11 @@ require_relative '../spec_helper'
 
 module Kamerling describe Franchus do
   describe '#handle' do
-    it 'raises on unknown messages' do
-      -> { Franchus.new.handle 'MESS age' }.must_raise UnknownMessage
+    it 'raises on unknown inputs' do
+      -> { Franchus.new.handle 'MESS age' }.must_raise UnknownInput
     end
 
-    it 'handles known messages' do
+    it 'handles known inputs' do
       scribe   = double decipher: -> _ { double type: 'MESS' }
       franchus = Franchus.new
       def franchus.handle_MESS message
@@ -15,7 +15,7 @@ module Kamerling describe Franchus do
       franchus.handle('MESSage', scribe: scribe).must_equal 'MESS'
     end
 
-    it 'handles RGST messages' do
+    it 'handles RGST inputs' do
       cuuid = '16B client UUID '
       puuid = '16B project UUID'
       repos = {
@@ -24,12 +24,12 @@ module Kamerling describe Franchus do
       }
       registrar = MiniTest::Mock.new
       registrar.expect :register, nil, [{ client: client, project: project }]
-      message   = "RGST" + "\0" * 12 + cuuid + puuid
-      Franchus.new(registrar: registrar, repos: repos).handle message
+      input = "RGST" + "\0" * 12 + cuuid + puuid
+      Franchus.new(registrar: registrar, repos: repos).handle input
       registrar.verify
     end
 
-    it 'handles RSLT messages' do
+    it 'handles RSLT inputs' do
       cuuid = '16B client UUID '
       puuid = '16B project UUID'
       tuuid = '16B task UUID   '
@@ -40,8 +40,8 @@ module Kamerling describe Franchus do
       }
       receiver = MiniTest::Mock.new
       receiver.expect :receive, nil, [{ client: client, project: project, task: task }]
-      message = "RSLT" + "\0" * 12 + cuuid + puuid + tuuid + 'data'
-      Franchus.new(repos: repos, receiver: receiver).handle message
+      input = "RSLT" + "\0" * 12 + cuuid + puuid + tuuid + 'data'
+      Franchus.new(repos: repos, receiver: receiver).handle input
       receiver.verify
     end
   end

@@ -9,7 +9,7 @@ module Kamerling class Franchus
     message = scribe.decipher input
     send "handle_#{message.type}", message
   rescue NoMethodError
-    raise UnknownMessage, input
+    raise UnknownInput, input
   end
 
   attr_reader :receiver, :registrar, :repos

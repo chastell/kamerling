@@ -5,5 +5,5 @@ require_relative 'kamerling/messages'
 require_relative 'kamerling/rainierus'
 
 module Kamerling
-  UnknownMessage = Class.new RuntimeError
+  UnknownInput = Class.new RuntimeError
 end
