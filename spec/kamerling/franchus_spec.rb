@@ -2,19 +2,6 @@ require_relative '../spec_helper'
 
 module Kamerling describe Franchus do
   describe '#handle' do
-    it 'raises on unknown inputs' do
-      -> { Franchus.new.handle 'MESS age' }.must_raise UnknownInput
-    end
-
-    it 'handles known inputs' do
-      scribe   = double decipher: -> _ { double type: 'MESS' }
-      franchus = Franchus.new
-      def franchus.handle_MESS message
-        message.type
-      end
-      franchus.handle('MESSage', scribe: scribe).must_equal 'MESS'
-    end
-
     it 'handles RGST inputs' do
       cuuid = '16B client UUID '
       puuid = '16B project UUID'
