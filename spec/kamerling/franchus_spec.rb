@@ -21,7 +21,7 @@ module Kamerling describe Franchus do
 
     it 'handles RSLT inputs' do
       receiver = MiniTest::Mock.new.expect :receive, nil,
-        [{ client: client, result: 'data', task: task }]
+        [{ client: client, data: 'data', task: task }]
       input = 'RSLT' + "\0" * 12
       input << '16B client UUID 16B project UUID16B task UUID   data'
       Franchus.new(receiver: receiver, repos: repos).handle input

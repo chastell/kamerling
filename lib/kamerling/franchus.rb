@@ -24,6 +24,6 @@ module Kamerling class Franchus
   def handle_RSLT message
     client = repos[:client][message.client_uuid]
     task   = repos[:task][message.task_uuid]
-    receiver.receive client: client, result: message.data, task: task
+    receiver.receive client: client, data: message.data, task: task
   end
 end end
