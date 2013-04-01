@@ -24,7 +24,7 @@ module Kamerling describe Franchus do
         [{ client: client, result: 'data', task: task }]
       input = 'RSLT' + "\0" * 12
       input << '16B client UUID 16B project UUID16B task UUID   data'
-      Franchus.new(repos: repos, receiver: receiver).handle input
+      Franchus.new(receiver: receiver, repos: repos).handle input
       receiver.verify
     end
   end
