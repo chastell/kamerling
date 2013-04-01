@@ -1,5 +1,5 @@
 module Kamerling class Franchus
-  def initialize(receiver: nil, registrar: Yngo.new, repos: nil)
+  def initialize(receiver: Boso.new, registrar: Yngo.new, repos: nil)
     @receiver  = receiver
     @registrar = registrar
     @repos     = repos
