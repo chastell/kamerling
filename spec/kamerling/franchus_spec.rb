@@ -22,7 +22,8 @@ module Kamerling describe Franchus do
         client:  { cuuid => client  = double },
         project: { puuid => project = double },
       }
-      registrar = MiniTest::Mock.new.expect :register, nil, [client, project]
+      registrar = MiniTest::Mock.new
+      registrar.expect :register, nil, [{ client: client, project: project }]
       message   = "RGST" + "\0" * 12 + cuuid + puuid
       Franchus.new(registrar: registrar, repos: repos).handle message
       registrar.verify
@@ -37,7 +38,8 @@ module Kamerling describe Franchus do
         project: { puuid => project = double },
         task:    { tuuid => task    = double },
       }
-      receiver = MiniTest::Mock.new.expect :receive, nil, [client, project, task]
+      receiver = MiniTest::Mock.new
+      receiver.expect :receive, nil, [{ client: client, project: project, task: task }]
       message = "RSLT" + "\0" * 12 + cuuid + puuid + tuuid + 'data'
       Franchus.new(repos: repos, receiver: receiver).handle message
       receiver.verify
