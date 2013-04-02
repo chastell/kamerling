@@ -4,7 +4,7 @@ module Kamerling describe Rainierus do
   describe '#decipher' do
     it 'raises on undecipherable inputs' do
       rainierus = Rainierus.new
-      -> { rainierus.decipher 'MESS age' }.must_raise UnknownInput
+      -> { rainierus.decipher 'MESS age' }.must_raise Rainierus::UnknownInput
     end
 
     it 'deciphers known inputs' do
