@@ -8,7 +8,7 @@ module Kamerling class Jordan < GServer
   end
 
   def serve io
-    handler.handle io.read
+    handler.handle io.read, io.remote_address
   end
 
   attr_reader :handler
