@@ -5,9 +5,9 @@ module Kamerling class Franchus
     @repos     = repos
   end
 
-  def handle input
+  def handle input, addrinfo
     message = Rainierus.new.decipher input
-    send "handle_#{message.type}", message
+    send "handle_#{message.type}", message, addrinfo
   end
 
   attr_reader :receiver, :registrar, :repos
@@ -15,13 +15,13 @@ module Kamerling class Franchus
 
   private
 
-  def handle_RGST message
+  def handle_RGST message, addrinfo
     client  = repos[:clients][message.client_uuid]
     project = repos[:projects][message.project_uuid]
-    registrar.register client: client, project: project
+    registrar.register addrinfo: addrinfo, client: client, project: project
   end
 
-  def handle_RSLT message
+  def handle_RSLT message, _
     client = repos[:clients][message.client_uuid]
     task   = repos[:tasks][message.task_uuid]
     receiver.receive client: client, data: message.data, task: task
