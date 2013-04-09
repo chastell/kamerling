@@ -1,3 +1,5 @@
+require 'sequel'
+
 require_relative 'kamerling/boso'
 require_relative 'kamerling/franchus'
 require_relative 'kamerling/jordan'

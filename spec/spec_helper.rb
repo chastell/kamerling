@@ -19,3 +19,10 @@ end
 def double opts = {}
   Double.new opts
 end
+
+def repos
+  @repos ||= Sequel.sqlite
+end
+
+Sequel.extension :migration
+Sequel::Migrator.run repos, 'lib/kamerling/migrations'
