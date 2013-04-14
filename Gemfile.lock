@@ -8,8 +8,8 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    minitest (4.7.0)
-    sequel (3.45.0)
+    minitest (4.7.1)
+    sequel (3.46.0)
     sqlite3 (1.3.7)
 
 PLATFORMS
