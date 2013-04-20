@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'minitest/autorun'
+require 'minitest/pride'
 require 'ostruct'
 require 'kamerling'
 
