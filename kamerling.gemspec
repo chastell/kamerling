@@ -13,5 +13,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sequel'
   gem.add_dependency 'sqlite3'
 
+  gem.add_development_dependency 'bogus'
   gem.add_development_dependency 'minitest', '~> 4.0'
 end
