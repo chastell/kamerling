@@ -3,9 +3,9 @@ require_relative '../spec_helper'
 module Kamerling describe Franchus do
   describe '#handle' do
     let(:addrinfo) { Addrinfo.tcp '127.0.0.1', 1981 }
-    let(:client)  { double }
-    let(:project) { double }
-    let(:task)    { double }
+    let(:client)  { fake }
+    let(:project) { fake }
+    let(:task)    { fake }
     let(:repos) { {
       clients:  { '16B client UUID ' => client  },
       projects: { '16B project UUID' => project },
