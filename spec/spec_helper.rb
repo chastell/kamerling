@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'bogus'
 require 'ostruct'
 require 'kamerling'
 
@@ -20,6 +21,8 @@ end
 def double opts = {}
   Double.new opts
 end
+
+include Bogus::MockingDSL
 
 def repos
   @repos ||= Sequel.sqlite
