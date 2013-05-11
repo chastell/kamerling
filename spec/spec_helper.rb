@@ -1,11 +1,9 @@
 require 'bundler/setup'
 require 'minitest/autorun'
 require 'minitest/pride'
-require 'bogus'
 require 'ostruct'
 require 'kamerling'
-
-include Bogus::MockingDSL
+require_relative './bogus_setup'
 
 def repos
   @repos ||= Sequel.sqlite
