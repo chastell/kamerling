@@ -18,12 +18,12 @@ module Kamerling describe Server do
     end
 
     it 'defaults to a random, unused port' do
-      j1, j2 = Server.new, Server.new
-      assert (1024..65535).include? j1.port
-      assert (1024..65535).include? j2.port
-      refute j1.port == j2.port
-      TCPSocket.open j1.host, j1.port
-      TCPSocket.open j2.host, j2.port
+      s1, s2 = Server.new, Server.new
+      (1024..65535).must_include s1.port
+      (1024..65535).must_include s2.port
+      s1.port.wont_equal s2.port
+      TCPSocket.open s1.host, s1.port
+      TCPSocket.open s2.host, s2.port
     end
   end
 
