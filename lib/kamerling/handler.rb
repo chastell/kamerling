@@ -6,7 +6,7 @@ module Kamerling class Handler
   end
 
   def handle input, addrinfo
-    message = Rainierus.new.decipher input
+    message = Scribe.new.decipher input
     send "handle_#{message.type}", message, addrinfo
   end
 

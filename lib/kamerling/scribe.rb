@@ -1,4 +1,4 @@
-module Kamerling class Rainierus
+module Kamerling class Scribe
   UnknownInput = Class.new RuntimeError
 
   def decipher input
