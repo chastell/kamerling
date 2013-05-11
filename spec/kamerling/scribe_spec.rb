@@ -3,8 +3,7 @@ require_relative '../spec_helper'
 module Kamerling describe Scribe do
   describe '#decipher' do
     it 'raises on undecipherable inputs' do
-      scribe = Scribe.new
-      -> { scribe.decipher 'MESS age' }.must_raise Scribe::UnknownInput
+      -> { Scribe.new.decipher 'MESS age' }.must_raise Scribe::UnknownInput
     end
 
     it 'deciphers known inputs' do
