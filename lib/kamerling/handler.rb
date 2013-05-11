@@ -1,5 +1,5 @@
 module Kamerling class Handler
-  def initialize(receiver: Receiver.new, registrar: Yngo.new, repos: nil)
+  def initialize(receiver: Receiver.new, registrar: Registrar.new, repos: nil)
     @receiver  = receiver
     @registrar = registrar
     @repos     = repos
