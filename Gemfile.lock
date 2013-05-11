@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/chastell/bogus.git
-  revision: 018cc26760990ef6835d9713bf3a11a63c017f21
-  branch: warning_clean
+  revision: 6a0d68fbc3a61bebf0502ea7a55425aa45ceb50c
+  branch: ruby_2.0_support
   specs:
     bogus (0.0.3)
       dependor (>= 0.0.4)
