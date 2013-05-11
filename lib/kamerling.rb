@@ -1,5 +1,6 @@
 require 'sequel'
 
+require_relative 'kamerling/addr'
 require_relative 'kamerling/handler'
 require_relative 'kamerling/message'
 require_relative 'kamerling/messages'

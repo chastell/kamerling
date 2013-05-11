@@ -1,11 +1,5 @@
 require_relative '../spec_helper'
 
-class Addrinfo
-  def == other
-    to_s == other.to_s
-  end
-end
-
 module Kamerling describe Server do
   describe '.new' do
     it 'starts a server on the given host and port' do
@@ -30,11 +24,13 @@ module Kamerling describe Server do
   describe '#serve' do
     it 'passes the received input to the handler' do
       server = Server.new handler: handler = fake(:handler)
-      socket = TCPSocket.open server.host, server.port
-      socket << 'message'
-      socket.close_write
+      s_addr = nil
+      TCPSocket.open server.host, server.port do |socket|
+        socket << 'message'
+        s_addr = Addr[*socket.local_address.ip_unpack]
+      end
       sleep 0.001
-      handler.must_have_received :handle, ['message', socket.local_address]
+      handler.must_have_received :handle, ['message', s_addr]
     end
   end
 end end
