@@ -2,10 +2,10 @@ require_relative '../spec_helper'
 
 module Kamerling describe Handler do
   describe '#handle' do
-    let(:addrinfo) { Addrinfo.tcp '127.0.0.1', 1981 }
-    let(:client)  { fake }
-    let(:project) { fake }
-    let(:task)    { fake }
+    let(:client)  { fake :client  }
+    let(:project) { fake :project }
+    let(:task)    { fake :task    }
+    let(:addr)  { Addr['127.0.0.1', 1981] }
     let(:repos) { {
       clients:  { '16B client UUID ' => client  },
       projects: { '16B project UUID' => project },
@@ -13,21 +13,20 @@ module Kamerling describe Handler do
     } }
 
     it 'handles RGST inputs' do
-      registrar = MiniTest::Mock.new
-      registrar.expect :register, nil,
-        [{ addrinfo: addrinfo, client: client, project: project }]
       input = 'RGST' + "\0" * 12 + '16B client UUID 16B project UUID'
-      Handler.new(registrar: registrar, repos: repos).handle input, addrinfo
-      registrar.verify
+      registrar = fake :registrar
+      Handler.new(registrar: registrar, repos: repos).handle input, addr
+      registrar.must_have_received :register,
+        [{ addr: addr, client: client, project: project, repos: repos }]
     end
 
     it 'handles RSLT inputs' do
-      receiver = MiniTest::Mock.new.expect :receive, nil,
-        [{ client: client, data: 'data', task: task }]
       input = 'RSLT' + "\0" * 12
       input << '16B client UUID 16B project UUID16B task UUID   data'
-      Handler.new(receiver: receiver, repos: repos).handle input, addrinfo
-      receiver.verify
+      receiver = fake :receiver
+      Handler.new(receiver: receiver, repos: repos).handle input, addr
+      receiver.must_have_received :receive,
+        [{ client: client, data: 'data', repos: repos, task: task }]
     end
   end
 end end

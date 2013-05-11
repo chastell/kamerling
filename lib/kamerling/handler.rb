@@ -5,9 +5,9 @@ module Kamerling class Handler
     @repos     = repos
   end
 
-  def handle input, addrinfo
+  def handle input, addr
     message = Scribe.new.decipher input
-    send "handle_#{message.type}", message, addrinfo
+    send "handle_#{message.type}", message, addr
   end
 
   attr_reader :receiver, :registrar, :repos
@@ -15,15 +15,17 @@ module Kamerling class Handler
 
   private
 
-  def handle_RGST message, addrinfo
+  def handle_RGST message, addr
     client  = repos[:clients][message.client_uuid]
     project = repos[:projects][message.project_uuid]
-    registrar.register addrinfo: addrinfo, client: client, project: project
+    registrar.register addr: addr, client: client, project: project,
+      repos: repos
   end
 
   def handle_RSLT message, _
     client = repos[:clients][message.client_uuid]
     task   = repos[:tasks][message.task_uuid]
-    receiver.receive client: client, data: message.data, task: task
+    receiver.receive client: client, data: message.data, repos: repos,
+      task: task
   end
 end end
