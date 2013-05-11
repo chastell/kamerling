@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-module Kamerling describe Franchus do
+module Kamerling describe Handler do
   describe '#handle' do
     let(:addrinfo) { Addrinfo.tcp '127.0.0.1', 1981 }
     let(:client)  { fake }
@@ -17,7 +17,7 @@ module Kamerling describe Franchus do
       registrar.expect :register, nil,
         [{ addrinfo: addrinfo, client: client, project: project }]
       input = 'RGST' + "\0" * 12 + '16B client UUID 16B project UUID'
-      Franchus.new(registrar: registrar, repos: repos).handle input, addrinfo
+      Handler.new(registrar: registrar, repos: repos).handle input, addrinfo
       registrar.verify
     end
 
@@ -26,7 +26,7 @@ module Kamerling describe Franchus do
         [{ client: client, data: 'data', task: task }]
       input = 'RSLT' + "\0" * 12
       input << '16B client UUID 16B project UUID16B task UUID   data'
-      Franchus.new(receiver: receiver, repos: repos).handle input, addrinfo
+      Handler.new(receiver: receiver, repos: repos).handle input, addrinfo
       receiver.verify
     end
   end

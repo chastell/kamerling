@@ -1,4 +1,4 @@
-module Kamerling class Franchus
+module Kamerling class Handler
   def initialize(receiver: Boso.new, registrar: Yngo.new, repos: nil)
     @receiver  = receiver
     @registrar = registrar
