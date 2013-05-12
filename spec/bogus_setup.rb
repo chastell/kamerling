@@ -31,4 +31,10 @@ end
 
 class MiniTest::Spec
   include Bogus::MockingDSL
+
+  module DSL
+    def fake name, opts = {}, &block
+      let(name) { fake name, opts, &block }
+    end
+  end
 end
