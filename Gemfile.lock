@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/chastell/bogus.git
-  revision: 6a0d68fbc3a61bebf0502ea7a55425aa45ceb50c
-  branch: ruby_2.0_support
+  revision: 75bb6433662309357b8091aebd1068da2a9fd714
+  branch: kamerling
   specs:
     bogus (0.0.3)
       dependor (>= 0.0.4)
