@@ -2,10 +2,10 @@ require_relative '../spec_helper'
 
 module Kamerling describe Handler do
   describe '#handle' do
-    let(:client)  { fake :client  }
-    let(:project) { fake :project }
-    let(:task)    { fake :task    }
-    let(:addr)  { Addr['127.0.0.1', 1981] }
+    fake :addr
+    fake :client
+    fake :project
+    fake :task
     let(:repos) { {
       clients:  { '16B client UUID ' => client  },
       projects: { '16B project UUID' => project },
