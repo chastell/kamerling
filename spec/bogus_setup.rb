@@ -3,14 +3,18 @@ require 'bogus'
 Bogus.configure { |config| config.search_modules << Kamerling }
 
 module MiniTest::Assertions
-  def assert_received subject, method, args
+  def assert_received subject, method, args, message = nil
     matcher = Bogus.have_received.__send__ method, *args
-    assert matcher.matches?(subject), matcher.failure_message_for_should
+    result  = matcher.matches? subject
+    message ||= matcher.failure_message_for_should
+    assert result, message
   end
 
-  def refute_received subject, method, args
+  def refute_received subject, method, args, message = nil
     matcher = Bogus.have_received.__send__ method, *args
-    refute matcher.matches?(subject), matcher.failure_message_for_should_not
+    result  = matcher.matches? subject
+    message ||= matcher.failure_message_for_should_not
+    refute result, message
   end
 end
 
