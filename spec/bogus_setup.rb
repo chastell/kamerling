@@ -1,7 +1,5 @@
 require 'bogus'
 
-include Bogus::MockingDSL
-
 Bogus.configure { |config| config.search_modules << Kamerling }
 
 module MiniTest::Assertions
@@ -19,4 +17,8 @@ end
 module MiniTest::Expectations
   infect_an_assertion :assert_received, :must_have_received, true
   infect_an_assertion :refute_received, :wont_have_received, true
+end
+
+class MiniTest::Spec
+  include Bogus::MockingDSL
 end
