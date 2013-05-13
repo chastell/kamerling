@@ -8,7 +8,7 @@ module Kamerling describe Registrar do
       project = fake :project
       repo    = fake :repo
       Registrar.new.register addr: addr, client: client, project: project,
-        repos: { registrations: repo }
+        repos: { Registration => repo }
       repo.must_have_received :<<,
         [{ addr: addr, client: client, project: project }]
     end

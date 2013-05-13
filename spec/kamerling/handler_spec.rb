@@ -7,9 +7,9 @@ module Kamerling describe Handler do
     fake :project
     fake :task
     let(:repos) { {
-      clients:  { '16B client UUID ' => client  },
-      projects: { '16B project UUID' => project },
-      tasks:    { '16B task UUID   ' => task    },
+      Client  => { '16B client UUID ' => client  },
+      Project => { '16B project UUID' => project },
+      Task    => { '16B task UUID   ' => task    },
     } }
 
     it 'handles RGST inputs' do

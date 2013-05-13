@@ -7,7 +7,7 @@ module Kamerling describe Receiver do
       repo   = fake :repo
       task   = fake :task
       Receiver.new.receive client: client, data: 'data',
-        repos: { results: repo }, task: task
+        repos: { Result => repo }, task: task
       repo.must_have_received :<<,
         [{ client: client, data: 'data', task: task }]
     end

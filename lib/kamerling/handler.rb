@@ -16,15 +16,15 @@ module Kamerling class Handler
   private
 
   def handle_RGST message, addr
-    client  = repos[:clients][message.client_uuid]
-    project = repos[:projects][message.project_uuid]
+    client  = repos[Client][message.client_uuid]
+    project = repos[Project][message.project_uuid]
     registrar.register addr: addr, client: client, project: project,
       repos: repos
   end
 
   def handle_RSLT message, _
-    client = repos[:clients][message.client_uuid]
-    task   = repos[:tasks][message.task_uuid]
+    client = repos[Client][message.client_uuid]
+    task   = repos[Task][message.task_uuid]
     receiver.receive client: client, data: message.data, repos: repos,
       task: task
   end
