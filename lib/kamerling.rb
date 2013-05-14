@@ -1,3 +1,5 @@
+require 'data_mapper'
+
 require_relative 'kamerling/addr'
 require_relative 'kamerling/client'
 require_relative 'kamerling/handler'
