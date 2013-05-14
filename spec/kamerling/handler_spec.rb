@@ -2,10 +2,8 @@ require_relative '../spec_helper'
 
 module Kamerling describe Handler do
   describe '#handle' do
-    fake :addr
-    fake :client
-    fake :project
-    fake :task
+    fakes :addr, :client, :project, :registrar, :receiver, :task
+
     let(:repos) { {
       Client  => { '16B client UUID ' => client  },
       Project => { '16B project UUID' => project },
@@ -14,7 +12,6 @@ module Kamerling describe Handler do
 
     it 'handles RGST inputs' do
       input = 'RGST' + "\0" * 12 + '16B client UUID 16B project UUID'
-      registrar = fake :registrar
       Handler.new(registrar: registrar, repos: repos).handle input, addr
       registrar.must_have_received :register,
         [{ addr: addr, client: client, project: project, repos: repos }]
@@ -23,7 +20,6 @@ module Kamerling describe Handler do
     it 'handles RSLT inputs' do
       input = 'RSLT' + "\0" * 12
       input << '16B client UUID 16B project UUID16B task UUID   data'
-      receiver = fake :receiver
       Handler.new(receiver: receiver, repos: repos).handle input, addr
       receiver.must_have_received :receive,
         [{ client: client, data: 'data', repos: repos, task: task }]
