@@ -6,8 +6,10 @@ require 'kamerling'
 
 Bogus.configure { |config| config.search_modules << Kamerling }
 
-def fakes *args
-  args.each { |arg| fake arg }
+module MiniTest::Spec::DSL
+  def fakes *args
+    args.each { |arg| fake arg }
+  end
 end
 
 def repos
