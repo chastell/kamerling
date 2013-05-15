@@ -1,2 +1,3 @@
-module Kamerling class Registration
-end end
+module Kamerling
+  Registration = Struct.new :project, :client, :addr
+end
