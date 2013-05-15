@@ -1,2 +1,3 @@
-module Kamerling class Result
-end end
+module Kamerling
+  Result = Struct.new :client, :task, :data
+end

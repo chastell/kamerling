@@ -7,8 +7,7 @@ module Kamerling describe Receiver do
     it 'processes the result for a given task' do
       Receiver.new.receive client: client, data: 'data',
         repos: { Result => repo }, task: task
-      repo.must_have_received :<<,
-        [{ client: client, data: 'data', task: task }]
+      repo.must_have_received :<<, [Result[client, task, 'data']]
     end
   end
 end end
