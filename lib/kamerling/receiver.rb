@@ -1,5 +1,7 @@
 module Kamerling class Receiver
-  def receive(client: raise, data: raise, repos: nil, task: raise)
-    repos[Result] << Result[client, task, data]
+  def receive(addr: raise, client_uuid: raise, data: raise, repos: {}, task_uuid: raise)
+    client = repos[Client][client_uuid]
+    task   = repos[Task][task_uuid]
+    repos[Result] << Result[client, addr, task, data]
   end
 end end

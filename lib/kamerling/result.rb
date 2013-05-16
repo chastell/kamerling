@@ -1,3 +1,3 @@
 module Kamerling
-  Result = Struct.new :client, :task, :data
+  Result = Struct.new :client, :addr, :task, :data
 end

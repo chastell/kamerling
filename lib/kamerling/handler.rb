@@ -1,5 +1,5 @@
 module Kamerling class Handler
-  def initialize(receiver: Receiver.new, registrar: Registrar.new, repos: nil)
+  def initialize(receiver: Receiver.new, registrar: Registrar.new, repos: {})
     @receiver  = receiver
     @registrar = registrar
     @repos     = repos
@@ -16,16 +16,12 @@ module Kamerling class Handler
   private
 
   def handle_RGST message, addr
-    client  = repos[Client][message.client_uuid]
-    project = repos[Project][message.project_uuid]
-    registrar.register addr: addr, client: client, project: project,
-      repos: repos
+    registrar.register addr: addr, client_uuid: message.client_uuid,
+      project_uuid: message.project_uuid, repos: repos
   end
 
-  def handle_RSLT message, _
-    client = repos[Client][message.client_uuid]
-    task   = repos[Task][message.task_uuid]
-    receiver.receive client: client, data: message.data, repos: repos,
-      task: task
+  def handle_RSLT message, addr
+    receiver.receive addr: addr, client_uuid: message.client_uuid,
+      data: message.data, repos: repos, task_uuid: message.task_uuid
   end
 end end
