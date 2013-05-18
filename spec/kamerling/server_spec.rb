@@ -32,7 +32,8 @@ module Kamerling describe Server do
         s_addr = Addr[*socket.local_address.ip_unpack]
       end
       sleep 0.001
-      handler.must_have_received :handle, ['message', s_addr]
+      handler.must_have_received :handle,
+        ['message', s_addr, receiver: nil, registrar: nil]
     end
   end
 end end
