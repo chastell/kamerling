@@ -8,7 +8,7 @@ module Kamerling describe Handler do
       input = 'RGST' + "\0" * 12 + '16B client UUID 16B project UUID'
       Handler.new(registrar: registrar).handle input, addr
       registrar.must_have_received :register, [{ addr: addr,
-        client_uuid: '16B client UUID ', project_uuid: '16B project UUID', repos: {} }]
+        client_uuid: '16B client UUID ', project_uuid: '16B project UUID', repos: nil }]
     end
 
     it 'handles RSLT inputs' do
@@ -16,7 +16,7 @@ module Kamerling describe Handler do
       input << '16B client UUID 16B project UUID16B task UUID   data'
       Handler.new(receiver: receiver).handle input, addr
       receiver.must_have_received :receive, [{ addr: addr,
-        client_uuid: '16B client UUID ', data: 'data', repos: {},
+        client_uuid: '16B client UUID ', data: 'data', repos: nil,
         task_uuid: '16B task UUID   ' }]
     end
   end
