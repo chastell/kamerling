@@ -8,7 +8,7 @@ Bogus.configure { |config| config.search_modules << Kamerling }
 
 module MiniTest::Spec::DSL
   def fakes *args
-    args.each { |arg| fake arg }
+    args.map { |arg| fake arg }
   end
 end
 
