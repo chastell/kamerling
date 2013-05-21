@@ -10,7 +10,7 @@ module Kamerling describe Handler do
       handler.handle input, addr, registrar: registrar
       registrar.must_have_received :register,
         [{ project_uuid: '16B project UUID', client_uuid: '16B client UUID ',
-           addr: addr, repos: nil }]
+           client_addr: addr, repos: nil }]
     end
 
     it 'handles RSLT inputs' do
@@ -18,7 +18,7 @@ module Kamerling describe Handler do
       input << '16B client UUID 16B project UUID16B task UUID   data'
       handler.handle input, addr, receiver: receiver
       receiver.must_have_received :receive,
-        [{ client_uuid: '16B client UUID ', addr: addr,
+        [{ client_uuid: '16B client UUID ', client_addr: addr,
            task_uuid: '16B task UUID   ', data: 'data', repos: nil }]
     end
 

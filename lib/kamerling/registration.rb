@@ -1,3 +1,3 @@
 module Kamerling
-  Registration = Struct.new :project, :client, :addr
+  Registration = Struct.new :project, :client, :client_addr
 end

@@ -10,7 +10,7 @@ module Kamerling describe Registrar do
     } }
 
     it 'registers that the given client can do the given project' do
-      Registrar.new.register addr: addr, client_uuid: '16B client UUID ',
+      Registrar.new.register client_addr: addr, client_uuid: '16B client UUID ',
         project_uuid: '16B project UUID', repos: repos
       repo.must_have_received :<<, [Registration[project, client, addr]]
     end
