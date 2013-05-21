@@ -1,9 +1,9 @@
 module MessageBehaviour
   def self.included spec_class
     spec_class.class_eval do
-      let(:cuuid) { '16B client UUID ' }
+      let(:cuuid) { '16B client  UUID' }
       let(:puuid) { '16B project UUID' }
-      let(:tuuid) { '16B task UUID   ' }
+      let(:tuuid) { '16B task    UUID' }
       let(:data)  { 'some-length data' }
 
       describe '#client_uuid' do
