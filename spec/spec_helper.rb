@@ -12,9 +12,4 @@ module MiniTest::Spec::DSL
   end
 end
 
-def spec_db
-  @spec_db ||= Sequel.sqlite
-end
-
-Sequel.extension :migration
-Sequel::Migrator.run spec_db, 'lib/kamerling/migrations'
+Kamerling::Repos.configure sequel_db: Sequel.sqlite
