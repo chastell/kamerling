@@ -3,6 +3,7 @@ module Kamerling class Receiver
               data: raise, repos: Repos
     client = repos[Client][client_uuid]
     task   = repos[Task][task_uuid]
-    repos[Result] << Result[client, client_addr, task, data]
+    repos[Result] <<
+      Result[client: client, client_addr: client_addr, data: data, task: task]
   end
 end end
