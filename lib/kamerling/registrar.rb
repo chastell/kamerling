@@ -3,6 +3,7 @@ module Kamerling class Registrar
                repos: Repos
     client  = repos[Client][client_uuid]
     project = repos[Project][project_uuid]
-    repos[Registration] << Registration[project, client, client_addr]
+    repos[Registration] <<
+      Registration[client: client, client_addr: client_addr, project: project]
   end
 end end
