@@ -1,3 +1,9 @@
+$VERBOSE = false
+require 'sequel'
+$VERBOSE = true
+
+Sequel.extension :migration
+
 module Kamerling class Repos
   def self.configure sequel_db: nil
     Sequel.extension :migration
