@@ -11,5 +11,3 @@ module MiniTest::Spec::DSL
     args.map { |arg| fake arg }
   end
 end
-
-Kamerling::Repos.configure sequel_db: Sequel.sqlite
