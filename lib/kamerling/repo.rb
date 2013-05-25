@@ -8,7 +8,9 @@ module Kamerling class Repo
   end
 
   def [] uuid
-    klass[source[uuid: uuid]]
+    if hash = source[uuid: uuid]
+      klass[hash]
+    end
   end
 
   attr_reader :klass, :source
