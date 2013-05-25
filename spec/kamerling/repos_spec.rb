@@ -8,6 +8,14 @@ module Kamerling describe Repos do
       Repos[Client, repo: {}][uuid].must_be_nil
       Repos[Client, repo: { uuid => client }][uuid].must_equal client
     end
+
+    it 'makes sure there’s an actual db underneath' do
+      uuid   = '16B client  UUID'
+      client = Client[uuid: uuid]
+      Repos[Client][uuid].must_be_nil
+      Repos[Client] << client
+      Repos[Client][uuid].must_equal client
+    end
   end
 
   describe '.db=' do
