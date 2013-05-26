@@ -1,6 +1,8 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Task do
+  before { Repos.db = Sequel.sqlite }
+
   describe '.from_h' do
     it 'backtranslates a project_uuid to project' do
       Repos << project = Project[name: 'project name', uuid: '16B project UUID']

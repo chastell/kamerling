@@ -11,7 +11,3 @@ module MiniTest::Spec::DSL
     args.map { |arg| fake arg }
   end
 end
-
-class MiniTest::Spec
-  before { Kamerling::Repos.db = Sequel.sqlite }
-end
