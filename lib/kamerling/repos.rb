@@ -16,7 +16,8 @@ module Kamerling class Repos
 
     def db= db
       Sequel::Migrator.run db, "#{__dir__}/migrations"
-      db
+      @repos = nil
+      @db    = db
     end
 
     private
