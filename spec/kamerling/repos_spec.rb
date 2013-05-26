@@ -31,5 +31,11 @@ module Kamerling describe Repos do
       Repos << client
       Repos[Client]['16B client  UUID'].must_equal client
     end
+
+    it 'makes sure projects can be stored and retrieved' do
+      project = Project[name: 'project name', uuid: '16B project UUID']
+      Repos << project
+      Repos[Project]['16B project UUID'].must_equal project
+    end
   end
 end end

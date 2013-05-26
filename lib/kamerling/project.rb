@@ -1,2 +1,7 @@
-module Kamerling class Project
-end end
+module Kamerling
+  Project = Struct.new :name, :uuid do
+    def initialize name: raise, uuid: raise
+      super name, uuid
+    end
+  end
+end
