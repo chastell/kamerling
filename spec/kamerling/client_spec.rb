@@ -1,10 +1,11 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Client do
-  describe '.new' do
-    it 'can be instantiated with host and port' do
-      client = Client[host: '127.0.0.1', port: 1981, uuid: '16B client  UUID']
-      client.addr.must_equal Addr['127.0.0.1', 1981]
+  describe '.from_h' do
+    it 'backtranslates host and port to addr' do
+      Client.from_h(host: '127.0.0.1', port: 1981, uuid: '16B client  UUID')
+        .must_equal Client[addr: Addr['127.0.0.1', 1981],
+          uuid: '16B client  UUID']
     end
   end
 
