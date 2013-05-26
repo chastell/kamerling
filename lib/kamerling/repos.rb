@@ -30,6 +30,7 @@ module Kamerling class Repos
       @repos ||= {
         Client  => Repo.new(db[:clients],  Client),
         Project => Repo.new(db[:projects], Project),
+        Task    => Repo.new(db[:tasks],    Task),
       }
     end
   end
