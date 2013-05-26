@@ -1,12 +1,12 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Task do
-  describe '.new' do
-    it 'can be instantiated with project_uuid' do
+  describe '.from_h' do
+    it 'backtranslates a project_uuid to project' do
       Repos << project = Project[name: 'project name', uuid: '16B project UUID']
-      task = Task[input: 'input', project_uuid: '16B project UUID',
-        uuid: '16B task    UUID']
-      task.project.must_equal project
+      Task.from_h(input: 'input', project_uuid: '16B project UUID',
+        uuid: '16B task    UUID').must_equal Task[input: 'input',
+          project: project, uuid: '16B task    UUID']
     end
   end
 
