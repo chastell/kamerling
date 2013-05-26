@@ -13,6 +13,9 @@ module Kamerling describe Repo do
   describe '#[]' do
     it 'hydrates the object found in the repo' do
       Tune = Struct.new :genre do
+        class << self
+          alias :from_h :[]
+        end
         def initialize genre: raise
           super genre
         end

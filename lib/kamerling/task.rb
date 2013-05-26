@@ -1,5 +1,9 @@
 module Kamerling
   Task = Struct.new :input, :project, :uuid do
+    class << self
+      alias :from_h :[]
+    end
+
     def initialize input: raise, project_uuid: nil,
       project: Repos[Project][project_uuid], uuid: raise
       super input, project, uuid

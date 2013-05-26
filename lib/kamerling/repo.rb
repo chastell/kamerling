@@ -9,7 +9,7 @@ module Kamerling class Repo
 
   def [] uuid
     if hash = source[uuid: uuid]
-      klass[hash]
+      klass.from_h hash
     end
   end
 
