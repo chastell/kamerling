@@ -4,14 +4,14 @@ module Kamerling describe Repos do
   describe '.[]' do
     it 'allows querying for repository objects' do
       uuid   = '16B client  UUID'
-      client = Client[uuid: uuid]
+      client = Client[addr: Addr['127.0.0.1', 1981], uuid: uuid]
       Repos[Client, repo: {}][uuid].must_be_nil
       Repos[Client, repo: { uuid => client }][uuid].must_equal client
     end
 
     it 'makes sure there’s an actual db underneath' do
       uuid   = '16B client  UUID'
-      client = Client[uuid: uuid]
+      client = Client[addr: Addr['127.0.0.1', 1981], uuid: uuid]
       Repos[Client][uuid].must_be_nil
       Repos[Client] << client
       Repos[Client][uuid].must_equal client
