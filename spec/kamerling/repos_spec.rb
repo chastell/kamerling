@@ -1,6 +1,14 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Repos do
+  describe '.<<' do
+    it 'shuffles the object into the right repo' do
+      repo = fake :repo
+      Repos.<< object = Object.new, repos: { Object => repo }
+      repo.must_have_received :<<, [object]
+    end
+  end
+
   describe '.[]' do
     it 'allows querying for repository objects' do
       uuid   = '16B client  UUID'

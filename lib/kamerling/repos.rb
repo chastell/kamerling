@@ -6,6 +6,10 @@ Sequel.extension :migration
 
 module Kamerling class Repos
   class << self
+    def << object, repos: repos
+      repos[object.class] << object
+    end
+
     def [] klass, repo: repos[klass]
       repo
     end
