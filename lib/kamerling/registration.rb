@@ -1,7 +1,7 @@
 module Kamerling
-  Registration = Struct.new :client, :client_addr, :project do
-    def initialize client: raise, client_addr: raise, project: raise
-      super client, client_addr, project
+  Registration = Struct.new :addr, :client, :project do
+    def initialize addr: raise, client: raise, project: raise
+      super addr, client, project
     end
   end
 end
