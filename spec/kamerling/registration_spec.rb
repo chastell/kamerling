@@ -3,6 +3,13 @@ require_relative '../spec_helper'
 module Kamerling describe Registration do
   fakes :addr, :client, :project
 
+  describe '.from_h' do
+    it 'backtranslates host and port to addr' do
+      Registration.from_h(client: client, host: '127.0.0.1', port: 1981,
+         project: project).addr.must_equal Addr['127.0.0.1', 1981]
+    end
+  end
+
   describe '.new' do
     it 'gives the registration a random UUID' do
       r1 = Registration[addr: addr, client: client, project: project]
