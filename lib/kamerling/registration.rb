@@ -15,8 +15,9 @@ module Kamerling
 
     def to_h
       super.tap do |hash|
-        hash.merge! host: addr.host, port: addr.port
+        hash.merge! client_uuid: client.uuid, host: addr.host, port: addr.port
         hash.delete :addr
+        hash.delete :client
       end
     end
   end

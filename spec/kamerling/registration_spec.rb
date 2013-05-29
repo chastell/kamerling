@@ -20,8 +20,10 @@ module Kamerling describe Registration do
 
   describe '#to_h' do
     it 'represents addr as a host + port pair' do
-      addr = Addr['127.0.0.1', 1981]
-      hash = Registration[addr: addr, client: client, project: project].to_h
+      addr   = Addr['127.0.0.1', 1981]
+      client = fake :client, uuid: '16B client  UUID'
+      hash   = Registration[addr: addr, client: client, project: project].to_h
+      hash[:client_uuid].must_equal '16B client  UUID'
       hash[:host].must_equal '127.0.0.1'
       hash[:port].must_equal 1981
     end
