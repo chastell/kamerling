@@ -21,6 +21,10 @@ module Kamerling describe Repos do
   end
 
   describe '.db=' do
+    let(:client)  { Client[addr: addr, uuid: UUID.new] }
+    let(:project) { Project[name: 'project name', uuid: UUID.new] }
+    let(:task)    { Task[input: 'input', project: project, uuid: UUID.new] }
+
     it 'auto-migrates the passed db' do
       db = Sequel.sqlite
       db.tables.wont_include :schema_info
@@ -29,33 +33,33 @@ module Kamerling describe Repos do
     end
 
     it 'makes sure clients can be stored and retrieved' do
-      Repos << client = Client[addr: addr, uuid: UUID.new]
+      Repos << client
       Repos[Client][client.uuid].must_equal client
     end
 
     it 'makes sure projects can be stored and retrieved' do
-      Repos << project = Project[name: 'project name', uuid: UUID.new]
+      Repos << project
       Repos[Project][project.uuid].must_equal project
     end
 
     it 'makes sure registrations can be stored and retrieved' do
-      Repos << project = Project[name: 'project name', uuid: UUID.new]
-      Repos << client = Client[addr: addr, uuid: UUID.new]
+      Repos << project
+      Repos << client
       Repos << reg = Registration[addr: addr, client: client, project: project]
       Repos[Registration][reg.uuid].must_equal reg
     end
 
     it 'makes sure results can be stored and retrieved' do
-      Repos << project = Project[name: 'project name', uuid: UUID.new]
-      Repos << client = Client[addr: addr, uuid: UUID.new]
-      Repos << task = Task[input: 'input', project: project, uuid: UUID.new]
+      Repos << project
+      Repos << client
+      Repos << task
       Repos << res = Result[addr: addr, client: client, data: 'da', task: task]
       Repos[Result][res.uuid].must_equal res
     end
 
     it 'makes sure tasks can be stored and retrieved' do
-      Repos << project = Project[name: 'project name', uuid: UUID.new]
-      Repos << task = Task[input: 'input', project: project, uuid: UUID.new]
+      Repos << project
+      Repos << task
       Repos[Task][task.uuid].must_equal task
     end
   end
