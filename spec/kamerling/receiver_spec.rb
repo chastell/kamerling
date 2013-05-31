@@ -12,8 +12,8 @@ module Kamerling describe Receiver do
     it 'processes the result for a given task' do
       Receiver.new.receive addr: addr, client_uuid: cuuid, data: 'data',
         repos: repos, task_uuid: tuuid
-      repo.must_have_received :<<,
-        [Result[addr: addr, client: client, data: 'data', task: task]]
+      repo.must_have_received :<<, [Result[addr: addr, client: client,
+        data: 'data', task: task, uuid: anything]]
     end
   end
 end end
