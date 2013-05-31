@@ -13,8 +13,7 @@ module Kamerling describe Repos do
 
   describe '.[]' do
     it 'allows querying for repository objects' do
-      uuid   = UUID.from_bin '16B client  UUID'
-      client = Client[addr: Addr['127.0.0.1', 1981], uuid: uuid]
+      client = Client[addr: Addr['127.0.0.1', 1981], uuid: uuid = UUID.new]
       Repos[Client, repo: {}][uuid].must_be_nil
       Repos[Client, repo: { uuid => client }][uuid].must_equal client
     end
@@ -29,27 +28,23 @@ module Kamerling describe Repos do
     end
 
     it 'makes sure clients can be stored and retrieved' do
-      uuid   = UUID.from_bin '16B client  UUID'
-      client = Client[addr: Addr['127.0.0.1', 1981], uuid: uuid]
+      client = Client[addr: Addr['127.0.0.1', 1981], uuid: uuid = UUID.new]
       Repos << client
       Repos[Client][uuid].must_equal client
     end
 
     it 'makes sure projects can be stored and retrieved' do
-      uuid    = UUID.from_bin '16B project UUID'
-      project = Project[name: 'project name', uuid: uuid]
+      project = Project[name: 'project name', uuid: uuid = UUID.new]
       Repos << project
       Repos[Project][uuid].must_equal project
     end
 
     it 'makes sure tasks can be stored and retrieved' do
-      project_uuid = UUID.from_bin '16B project UUID'
-      task_uuid    = UUID.from_bin '16B task    UUID'
-      project      = Project[name: 'project name', uuid: project_uuid]
-      task         = Task[input: 'input', project: project, uuid: task_uuid]
+      project = Project[name: 'project name', uuid: UUID.new]
+      task    = Task[input: 'input', project: project, uuid: tuuid = UUID.new]
       Repos << project
       Repos << task
-      Repos[Task][task_uuid].must_equal task
+      Repos[Task][tuuid].must_equal task
     end
   end
 end end
