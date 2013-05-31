@@ -1,12 +1,19 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Registration do
+  before { Repos.db = Sequel.sqlite }
+
   fakes :addr, :client, :project
 
   describe '.from_h' do
-    it 'backtranslates host and port to addr' do
-      Registration.from_h(client: client, host: '127.0.0.1', port: 1981,
-         project: project).addr.must_equal Addr['127.0.0.1', 1981]
+    it 'backtranslates client_uuid, host, port and project_uuid' do
+      addr = Addr['127.0.0.1', 1981]
+      Repos << client  = Client[addr: addr, uuid: cuuid = UUID.new]
+      Repos << project = Project[name: 'project name', uuid: puuid = UUID.new]
+      reg = Registration.from_h client_uuid: cuuid, host: '127.0.0.1',
+        port: 1981, project_uuid: puuid
+      reg.must_equal Registration[addr: addr, client: client, project: project,
+        uuid: anything]
     end
   end
 
@@ -19,13 +26,10 @@ module Kamerling describe Registration do
   end
 
   describe '#to_h' do
-    it 'represents addr as a host + port pair' do
-      addr   = Addr['127.0.0.1', 1981]
-      client = fake :client, uuid: cuuid = UUID.new
-      hash   = Registration[addr: addr, client: client, project: project].to_h
-      hash[:client_uuid].must_equal cuuid
-      hash[:host].must_equal '127.0.0.1'
-      hash[:port].must_equal 1981
+    it 'serialises addr, client and project' do
+      hash = Registration[addr: addr, client: client, project: project].to_h
+      hash.must_equal({ client_uuid: client.uuid, host: addr.host,
+        port: addr.port, project_uuid: project.uuid, uuid: anything })
     end
   end
 end end
