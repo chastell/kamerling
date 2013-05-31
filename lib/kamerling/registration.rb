@@ -1,7 +1,5 @@
 module Kamerling
   Registration = Struct.new :addr, :client, :project, :uuid do
-    include RandomUUID
-
     def self.from_h hash
       hash.merge! addr: Addr[hash[:host], hash[:port]]
       hash.delete :host
@@ -9,7 +7,7 @@ module Kamerling
       new hash
     end
 
-    def initialize addr: raise, client: raise, project: raise, uuid: random_uuid
+    def initialize addr: raise, client: raise, project: raise, uuid: UUID.new
       super addr, client, project, uuid
     end
 
