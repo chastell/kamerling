@@ -14,9 +14,9 @@ module Kamerling describe Repos do
 
   describe '.[]' do
     it 'allows querying for repository objects' do
-      client = Client[addr: addr, uuid: uuid = UUID.new]
-      Repos[Client, repo: {}][uuid].must_be_nil
-      Repos[Client, repo: { uuid => client }][uuid].must_equal client
+      clnt = fake :client
+      Repos[Client, repo: {}][clnt.uuid].must_be_nil
+      Repos[Client, repo: { clnt.uuid => clnt }][clnt.uuid].must_equal clnt
     end
   end
 
