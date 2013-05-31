@@ -1,9 +1,9 @@
 module Kamerling
   Result = Struct.new :addr, :client, :data, :task, :uuid do
-    def self.from_h hash
+    def self.from_h hash, repos = Repos
       hash.merge! addr:   Addr[hash[:host], hash[:port]]
-      hash.merge! client: Repos[Client][hash[:client_uuid]]
-      hash.merge! task:   Repos[Task][hash[:task_uuid]]
+      hash.merge! client: repos[Client][hash[:client_uuid]]
+      hash.merge! task:   repos[Task][hash[:task_uuid]]
       hash.delete :host
       hash.delete :port
       hash.delete :client_uuid
