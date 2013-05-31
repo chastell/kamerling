@@ -1,9 +1,9 @@
 module Kamerling
   Registration = Struct.new :addr, :client, :project, :uuid do
-    def self.from_h hash
+    def self.from_h hash, repos = Repos
       hash.merge! addr:    Addr[hash[:host], hash[:port]]
-      hash.merge! client:  Repos[Client][hash[:client_uuid]]
-      hash.merge! project: Repos[Project][hash[:project_uuid]]
+      hash.merge! client:  repos[Client][hash[:client_uuid]]
+      hash.merge! project: repos[Project][hash[:project_uuid]]
       hash.delete :host
       hash.delete :port
       hash.delete :client_uuid
