@@ -11,6 +11,14 @@ Sequel.migration do
       string :name, null: false
     end
 
+    create_table :registrations do
+      uuid    :uuid, primary_key: true
+      inet    :host, null: false
+      integer :port, null: false
+      foreign_key :client_uuid,  :clients,  index: true, null: false, type: :uuid
+      foreign_key :project_uuid, :projects, index: true, null: false, type: :uuid
+    end
+
     create_table :tasks do
       uuid  :uuid,  primary_key: true
       bytea :input, null: false

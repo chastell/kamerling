@@ -39,6 +39,14 @@ module Kamerling describe Repos do
       Repos[Project][uuid].must_equal project
     end
 
+    it 'makes sure registrations can be stored and retrieved' do
+      addr = Addr['127.0.0.1', 1981]
+      Repos << project = Project[name: 'project name', uuid: UUID.new]
+      Repos << client = Client[addr: addr, uuid: UUID.new]
+      Repos << reg = Registration[addr: addr, client: client, project: project]
+      Repos[Registration][reg.uuid].must_equal reg
+    end
+
     it 'makes sure tasks can be stored and retrieved' do
       project = Project[name: 'project name', uuid: UUID.new]
       task    = Task[input: 'input', project: project, uuid: tuuid = UUID.new]
