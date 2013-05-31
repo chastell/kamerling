@@ -1,8 +1,6 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Repos do
-  before { Repos.db = Sequel.sqlite }
-
   describe '.<<' do
     it 'shuffles the object into the right repo' do
       repo = fake :repo
