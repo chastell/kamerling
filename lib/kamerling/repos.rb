@@ -31,6 +31,7 @@ module Kamerling class Repos
         Client       => Repo.new(db[:clients],       Client),
         Project      => Repo.new(db[:projects],      Project),
         Registration => Repo.new(db[:registrations], Registration),
+        Result       => Repo.new(db[:results],       Result),
         Task         => Repo.new(db[:tasks],         Task),
       }
     end
