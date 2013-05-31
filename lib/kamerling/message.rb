@@ -8,7 +8,7 @@ module Kamerling class Message
   end
 
   def client_uuid
-    input[16..31]
+    UUID.from_bin input[16..31]
   end
 
   def data
@@ -16,11 +16,11 @@ module Kamerling class Message
   end
 
   def project_uuid
-    input[32..47]
+    UUID.from_bin input[32..47]
   end
 
   def task_uuid
-    input[48..63]
+    UUID.from_bin input[48..63]
   end
 
   def type

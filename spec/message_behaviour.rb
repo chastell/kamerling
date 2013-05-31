@@ -8,7 +8,7 @@ module MessageBehaviour
 
       describe '#client_uuid' do
         it 'returns the client UUID' do
-          mess.client_uuid.must_equal cuuid
+          mess.client_uuid.must_equal '31364220-636c-6965-6e74-202055554944'
         end
       end
 
@@ -20,13 +20,13 @@ module MessageBehaviour
 
       describe '#project_uuid' do
         it 'returns the project UUID' do
-          mess.project_uuid.must_equal puuid
+          mess.project_uuid.must_equal '31364220-7072-6f6a-6563-742055554944'
         end
       end
 
       describe '#task_uuid' do
         it 'returns the task UUID' do
-          mess.task_uuid.must_equal tuuid
+          mess.task_uuid.must_equal '31364220-7461-736b-2020-202055554944'
         end
       end
 

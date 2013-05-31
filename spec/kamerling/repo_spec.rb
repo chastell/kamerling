@@ -20,13 +20,16 @@ module Kamerling describe Repo do
           super genre
         end
       end
+
       tune   = Tune[genre: :chap_hop]
-      uuid   = '16B tune    UUID'
+      uuid   = UUID.from_bin '16B tune    UUID'
       source = fake
       stub(source).[](uuid: uuid) { { genre: :chap_hop } }
       Repo.new(source, Tune)[uuid].must_equal tune
-      stub(source).[](uuid: 'fu') { nil }
-      Repo.new(source, Tune)['fu'].must_be_nil
+
+      some_uuid = UUID.new
+      stub(source).[](uuid: some_uuid) { nil }
+      Repo.new(source, Tune)[some_uuid].must_be_nil
     end
   end
 end end
