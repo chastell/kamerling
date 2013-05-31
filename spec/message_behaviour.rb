@@ -1,11 +1,6 @@
 module MessageBehaviour
   def self.included spec_class
     spec_class.class_eval do
-      let(:cuuid) { '16B client  UUID' }
-      let(:puuid) { '16B project UUID' }
-      let(:tuuid) { '16B task    UUID' }
-      let(:data)  { 'some-length data' }
-
       describe '#client_uuid' do
         it 'returns the client UUID' do
           mess.client_uuid.must_equal '31364220-636c-6965-6e74-202055554944'
@@ -14,7 +9,7 @@ module MessageBehaviour
 
       describe '#data' do
         it 'returns the result data' do
-          mess.data.must_equal data
+          mess.data.must_equal 'some-length data'
         end
       end
 
