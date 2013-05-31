@@ -1,13 +1,12 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Task do
-  before { Repos.db = Sequel.sqlite }
-
   describe '.from_h' do
     it 'backtranslates a project_uuid to project' do
-      Repos << project = Project[name: 'project name', uuid: puuid = UUID.new]
-      hash = { input: 'input', project_uuid: puuid, uuid: UUID.new }
-      Task.from_h(hash).project.must_equal project
+      project = fake :project
+      repos   = { Project => { project.uuid => project } }
+      hash    = { input: 'input', project_uuid: project.uuid, uuid: UUID.new }
+      Task.from_h(hash, repos).project.must_equal project
     end
   end
 
