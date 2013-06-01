@@ -25,13 +25,10 @@ module Kamerling class Repos
     end
 
     def repos
-      @repos ||= {
-        Client       => Repo.new(db[:clients],       Client),
-        Project      => Repo.new(db[:projects],      Project),
-        Registration => Repo.new(db[:registrations], Registration),
-        Result       => Repo.new(db[:results],       Result),
-        Task         => Repo.new(db[:tasks],         Task),
-      }
+      @repos ||= Hash.new do |repos, klass|
+        table = "#{klass.name.split('::').last.downcase}s".to_sym
+        repos[klass] = Repo.new db[table], klass
+      end
     end
   end
 end end
