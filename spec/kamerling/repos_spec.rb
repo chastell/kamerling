@@ -18,14 +18,16 @@ module Kamerling describe Repos do
   end
 
   describe '.db=' do
-    before { Repos.db = Sequel.sqlite }
-
     it 'auto-migrates the passed db' do
       db = Sequel.sqlite
       db.tables.wont_include :schema_info
       Repos.db = db
       db.tables.must_include :schema_info
     end
+  end
+
+  describe 'when working on actual database' do
+    before { Repos.db = Sequel.sqlite }
 
     it 'makes sure objects can be stored and retrieved' do
       addr = Addr['127.0.0.1', 1981]
