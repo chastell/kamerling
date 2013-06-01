@@ -1,6 +1,4 @@
-$VERBOSE = false
-require 'sequel'
-$VERBOSE = true
+verbose = $VERBOSE; $VERBOSE = false; require 'sequel'; $VERBOSE = verbose
 
 Sequel.extension :migration
 
