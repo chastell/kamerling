@@ -16,6 +16,16 @@ module Kamerling describe Repo do
       mock(source = fake) << { genre: :chap_hop, uuid: anything }
       Repo.new(source, Tune) << tune
     end
+
+    it 'updates the source’s version if it exists there' do
+      dataset = fake
+      source  = fake
+      tune    = Tune[genre: :chap_hop]
+      stub(source).<<(tune.to_h) { raise Sequel::UniqueConstraintViolation }
+      stub(source).where(uuid: tune.uuid) { dataset }
+      Repo.new(source, Tune) << tune
+      dataset.must_have_received :update, [tune.to_h]
+    end
   end
 
   describe '#[]' do

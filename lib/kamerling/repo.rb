@@ -7,6 +7,8 @@ module Kamerling class Repo
 
   def << object
     source << object.to_h
+  rescue Sequel::UniqueConstraintViolation
+    source.where(uuid: object.uuid).update object.to_h
   end
 
   def [] uuid

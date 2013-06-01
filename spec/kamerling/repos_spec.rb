@@ -18,6 +18,8 @@ module Kamerling describe Repos do
   end
 
   describe '.db=' do
+    before { Repos.db = Sequel.sqlite }
+
     it 'auto-migrates the passed db' do
       db = Sequel.sqlite
       db.tables.wont_include :schema_info
@@ -37,6 +39,13 @@ module Kamerling describe Repos do
       Repos[Registration][reg.uuid].must_equal reg
       Repos[Result][res.uuid].must_equal res
       Repos[Task][task.uuid].must_equal task
+    end
+
+    it 'makes sure objects can be updated' do
+      Repos << client = Client[addr: Addr['127.0.0.1', 1979], uuid: UUID.new]
+      client.addr.port = 1981
+      Repos << client
+      Repos[Client][client.uuid].addr.port.must_equal 1981
     end
   end
 end end
