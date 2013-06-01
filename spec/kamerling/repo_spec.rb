@@ -11,19 +11,22 @@ module Kamerling describe Repo do
   end
 
   describe '#[]' do
-    it 'hydrates the object found in the repo' do
-      Tune = Struct.new :genre do
-        class << self
-          alias :from_h :[]
-        end
-        def initialize genre: raise
-          super genre
-        end
+    Tune = Struct.new :genre do
+      class << self
+        alias :from_h :[]
       end
-      uuid   = UUID.new
-      source = { { uuid: uuid } => { genre: :chap_hop } }
+      def initialize genre: raise
+        super genre
+      end
+    end
+
+    it 'hydrates the object found in the repo' do
+      source = { { uuid: uuid = UUID.new } => { genre: :chap_hop } }
       Repo.new(source, Tune)[uuid].must_equal Tune[genre: :chap_hop]
-      Repo.new(source, Tune)[UUID.new].must_be_nil
+    end
+
+    it 'returns nil if the object is not found in the repo' do
+      Repo.new({}, Tune)[UUID.new].must_be_nil
     end
   end
 end end
