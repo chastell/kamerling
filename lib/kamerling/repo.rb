@@ -1,4 +1,6 @@
 module Kamerling class Repo
+  NotFound = Class.new RuntimeError
+
   def initialize source, klass
     @klass, @source = klass, source
   end
@@ -10,6 +12,8 @@ module Kamerling class Repo
   def [] uuid
     if hash = source[uuid: uuid]
       klass.from_h hash
+    else
+      raise NotFound, "#{klass} with UUID #{uuid}"
     end
   end
 

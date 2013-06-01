@@ -25,8 +25,8 @@ module Kamerling describe Repo do
       Repo.new(source, Tune)[uuid].must_equal Tune[genre: :chap_hop]
     end
 
-    it 'returns nil if the object is not found in the repo' do
-      Repo.new({}, Tune)[UUID.new].must_be_nil
+    it 'raises NotFound if the object is not found in the repo' do
+      -> { Repo.new({}, Tune)[UUID.new] }.must_raise Repo::NotFound
     end
   end
 end end
