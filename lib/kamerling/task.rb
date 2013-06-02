@@ -1,13 +1,13 @@
 module Kamerling
-  Task = Struct.new :input, :project, :uuid do
+  Task = Struct.new :done, :input, :project, :uuid do
     def self.from_h hash, repos = Repos
       hash.merge! project: repos[Project][hash[:project_uuid]]
       hash.delete :project_uuid
       new hash
     end
 
-    def initialize input: raise, project: raise, uuid: raise
-      super input, project, uuid
+    def initialize done: false, input: raise, project: raise, uuid: raise
+      super done, input, project, uuid
     end
 
     def to_h
