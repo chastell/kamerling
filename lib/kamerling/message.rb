@@ -1,4 +1,6 @@
 module Kamerling class Message
+  attr_reader :input
+
   def initialize input
     @input = input
   end
@@ -26,7 +28,4 @@ module Kamerling class Message
   def type
     input[0..3]
   end
-
-  attr_reader :input
-  protected   :input
 end end
