@@ -23,6 +23,11 @@ module Kamerling class Repo
     source.all.map { |hash| klass.from_h hash }
   end
 
+  def related_to object
+    key = "#{object.class.name.split('::').last.downcase}_uuid".to_sym
+    source.where(key => object.uuid).map { |hash| klass.from_h hash }
+  end
+
   attr_reader :klass, :source
   private     :klass, :source
 end end
