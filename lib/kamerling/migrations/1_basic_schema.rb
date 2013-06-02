@@ -4,6 +4,7 @@ Sequel.migration do
       uuid    :uuid, primary_key: true
       inet    :host, null: false
       integer :port, null: false
+      boolean :busy, null: false
     end
 
     create_table :projects do
