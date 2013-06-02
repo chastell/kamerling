@@ -3,17 +3,19 @@ require_relative '../spec_helper'
 module Kamerling describe Repos do
   describe '.<<' do
     it 'shuffles the object into the right repo' do
-      repo = fake :repo
-      Repos.<< object = Object.new, repos: { Object => repo }
+      Repos.repos = { Object => repo = fake(:repo) }
+      Repos.<< object = Object.new
       repo.must_have_received :<<, [object]
     end
   end
 
   describe '.[]' do
     it 'allows querying for repository objects' do
-      clnt = fake :client
-      Repos[Client, repo: {}][clnt.uuid].must_be_nil
-      Repos[Client, repo: { clnt.uuid => clnt }][clnt.uuid].must_equal clnt
+      client = fake :client
+      Repos.repos = { Client => {} }
+      Repos[Client][client.uuid].must_be_nil
+      Repos.repos = { Client => { client.uuid => client } }
+      Repos[Client][client.uuid].must_equal client
     end
   end
 

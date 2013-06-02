@@ -4,12 +4,14 @@ Sequel.extension :migration
 
 module Kamerling class Repos
   class << self
-    def << object, repos: repos
+    attr_writer :repos
+
+    def << object
       repos[object.class] << object
     end
 
-    def [] klass, repo: repos[klass]
-      repo
+    def [] klass
+      repos[klass]
     end
 
     def db= db
