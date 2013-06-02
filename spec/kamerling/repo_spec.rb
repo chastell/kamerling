@@ -13,7 +13,7 @@ module Kamerling describe Repo do
   describe '#<<' do
     it 'passes the Hash version of an object to the source' do
       tune = Tune[genre: :chap_hop]
-      mock(source = fake) << { genre: :chap_hop, uuid: anything }
+      mock(source = fake) << { genre: :chap_hop, uuid: tune.uuid }
       Repo.new(Tune, source) << tune
     end
 

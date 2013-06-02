@@ -25,9 +25,10 @@ module Kamerling describe Result do
 
   describe '#to_h' do
     it 'serialises addr, client and task' do
-      hash = Result[addr: addr, client: client, data: 'data', task: task].to_h
-      hash.must_equal({ client_uuid: client.uuid, data: 'data', host: addr.host,
-        port: addr.port, task_uuid: task.uuid, uuid: anything })
+      result = Result[addr: addr, client: client, data: 'data', task: task]
+      result.to_h.must_equal({ client_uuid: client.uuid, data: 'data',
+        host: addr.host, port: addr.port, task_uuid: task.uuid,
+        uuid: result.uuid })
     end
   end
 end end

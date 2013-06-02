@@ -25,9 +25,9 @@ module Kamerling describe Registration do
 
   describe '#to_h' do
     it 'serialises addr, client and project' do
-      hash = Registration[addr: addr, client: client, project: project].to_h
-      hash.must_equal({ client_uuid: client.uuid, host: addr.host,
-        port: addr.port, project_uuid: project.uuid, uuid: anything })
+      registration = Registration[addr: addr, client: client, project: project]
+      registration.to_h.must_equal({ client_uuid: client.uuid, host: addr.host,
+        port: addr.port, project_uuid: project.uuid, uuid: registration.uuid })
     end
   end
 end end
