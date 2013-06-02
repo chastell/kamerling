@@ -39,4 +39,12 @@ module Kamerling describe Repo do
       -> { Repo.new(Tune, {})[UUID.new] }.must_raise Repo::NotFound
     end
   end
+
+  describe '#all' do
+    it 'returns all objects' do
+      tune = Tune[genre: :chap_hop, uuid: UUID.new]
+      source = fake all: [{ genre: :chap_hop, uuid: tune.uuid }]
+      Repo.new(Tune, source).all.must_equal [tune]
+    end
+  end
 end end
