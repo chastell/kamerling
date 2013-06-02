@@ -47,4 +47,16 @@ module Kamerling describe Repo do
       Repo.new(Tune, source).all.must_equal [tune]
     end
   end
+
+  describe '#related_to' do
+    it 'returns objects related to the given object' do
+      tunes   = [Tune[genre: :ragga], Tune[genre: :reggae]]
+      project = fake :project
+      stub(source = fake).where(project_uuid: project.uuid) { [
+        { genre: :ragga, uuid: tunes.first.uuid },
+        { genre: :reggae, uuid: tunes.last.uuid },
+      ] }
+      Repo.new(Tune, source).related_to(project).must_equal tunes
+    end
+  end
 end end
