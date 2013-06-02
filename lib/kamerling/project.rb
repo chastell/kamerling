@@ -4,7 +4,7 @@ module Kamerling
       alias :from_h :new
     end
 
-    def initialize name: raise, uuid: raise
+    def initialize name: raise, uuid: UUID.new
       super name, uuid
     end
   end
