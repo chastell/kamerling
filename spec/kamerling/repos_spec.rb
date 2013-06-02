@@ -28,6 +28,20 @@ module Kamerling describe Repos do
     end
   end
 
+  describe '.free_clients_for' do
+    it 'returns free clients for the given project' do
+      busy_client = fake :client, busy: true
+      free_client = fake :client, busy: false
+      busy_reg    = fake :registration, client: busy_client
+      free_reg    = fake :registration, client: free_client
+      project     = fake :project
+      repo        = fake :repo
+      stub(repo).related_to(project) { [busy_reg, free_reg] }
+      Repos.repos = { Registration => repo }
+      Repos.free_clients_for(project).must_equal [free_client]
+    end
+  end
+
   describe '.projects' do
     it 'returns all projects' do
       Repos.repos = { Project => fake(:repo, all: all_projects = fake) }

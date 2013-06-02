@@ -20,6 +20,10 @@ module Kamerling class Repos
       @db    = db
     end
 
+    def free_clients_for project
+      repos[Registration].related_to(project).map(&:client).reject(&:busy)
+    end
+
     def projects
       repos[Project].all
     end
