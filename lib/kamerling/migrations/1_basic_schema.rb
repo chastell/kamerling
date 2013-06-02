@@ -2,6 +2,7 @@ Sequel.migration do
   change do
     create_table :clients do
       uuid    :uuid, primary_key: true
+      boolean :busy, null: false
       inet    :host, null: false
       integer :port, null: false
     end
