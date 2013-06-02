@@ -21,6 +21,13 @@ module Kamerling describe Server do
     end
   end
 
+  describe '#addr' do
+    it 'returns the server’s host + port as an addr' do
+      server = Server.new
+      server.addr.must_equal Addr[server.host, server.port]
+    end
+  end
+
   describe '#serve' do
     it 'passes the received input to the handler' do
       server = Server.new handler: handler = fake(:handler)
