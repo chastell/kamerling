@@ -3,6 +3,10 @@ module Kamerling module UUID
     bin.unpack('H8H4H4H4H12').join '-'
   end
 
+  def self.bin uuid
+    [uuid.tr('-', '')].pack 'H*'
+  end
+
   def self.new
     SecureRandom.uuid
   end
