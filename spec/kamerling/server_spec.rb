@@ -22,10 +22,8 @@ module Kamerling describe Server do
   end
 
   describe '#serve' do
-    fake :handler
-
     it 'passes the received input to the handler' do
-      server = Server.new handler: handler
+      server = Server.new handler: handler = fake(:handler)
       s_addr = nil
       TCPSocket.open server.host, server.port do |socket|
         socket << 'message'
