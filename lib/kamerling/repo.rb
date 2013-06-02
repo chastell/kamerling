@@ -1,7 +1,7 @@
 module Kamerling class Repo
   NotFound = Class.new RuntimeError
 
-  def initialize source, klass
+  def initialize klass, source
     @klass, @source = klass, source
   end
 

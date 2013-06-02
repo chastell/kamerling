@@ -27,7 +27,7 @@ module Kamerling class Repos
     def repos
       @repos ||= Hash.new do |repos, klass|
         table = "#{klass.name.split('::').last.downcase}s".to_sym
-        repos[klass] = Repo.new db[table], klass
+        repos[klass] = Repo.new klass, db[table]
       end
     end
   end
