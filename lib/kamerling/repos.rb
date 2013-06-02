@@ -20,6 +20,10 @@ module Kamerling class Repos
       @db    = db
     end
 
+    def projects
+      repos[Project].all
+    end
+
     private
 
     def db

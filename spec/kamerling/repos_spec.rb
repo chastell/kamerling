@@ -28,6 +28,13 @@ module Kamerling describe Repos do
     end
   end
 
+  describe '.projects' do
+    it 'returns all projects' do
+      Repos.repos = { Project => fake(:repo, all: all_projects = fake) }
+      Repos.projects.must_equal all_projects
+    end
+  end
+
   describe 'when working on actual database' do
     before { Repos.db = Sequel.sqlite }
 
