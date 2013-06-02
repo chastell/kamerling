@@ -42,6 +42,18 @@ module Kamerling describe Repos do
     end
   end
 
+  describe '.next_task_for' do
+    it 'returns the next task for the given project' do
+      project   = fake :project
+      done_task = fake :task, done: true
+      new_task  = fake :task, done: false
+      repo      = fake :repo
+      stub(repo).related_to(project) { [done_task, new_task] }
+      Repos.repos = { Task => repo }
+      Repos.next_task_for(project).must_equal new_task
+    end
+  end
+
   describe '.projects' do
     it 'returns all projects' do
       Repos.repos = { Project => fake(:repo, all: all_projects = fake) }

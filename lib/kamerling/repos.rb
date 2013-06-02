@@ -24,6 +24,10 @@ module Kamerling class Repos
       repos[Registration].related_to(project).map(&:client).reject(&:busy)
     end
 
+    def next_task_for project
+      repos[Task].related_to(project).reject(&:done).first
+    end
+
     def projects
       repos[Project].all
     end
