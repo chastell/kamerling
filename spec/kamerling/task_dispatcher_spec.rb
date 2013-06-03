@@ -16,6 +16,8 @@ module Kamerling describe TaskDispatcher do
         TaskDispatcher.new.dispatch repos: repos
       end
       sleep 0.01
+      client.must_have_received :busy=, true
+      repos.must_have_received :<<, [client]
       handler.must_have_received :handle, ["DATA\0\0\0\0\0\0\0\0\0\0\0\0" +
         '16B client  UUID16B project UUID16B task    UUIDtask input', anything]
     end

@@ -8,6 +8,8 @@ module Kamerling class TaskDispatcher
               project: project, task: task]
             socket << message.input
           end
+          client.busy = true
+          repos << client
         end
       end
     end
