@@ -3,10 +3,10 @@ module Kamerling class Receiver
     task_uuid: raise
     client = repos[Client][client_uuid]
     task   = repos[Task][task_uuid]
-    repos[Result] << Result[addr: addr, client: client, data: data, task: task]
     client.busy = false
     task.done   = true
-    repos[Client] << client
-    repos[Task]   << task
+    repos << Result[addr: addr, client: client, data: data, task: task]
+    repos << client
+    repos << task
   end
 end end
