@@ -8,6 +8,7 @@ module Kamerling class Repos
 
     def << object
       repos[object.class] << object
+      self
     end
 
     def [] klass
