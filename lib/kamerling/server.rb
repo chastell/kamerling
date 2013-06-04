@@ -4,7 +4,6 @@ module Kamerling class Server < GServer
   def initialize handler: Handler.new, host: DEFAULT_HOST, port: 0
     @handler = handler
     super port, host
-    start
   end
 
   def addr

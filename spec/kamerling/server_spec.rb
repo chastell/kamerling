@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 module Kamerling describe Server do
   describe '.new' do
     it 'starts a server on the given host and port' do
-      Server.new host: '0.0.0.0', port: 1981
+      Server.new(host: '0.0.0.0', port: 1981).start
       TCPSocket.open '0.0.0.0', 1981
     end
 
@@ -12,7 +12,7 @@ module Kamerling describe Server do
     end
 
     it 'defaults to a random, unused port' do
-      s1, s2 = Server.new, Server.new
+      s1, s2 = Server.new.start, Server.new.start
       (1024..65535).must_include s1.port
       (1024..65535).must_include s2.port
       s1.port.wont_equal s2.port
@@ -30,7 +30,7 @@ module Kamerling describe Server do
 
   describe '#serve' do
     it 'passes the received input to the handler' do
-      server = Server.new handler: handler = fake(:handler)
+      server = Server.new(handler: handler = fake(:handler)).start
       s_addr = nil
       TCPSocket.open server.host, server.port do |socket|
         socket << 'message'

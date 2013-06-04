@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 module Kamerling describe TaskDispatcher do
   describe '#dispatch' do
     it 'dispatches tasks to free clients' do
-      endpoint = Server.new handler: handler = fake(:handler)
+      endpoint = Server.new(handler: handler = fake(:handler)).start
       project  = fake :project, uuid: UUID['16B project UUID']
       task     = fake :task, input: 'task input', project: project,
         uuid: UUID['16B task    UUID']
