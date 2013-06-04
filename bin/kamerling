@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/kamerling'
+
+server = Kamerling::Server.new
+server.audit = true
+server.debug = true
+server.start
+server.join
