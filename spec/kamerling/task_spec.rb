@@ -11,6 +11,14 @@ module Kamerling describe Task do
     end
   end
 
+  describe '.new' do
+    it 'gives the task a random UUID' do
+      t1 = Task[input: 'some input', project: project]
+      t2 = Task[input: 'some input', project: project]
+      t1.uuid.wont_equal t2.uuid
+    end
+  end
+
   describe '#to_h' do
     it 'represents project as its UUID' do
       task = Task[input: 'task input', project: project, uuid: UUID.new]
