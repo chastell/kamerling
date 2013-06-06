@@ -1,6 +1,13 @@
 module Kamerling class Message
   attr_reader :input
 
+  def self.[] client: raise, data: raise, project: raise, task: raise
+    type  = name.split('::').last
+    input = type + "\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
+      UUID.bin(project.uuid) + UUID.bin(task.uuid) + data
+    new input
+  end
+
   def initialize input
     @input = input
   end
