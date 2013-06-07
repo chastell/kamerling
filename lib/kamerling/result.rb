@@ -11,8 +11,7 @@ module Kamerling
       new hash
     end
 
-    def initialize addr: raise, client: raise, data: raise, task: raise,
-      uuid: UUID.new
+    def initialize addr: raise, client: raise, data: raise, task: raise, uuid: UUID.new
       super addr, client, data, task, uuid
     end
 
