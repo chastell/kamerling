@@ -1,3 +1,9 @@
+def req param
+  method   = caller.first[/`(.*)'$/, 1]
+  callsite = Class === self ? "#{name}.#{method}" : "#{self.class}##{method}"
+  raise "#{callsite}: param #{param} is required"
+end
+
 def warn_off
   verbose  = $VERBOSE
   $VERBOSE = false

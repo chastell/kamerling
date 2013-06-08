@@ -5,7 +5,7 @@ module Kamerling describe Repo do
     class << self
       alias :from_h :[]
     end
-    def initialize genre: raise, uuid: UUID.new
+    def initialize genre: req(:genre), uuid: UUID.new
       super genre, uuid
     end
   end

@@ -6,7 +6,7 @@ module Kamerling
       new hash
     end
 
-    def initialize done: false, input: raise, project: raise, uuid: UUID.new
+    def initialize done: false, input: req(:input), project: req(:project), uuid: UUID.new
       super done, input, project, uuid
     end
 

@@ -7,7 +7,7 @@ module Kamerling
       new hash
     end
 
-    def initialize addr: raise, busy: false, uuid: UUID.new
+    def initialize addr: req(:addr), busy: false, uuid: UUID.new
       super addr, busy, uuid
     end
 
