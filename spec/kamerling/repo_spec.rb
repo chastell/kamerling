@@ -1,14 +1,7 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Repo do
-  Tune = Struct.new :genre, :uuid do
-    class << self
-      alias :from_h :[]
-    end
-    def initialize genre: req(:genre), uuid: UUID.new
-      super genre, uuid
-    end
-  end
+  Tune = Kamerling.UUIDObject genre: -> { req :genre }
 
   describe '#<<' do
     it 'passes the Hash version of an object to the source' do
