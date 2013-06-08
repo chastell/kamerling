@@ -12,6 +12,22 @@ module Kamerling describe '.UUIDObject' do
       Netable.from_h(host: '127.0.0.1', port: 1981).addr
         .must_equal Addr['127.0.0.1', 1981]
     end
+
+    it 'deserialises {client,project,task}_uuid' do
+      client, project, task = fake(:client), fake(:project), fake(:task)
+      Complete = Kamerling.UUIDObject :client, :project, :task
+      repos = {
+        Client  => { client.uuid  => client  },
+        Project => { project.uuid => project },
+        Task    => { task.uuid    => task    },
+      }
+      hash = { client_uuid: client.uuid, project_uuid: project.uuid,
+        task_uuid: task.uuid, uuid: UUID.new }
+      complete = Complete.from_h hash, repos
+      complete.client.must_equal  client
+      complete.project.must_equal project
+      complete.task.must_equal    task
+    end
   end
 
   describe '.new' do

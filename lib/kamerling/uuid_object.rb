@@ -11,10 +11,13 @@ module Kamerling
         alias [] new
       end
 
-      define_singleton_method :from_h do |hash|
+      define_singleton_method :from_h do |hash, repos = Repos|
         args = Hash[hash.map do |key, value|
           case key
-          when :host, :port then [:addr, Addr[hash[:host], hash[:port]]]
+          when :host, :port  then [:addr,    Addr[hash[:host], hash[:port]]]
+          when :client_uuid  then [:client,  repos[Client][value]]
+          when :project_uuid then [:project, repos[Project][value]]
+          when :task_uuid    then [:task,    repos[Task][value]]
           else [key, value]
           end
         end]
