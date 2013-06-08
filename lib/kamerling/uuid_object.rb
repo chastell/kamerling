@@ -1,5 +1,5 @@
 module Kamerling
-  def self.UUIDObject attrs
+  def self.UUIDObject attrs = {}
     attrs[:uuid] = -> { UUID.new }
 
     Class.new do
