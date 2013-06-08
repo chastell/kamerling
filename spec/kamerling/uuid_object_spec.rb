@@ -12,4 +12,9 @@ module Kamerling describe '.UUIDObject' do
     FooFul.new(foo: 'bar').foo.must_equal 'bar'
     -> { FooFul.new }.must_raise RuntimeError
   end
+
+  it 'allows setting properties’ default procs' do
+    ProcFul = Kamerling.UUIDObject rand: -> { rand }
+    ProcFul.new.rand.wont_equal ProcFul.new.rand
+  end
 end end
