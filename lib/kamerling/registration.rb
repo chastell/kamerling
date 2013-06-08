@@ -1,4 +1,4 @@
-module Kamerling class Registration < UUIDObject addr: nil, client: nil, project: nil
+module Kamerling class Registration < UUIDObject :addr, :client, :project
   def self.from_h hash, repos = Repos
     hash.merge! addr:    Addr[hash[:host], hash[:port]]
     hash.merge! client:  repos[Client][hash[:client_uuid]]

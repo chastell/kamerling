@@ -1,2 +1,2 @@
-module Kamerling class Project < UUIDObject name: nil
+module Kamerling class Project < UUIDObject :name
 end end
