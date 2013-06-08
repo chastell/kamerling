@@ -12,7 +12,13 @@ module Kamerling
       end
 
       define_singleton_method :from_h do |hash|
-        new hash
+        args = Hash[hash.map do |key, value|
+          case key
+          when :host, :port then [:addr, Addr[hash[:host], hash[:port]]]
+          else [key, value]
+          end
+        end]
+        new args
       end
 
       attr_accessor(*attrs.keys)
