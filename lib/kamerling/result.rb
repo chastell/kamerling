@@ -1,4 +1,4 @@
-module Kamerling class Result < UUIDObject addr: -> { req :addr }, client: -> { req :client }, data: -> { req :data }, task: -> { req :task }
+module Kamerling class Result < UUIDObject addr: nil, client: nil, data: nil, task: nil
   def self.from_h hash, repos = Repos
     hash.merge! addr:   Addr[hash[:host], hash[:port]]
     hash.merge! client: repos[Client][hash[:client_uuid]]

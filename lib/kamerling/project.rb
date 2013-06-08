@@ -1,2 +1,2 @@
-module Kamerling class Project < UUIDObject name: -> { req :name }
+module Kamerling class Project < UUIDObject name: nil
 end end

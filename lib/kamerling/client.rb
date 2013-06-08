@@ -1,4 +1,4 @@
-module Kamerling class Client < UUIDObject addr: -> { req :addr }, busy: -> { false }
+module Kamerling class Client < UUIDObject addr: nil, busy: -> { false }
   def self.from_h hash
     hash.merge! addr: Addr[hash[:host], hash[:port]]
     hash.delete :host
