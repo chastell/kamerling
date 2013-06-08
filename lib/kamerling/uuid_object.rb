@@ -11,7 +11,7 @@ module Kamerling
         new hash
       end
 
-      attr_reader(*attrs.keys)
+      attr_accessor(*attrs.keys)
 
       define_method :initialize do |args = {}|
         attrs.keys.each do |attr|
