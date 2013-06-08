@@ -37,6 +37,7 @@ module Kamerling
             when Addr    then hash[:host], hash[:port] = value.host, value.port
             when Client  then hash[:client_uuid]  = client.uuid
             when Project then hash[:project_uuid] = project.uuid
+            when Task    then hash[:task_uuid]    = task.uuid
             else hash[attr] = value
             end
           end
