@@ -16,7 +16,10 @@ module Kamerling class Repos
     end
 
     def db= db
+      verbose = $VERBOSE
+      $VERBOSE = false
       Sequel::Migrator.run db, "#{__dir__}/migrations"
+      $VERBOSE = verbose
       @repos = nil
       @db    = db
     end
@@ -42,7 +45,11 @@ module Kamerling class Repos
     def repos
       @repos ||= Hash.new do |repos, klass|
         table = "#{klass.name.split('::').last.downcase}s".to_sym
-        repos[klass] = Repo.new klass, db[table]
+        verbose = $VERBOSE
+        $VERBOSE = false
+        db_table = db[table]
+        $VERBOSE = verbose
+        repos[klass] = Repo.new klass, db_table
       end
     end
   end

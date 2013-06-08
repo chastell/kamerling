@@ -6,13 +6,21 @@ module Kamerling class Repo
   end
 
   def << object
+    verbose = $VERBOSE
+    $VERBOSE = false
     source << object.to_h
   rescue Sequel::UniqueConstraintViolation
     source.where(uuid: object.uuid).update object.to_h
+  ensure
+    $VERBOSE = verbose
   end
 
   def [] uuid
-    if hash = source[uuid: uuid]
+    verbose = $VERBOSE
+    $VERBOSE = false
+    hash = source[uuid: uuid]
+    $VERBOSE = verbose
+    if hash
       klass.from_h hash
     else
       raise NotFound, "#{klass} with UUID #{uuid}"
