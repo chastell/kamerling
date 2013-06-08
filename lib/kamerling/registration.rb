@@ -9,14 +9,4 @@ module Kamerling class Registration < UUIDObject :addr, :client, :project
     hash.delete :project_uuid
     new hash
   end
-
-  def to_h
-    super.tap do |hash|
-      hash.merge! client_uuid: client.uuid, project_uuid: project.uuid
-      hash.merge! host: addr.host, port: addr.port
-      hash.delete :addr
-      hash.delete :client
-      hash.delete :project
-    end
-  end
 end end
