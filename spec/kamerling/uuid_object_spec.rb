@@ -46,5 +46,11 @@ module Kamerling describe '.UUIDObject' do
       addrble = Addrble.new addr: Addr['127.0.0.1', 1981]
       addrble.to_h.must_equal({ host: '127.0.0.1', port: 1981, uuid: anything })
     end
+
+    it 'serialises project' do
+      Projable = Kamerling.UUIDObject :project
+      projable = Projable.new project: project = Project[name: 'name']
+      projable.to_h.must_equal({ project_uuid: project.uuid, uuid: anything })
+    end
   end
 end end

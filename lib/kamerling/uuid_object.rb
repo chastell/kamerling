@@ -34,7 +34,8 @@ module Kamerling
         {}.tap do |hash|
           attrs.keys.map do |attr|
             case value = instance_variable_get("@#{attr}")
-            when Addr then hash[:host], hash[:port] = value.host, value.port
+            when Addr    then hash[:host], hash[:port] = value.host, value.port
+            when Project then hash[:project_uuid] = project.uuid
             else hash[attr] = value
             end
           end
