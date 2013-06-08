@@ -17,4 +17,9 @@ module Kamerling describe '.UUIDObject' do
     ProcFul = Kamerling.UUIDObject rand: -> { rand }
     ProcFul.new.rand.wont_equal ProcFul.new.rand
   end
+
+  it 'allows setting properties’ default values' do
+    ValFul = Kamerling.UUIDObject bar: :baz
+    ValFul.new.bar.must_equal :baz
+  end
 end end

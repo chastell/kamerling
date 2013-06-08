@@ -16,7 +16,10 @@ module Kamerling
       define_method :initialize do |args = {}|
         attrs.keys.each do |attr|
           raise "#{self.class.name}: param #{attr} is required" if attrs[attr].nil? and not args[attr]
-          instance_variable_set "@#{attr}", args[attr] || attrs[attr].call
+          value = args.fetch attr do
+            attrs[attr].is_a?(Proc) ? attrs[attr].call : attrs[attr]
+          end
+          instance_variable_set "@#{attr}", value
         end
       end
 
