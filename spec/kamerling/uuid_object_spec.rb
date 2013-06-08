@@ -34,4 +34,11 @@ module Kamerling describe '.UUIDObject' do
         .must_equal Actor.new(name: :hardy, uuid: uuid)
     end
   end
+
+  describe '#to_h' do
+    it 'serialises the object to a Hash' do
+      Hashable = Kamerling.UUIDObject :param
+      Hashable.new(param: :val).to_h.must_equal({ param: :val, uuid: anything })
+    end
+  end
 end end
