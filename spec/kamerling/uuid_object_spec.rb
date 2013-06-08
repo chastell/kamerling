@@ -7,8 +7,8 @@ module Kamerling describe '.UUIDObject' do
     AttrLess.new.uuid.wont_equal AttrLess.new.uuid
   end
 
-  it 'allows setting custom properties and raises when they default to nil' do
-    FooFul = Kamerling.UUIDObject foo: nil
+  it 'allows setting custom properties and raises when they lack defaults' do
+    FooFul = Kamerling.UUIDObject :foo
     FooFul.new(foo: 'bar').foo.must_equal 'bar'
     -> { FooFul.new }.must_raise RuntimeError
   end

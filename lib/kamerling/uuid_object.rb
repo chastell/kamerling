@@ -1,6 +1,10 @@
 module Kamerling
-  def self.UUIDObject attrs = {}
-    attrs[:uuid] = -> { UUID.new }
+  def self.UUIDObject *params
+    attrs = params.last.is_a?(Hash) ? params.pop : {}
+    params.each do |param|
+      attrs[param] = -> { raise "param #{param} is required" }
+    end
+    attrs[:uuid] ||= -> { UUID.new }
 
     Class.new do
       class << self
@@ -15,7 +19,6 @@ module Kamerling
 
       define_method :initialize do |args = {}|
         attrs.keys.each do |attr|
-          raise "#{self.class.name}: param #{attr} is required" if attrs[attr].nil? and not args[attr]
           value = args.fetch attr do
             attrs[attr].is_a?(Proc) ? attrs[attr].call : attrs[attr]
           end
