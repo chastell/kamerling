@@ -4,11 +4,4 @@ module Kamerling class Task < UUIDObject :input, :project, done: false
     hash.delete :project_uuid
     new hash
   end
-
-  def to_h
-    super.tap do |hash|
-      hash.merge! project_uuid: project.uuid
-      hash.delete :project
-    end
-  end
 end end

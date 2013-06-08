@@ -18,11 +18,4 @@ module Kamerling describe Task do
       t1.uuid.wont_equal t2.uuid
     end
   end
-
-  describe '#to_h' do
-    it 'represents project as its UUID' do
-      task = Task[input: 'task input', project: project, uuid: UUID.new]
-      task.to_h[:project_uuid].must_equal project.uuid
-    end
-  end
 end end
