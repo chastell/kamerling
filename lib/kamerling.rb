@@ -1,3 +1,11 @@
+def warn_off
+  verbose  = $VERBOSE
+  $VERBOSE = false
+  yield
+ensure
+  $VERBOSE = verbose
+end
+
 require_relative 'kamerling/addr'
 require_relative 'kamerling/client'
 require_relative 'kamerling/handler'

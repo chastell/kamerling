@@ -29,13 +29,9 @@ module Kamerling describe Repos do
   describe '.db=' do
     it 'auto-migrates the passed db' do
       db = Sequel.sqlite
-      $VERBOSE = false
-      db.tables.wont_include :schema_info
-      $VERBOSE = true
+      warn_off { db.tables.wont_include :schema_info }
       Repos.db = db
-      $VERBOSE = false
-      db.tables.must_include :schema_info
-      $VERBOSE = true
+      warn_off { db.tables.must_include :schema_info }
     end
   end
 

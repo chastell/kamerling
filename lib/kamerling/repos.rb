@@ -1,4 +1,4 @@
-verbose = $VERBOSE; $VERBOSE = false; require 'sequel'; $VERBOSE = verbose
+warn_off { require 'sequel' }
 
 Sequel.extension :migration
 
@@ -16,10 +16,7 @@ module Kamerling class Repos
     end
 
     def db= db
-      verbose = $VERBOSE
-      $VERBOSE = false
-      Sequel::Migrator.run db, "#{__dir__}/migrations"
-      $VERBOSE = verbose
+      warn_off { Sequel::Migrator.run db, "#{__dir__}/migrations" }
       @repos = nil
       @db    = db
     end
@@ -45,11 +42,7 @@ module Kamerling class Repos
     def repos
       @repos ||= Hash.new do |repos, klass|
         table = "#{klass.name.split('::').last.downcase}s".to_sym
-        verbose = $VERBOSE
-        $VERBOSE = false
-        db_table = db[table]
-        $VERBOSE = verbose
-        repos[klass] = Repo.new klass, db_table
+        repos[klass] = Repo.new klass, warn_off { db[table] }
       end
     end
   end
