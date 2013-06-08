@@ -31,9 +31,14 @@ module Kamerling
       end
 
       define_method :to_h do
-        Hash[attrs.keys.map do |attr|
-          [attr, instance_variable_get("@#{attr}")]
-        end]
+        {}.tap do |hash|
+          attrs.keys.map do |attr|
+            case value = instance_variable_get("@#{attr}")
+            when Addr then hash[:host], hash[:port] = value.host, value.port
+            else hash[attr] = value
+            end
+          end
+        end
       end
     end
   end

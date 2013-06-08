@@ -40,5 +40,11 @@ module Kamerling describe '.UUIDObject' do
       Hashable = Kamerling.UUIDObject :param
       Hashable.new(param: :val).to_h.must_equal({ param: :val, uuid: anything })
     end
+
+    it 'serialises addr' do
+      Addrble = Kamerling.UUIDObject :addr
+      addrble = Addrble.new addr: Addr['127.0.0.1', 1981]
+      addrble.to_h.must_equal({ host: '127.0.0.1', port: 1981, uuid: anything })
+    end
   end
 end end
