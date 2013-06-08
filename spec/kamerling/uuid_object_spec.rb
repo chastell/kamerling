@@ -1,6 +1,13 @@
 require_relative '../spec_helper'
 
 module Kamerling describe '.UUIDObject' do
+  describe '.from_h' do
+    it 'deserialises the object from a Hash' do
+      Trivial = Kamerling.UUIDObject :question
+      Trivial.from_h(question: :answer).question.must_equal :answer
+    end
+  end
+
   describe '.new' do
     it 'creates a class with an UUID property defaulting to a random UUID' do
       AttrLess = Kamerling.UUIDObject
