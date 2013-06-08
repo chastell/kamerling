@@ -7,12 +7,4 @@ module Kamerling describe Client do
         .must_equal Addr['127.0.0.1', 1981]
     end
   end
-
-  describe '#to_h' do
-    it 'represents addr as a host + port pair' do
-      hash = Client[addr: Addr['127.0.0.1', 1981]].to_h
-      hash[:host].must_equal '127.0.0.1'
-      hash[:port].must_equal 1981
-    end
-  end
 end end
