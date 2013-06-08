@@ -3,18 +3,6 @@ require_relative '../spec_helper'
 module Kamerling describe Result do
   fakes :addr, :client, :task
 
-  describe '.from_h' do
-    it 'backtranslates client_uuid, host, port and task_uuid' do
-      addr  = Addr['127.0.0.1', 1981]
-      repos = { Client => { client.uuid => client },
-        Task => { task.uuid => task } }
-      hash  = { client_uuid: client.uuid, data: 'result data', host: addr.host,
-        port: addr.port, task_uuid: task.uuid }
-      Result.from_h(hash, repos).must_equal Result[addr: addr, client: client,
-        data: 'result data', task: task, uuid: anything]
-    end
-  end
-
   describe '.new' do
     it 'gives the result a random UUID' do
       r1 = Result[addr: addr, client: client, data: 'some data', task: task]
