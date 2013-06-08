@@ -22,13 +22,4 @@ module Kamerling describe Result do
       r1.uuid.wont_equal r2.uuid
     end
   end
-
-  describe '#to_h' do
-    it 'serialises addr, client and task' do
-      result = Result[addr: addr, client: client, data: 'data', task: task]
-      result.to_h.must_equal({ client_uuid: client.uuid, data: 'data',
-        host: addr.host, port: addr.port, task_uuid: task.uuid,
-        uuid: result.uuid })
-    end
-  end
 end end

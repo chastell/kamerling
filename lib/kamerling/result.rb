@@ -9,14 +9,4 @@ module Kamerling class Result < UUIDObject :addr, :client, :data, :task
     hash.delete :task_uuid
     new hash
   end
-
-  def to_h
-    super.tap do |hash|
-      hash.merge! client_uuid: client.uuid, task_uuid: task.uuid
-      hash.merge! host: addr.host, port: addr.port
-      hash.delete :addr
-      hash.delete :client
-      hash.delete :task
-    end
-  end
 end end
