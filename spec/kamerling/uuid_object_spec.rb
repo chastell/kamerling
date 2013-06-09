@@ -57,10 +57,10 @@ module Kamerling describe '.UUIDObject' do
   describe '#==' do
     it 'reports UUID-based euqality' do
       Actor = Kamerling.UUIDObject :name
-      Actor.new(name: :laurel).wont_equal Actor.new(name: :laurel)
+      Actor.new(name: :laurel).wont_equal Actor.new name: :laurel
       uuid = UUID.new
       Actor.new(name: :laurel, uuid: uuid)
-        .must_equal Actor.new(name: :hardy, uuid: uuid)
+        .must_equal Actor.new name: :hardy, uuid: uuid
     end
   end
 
@@ -78,19 +78,20 @@ module Kamerling describe '.UUIDObject' do
 
     it 'serialises client' do
       Clientable = Kamerling.UUIDObject :client
-      clientable = Clientable.new client: client = Client[addr: fake(:addr)]
+      clientable = Clientable.new client: client = Client.new(addr: fake(:addr))
       clientable.to_h.must_equal({ client_uuid: client.uuid, uuid: anything })
     end
 
     it 'serialises project' do
       Projable = Kamerling.UUIDObject :project
-      projable = Projable.new project: project = Project[name: 'name']
+      projable = Projable.new project: project = Project.new(name: 'name')
       projable.to_h.must_equal({ project_uuid: project.uuid, uuid: anything })
     end
 
     it 'serialises task' do
+      project = fake :project
       Tskble = Kamerling.UUIDObject :task
-      tskble = Tskble.new task: task = Task[input: 'i', project: fake(:project)]
+      tskble = Tskble.new task: task = Task.new(input: 'inp', project: project)
       tskble.to_h.must_equal({ task_uuid: task.uuid, uuid: anything })
     end
   end

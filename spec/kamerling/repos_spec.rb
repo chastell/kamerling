@@ -73,11 +73,12 @@ module Kamerling describe Repos do
 
     it 'makes sure objects can be stored and retrieved' do
       addr = Addr['127.0.0.1', 1981]
-      Repos << client  = Client[addr: addr, uuid: UUID.new]
-      Repos << project = Project[name: 'project name', uuid: UUID.new]
-      Repos << task    = Task[input: 'input', project: project, uuid: UUID.new]
-      Repos << reg = Registration[addr: addr, client: client, project: project]
-      Repos << res = Result[addr: addr, client: client, data: 'da', task: task]
+      client  = Client.new addr: addr, uuid: UUID.new
+      project = Project.new name: 'project name', uuid: UUID.new
+      task    = Task.new input: 'input', project: project, uuid: UUID.new
+      reg     = Registration.new addr: addr, client: client, project: project
+      res     = Result.new addr: addr, client: client, data: 'da', task: task
+      Repos << client << project << task << reg << res
       Repos[Client][client.uuid].must_equal client
       Repos[Project][project.uuid].must_equal project
       Repos[Registration][reg.uuid].must_equal reg
@@ -86,7 +87,8 @@ module Kamerling describe Repos do
     end
 
     it 'makes sure objects can be updated' do
-      Repos << client = Client[addr: Addr['127.0.0.1', 1979], uuid: UUID.new]
+      client = Client.new addr: Addr['127.0.0.1', 1979], uuid: UUID.new
+      Repos << client
       client.addr.port = 1981
       Repos << client
       Repos[Client][client.uuid].addr.port.must_equal 1981
