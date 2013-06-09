@@ -7,10 +7,6 @@ module Kamerling
     attrs[:uuid] ||= -> { UUID.new }
 
     Class.new do
-      class << self
-        alias [] new
-      end
-
       define_singleton_method :from_h do |hash, repos = Repos|
         args = Hash[hash.map do |key, value|
           case key
