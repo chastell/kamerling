@@ -31,7 +31,7 @@ module Kamerling
         end
       end
 
-      def == other
+      define_method :== do |other|
         uuid == other.uuid
       end
 
