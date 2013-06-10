@@ -5,7 +5,12 @@ module Kamerling
       attrs[param] = -> { raise "param #{param} is required" }
     end
     attrs[:uuid] ||= -> { UUID.new }
+    class_definition_from attrs
+  end
 
+  private
+
+  def self.class_definition_from attrs
     Class.new do
       define_singleton_method :from_h do |hash, repos = Repos|
         args = Hash[hash.map do |key, value|
