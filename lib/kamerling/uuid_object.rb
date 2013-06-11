@@ -1,14 +1,16 @@
 module Kamerling
   def self.UUIDObject *params
-    attrs = params.last.is_a?(Hash) ? params.pop : {}
-    params.each do |param|
-      attrs[param] = -> { raise "param #{param} is required" }
-    end
-    attrs[:uuid] ||= -> { UUID.new }
-    class_definition_from attrs
+    class_definition_from attrs_from params
   end
 
   private
+
+  def self.attrs_from params
+    { uuid: -> { UUID.new } }.tap do |attrs|
+      attrs.merge! params.pop if params.last.is_a? Hash
+      params.each { |par| attrs[par] = -> { raise "param #{par} is required" } }
+    end
+  end
 
   def self.class_definition_from attrs
     Class.new do
