@@ -27,25 +27,28 @@ module Kamerling
         new args
       end
 
-      attr_accessor(*attrs.keys)
-
       define_method :initialize do |args = {}|
-        attrs.keys.each do |attr|
+        @values = Hash[attrs.keys.map do |attr|
           value = args.fetch attr do
             attrs[attr].is_a?(Proc) ? attrs[attr].call : attrs[attr]
           end
-          instance_variable_set "@#{attr}", value
-        end
+          [attr, value]
+        end]
       end
 
       define_method :== do |other|
         uuid == other.uuid
       end
 
+      attrs.keys.each do |attr|
+        define_method(attr)       { @values[attr]             }
+        define_method("#{attr}=") { |val| @values[attr] = val }
+      end
+
       define_method :to_h do
         {}.tap do |hash|
           attrs.keys.map do |attr|
-            case value = instance_variable_get("@#{attr}")
+            case value = @values[attr]
             when Addr    then hash[:host], hash[:port] = value.host, value.port
             when Client  then hash[:client_uuid]       = client.uuid
             when Project then hash[:project_uuid]      = project.uuid
