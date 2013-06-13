@@ -16,7 +16,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    dependor (0.0.5)
+    dependor (0.0.6)
     minitest (5.0.4)
     rake (10.1.0.beta.3)
     sequel (3.48.0)
