@@ -1,3 +1,5 @@
+require 'securerandom'
+
 module Kamerling module UUID
   def self.[] bin
     bin.unpack('H8H4H4H4H12').join '-'
