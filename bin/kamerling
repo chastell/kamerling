@@ -1,7 +1,14 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require_relative '../lib/kamerling'
 
+db = nil
+OptionParser.new do |opts|
+  opts.on('--db STRING', String) { |string| db = string }
+end.parse! ARGV
+
+Kamerling::Repos.db = Sequel.sqlite db
 server = Kamerling::Server.new
 server.audit = true
 server.debug = true
