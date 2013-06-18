@@ -3,18 +3,17 @@
 require 'optparse'
 require_relative '../lib/kamerling'
 
-db   = nil
-host = GServer::DEFAULT_HOST
-port = 0
+Config = Struct.new :db, :host, :port
+config = Config.new nil, GServer::DEFAULT_HOST, 0
 
 OptionParser.new do |opts|
-  opts.on('--db STRING', String)     { |string|  db   = string  }
-  opts.on('--host STRING', String)   { |string|  host = string  }
-  opts.on('--port INTEGER', Integer) { |integer| port = integer }
+  opts.on('--db foo.sqlite3', String,  'SQLite path') { |db|   config.db   = db   }
+  opts.on('--host 127.0.0.1', String,  'server host') { |host| config.host = host }
+  opts.on('--port 0',         Integer, 'server port') { |port| config.port = port }
 end.parse! ARGV
 
-Kamerling::Repos.db = Sequel.sqlite db
-server = Kamerling::Server.new host: host, port: port
+Kamerling::Repos.db = Sequel.sqlite config.db
+server = Kamerling::Server.new host: config.host, port: config.port
 server.audit = true
 server.debug = true
 server.start
