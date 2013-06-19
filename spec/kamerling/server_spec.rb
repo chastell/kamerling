@@ -24,7 +24,7 @@ module Kamerling describe Server do
   describe '#addr' do
     it 'returns the server’s host + port as an addr' do
       server = Server.new
-      server.addr.must_equal Addr[server.host, server.port]
+      server.addr.must_equal Addr[server.host, server.port, 'TCP']
     end
   end
 
@@ -34,7 +34,7 @@ module Kamerling describe Server do
       s_addr = nil
       TCPSocket.open server.host, server.port do |socket|
         socket << 'message'
-        s_addr = Addr[*socket.local_address.ip_unpack]
+        s_addr = Addr[*socket.local_address.ip_unpack, 'TCP']
       end
       sleep 0.02
       handler.must_have_received :handle, ['message', s_addr]

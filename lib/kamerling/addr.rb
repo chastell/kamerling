@@ -1,3 +1,3 @@
 module Kamerling
-  Addr = Struct.new :host, :port
+  Addr = Struct.new :host, :port, :prot
 end

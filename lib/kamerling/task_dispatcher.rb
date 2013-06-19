@@ -3,7 +3,7 @@ module Kamerling class TaskDispatcher
     repos.projects.each do |project|
       repos.free_clients_for(project).each do |client|
         if task = repos.next_task_for(project)
-          TCPSocket.open(*client.addr) do |socket|
+          TCPSocket.open client.addr.host, client.addr.port do |socket|
             message = Messages::DATA[client: client, data: task.input,
               project: project, task: task]
             socket << message.input

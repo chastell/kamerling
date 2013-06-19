@@ -9,8 +9,8 @@ module Kamerling describe '.UUIDObject' do
 
     it 'deserialises addr' do
       Netable = Kamerling.UUIDObject :addr
-      Netable.from_h(host: '127.0.0.1', port: 1981).addr
-        .must_equal Addr['127.0.0.1', 1981]
+      Netable.from_h(host: '127.0.0.1', port: 1981, prot: 'TCP').addr
+        .must_equal Addr['127.0.0.1', 1981, 'TCP']
     end
 
     it 'deserialises {client,project,task}_uuid' do
@@ -72,8 +72,8 @@ module Kamerling describe '.UUIDObject' do
 
     it 'serialises addr' do
       Addrble = Kamerling.UUIDObject :addr
-      addrble = Addrble.new addr: Addr['127.0.0.1', 1981]
-      addrble.to_h.must_equal({ host: '127.0.0.1', port: 1981, uuid: anything })
+      addrble = Addrble.new addr: Addr['127.0.0.1', 1981, 'TCP']
+      addrble.to_h.must_equal({ host: '127.0.0.1', port: 1981, prot: 'TCP', uuid: anything })
     end
 
     it 'serialises client' do

@@ -7,11 +7,11 @@ module Kamerling class Server < GServer
   end
 
   def addr
-    Addr[host, port]
+    Addr[host, port, 'TCP']
   end
 
   def serve io
-    handler.handle io.read, Addr[*io.remote_address.ip_unpack]
+    handler.handle io.read, Addr[*io.remote_address.ip_unpack, 'TCP']
   end
 
   attr_reader :handler

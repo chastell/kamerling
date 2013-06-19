@@ -5,6 +5,7 @@ Sequel.migration do
       boolean :busy, null: false
       inet    :host, null: false
       integer :port, null: false
+      string  :prot, null: false
     end
 
     create_table :projects do
@@ -16,6 +17,7 @@ Sequel.migration do
       uuid    :uuid, primary_key: true
       inet    :host, null: false
       integer :port, null: false
+      string  :prot, null: false
       foreign_key :client_uuid,  :clients,  index: true, null: false, type: :uuid
       foreign_key :project_uuid, :projects, index: true, null: false, type: :uuid
     end
@@ -25,6 +27,7 @@ Sequel.migration do
       bytea   :data, null: false
       inet    :host, null: false
       integer :port, null: false
+      string  :prot, null: false
       foreign_key :client_uuid, :clients, index: true, null: false, type: :uuid
       foreign_key :task_uuid,   :tasks,   index: true, null: false, type: :uuid
     end

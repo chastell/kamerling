@@ -72,7 +72,7 @@ module Kamerling describe Repos do
     before { Repos.db = Sequel.sqlite }
 
     it 'makes sure objects can be stored and retrieved' do
-      addr = Addr['127.0.0.1', 1981]
+      addr = Addr['127.0.0.1', 1981, 'TCP']
       client  = Client.new addr: addr, uuid: UUID.new
       project = Project.new name: 'project name', uuid: UUID.new
       task    = Task.new input: 'input', project: project, uuid: UUID.new
@@ -87,7 +87,7 @@ module Kamerling describe Repos do
     end
 
     it 'makes sure objects can be updated' do
-      client = Client.new addr: Addr['127.0.0.1', 1979], uuid: UUID.new
+      client = Client.new addr: Addr['127.0.0.1', 1979, 'TCP'], uuid: UUID.new
       Repos << client
       client.addr.port = 1981
       Repos << client

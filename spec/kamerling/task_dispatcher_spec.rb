@@ -12,7 +12,7 @@ module Kamerling describe TaskDispatcher do
       repos = fake :repos, as: :class, projects: [project]
       stub(repos).free_clients_for(project) { [client] }
       stub(repos).next_task_for(project) { task }
-      TCPSocket.open(*endpoint.addr) do |socket|
+      TCPSocket.open endpoint.addr.host, endpoint.addr.port do |socket|
         TaskDispatcher.new.dispatch repos: repos
       end
       sleep 0.01
