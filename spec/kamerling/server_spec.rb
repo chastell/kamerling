@@ -28,8 +28,8 @@ module Kamerling describe Server do
     end
   end
 
-  describe '#serve' do
-    it 'passes the received input to the handler' do
+  describe '#start' do
+    it 'listens and passes the received input to the handler' do
       server = Server.new(handler: handler = fake(:handler)).start
       s_addr = nil
       TCPSocket.open server.host, server.port do |socket|
