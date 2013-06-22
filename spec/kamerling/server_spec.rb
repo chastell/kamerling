@@ -29,7 +29,7 @@ module Kamerling describe Server do
   end
 
   describe '#start' do
-    it 'listens and passes the received input to the handler' do
+    it 'listens on a TCP port and passes the received input to the handler' do
       server = Server.new(handler: handler = fake(:handler)).start
       s_addr = nil
       TCPSocket.open server.host, server.port do |socket|
@@ -38,6 +38,17 @@ module Kamerling describe Server do
       end
       sleep 0.02
       handler.must_have_received :handle, ['message', s_addr]
+    end
+
+    it 'listens on an UDP port and passes the received input to the handler' do
+      server = Server.new(handler: handler = fake(:handler)).start
+      sleep 0.02
+      client = UDPSocket.new
+      client.connect server.host, server.port
+      client.send 'message', 0
+      c_addr = Addr[client.addr[3], client.addr[1], 'UDP']
+      sleep 0.02
+      handler.must_have_received :handle, ['message', c_addr]
     end
   end
 end end
