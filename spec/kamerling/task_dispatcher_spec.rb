@@ -24,5 +24,29 @@ module Kamerling describe TaskDispatcher do
       client.must_have_received :busy=, true
       repos.must_have_received :<<, [client]
     end
+
+    it 'dispatches tasks to free UDP clients' do
+      socket = UDPSocket.new
+      socket.bind '127.0.0.1', 0
+      addr   = Addr[socket.addr[3], socket.addr[1], 'UDP']
+
+      client  = fake :client, addr: addr, uuid: UUID['16B client  UUID']
+      project = fake :project, uuid: UUID['16B project UUID']
+      task    = fake :task, input: 'task input', uuid: UUID['16B task    UUID']
+
+      repos = fake :repos, as: :class, projects: [project]
+      stub(repos).free_clients_for(project) { [client] }
+      stub(repos).next_task_for(project) { task }
+
+      message = nil
+      thread  = Thread.new { message, _ = socket.recvfrom 2**16 }
+      TaskDispatcher.new.dispatch repos: repos
+      thread.join
+
+      message.must_equal "DATA\0\0\0\0\0\0\0\0\0\0\0\0" +
+        '16B client  UUID16B project UUID16B task    UUIDtask input'
+      client.must_have_received :busy=, true
+      repos.must_have_received :<<, [client]
+    end
   end
 end end
