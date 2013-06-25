@@ -5,19 +5,23 @@ module Kamerling class TaskDispatcher
         if task = repos.next_task_for(project)
           message = Messages::DATA[client: client, data: task.input,
             project: project, task: task]
-          case client.addr.prot
-          when 'TCP'
-            TCPSocket.open client.addr.host, client.addr.port do |socket|
-              socket << message.input
-            end
-          when 'UDP'
-            socket = UDPSocket.new
-            socket.send message.input, 0, client.addr.host, client.addr.port
-          end
+          send "dispatch_to_#{client.addr.prot.downcase}", client, message
           client.busy = true
           repos << client
         end
       end
     end
+  end
+
+  private
+
+  def dispatch_to_tcp client, message
+    TCPSocket.open client.addr.host, client.addr.port do |socket|
+      socket << message.input
+    end
+  end
+
+  def dispatch_to_udp client, message
+    UDPSocket.new.send message.input, 0, client.addr.host, client.addr.port
   end
 end end
