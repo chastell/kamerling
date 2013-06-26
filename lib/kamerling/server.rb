@@ -6,10 +6,6 @@ module Kamerling class Server < GServer
     super port, host
   end
 
-  def addr
-    Addr[host, port, 'TCP']
-  end
-
   def start
     Thread.new do
       udp_server = UDPSocket.new
@@ -22,6 +18,10 @@ module Kamerling class Server < GServer
       end
     end
     super
+  end
+
+  def tcp_addr
+    Addr[host, port, 'TCP']
   end
 
   attr_reader :handler

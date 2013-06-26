@@ -21,13 +21,6 @@ module Kamerling describe Server do
     end
   end
 
-  describe '#addr' do
-    it 'returns the server’s host + port as an addr' do
-      server = Server.new
-      server.addr.must_equal Addr[server.host, server.port, 'TCP']
-    end
-  end
-
   describe '#start' do
     it 'listens on a TCP port and passes the received input to the handler' do
       server = Server.new(handler: handler = fake(:handler)).start
@@ -49,6 +42,13 @@ module Kamerling describe Server do
       c_addr = Addr[client.addr[3], client.addr[1], 'UDP']
       sleep 0.02
       handler.must_have_received :handle, ['message', c_addr]
+    end
+  end
+
+  describe '#tcp_addr' do
+    it 'returns the server’s host + port as a TCP addr' do
+      server = Server.new
+      server.tcp_addr.must_equal Addr[server.host, server.port, 'TCP']
     end
   end
 end end
