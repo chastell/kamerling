@@ -24,6 +24,10 @@ module Kamerling class Server < GServer
     Addr[host, port, 'TCP']
   end
 
+  def udp_addr
+    Addr[host, port, 'UDP']
+  end
+
   attr_reader :handler
   private     :handler
 

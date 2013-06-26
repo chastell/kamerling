@@ -51,4 +51,11 @@ module Kamerling describe Server do
       server.tcp_addr.must_equal Addr[server.host, server.port, 'TCP']
     end
   end
+
+  describe '#udp_addr' do
+    it 'returns the server’s host + port as an UDP addr' do
+      server = Server.new
+      server.udp_addr.must_equal Addr[server.host, server.port, 'UDP']
+    end
+  end
 end end
