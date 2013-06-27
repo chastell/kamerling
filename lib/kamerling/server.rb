@@ -7,16 +7,7 @@ module Kamerling class Server < GServer
   end
 
   def start
-    Thread.new do
-      udp_server = UDPSocket.new
-      udp_server.bind host, port
-      loop do
-        if IO.select [udp_server]
-          input, conn = udp_server.recvfrom(2**16)
-          handler.handle input, Addr[conn[3], conn[1], 'UDP']
-        end
-      end
-    end
+    start_udp_server
     super
   end
 
@@ -35,5 +26,18 @@ module Kamerling class Server < GServer
 
   def serve io
     handler.handle io.read, Addr[*io.remote_address.ip_unpack, 'TCP']
+  end
+
+  def start_udp_server
+    Thread.new do
+      udp_server = UDPSocket.new
+      udp_server.bind host, port
+      loop do
+        if IO.select [udp_server]
+          input, conn = udp_server.recvfrom(2**16)
+          handler.handle input, Addr[conn[3], conn[1], 'UDP']
+        end
+      end
+    end
   end
 end end
