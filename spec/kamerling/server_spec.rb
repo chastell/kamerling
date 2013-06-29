@@ -25,7 +25,7 @@ module Kamerling describe Server do
     it 'listens on a TCP port and passes the received input to the handler' do
       server = Server.new(handler: handler = fake(:handler)).start
       s_addr = nil
-      TCPSocket.open server.tcp_addr.host, server.tcp_addr.port do |socket|
+      TCPSocket.open(*server.tcp_addr) do |socket|
         socket << 'message'
         s_addr = Addr[*socket.local_address.ip_unpack, 'TCP']
       end

@@ -16,12 +16,12 @@ module Kamerling class TaskDispatcher
   private
 
   def dispatch_to_tcp client, message
-    TCPSocket.open client.addr.host, client.addr.port do |socket|
+    TCPSocket.open(*client.addr) do |socket|
       socket << message.input
     end
   end
 
   def dispatch_to_udp client, message
-    UDPSocket.new.send message.input, 0, client.addr.host, client.addr.port
+    UDPSocket.new.send message.input, 0, *client.addr
   end
 end end
