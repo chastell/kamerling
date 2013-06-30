@@ -14,10 +14,9 @@ module Kamerling describe TaskDispatcher do
       stub(repos).free_clients_for(project) { [client] }
       stub(repos).next_task_for(project) { task }
 
-      message = nil
-      thread  = Thread.new { message = server.accept.read }
+      thread  = Thread.new { server.accept.read }
       TaskDispatcher.new.dispatch repos: repos
-      thread.join
+      message = thread.value
 
       message.must_equal "DATA\0\0\0\0\0\0\0\0\0\0\0\0" +
         '16B client  UUID16B project UUID16B task    UUIDtask input'
@@ -38,10 +37,9 @@ module Kamerling describe TaskDispatcher do
       stub(repos).free_clients_for(project) { [client] }
       stub(repos).next_task_for(project) { task }
 
-      message = nil
-      thread  = Thread.new { message, _ = socket.recvfrom 2**16 }
+      thread  = Thread.new { socket.recvfrom(2**16).first }
       TaskDispatcher.new.dispatch repos: repos
-      thread.join
+      message = thread.value
 
       message.must_equal "DATA\0\0\0\0\0\0\0\0\0\0\0\0" +
         '16B client  UUID16B project UUID16B task    UUIDtask input'
