@@ -6,8 +6,9 @@ module Kamerling describe Receiver do
 
     it 'saves the result and updates client and task' do
       repos = fake :repos, as: :class
-      stub(repos).[](Client) { fake :repo, :[] => client }
-      stub(repos).[](Task)   { fake :repo, :[] => task   }
+      stub(repos).<<(any_args) { repos }
+      stub(repos).[](Client)   { fake :repo, :[] => client }
+      stub(repos).[](Task)     { fake :repo, :[] => task   }
       Receiver.new.receive addr: addr, client_uuid: client.uuid, data: 'data',
         repos: repos, task_uuid: task.uuid
       client.must_have_received :busy=, false

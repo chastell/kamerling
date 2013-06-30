@@ -45,7 +45,7 @@ module Kamerling describe Repo do
   describe '#related_to' do
     it 'returns objects related to the given object' do
       tunes   = [Tune.new(genre: :ragga), Tune.new(genre: :reggae)]
-      project = fake :project
+      project = fake :project, uuid: UUID.new
       stub(source = fake).where(project_uuid: project.uuid) { [
         { genre: :ragga, uuid: tunes.first.uuid },
         { genre: :reggae, uuid: tunes.last.uuid },

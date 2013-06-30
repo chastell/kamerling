@@ -14,7 +14,9 @@ module Kamerling describe '.UUIDObject' do
     end
 
     it 'deserialises {client,project,task}_uuid' do
-      client, project, task = fake(:client), fake(:project), fake(:task)
+      client  = fake :client,  uuid: UUID.new
+      project = fake :project, uuid: UUID.new
+      task    = fake :task,    uuid: UUID.new
       Complete = Kamerling.UUIDObject :client, :project, :task
       repos = {
         Client  => { client.uuid  => client  },
