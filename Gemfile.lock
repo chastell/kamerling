@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/chastell/bogus.git
-  revision: dbecf06c1ac591c71ba841a48d542eb819a18190
+  revision: aa87a5ed46ef098b57fa90f8b85ae73a43b13290
   branch: kamerling
   specs:
-    bogus (0.0.4)
+    bogus (0.1.0)
       dependor (>= 0.0.4)
 
 PATH
