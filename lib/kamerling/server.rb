@@ -36,7 +36,7 @@ module Kamerling class Server < GServer
       udp_server.bind host, tcp_port
       loop do
         if IO.select [udp_server]
-          input, conn = udp_server.recvfrom(2**16)
+          input, conn = udp_server.recvfrom 2**16
           handler.handle input, Addr[conn[3], conn[1], 'UDP']
         end
       end
