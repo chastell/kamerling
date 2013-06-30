@@ -1,7 +1,7 @@
 require 'bundler/setup'
 require 'minitest/autorun'
 require 'minitest/pride'
-require 'bogus/minitest'
+require 'bogus/minitest/spec'
 require 'kamerling'
 
 Bogus.configure { |config| config.search_modules << Kamerling }
