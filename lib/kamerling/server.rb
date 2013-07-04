@@ -2,9 +2,9 @@ require 'gserver'
 
 module Kamerling class Server < GServer
   def initialize handler: Handler.new, host: DEFAULT_HOST, tcp_port: 0, udp_port: 0
-    @handler = handler
-    super tcp_port, host
+    @handler    = handler
     @udp_server = UDPSocket.new.tap { |s| s.bind host, udp_port }
+    super tcp_port, host
   end
 
   def start
@@ -17,7 +17,7 @@ module Kamerling class Server < GServer
   end
 
   def udp_addr
-    Addr[host, udp_server.addr[1], 'UDP']
+    Addr[udp_server.addr[3], udp_server.addr[1], 'UDP']
   end
 
   attr_reader :handler, :udp_server
