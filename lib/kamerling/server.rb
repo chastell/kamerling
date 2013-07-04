@@ -10,20 +10,18 @@ module Kamerling class Server < GServer
   def start
     start_udp_server
     super
-    @tcp_port = port
-    self
   end
 
   def tcp_addr
-    Addr[host, tcp_port, 'TCP']
+    Addr[host, port, 'TCP']
   end
 
   def udp_addr
     Addr[host, udp_server.addr[1], 'UDP']
   end
 
-  attr_reader :handler, :tcp_port, :udp_server
-  private     :handler, :port, :tcp_port, :udp_server
+  attr_reader :handler, :udp_server
+  private     :handler, :port, :udp_server
 
   private
 
