@@ -2,22 +2,25 @@ require_relative '../spec_helper'
 
 module Kamerling describe Server do
   describe '.new' do
-    it 'starts a server on the given host and port' do
-      Server.new(host: '0.0.0.0', tcp_port: 1981).start
+    it 'starts a server on the given host and ports' do
+      Server.new(host: '0.0.0.0', tcp_port: 1981, udp_port: 1979).start
       TCPSocket.open '0.0.0.0', 1981
+      UDPSocket.new.connect '0.0.0.0', 1979
     end
 
     it 'defaults to localhost' do
       Server.new.host.must_equal '127.0.0.1'
     end
 
-    it 'defaults to a random, unused port' do
+    it 'defaults to random, unused ports' do
       s1, s2 = Server.new.start, Server.new.start
+      sleep 0.001
       (1024..65535).must_include s1.tcp_addr.port
       (1024..65535).must_include s2.tcp_addr.port
+      (1024..65535).must_include s1.udp_addr.port
+      (1024..65535).must_include s2.udp_addr.port
       s1.tcp_addr.port.wont_equal s2.tcp_addr.port
-      TCPSocket.open s1.host, s1.tcp_addr.port
-      TCPSocket.open s2.host, s2.tcp_addr.port
+      s1.udp_addr.port.wont_equal s2.udp_addr.port
     end
   end
 

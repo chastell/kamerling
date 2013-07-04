@@ -1,9 +1,10 @@
 require 'gserver'
 
 module Kamerling class Server < GServer
-  def initialize handler: Handler.new, host: DEFAULT_HOST, tcp_port: 0
+  def initialize handler: Handler.new, host: DEFAULT_HOST, tcp_port: 0, udp_port: 0
     @handler = handler
     super tcp_port, host
+    @udp_port = udp_port
   end
 
   def start
@@ -33,7 +34,7 @@ module Kamerling class Server < GServer
   def start_udp_server
     Thread.new do
       udp_server = UDPSocket.new
-      udp_server.bind host, 0
+      udp_server.bind host, udp_port
       @udp_port = udp_server.addr[1]
       loop do
         if IO.select [udp_server]
