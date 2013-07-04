@@ -9,7 +9,7 @@ module Kamerling describe Server do
     end
 
     it 'defaults to localhost' do
-      Server.new.host.must_equal '127.0.0.1'
+      Server.new.tcp_addr.host.must_equal '127.0.0.1'
     end
 
     it 'defaults to random, unused ports' do
@@ -49,7 +49,7 @@ module Kamerling describe Server do
   describe '#tcp_addr' do
     it 'returns the server’s host + port as a TCP addr' do
       server = Server.new
-      server.tcp_addr.must_equal Addr[server.host, server.tcp_addr.port, 'TCP']
+      server.tcp_addr.must_equal Addr['127.0.0.1', server.tcp_addr.port, 'TCP']
     end
   end
 
@@ -57,7 +57,7 @@ module Kamerling describe Server do
     it 'returns the server’s host + port as an UDP addr' do
       server = Server.new.start
       sleep 0.001
-      server.udp_addr.must_equal Addr[server.host, server.udp_addr.port, 'UDP']
+      server.udp_addr.must_equal Addr['127.0.0.1', server.udp_addr.port, 'UDP']
     end
   end
 end end

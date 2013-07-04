@@ -21,7 +21,8 @@ module Kamerling class Server < GServer
   end
 
   attr_reader :handler, :udp_server
-  private     :handler, :port, :udp_server
+  private     :handler, :udp_server
+  private     :host, :port
 
   private
 
