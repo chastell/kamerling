@@ -24,12 +24,11 @@ module Kamerling describe Server do
   describe '#start' do
     it 'listens on a TCP port and passes the received input to the handler' do
       server = Server.new(handler: handler = fake(:handler)).start
-      s_addr = nil
-      TCPSocket.open(*server.tcp_addr) do |socket|
+      s_addr = TCPSocket.open(*server.tcp_addr) do |socket|
         socket << 'message'
-        s_addr = Addr[*socket.local_address.ip_unpack, 'TCP']
+        Addr[*socket.local_address.ip_unpack, 'TCP']
       end
-      sleep 0.02
+      sleep 0.001
       handler.must_have_received :handle, ['message', s_addr]
     end
 
