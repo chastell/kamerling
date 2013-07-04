@@ -55,7 +55,8 @@ module Kamerling describe Server do
 
   describe '#udp_addr' do
     it 'returns the server’s host + port as an UDP addr' do
-      server = Server.new
+      server = Server.new.start
+      sleep 0.001
       server.udp_addr.must_equal Addr[server.host, server.udp_addr.port, 'UDP']
     end
   end

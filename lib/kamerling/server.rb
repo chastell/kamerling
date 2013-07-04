@@ -19,11 +19,11 @@ module Kamerling class Server < GServer
   end
 
   def udp_addr
-    Addr[host, udp_port, 'UDP']
+    Addr[host, udp_server.addr[1], 'UDP']
   end
 
-  attr_reader :handler, :tcp_port, :udp_port
-  private     :handler, :port, :tcp_port, :udp_port
+  attr_reader :handler, :tcp_port, :udp_port, :udp_server
+  private     :handler, :port, :tcp_port, :udp_port, :udp_server
 
   private
 
@@ -33,9 +33,7 @@ module Kamerling class Server < GServer
 
   def start_udp_server
     Thread.new do
-      udp_server = UDPSocket.new
-      udp_server.bind host, udp_port
-      @udp_port = udp_server.addr[1]
+      @udp_server = UDPSocket.new.tap { |s| s.bind host, udp_port }
       loop do
         if IO.select [udp_server]
           input, conn = udp_server.recvfrom 2**16
