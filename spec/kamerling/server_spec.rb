@@ -35,12 +35,11 @@ module Kamerling describe Server do
 
     it 'listens on an UDP port and passes the received input to the handler' do
       server = Server.new(handler: handler = fake(:handler)).start
-      sleep 0.02
-      client = UDPSocket.new
-      client.connect server.host, server.tcp_addr.port
+      sleep 0.001
+      client = UDPSocket.new.tap { |s| s.connect(*server.udp_addr) }
       client.send 'message', 0
       c_addr = Addr[client.addr[3], client.addr[1], 'UDP']
-      sleep 0.02
+      sleep 0.001
       handler.must_have_received :handle, ['message', c_addr]
     end
   end
@@ -55,7 +54,7 @@ module Kamerling describe Server do
   describe '#udp_addr' do
     it 'returns the server’s host + port as an UDP addr' do
       server = Server.new
-      server.udp_addr.must_equal Addr[server.host, server.tcp_addr.port, 'UDP']
+      server.udp_addr.must_equal Addr[server.host, server.udp_addr.port, 'UDP']
     end
   end
 end end
