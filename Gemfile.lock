@@ -19,7 +19,7 @@ GEM
     dependor (0.0.6)
     minitest (5.0.6)
     rake (10.1.0)
-    sequel (3.48.0)
+    sequel (4.0.0)
     sqlite3 (1.3.7)
 
 PLATFORMS
