@@ -26,7 +26,7 @@ module Kamerling describe TaskDispatcher do
         stub(repos).next_task_for(project) { task }
         stub(repos).free_clients_for(project) { [client] }
 
-        TaskDispatcher.new.dispatch repos: repos
+        TaskDispatcher.new(repos: repos).dispatch
 
         thread.value.must_equal "DATA\0\0\0\0\0\0\0\0\0\0\0\0" +
           '16B client  UUID16B project UUID16B task    UUIDinput'

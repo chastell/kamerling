@@ -1,15 +1,22 @@
 module Kamerling class TaskDispatcher
-  def dispatch repos: Repos
+  def initialize repos: Repos
+    @repos = repos
+  end
+
+  def dispatch
     repos.projects.each do |project|
       repos.free_clients_for(project).each do |client|
-        dispatch_task_to_client repos, project, client
+        dispatch_task_to_client project, client
       end
     end
   end
 
+  attr_reader :repos
+  private     :repos
+
   private
 
-  def dispatch_task_to_client repos, project, client
+  def dispatch_task_to_client project, client
     if task = repos.next_task_for(project)
       message = Messages::DATA[client: client, data: task.input,
         project: project, task: task]
