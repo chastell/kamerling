@@ -18,7 +18,7 @@ module Kamerling
         args = Hash[hash.map do |key, value|
           case key
           when :host, :port, :prot
-            [:addr, Addr[hash[:host], hash[:port], hash[:prot]]]
+            [:addr, Addr[hash[:host], hash[:port], hash[:prot].to_sym]]
           when :client_uuid  then [:client,  repos[Client][value]]
           when :project_uuid then [:project, repos[Project][value]]
           when :task_uuid    then [:task,    repos[Task][value]]
@@ -51,7 +51,7 @@ module Kamerling
           attrs.keys.map do |attr|
             case value = @values[attr]
             when Addr
-              hash.merge! host: value.host, port: value.port, prot: value.prot
+              hash.merge! host: value.host, port: value.port, prot: value.prot.to_s
             when Client  then hash[:client_uuid]  = client.uuid
             when Project then hash[:project_uuid] = project.uuid
             when Task    then hash[:task_uuid]    = task.uuid

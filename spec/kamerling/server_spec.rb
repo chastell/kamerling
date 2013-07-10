@@ -29,7 +29,7 @@ module Kamerling describe Server do
       server = Server.new(handler: handler = fake(:handler)).start
       s_addr = TCPSocket.open(*server.tcp_addr) do |socket|
         socket << 'message'
-        Addr[*socket.local_address.ip_unpack, 'TCP']
+        Addr[*socket.local_address.ip_unpack, :TCP]
       end
       sleep 0.001
       handler.must_have_received :handle, ['message', s_addr]
@@ -40,7 +40,7 @@ module Kamerling describe Server do
       sleep 0.001
       client = UDPSocket.new.tap { |s| s.connect(*server.udp_addr) }
       client.send 'message', 0
-      c_addr = Addr[client.addr[3], client.addr[1], 'UDP']
+      c_addr = Addr[client.addr[3], client.addr[1], :UDP]
       sleep 0.001
       handler.must_have_received :handle, ['message', c_addr]
     end
@@ -49,7 +49,7 @@ module Kamerling describe Server do
   describe '#tcp_addr' do
     it 'returns the server’s host + port as a TCP addr' do
       server = Server.new
-      server.tcp_addr.must_equal Addr['127.0.0.1', server.tcp_addr.port, 'TCP']
+      server.tcp_addr.must_equal Addr['127.0.0.1', server.tcp_addr.port, :TCP]
     end
   end
 
@@ -57,7 +57,7 @@ module Kamerling describe Server do
     it 'returns the server’s host + port as an UDP addr' do
       server = Server.new.start
       sleep 0.001
-      server.udp_addr.must_equal Addr['127.0.0.1', server.udp_addr.port, 'UDP']
+      server.udp_addr.must_equal Addr['127.0.0.1', server.udp_addr.port, :UDP]
     end
   end
 end end

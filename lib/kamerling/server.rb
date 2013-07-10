@@ -13,11 +13,11 @@ module Kamerling class Server < GServer
   end
 
   def tcp_addr
-    Addr[host, port, 'TCP']
+    Addr[host, port, :TCP]
   end
 
   def udp_addr
-    Addr[udp_server.addr[3], udp_server.addr[1], 'UDP']
+    Addr[udp_server.addr[3], udp_server.addr[1], :UDP]
   end
 
   attr_reader :handler, :udp_server
@@ -27,7 +27,7 @@ module Kamerling class Server < GServer
   private
 
   def serve io
-    handler.handle io.read, Addr[*io.remote_address.ip_unpack, 'TCP']
+    handler.handle io.read, Addr[*io.remote_address.ip_unpack, :TCP]
   end
 
   def start_udp_server
@@ -35,7 +35,7 @@ module Kamerling class Server < GServer
       loop do
         if IO.select [udp_server]
           input, conn = udp_server.recvfrom 2**16
-          handler.handle input, Addr[conn[3], conn[1], 'UDP']
+          handler.handle input, Addr[conn[3], conn[1], :UDP]
         end
       end
     end
