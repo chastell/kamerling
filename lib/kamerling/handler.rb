@@ -9,7 +9,7 @@ module Kamerling class Handler
         project_uuid: message.project_uuid
     when 'RSLT'
       receiver.receive addr: addr, client_uuid: message.client_uuid,
-        data: message.data, task_uuid: message.task_uuid
+        data: message.payload, task_uuid: message.task_uuid
     end
   end
 

@@ -7,16 +7,16 @@ module MessageBehaviour
         end
       end
 
-      describe '#data' do
-        it 'returns the result data' do
-          mess.data.must_equal 'some-length data'
+      describe '#payload' do
+        it 'returns the result payload' do
+          mess.payload.must_equal 'some payload'
         end
       end
 
       describe '#input' do
         it 'returns the binary input' do
           mess.input.must_equal mess.type + "\0\0\0\0\0\0\0\0\0\0\0\0" +
-            '16B client  UUID16B project UUID16B task    UUIDsome-length data'
+            '16B client  UUID16B project UUID16B task    UUIDsome payload'
         end
       end
 
