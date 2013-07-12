@@ -21,7 +21,7 @@ module Kamerling describe TaskDispatcher do
         addr    = Addr[server.addr[3], server.addr[1], type]
         client  = fake :client, addr: addr, uuid: UUID['16B client  UUID']
         project = fake :project, uuid: UUID['16B project UUID']
-        task    = fake :task, input: 'input', uuid: UUID['16B task    UUID']
+        task    = fake :task, data: 'data', uuid: UUID['16B task    UUID']
         repos   = fake :repos, as: :class, projects: [project]
         stub(repos).next_task_for(project) { task }
         stub(repos).free_clients_for(project) { [client] }
@@ -29,7 +29,7 @@ module Kamerling describe TaskDispatcher do
         TaskDispatcher.new(repos: repos).dispatch
 
         thread.value.must_equal "DATA\0\0\0\0\0\0\0\0\0\0\0\0" +
-          '16B client  UUID16B project UUID16B task    UUIDinput'
+          '16B client  UUID16B project UUID16B task    UUIDdata'
         client.must_have_received :busy=, true
         repos.must_have_received :<<, [client]
       end

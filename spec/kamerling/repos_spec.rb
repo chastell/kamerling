@@ -75,7 +75,7 @@ module Kamerling describe Repos do
       addr = Addr['127.0.0.1', 1981, :TCP]
       client  = Client.new addr: addr, uuid: UUID.new
       project = Project.new name: 'project name', uuid: UUID.new
-      task    = Task.new input: 'input', project: project, uuid: UUID.new
+      task    = Task.new data: 'data', project: project, uuid: UUID.new
       reg     = Registration.new addr: addr, client: client, project: project
       res     = Result.new addr: addr, client: client, data: 'da', task: task
       Repos << client << project << task << reg << res

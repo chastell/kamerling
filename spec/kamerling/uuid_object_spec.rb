@@ -94,7 +94,7 @@ module Kamerling describe '.UUIDObject' do
     it 'serialises task' do
       project = fake :project
       Tskble = Kamerling.UUIDObject :task
-      tskble = Tskble.new task: task = Task.new(input: 'inp', project: project)
+      tskble = Tskble.new task: task = Task.new(data: 'data', project: project)
       tskble.to_h.must_equal({ task_uuid: task.uuid, uuid: anything })
     end
   end
