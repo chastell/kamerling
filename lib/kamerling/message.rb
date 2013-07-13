@@ -1,38 +1,38 @@
 module Kamerling class Message
-  attr_reader :input
+  attr_reader :raw
 
   def self.[] client: req(:client), payload: req(:payload), project: req(:project), task: req(:task)
-    type  = name.split('::').last
-    input = type + "\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
+    type = name.split('::').last
+    raw  = type + "\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
       UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
-    new input
+    new raw
   end
 
-  def initialize input
-    @input = input
+  def initialize raw
+    @raw = raw
   end
 
   def == other
-    input == other.input
+    raw == other.raw
   end
 
   def client_uuid
-    UUID[input[16..31]]
+    UUID[raw[16..31]]
   end
 
   def payload
-    input[64..-1]
+    raw[64..-1]
   end
 
   def project_uuid
-    UUID[input[32..47]]
+    UUID[raw[32..47]]
   end
 
   def task_uuid
-    UUID[input[48..63]]
+    UUID[raw[48..63]]
   end
 
   def type
-    input[0..3]
+    raw[0..3]
   end
 end end

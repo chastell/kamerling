@@ -13,16 +13,16 @@ module MessageBehaviour
         end
       end
 
-      describe '#input' do
-        it 'returns the binary input' do
-          mess.input.must_equal mess.type + "\0\0\0\0\0\0\0\0\0\0\0\0" +
-            '16B client  UUID16B project UUID16B task    UUIDsome payload'
-        end
-      end
-
       describe '#project_uuid' do
         it 'returns the project UUID' do
           mess.project_uuid.must_equal '31364220-7072-6f6a-6563-742055554944'
+        end
+      end
+
+      describe '#raw' do
+        it 'returns the raw bytes' do
+          mess.raw.must_equal mess.type + "\0\0\0\0\0\0\0\0\0\0\0\0" +
+            '16B client  UUID16B project UUID16B task    UUIDsome payload'
         end
       end
 

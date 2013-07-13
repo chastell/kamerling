@@ -28,11 +28,11 @@ module Kamerling class TaskDispatcher
 
   def dispatch_to_tcp client, message
     TCPSocket.open(*client.addr) do |socket|
-      socket << message.input
+      socket << message.raw
     end
   end
 
   def dispatch_to_udp client, message
-    UDPSocket.new.send message.input, 0, *client.addr
+    UDPSocket.new.send message.raw, 0, *client.addr
   end
 end end
