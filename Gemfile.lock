@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/chastell/bogus.git
-  revision: 939443703cd1d3a685f89909ba89764c17d8e5dc
-  branch: kamerling
-  specs:
-    bogus (0.1.1)
-      dependor (>= 0.0.4)
-
 PATH
   remote: .
   specs:
@@ -16,6 +8,8 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    bogus (0.1.3)
+      dependor (>= 0.0.4)
     dependor (0.0.6)
     minitest (5.0.6)
     rake (10.1.0)
@@ -26,7 +20,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bogus!
+  bogus (>= 0.1.3)
   kamerling!
   minitest (~> 5.0)
   rake (~> 10.1)
