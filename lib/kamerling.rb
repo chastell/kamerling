@@ -4,14 +4,7 @@ def req param
   raise "#{callsite}: param #{param} is required"
 end
 
-def warn_off
-  verbose  = $VERBOSE
-  $VERBOSE = false
-  yield
-ensure
-  $VERBOSE = verbose
-end
-
+require_relative 'kamerling/core_extensions'
 require_relative 'kamerling/addr'
 require_relative 'kamerling/handler'
 require_relative 'kamerling/message'
