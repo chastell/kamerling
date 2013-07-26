@@ -1,9 +1,3 @@
-def req param
-  method   = caller.first[/`(.*)'$/, 1]
-  callsite = Class === self ? "#{name}.#{method}" : "#{self.class}##{method}"
-  raise "#{callsite}: param #{param} is required"
-end
-
 require_relative 'kamerling/core_extensions'
 require_relative 'kamerling/addr'
 require_relative 'kamerling/handler'
