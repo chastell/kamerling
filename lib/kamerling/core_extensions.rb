@@ -1,1 +1,1 @@
-require_relative 'core_extensions/object'
+require_relative 'core_extensions/main'

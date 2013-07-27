@@ -1,4 +1,4 @@
-module Kamerling module CoreExtensions module Object
+module Kamerling module CoreExtensions module Main
   module_function
 
   def req param
@@ -16,6 +16,4 @@ module Kamerling module CoreExtensions module Object
   end
 end end end
 
-class Object
-  include Kamerling::CoreExtensions::Object
-end
+include Kamerling::CoreExtensions::Main
