@@ -1,4 +1,6 @@
 module Kamerling module CoreExtensions module Object
+  module_function
+
   def req param
     method   = caller.first[/`(.*)'$/, 1]
     callsite = Class === self ? "#{name}.#{method}" : "#{self.class}##{method}"
