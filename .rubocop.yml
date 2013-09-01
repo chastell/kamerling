@@ -1,0 +1,38 @@
+AccessControl:
+  Enabled: false
+
+AssignmentInCondition:
+  Enabled: false
+
+BlockAlignment:
+  Enabled: false
+
+Blocks:
+  Enabled: false
+
+CaseEquality:
+  Enabled: false
+
+DefWithoutParentheses:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+EndAlignment:
+  Enabled: false
+
+IndentationWidth:
+  Enabled: false
+
+LineLength:
+  Enabled: false
+
+MethodAndVariableSnakeCase:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+SpaceAroundOperators:
+  Enabled: false
