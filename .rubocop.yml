@@ -7,9 +7,6 @@ AssignmentInCondition:
 BlockAlignment:
   Enabled: false
 
-Blocks:
-  Enabled: false
-
 CaseEquality:
   Enabled: false
 
