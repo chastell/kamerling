@@ -1,7 +1,8 @@
 require 'gserver'
 
 module Kamerling class Server < GServer
-  def initialize handler: Handler.new, host: DEFAULT_HOST, tcp_port: 0, udp_port: 0
+  def initialize handler: Handler.new, host: DEFAULT_HOST, tcp_port: 0,
+                 udp_port: 0
     @handler    = handler
     @udp_server = UDPSocket.new.tap { |s| s.bind host, udp_port }
     super tcp_port, host
