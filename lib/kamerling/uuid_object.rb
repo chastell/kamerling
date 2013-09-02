@@ -8,7 +8,7 @@ module Kamerling
   def self.attrs_from params
     { uuid: -> { UUID.new } }.tap do |attrs|
       attrs.merge! params.pop if params.last.is_a? Hash
-      params.each { |par| attrs[par] = -> { raise "param #{par} is required" } }
+      params.each { |p| attrs[p] = -> { raise "param #{p} is required" } }
     end
   end
 
@@ -51,7 +51,8 @@ module Kamerling
           attrs.keys.map do |attr|
             case value = @values[attr]
             when Addr
-              hash.merge! host: value.host, port: value.port, prot: value.prot.to_s
+              hash.merge! host: value.host, port: value.port,
+                prot: value.prot.to_s
             when Client  then hash[:client_uuid]  = client.uuid
             when Project then hash[:project_uuid] = project.uuid
             when Task    then hash[:task_uuid]    = task.uuid

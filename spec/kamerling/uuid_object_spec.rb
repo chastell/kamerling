@@ -68,8 +68,8 @@ module Kamerling describe '.UUIDObject' do
 
   describe '#to_h' do
     it 'serialises the object to a Hash' do
-      Hashable = Kamerling.UUIDObject :param
-      Hashable.new(param: :val).to_h.must_equal({ param: :val, uuid: anything })
+      Hashble = Kamerling.UUIDObject :param
+      Hashble.new(param: :val).to_h.must_equal({ param: :val, uuid: anything })
     end
 
     it 'serialises addr' do
@@ -80,9 +80,9 @@ module Kamerling describe '.UUIDObject' do
     end
 
     it 'serialises client' do
-      Clientable = Kamerling.UUIDObject :client
-      clientable = Clientable.new client: client = Client.new(addr: fake(:addr))
-      clientable.to_h.must_equal({ client_uuid: client.uuid, uuid: anything })
+      Clintable = Kamerling.UUIDObject :client
+      clintable = Clintable.new client: client = Client.new(addr: fake(:addr))
+      clintable.to_h.must_equal({ client_uuid: client.uuid, uuid: anything })
     end
 
     it 'serialises project' do
