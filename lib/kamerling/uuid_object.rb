@@ -14,7 +14,7 @@ module Kamerling
 
   def self.class_definition_from attrs
     Class.new do
-      define_singleton_method :from_h do |hash, repos = Repos|
+      def self.from_h hash, repos = Repos
         args = Hash[hash.map do |key, value|
           case key
           when :host, :port, :prot
