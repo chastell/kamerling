@@ -14,6 +14,8 @@ module Kamerling
 
   def self.class_definition_from attrs
     Class.new do
+      define_singleton_method(:attrs) { attrs }
+
       def self.from_h hash, repos = Repos
         args = Hash[hash.map do |key, value|
           case key
@@ -46,9 +48,9 @@ module Kamerling
         define_method("#{attr}=") { |val| @values[attr] = val }
       end
 
-      define_method :to_h do
+      def to_h
         {}.tap do |hash|
-          attrs.keys.map do |attr|
+          self.class.attrs.keys.map do |attr|
             case value = @values[attr]
             when Addr
               hash.merge! host: value.host, port: value.port,
