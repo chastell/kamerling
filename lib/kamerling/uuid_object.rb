@@ -30,7 +30,8 @@ module Kamerling
         new args
       end
 
-      define_method :initialize do |args = {}|
+      def initialize args = {}
+        attrs   = self.class.attrs
         @values = Hash[attrs.keys.map do |attr|
           value = args.fetch attr do
             attrs[attr].is_a?(Proc) ? attrs[attr].call : attrs[attr]
