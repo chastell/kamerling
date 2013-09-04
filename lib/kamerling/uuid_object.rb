@@ -18,14 +18,7 @@ module Kamerling
 
       def self.from_h hash, repos = Repos
         args = Hash[hash.map do |key, value|
-          case key
-          when :host, :port, :prot
-            [:addr, Addr[hash[:host], hash[:port], hash[:prot].to_sym]]
-          when :client_uuid  then [:client,  repos[Client][value]]
-          when :project_uuid then [:project, repos[Project][value]]
-          when :task_uuid    then [:task,    repos[Task][value]]
-          else [key, value]
-          end
+          from_h_mapping hash, key, repos
         end]
         new args
       end
@@ -62,6 +55,19 @@ module Kamerling
             else              hash[attr]          = value
             end
           end
+        end
+      end
+
+      private
+
+      def self.from_h_mapping hash, key, repos
+        case key
+        when :host, :port, :prot
+          [:addr, Addr[hash[:host], hash[:port], hash[:prot].to_sym]]
+        when :client_uuid  then [:client,  repos[Client][hash[key]]]
+        when :project_uuid then [:project, repos[Project][hash[key]]]
+        when :task_uuid    then [:task,    repos[Task][hash[key]]]
+        else [key, hash[key]]
         end
       end
     end
