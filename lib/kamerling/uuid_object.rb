@@ -25,9 +25,9 @@ module Kamerling
 
       def initialize args = {}
         attrs   = self.class.attrs
-        @values = Hash[attrs.keys.map do |attr|
+        @values = Hash[attrs.map do |attr, default|
           value = args.fetch attr do
-            attrs[attr].is_a?(Proc) ? attrs[attr].call : attrs[attr]
+            default.respond_to?(:call) ? default.call : default
           end
           [attr, value]
         end]
