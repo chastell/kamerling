@@ -6,9 +6,8 @@ module Kamerling class TaskDispatcher
   def dispatch
     repos.projects.each do |project|
       repos.free_clients_for(project).each do |client|
-        if task = repos.next_task_for(project)
-          dispatch_task client: client, project: project, task: task
-        end
+        task = repos.next_task_for(project)
+        dispatch_task client: client, project: project, task: task if task
       end
     end
   end
