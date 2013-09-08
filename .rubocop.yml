@@ -1,9 +1,6 @@
 AccessControl:
   Enabled: false
 
-AssignmentInCondition:
-  Enabled: false
-
 BlockAlignment:
   Enabled: false
 
