@@ -12,11 +12,9 @@ module Kamerling class Repo
   end
 
   def [] uuid
-    if hash = warn_off { source[uuid: uuid] }
-      klass.from_h hash
-    else
-      raise NotFound, "#{klass} with UUID #{uuid}"
-    end
+    hash = warn_off { source[uuid: uuid] }
+    raise NotFound, "#{klass} with UUID #{uuid}" unless hash
+    klass.from_h hash
   end
 
   def all
