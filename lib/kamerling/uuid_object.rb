@@ -45,7 +45,7 @@ module Kamerling
       def to_h
         {}.tap do |hash|
           self.class.attrs.keys.map do |attr|
-            to_h_mapping hash, attr
+            hash.merge! to_h_mapping attr
           end
         end
       end
@@ -63,15 +63,14 @@ module Kamerling
         end
       end
 
-      def to_h_mapping hash, attr
+      def to_h_mapping attr
         case value = @values[attr]
         when Addr
-          hash.merge! host: value.host, port: value.port,
-            prot: value.prot.to_s
-        when Client  then hash[:client_uuid]  = client.uuid
-        when Project then hash[:project_uuid] = project.uuid
-        when Task    then hash[:task_uuid]    = task.uuid
-        else              hash[attr]          = value
+          { host: value.host, port: value.port, prot: value.prot.to_s }
+        when Client  then { client_uuid:  client.uuid  }
+        when Project then { project_uuid: project.uuid }
+        when Task    then { task_uuid:    task.uuid    }
+        else { attr => value }
         end
       end
     end
