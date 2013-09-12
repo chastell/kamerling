@@ -6,9 +6,10 @@ module Kamerling class Repo
   end
 
   def << object
-    warn_off { source << object.to_h }
+    hash = object.to_h
+    warn_off { source << hash }
   rescue Sequel::UniqueConstraintViolation
-    warn_off { source.where(uuid: object.uuid).update object.to_h }
+    warn_off { source.where(uuid: object.uuid).update hash }
   end
 
   def [] uuid
