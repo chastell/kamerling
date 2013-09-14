@@ -8,7 +8,7 @@ module Kamerling
   def self.attrs_from params
     { uuid: -> { UUID.new } }.tap do |attrs|
       attrs.merge! params.pop if params.last.is_a? Hash
-      params.each { |p| attrs[p] = -> { raise "param #{p} is required" } }
+      params.each { |param| attrs[param] = -> { raise "#{param} required" } }
     end
   end
 
