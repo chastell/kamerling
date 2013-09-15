@@ -43,10 +43,8 @@ module Kamerling
       end
 
       def to_h
-        {}.tap do |hash|
-          self.class.attrs.keys.map do |attr|
-            hash.merge! to_h_mapping attr
-          end
+        self.class.attrs.reduce({}) do |hash, (attr, _)|
+          hash.merge to_h_mapping attr
         end
       end
 
