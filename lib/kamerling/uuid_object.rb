@@ -17,9 +17,9 @@ module Kamerling
       define_singleton_method(:attrs) { attrs }
 
       def self.from_h hash, repos = Repos
-        args = Hash[hash.map do |key, value|
-          from_h_mapping hash, key, repos
-        end]
+        args = hash.reduce({}) do |result, (key, _)|
+          result.merge from_h_mapping hash, key, repos
+        end
         new args
       end
 
@@ -53,11 +53,11 @@ module Kamerling
       def self.from_h_mapping hash, key, repos
         case key
         when :host, :port, :prot
-          [:addr, Addr[hash[:host], hash[:port], hash[:prot].to_sym]]
-        when :client_uuid  then [:client,  repos[Client][hash[key]]]
-        when :project_uuid then [:project, repos[Project][hash[key]]]
-        when :task_uuid    then [:task,    repos[Task][hash[key]]]
-        else [key, hash[key]]
+          { addr: Addr[hash[:host], hash[:port], hash[:prot].to_sym] }
+        when :client_uuid  then { client:  repos[Client][hash[key]]  }
+        when :project_uuid then { project: repos[Project][hash[key]] }
+        when :task_uuid    then { task:    repos[Task][hash[key]]    }
+        else { key => hash[key] }
         end
       end
 
