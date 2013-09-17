@@ -16,7 +16,7 @@ module Kamerling
     Class.new do
       define_singleton_method(:attrs) { attrs }
 
-      def self.from_h hash, repos = Repos
+      def self.from_h hash, repos: Repos
         args = hash.reduce({}) do |result, (key, _)|
           result.merge from_h_mapping hash, key, repos
         end
