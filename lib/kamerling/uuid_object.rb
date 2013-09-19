@@ -24,8 +24,7 @@ module Kamerling
       end
 
       def initialize args = {}
-        attrs   = self.class.attrs
-        @values = Hash[attrs.map do |attr, default|
+        @values = Hash[self.class.attrs.map do |attr, default|
           value = args.fetch attr do
             default.respond_to?(:call) ? default.call : default
           end
