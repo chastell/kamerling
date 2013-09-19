@@ -36,7 +36,7 @@ module Kamerling
         uuid == other.uuid
       end
 
-      attrs.keys.each do |attr|
+      attrs.each do |attr, _|
         define_method(attr)       { @values[attr]             }
         define_method("#{attr}=") { |val| @values[attr] = val }
       end
