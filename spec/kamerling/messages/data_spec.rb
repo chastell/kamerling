@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 require_relative '../../message_behaviour'
 
-module Kamerling module Messages describe RGST do
+module Kamerling module Messages describe DATA do
   include MessageBehaviour
 
   let(:mess) do
