@@ -14,10 +14,10 @@ module Kamerling describe Server do
 
     it 'defaults to random, unused ports' do
       s1, s2 = Server.new.start, Server.new.start
-      (1024..65535).must_include s1.tcp_addr.port
-      (1024..65535).must_include s2.tcp_addr.port
-      (1024..65535).must_include s1.udp_addr.port
-      (1024..65535).must_include s2.udp_addr.port
+      (1024..65_535).must_include s1.tcp_addr.port
+      (1024..65_535).must_include s2.tcp_addr.port
+      (1024..65_535).must_include s1.udp_addr.port
+      (1024..65_535).must_include s2.udp_addr.port
       s1.tcp_addr.port.wont_equal s2.tcp_addr.port
       s1.udp_addr.port.wont_equal s2.udp_addr.port
     end
