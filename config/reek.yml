@@ -1,0 +1,6 @@
+IrresponsibleModule:
+  enabled: false
+
+UncommunicativeModuleName:
+  exclude:
+  - Kamerling::self.UUIDObject
