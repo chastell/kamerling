@@ -10,14 +10,13 @@ module Kamerling class Handler
     when 'RSLT'
       receiver.receive addr: addr, client_uuid: message.client_uuid,
         data: message.payload, task_uuid: message.task_uuid
+    else raise UnknownInput, input
     end
   end
 
   private
 
   def parse input
-    Messages.const_get(input[0..3]).new input
-  rescue NameError
-    raise UnknownInput, input
+    Message.new input
   end
 end end
