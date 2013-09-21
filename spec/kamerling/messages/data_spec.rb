@@ -14,7 +14,8 @@ module Kamerling module Messages describe DATA do
       client  = fake :client,  uuid: UUID.new
       project = fake :project, uuid: UUID.new
       task    = fake :task,    uuid: UUID.new
-      mess = DATA[client: client, payload: 'pay', project: project, task: task]
+      mess    = DATA[client: client, payload: 'pay', project: project,
+        task: task, type: 'DATA']
       mess.client_uuid.must_equal client.uuid
       mess.project_uuid.must_equal project.uuid
       mess.task_uuid.must_equal task.uuid

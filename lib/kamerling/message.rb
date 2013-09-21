@@ -2,9 +2,8 @@ module Kamerling class Message
   attr_reader :raw
 
   def self.[] client: req(:client), payload: req(:payload),
-              project: req(:project), task: req(:task)
-    type = name.split('::').last
-    raw  = type + "\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
+              project: req(:project), task: req(:task), type: req(:type)
+    raw = type + "\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
       UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
     new raw
   end
