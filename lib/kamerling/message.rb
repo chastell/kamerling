@@ -3,7 +3,7 @@ module Kamerling class Message
 
   def self.[] client: req(:client), payload: req(:payload),
               project: req(:project), task: req(:task), type: req(:type)
-    raw = type + "\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
+    raw = "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
       UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
     new raw
   end
@@ -33,6 +33,6 @@ module Kamerling class Message
   end
 
   def type
-    raw[0..3]
+    raw[0..3].to_sym
   end
 end end

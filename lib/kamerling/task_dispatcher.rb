@@ -20,7 +20,7 @@ module Kamerling class TaskDispatcher
   def dispatch_task client: req(:client), project: req(:project),
                     task: req(:task)
     message = Message[client: client, payload: task.data, project: project,
-      task: task, type: 'DATA']
+      task: task, type: :DATA]
     send "dispatch_to_#{client.addr.prot.downcase}", client, message
     client.busy = true
     repos << client
