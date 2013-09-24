@@ -1,4 +1,7 @@
 module Kamerling class Message
+  KnownTypes  = %w[DATA RGST RSLT]
+  UnknownType = Class.new RuntimeError
+
   attr_reader :raw
 
   def self.[] client: req(:client), payload: req(:payload),
@@ -8,6 +11,8 @@ module Kamerling class Message
   end
 
   def initialize raw
+    type = raw[0..3]
+    raise UnknownType, type unless KnownTypes.include? type
     @raw = raw
   end
 

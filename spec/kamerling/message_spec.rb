@@ -21,6 +21,12 @@ module Kamerling describe Message do
     end
   end
 
+  describe '.new' do
+    it 'raises on unknown message types' do
+      -> { Message.new 'MESS age' }.must_raise Message::UnknownType
+    end
+  end
+
   describe '#client_uuid' do
     it 'returns the client UUID' do
       mess.client_uuid.must_equal '31364220-636c-6965-6e74-202055554944'

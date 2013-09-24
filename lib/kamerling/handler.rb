@@ -10,7 +10,8 @@ module Kamerling class Handler
     when :RSLT
       receiver.receive addr: addr, client_uuid: message.client_uuid,
         data: message.payload, task_uuid: message.task_uuid
-    else raise UnknownInput, input
     end
+  rescue Message::UnknownType
+    raise UnknownInput, input
   end
 end end
