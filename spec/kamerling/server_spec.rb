@@ -30,7 +30,7 @@ module Kamerling describe Server do
         socket << 'message'
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
-      sleep 0.001
+      2.times { Thread.list.each { |thread| thread.run if thread.alive? } }
       handler.must_have_received :handle, ['message', s_addr]
     end
 
@@ -39,7 +39,7 @@ module Kamerling describe Server do
       client = UDPSocket.new.tap { |s| s.connect(*server.udp_addr) }
       client.send 'message', 0
       c_addr = Addr[client.addr[3], client.addr[1], :UDP]
-      sleep 0.001
+      Thread.list.each { |thread| thread.run if thread.alive? }
       handler.must_have_received :handle, ['message', c_addr]
     end
   end
@@ -54,7 +54,7 @@ module Kamerling describe Server do
   describe '#udp_addr' do
     it 'returns the server’s host + port as an UDP addr' do
       server = Server.new.start
-      Thread.pass
+      Thread.list.each { |thread| thread.run if thread.alive? }
       server.udp_addr.must_equal Addr['127.0.0.1', server.udp_addr.port, :UDP]
     end
   end
