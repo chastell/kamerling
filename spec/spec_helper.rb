@@ -11,3 +11,7 @@ module MiniTest::Spec::DSL
     args.map { |arg| fake arg }
   end
 end
+
+def run_all_threads
+  Thread.list.each { |thread| thread.run if thread.alive? }
+end
