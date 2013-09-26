@@ -1,23 +1,16 @@
 require_relative '../spec_helper'
 
 module Kamerling describe TaskDispatcher do
-  def server_and_thread_for type
-    server = case type
-             when :TCP then TCPServer.open 0
-             when :UDP then UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
-             end
-    thread = case type
-             when :TCP then Thread.new { server.accept.read }
-             when :UDP then Thread.new { server.recvfrom(2**16).first }
-             end
-    [server, thread]
-  end
+  let(:tcp_server) { TCPServer.open 0                                }
+  let(:udp_server) { UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 } }
+  let(:tcp_thread) { Thread.new { tcp_server.accept.read }           }
+  let(:udp_thread) { Thread.new { udp_server.recvfrom(2**16).first } }
 
   describe '#dispatch' do
     [:TCP, :UDP].each do |type|
       it "dispatches tasks to free #{type} clients" do
-        server, thread = server_and_thread_for type
-
+        server  = send "#{type.downcase}_server"
+        thread  = send "#{type.downcase}_thread"
         addr    = Addr[server.addr[3], server.addr[1], type]
         client  = fake :client, addr: addr, uuid: UUID['16B client  UUID']
         project = fake :project, uuid: UUID['16B project UUID']
