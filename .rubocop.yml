@@ -10,6 +10,9 @@ BlockAlignment:
 CaseEquality:
   Enabled: false
 
+ConstantName:
+  Enabled: false
+
 DefWithoutParentheses:
   Enabled: false
 
