@@ -69,33 +69,33 @@ module Kamerling describe '.UUIDObject' do
   describe '#to_h' do
     it 'serialises the object to a Hash' do
       Hashble = Kamerling.UUIDObject :param
-      Hashble.new(param: :val).to_h.must_equal({ param: :val, uuid: anything })
+      Hashble.new(param: :val).to_h.must_equal param: :val, uuid: anything
     end
 
     it 'serialises addr' do
       Addrble = Kamerling.UUIDObject :addr
       addrble = Addrble.new addr: Addr['127.0.0.1', 1981, :TCP]
-      addrble.to_h.must_equal({ host: '127.0.0.1', port: 1981, prot: 'TCP',
-        uuid: anything })
+      addrble.to_h.must_equal host: '127.0.0.1', port: 1981, prot: 'TCP',
+        uuid: anything
     end
 
     it 'serialises client' do
       Clintable = Kamerling.UUIDObject :client
       clintable = Clintable.new client: client = Client.new(addr: fake(:addr))
-      clintable.to_h.must_equal({ client_uuid: client.uuid, uuid: anything })
+      clintable.to_h.must_equal client_uuid: client.uuid, uuid: anything
     end
 
     it 'serialises project' do
       Projable = Kamerling.UUIDObject :project
       projable = Projable.new project: project = Project.new(name: 'name')
-      projable.to_h.must_equal({ project_uuid: project.uuid, uuid: anything })
+      projable.to_h.must_equal project_uuid: project.uuid, uuid: anything
     end
 
     it 'serialises task' do
       project = fake :project
       Tskble = Kamerling.UUIDObject :task
       tskble = Tskble.new task: task = Task.new(data: 'data', project: project)
-      tskble.to_h.must_equal({ task_uuid: task.uuid, uuid: anything })
+      tskble.to_h.must_equal task_uuid: task.uuid, uuid: anything
     end
   end
 end end
