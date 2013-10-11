@@ -4,9 +4,6 @@ AccessControl:
 AlignHash:
   Enabled: false
 
-BlockAlignment:
-  Enabled: false
-
 CaseEquality:
   Enabled: false
 
