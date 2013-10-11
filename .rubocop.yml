@@ -31,5 +31,8 @@ MethodLength:
 MethodName:
   Enabled: false
 
+SignalException:
+  Enabled: false
+
 SpaceAroundOperators:
   Enabled: false
