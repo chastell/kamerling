@@ -25,10 +25,10 @@ EndAlignment:
 IndentationWidth:
   Enabled: false
 
-MethodAndVariableSnakeCase:
+MethodLength:
   Enabled: false
 
-MethodLength:
+MethodName:
   Enabled: false
 
 SpaceAroundOperators:
