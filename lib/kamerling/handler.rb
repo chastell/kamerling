@@ -1,7 +1,11 @@
 module Kamerling class Handler
   UnknownInput = Class.new RuntimeError
 
-  def handle input, addr, receiver: Receiver.new, registrar: Registrar.new
+  def initialize receiver: Receiver.new, registrar: Registrar.new
+    @receiver, @registrar = receiver, registrar
+  end
+
+  def handle input, addr
     message = Message.new input
     case message.type
     when :RGST
@@ -14,4 +18,7 @@ module Kamerling class Handler
   rescue Message::UnknownType
     raise UnknownInput, input
   end
+
+  attr_reader :receiver, :registrar
+  private     :receiver, :registrar
 end end
