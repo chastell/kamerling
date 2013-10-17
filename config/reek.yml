@@ -1,6 +1,14 @@
+DuplicateMethodCall:
+  exclude:
+  - Kamerling#self.class_definition_from
+  - Kamerling::Handler#handle
+
 IrresponsibleModule:
   enabled: false
 
-UncommunicativeModuleName:
+NestedIterators:
+  max_allowed_nesting: 2
+
+UncommunicativeMethodName:
   exclude:
-  - Kamerling::self.UUIDObject
+  - Kamerling#self.UUIDObject
