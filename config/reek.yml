@@ -12,3 +12,6 @@ NestedIterators:
 UncommunicativeMethodName:
   exclude:
   - Kamerling#self.UUIDObject
+
+UnusedParameters:
+  enabled: false
