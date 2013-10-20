@@ -21,18 +21,24 @@ module Kamerling class TaskDispatcher
                     task: req(:task)
     message = Message[client: client, payload: task.data, project: project,
       task: task, type: :DATA]
-    send "dispatch_to_#{client.addr.prot.downcase}", client, message
+    NetDispatcher.new(client.addr).dispatch message
     client.busy = true
     repos << client
   end
 
-  def dispatch_to_tcp client, message
-    TCPSocket.open(*client.addr) do |socket|
-      socket << message.raw
+  class NetDispatcher
+    def initialize addr
+      @addr = addr
     end
-  end
 
-  def dispatch_to_udp client, message
-    UDPSocket.new.send message.raw, 0, *client.addr
+    def dispatch message
+      case addr.prot
+      when :TCP then TCPSocket.open(*addr) { |socket| socket << message.raw }
+      when :UDP then UDPSocket.new.send message.raw, 0, *addr
+      end
+    end
+
+    attr_reader :addr
+    private     :addr
   end
 end end
