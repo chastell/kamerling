@@ -45,16 +45,16 @@ module Kamerling describe Message do
     end
   end
 
-  describe '#raw' do
-    it 'returns the raw bytes' do
-      mess.raw.must_equal "#{mess.type}\0\0\0\0\0\0\0\0\0\0\0\0" +
-        '16B client  UUID16B project UUID16B task    UUIDsome payload'
-    end
-  end
-
   describe '#task_uuid' do
     it 'returns the task UUID' do
       mess.task_uuid.must_equal '31364220-7461-736b-2020-202055554944'
+    end
+  end
+
+  describe '#to_s' do
+    it 'returns the raw bytes' do
+      mess.to_s.must_equal "#{mess.type}\0\0\0\0\0\0\0\0\0\0\0\0" +
+        '16B client  UUID16B project UUID16B task    UUIDsome payload'
     end
   end
 

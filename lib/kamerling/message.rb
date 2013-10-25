@@ -2,8 +2,6 @@ module Kamerling class Message
   KnownTypes  = %w[DATA RGST RSLT]
   UnknownType = Class.new RuntimeError
 
-  attr_reader :raw
-
   def self.[](client: req(:client), payload: req(:payload),
               project: req(:project), task: req(:task), type: req(:type))
     new "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
@@ -36,7 +34,14 @@ module Kamerling class Message
     UUID[raw[48..63]]
   end
 
+  def to_s
+    raw
+  end
+
   def type
     raw[0..3].to_sym
   end
+
+  attr_reader :raw
+  private     :raw
 end end
