@@ -12,6 +12,8 @@ module MiniTest::Spec::DSL
   end
 end
 
+Thread.abort_on_exception = true
+
 def run_all_threads
   Thread.list.each { |thread| thread.run if thread.alive? }
 end
