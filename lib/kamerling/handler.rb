@@ -1,7 +1,7 @@
 module Kamerling class Handler
   UnknownInput = Class.new RuntimeError
 
-  def initialize receiver: Receiver.new, registrar: Registrar.new
+  def initialize(receiver: Receiver.new, registrar: Registrar.new)
     @receiver, @registrar = receiver, registrar
   end
 
