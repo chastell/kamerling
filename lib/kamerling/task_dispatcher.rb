@@ -21,24 +21,8 @@ module Kamerling class TaskDispatcher
                     task: req(:task))
     message = Message[client: client, payload: task.data, project: project,
       task: task, type: :DATA]
-    NetDispatcher.new(client.addr).dispatch message
+    NetDispatcher.new(client.addr).dispatch message.to_s
     client.busy = true
     repos << client
-  end
-
-  class NetDispatcher
-    def initialize addr
-      @addr = addr
-    end
-
-    def dispatch message
-      case addr.prot
-      when :TCP then TCPSocket.open(*addr) { |socket| socket << message.raw }
-      when :UDP then UDPSocket.new.send message.raw, 0, *addr
-      end
-    end
-
-    attr_reader :addr
-    private     :addr
   end
 end end
