@@ -36,8 +36,14 @@ module Kamerling class Server < GServer
     true
   end
 
+  def disconnecting *_
+  end
+
   def starting
     logger.info "TCP start #{tcp_addr.host}:#{tcp_addr.port}"
+  end
+
+  def stopping
   end
 
   def serve io
