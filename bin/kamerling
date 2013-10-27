@@ -15,9 +15,11 @@ end.parse! ARGV
 
 Thread.abort_on_exception = true
 
+logger = Logger.new $stdout
+logger.level = Logger::INFO
+
 Kamerling::Repos.db = Sequel.sqlite c.db
-server = Kamerling::Server.new host: c.host, tcp_port: c.tcp, udp_port: c.udp
+server = Kamerling::Server.new host: c.host, logger: logger, tcp_port: c.tcp, udp_port: c.udp
 server.audit = true
-server.debug = true
 server.start
 server.join
