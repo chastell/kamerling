@@ -31,8 +31,7 @@ module Kamerling class Server < GServer
   private
 
   def connecting client
-    addr = Addr[*client.remote_address.ip_unpack, :TCP]
-    logger.info "TCP connect #{addr.host}:#{addr.port}"
+    logger.info "connect #{Addr[*client.remote_address.ip_unpack, :TCP]}"
     true
   end
 
@@ -40,7 +39,7 @@ module Kamerling class Server < GServer
   end
 
   def starting
-    logger.info "TCP start #{tcp_addr.host}:#{tcp_addr.port}"
+    logger.info "start #{tcp_addr}"
   end
 
   def stopping
@@ -49,19 +48,19 @@ module Kamerling class Server < GServer
   def serve io
     addr  = Addr[*io.remote_address.ip_unpack, :TCP]
     input = io.read
-    logger.debug "TCP received #{addr.host}:#{addr.port} #{input}"
+    logger.debug "received #{addr} #{input}"
     handler.handle input, addr
   end
 
   def start_udp_server
-    logger.info "UDP start #{udp_addr.host}:#{udp_addr.port}"
+    logger.info "start #{udp_addr}"
     Thread.new do
       loop do
         if IO.select [udp_server]
           input, conn = udp_server.recvfrom 2**16
           addr = Addr[conn[3], conn[1], :UDP]
-          logger.info "UDP connect #{addr.host}:#{addr.port}"
-          logger.debug "UDP received #{addr.host}:#{addr.port} #{input}"
+          logger.info "connect #{addr}"
+          logger.debug "received #{addr} #{input}"
           handler.handle input, addr
         end
       end

@@ -74,8 +74,8 @@ module Kamerling describe Server do
     it 'logs server starts' do
       server.start
       run_all_threads
-      logged.must_include "TCP start 0.0.0.0:#{server.tcp_addr.port}"
-      logged.must_include "UDP start 0.0.0.0:#{server.udp_addr.port}"
+      logged.must_include "start #{server.tcp_addr}"
+      logged.must_include "start #{server.udp_addr}"
     end
 
     it 'logs server connects' do
@@ -87,22 +87,22 @@ module Kamerling describe Server do
       client.send '', 0
       udp_addr = Addr[client.addr[3], client.addr[1], :UDP]
       run_all_threads
-      logged.must_include "TCP connect #{tcp_addr.host}:#{tcp_addr.port}"
-      logged.must_include "UDP connect #{udp_addr.host}:#{udp_addr.port}"
+      logged.must_include "connect #{tcp_addr}"
+      logged.must_include "connect #{udp_addr}"
     end
 
     it 'logs messages received' do
       server.start
       tcp_addr = TCPSocket.open(*server.tcp_addr) do |socket|
-        socket << 'TCPm'
+        socket << 'TCP message'
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
       client = UDPSocket.new.tap { |s| s.connect(*server.udp_addr) }
-      client.send 'UDPm', 0
+      client.send 'UDP message', 0
       udp_addr = Addr[client.addr[3], client.addr[1], :UDP]
       run_all_threads
-      logged.must_include "TCP received #{tcp_addr.host}:#{tcp_addr.port} TCPm"
-      logged.must_include "UDP received #{udp_addr.host}:#{udp_addr.port} UDPm"
+      logged.must_include "received #{tcp_addr} TCP message"
+      logged.must_include "received #{udp_addr} UDP message"
     end
   end
 end end
