@@ -1,6 +1,7 @@
 module Kamerling class TaskDispatcher
-  def initialize(repos: Repos)
-    @repos = repos
+  def initialize(net_dispatcher: NetDispatcher.new, repos: Repos)
+    @net_dispatcher = net_dispatcher
+    @repos          = repos
   end
 
   def dispatch
@@ -12,8 +13,8 @@ module Kamerling class TaskDispatcher
     end
   end
 
-  attr_reader :repos
-  private     :repos
+  attr_reader :net_dispatcher, :repos
+  private     :net_dispatcher, :repos
 
   private
 
@@ -21,7 +22,7 @@ module Kamerling class TaskDispatcher
                     task: req(:task))
     message = Message[client: client, payload: task.data, project: project,
       task: task, type: :DATA]
-    NetDispatcher.new.dispatch client.addr, message.to_s
+    net_dispatcher.dispatch client.addr, message.to_s
     client.busy = true
     repos << client
   end
