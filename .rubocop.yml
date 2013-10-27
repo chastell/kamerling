@@ -1,6 +1,9 @@
 AccessControl:
   Enabled: false
 
+AlignArray:
+  Enabled: false
+
 AlignHash:
   Enabled: false
 
