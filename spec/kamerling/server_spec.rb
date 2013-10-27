@@ -23,6 +23,12 @@ module Kamerling describe Server do
     end
   end
 
+  describe '#join' do
+    it 'allows joining the server thread' do
+      Server.new.must_respond_to :join
+    end
+  end
+
   describe '#start' do
     it 'listens on a TCP port and passes the received input to the handler' do
       server = Server.new(handler: handler = fake(:handler)).start
