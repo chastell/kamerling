@@ -21,7 +21,7 @@ module Kamerling class TaskDispatcher
                     task: req(:task))
     message = Message[client: client, payload: task.data, project: project,
       task: task, type: :DATA]
-    NetDispatcher.new(client.addr).dispatch message.to_s
+    NetDispatcher.new.dispatch client.addr, message.to_s
     client.busy = true
     repos << client
   end
