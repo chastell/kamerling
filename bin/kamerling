@@ -13,6 +13,8 @@ OptionParser.new do |opts|
   opts.on('--udp 0',          Integer, 'UDP port')    { |udp|  c.udp  = udp  }
 end.parse! ARGV
 
+Thread.abort_on_exception = true
+
 Kamerling::Repos.db = Sequel.sqlite c.db
 server = Kamerling::Server.new host: c.host, tcp_port: c.tcp, udp_port: c.udp
 server.audit = true
