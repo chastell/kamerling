@@ -64,4 +64,18 @@ module Kamerling describe Server do
       server.udp_addr.must_equal Addr['127.0.0.1', server.udp_addr.port, :UDP]
     end
   end
+
+  describe 'logging' do
+    let(:log)    { StringIO.new                               }
+    let(:logger) { Logger.new log                             }
+    let(:server) { Server.new host: '0.0.0.0', logger: logger }
+
+    it 'logs server starts' do
+      server.start
+      run_all_threads
+      logged = log.tap(&:rewind).read
+      logged.must_include "TCP start 0.0.0.0:#{server.tcp_addr.port}"
+      logged.must_include "UDP start 0.0.0.0:#{server.udp_addr.port}"
+    end
+  end
 end end

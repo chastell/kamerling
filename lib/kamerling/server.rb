@@ -1,11 +1,14 @@
 require 'gserver'
+require 'logger'
 
 module Kamerling class Server < GServer
-  def initialize(handler: Handler.new, host: DEFAULT_HOST, tcp_port: 0,
-                 udp_port: 0)
-    @handler    = handler
-    @udp_server = UDPSocket.new.tap { |server| server.bind host, udp_port }
+  def initialize(handler: Handler.new, host: DEFAULT_HOST,
+                 logger: NullLogger.new, tcp_port: 0, udp_port: 0)
     super tcp_port, host
+    @audit      = true
+    @handler    = handler
+    @logger     = logger
+    @udp_server = UDPSocket.new.tap { |server| server.bind host, udp_port }
   end
 
   def start
@@ -21,17 +24,22 @@ module Kamerling class Server < GServer
     Addr[udp_server.addr[3], udp_server.addr[1], :UDP]
   end
 
-  attr_reader :handler, :udp_server
-  private     :handler, :udp_server
+  attr_reader :handler, :logger, :udp_server
+  private     :handler, :logger, :udp_server
   private     :host, :port
 
   private
+
+  def starting
+    logger.info "TCP start #{tcp_addr.host}:#{tcp_addr.port}"
+  end
 
   def serve io
     handler.handle io.read, Addr[*io.remote_address.ip_unpack, :TCP]
   end
 
   def start_udp_server
+    logger.info "UDP start #{udp_addr.host}:#{udp_addr.port}"
     Thread.new do
       loop do
         if IO.select [udp_server]
@@ -40,5 +48,9 @@ module Kamerling class Server < GServer
         end
       end
     end
+  end
+
+  class NullLogger
+    def info *; end
   end
 end end
