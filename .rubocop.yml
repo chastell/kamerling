@@ -22,6 +22,9 @@ Documentation:
 EndAlignment:
   Enabled: false
 
+HandleExceptions:
+  Enabled: false
+
 IndentationWidth:
   Enabled: false
 
