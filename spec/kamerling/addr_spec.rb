@@ -7,4 +7,10 @@ module Kamerling describe Addr do
       splat.must_equal ['127.0.0.1', 1981]
     end
   end
+
+  describe '#to_s' do
+    it 'returns the Addr in ‘host:port (protocol)’ notation' do
+      Addr['127.0.0.1', 1981, :UDP].to_s.must_equal '127.0.0.1:1981 (UDP)'
+    end
+  end
 end end

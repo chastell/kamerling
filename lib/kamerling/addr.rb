@@ -3,5 +3,9 @@ module Kamerling
     def to_a
       [host, port]
     end
+
+    def to_s
+      "#{host}:#{port} (#{prot})"
+    end
   end
 end
