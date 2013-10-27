@@ -41,7 +41,10 @@ module Kamerling class Server < GServer
   end
 
   def serve io
-    handler.handle io.read, Addr[*io.remote_address.ip_unpack, :TCP]
+    addr  = Addr[*io.remote_address.ip_unpack, :TCP]
+    input = io.read
+    logger.debug "TCP received #{addr.host}:#{addr.port} #{input}"
+    handler.handle input, addr
   end
 
   def start_udp_server
@@ -52,6 +55,7 @@ module Kamerling class Server < GServer
           input, conn = udp_server.recvfrom 2**16
           addr = Addr[conn[3], conn[1], :UDP]
           logger.info "UDP connect #{addr.host}:#{addr.port}"
+          logger.debug "UDP received #{addr.host}:#{addr.port} #{input}"
           handler.handle input, addr
         end
       end
@@ -59,6 +63,10 @@ module Kamerling class Server < GServer
   end
 
   class NullLogger
-    def info *; end
+    def debug _
+    end
+
+    def info _
+    end
   end
 end end
