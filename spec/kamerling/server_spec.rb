@@ -67,15 +67,28 @@ module Kamerling describe Server do
 
   describe 'logging' do
     let(:log)    { StringIO.new                               }
+    let(:logged) { log.tap(&:rewind).read                     }
     let(:logger) { Logger.new log                             }
     let(:server) { Server.new host: '0.0.0.0', logger: logger }
 
     it 'logs server starts' do
       server.start
       run_all_threads
-      logged = log.tap(&:rewind).read
       logged.must_include "TCP start 0.0.0.0:#{server.tcp_addr.port}"
       logged.must_include "UDP start 0.0.0.0:#{server.udp_addr.port}"
+    end
+
+    it 'logs server connects' do
+      server.start
+      tcp_addr = TCPSocket.open(*server.tcp_addr) do |socket|
+        Addr[*socket.local_address.ip_unpack, :TCP]
+      end
+      client = UDPSocket.new.tap { |s| s.connect(*server.udp_addr) }
+      client.send '', 0
+      udp_addr = Addr[client.addr[3], client.addr[1], :UDP]
+      run_all_threads
+      logged.must_include "TCP connect #{tcp_addr.host}:#{tcp_addr.port}"
+      logged.must_include "UDP connect #{udp_addr.host}:#{udp_addr.port}"
     end
   end
 end end

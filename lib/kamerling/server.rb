@@ -12,7 +12,7 @@ module Kamerling class Server < GServer
   end
 
   def start
-    start_udp_server
+    @udp_server_thread = start_udp_server
     super
   end
 
@@ -30,6 +30,12 @@ module Kamerling class Server < GServer
 
   private
 
+  def connecting client
+    addr = Addr[*client.remote_address.ip_unpack, :TCP]
+    logger.info "TCP connect #{addr.host}:#{addr.port}"
+    true
+  end
+
   def starting
     logger.info "TCP start #{tcp_addr.host}:#{tcp_addr.port}"
   end
@@ -44,7 +50,9 @@ module Kamerling class Server < GServer
       loop do
         if IO.select [udp_server]
           input, conn = udp_server.recvfrom 2**16
-          handler.handle input, Addr[conn[3], conn[1], :UDP]
+          addr = Addr[conn[3], conn[1], :UDP]
+          logger.info "UDP connect #{addr.host}:#{addr.port}"
+          handler.handle input, addr
         end
       end
     end
