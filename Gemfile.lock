@@ -12,7 +12,7 @@ GEM
     bogus (0.1.4)
       dependor (>= 0.0.4)
     dependor (1.0.1)
-    ffi (1.9.0)
+    ffi (1.9.1)
     listen (1.0.3)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
