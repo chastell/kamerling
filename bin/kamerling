@@ -19,7 +19,8 @@ logger = Logger.new $stdout
 logger.level = Logger::INFO
 
 Kamerling::Repos.db = Sequel.sqlite c.db
-server = Kamerling::Server.new host: c.host, logger: logger, tcp_port: c.tcp, udp_port: c.udp
+server = Kamerling::Server.new host: c.host, logger: logger, tcp_port: c.tcp,
+  udp_port: c.udp
 server.audit = true
 server.start
 server.join
