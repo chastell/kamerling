@@ -38,13 +38,6 @@ module Kamerling class Server < GServer
   def disconnecting *_
   end
 
-  def starting
-    logger.info "start #{tcp_addr}"
-  end
-
-  def stopping
-  end
-
   def serve io
     addr  = Addr[*io.remote_address.ip_unpack, :TCP]
     input = io.read
@@ -65,6 +58,13 @@ module Kamerling class Server < GServer
         end
       end
     end
+  end
+
+  def starting
+    logger.info "start #{tcp_addr}"
+  end
+
+  def stopping
   end
 
   class NullLogger
