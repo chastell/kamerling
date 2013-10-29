@@ -3,7 +3,7 @@ require 'logger'
 
 module Kamerling class Server < GServer
   def initialize(handler: Handler.new, host: DEFAULT_HOST,
-                 logger: NullLogger.new, tcp_port: 0, udp_port: 0)
+                 logger: Logger.new('/dev/null'), tcp_port: 0, udp_port: 0)
     super tcp_port, host
     @audit      = true
     @handler    = handler
@@ -65,13 +65,5 @@ module Kamerling class Server < GServer
   end
 
   def stopping
-  end
-
-  class NullLogger
-    def debug _
-    end
-
-    def info _
-    end
   end
 end end
