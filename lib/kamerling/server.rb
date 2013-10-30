@@ -3,11 +3,12 @@ require 'logger'
 
 module Kamerling class Server
   def initialize(handler: Handler.new, host: '127.0.0.1',
-                 logger: Logger.new('/dev/null'), tcp_port: 0, udp_port: 0)
-    @tcp_server = TCP.new handler: handler, host: host, logger: logger,
-      port: tcp_port
-    @udp_server = UDP.new handler: handler, host: host, logger: logger,
-      port: udp_port
+                 logger: Logger.new('/dev/null'), tcp: nil, tcp_port: 0,
+                 udp: nil, udp_port: 0)
+    @tcp_server = tcp || TCP.new(handler: handler, host: host, logger: logger,
+      port: tcp_port)
+    @udp_server = udp || UDP.new(handler: handler, host: host, logger: logger,
+      port: udp_port)
   end
 
   def join
