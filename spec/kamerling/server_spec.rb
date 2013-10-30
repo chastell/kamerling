@@ -19,7 +19,7 @@ module Kamerling describe Server do
     it 'starts UDP and TCP servers' do
       tcp = fake Server::TCP
       udp = fake Server::UDP
-      Server.new(tcp: tcp, udp: udp).start
+      Server.new.start tcp: tcp, udp: udp
       tcp.must_have_received :start, []
       udp.must_have_received :start, []
     end
@@ -28,14 +28,14 @@ module Kamerling describe Server do
   describe '#tcp_addr' do
     it 'returns the TCP server’s Addr' do
       tcp = fake Server::TCP, addr: addr = fake(:addr)
-      Server.new(tcp: tcp).tcp_addr.must_equal addr
+      Server.new.tcp_addr(tcp: tcp).must_equal addr
     end
   end
 
   describe '#udp_addr' do
     it 'returns the UDP server’s Addr' do
       udp = fake Server::UDP, addr: addr = fake(:addr)
-      Server.new(udp: udp).udp_addr.must_equal addr
+      Server.new.udp_addr(udp: udp).must_equal addr
     end
   end
 end end
