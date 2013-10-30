@@ -24,7 +24,7 @@ module Kamerling describe Server do
   end
 
   describe '#join' do
-    it 'allows joining the server thread' do
+    it 'allows joining the TCP server thread' do
       Server.new.must_respond_to :join
     end
   end
