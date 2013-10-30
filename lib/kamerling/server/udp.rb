@@ -1,4 +1,4 @@
-module Kamerling class UDPServer
+module Kamerling class Server::UDP
   def initialize handler: Handler.new, host: '127.0.0.1',
                  logger: Logger.new('/dev/null'), port: 0
     @handler = handler

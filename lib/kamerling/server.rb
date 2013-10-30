@@ -8,7 +8,7 @@ module Kamerling class Server < GServer
     @audit      = true
     @handler    = handler
     @logger     = logger
-    @udp_server = UDPServer.new handler: handler, host: host, logger: logger,
+    @udp_server = UDP.new handler: handler, host: host, logger: logger,
       port: udp_port
   end
 
