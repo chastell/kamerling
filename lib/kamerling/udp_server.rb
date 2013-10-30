@@ -1,0 +1,31 @@
+module Kamerling class UDPServer
+  def initialize handler: Handler.new, host: '127.0.0.1',
+                 logger: Logger.new('/dev/null'), port: 0
+    @handler = handler
+    @logger  = logger
+    @socket  = UDPSocket.new.tap { |server| server.bind host, port }
+  end
+
+  def addr
+    Addr[socket.addr[3], socket.addr[1], :UDP]
+  end
+
+  def start
+    logger.info "start #{addr}"
+    Thread.new do
+      loop do
+        if IO.select [socket]
+          input, conn = socket.recvfrom 2**16
+          client_addr = Addr[conn[3], conn[1], :UDP]
+          logger.info "connect #{client_addr}"
+          logger.debug "received #{client_addr} #{input}"
+          handler.handle input, client_addr
+        end
+      end
+    end
+    self
+  end
+
+  attr_reader :handler, :logger, :socket
+  private     :handler, :logger, :socket
+end end
