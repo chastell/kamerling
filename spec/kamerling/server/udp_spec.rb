@@ -39,10 +39,10 @@ module Kamerling describe Server::UDP do
   end
 
   describe 'logging' do
-    let(:log)    { StringIO.new                                    }
-    let(:logged) { log.tap(&:rewind).read                          }
-    let(:logger) { Logger.new log                                  }
-    let(:server) { Server::UDP.new host: '0.0.0.0', logger: logger }
+    let(:log)    { StringIO.new                   }
+    let(:logged) { log.tap(&:rewind).read         }
+    let(:logger) { Logger.new log                 }
+    let(:server) { Server::UDP.new logger: logger }
 
     it 'logs server starts' do
       server.start
