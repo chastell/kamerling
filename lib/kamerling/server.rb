@@ -2,13 +2,13 @@ require 'gserver'
 require 'logger'
 
 module Kamerling class Server
-  def initialize(handler: Handler.new, host: '127.0.0.1',
-                 logger: Logger.new('/dev/null'), tcp: nil, tcp_port: 0,
-                 udp: nil, udp_port: 0)
-    @tcp = tcp || TCP.new(handler: handler, host: host, logger: logger,
-      port: tcp_port)
-    @udp = udp || UDP.new(handler: handler, host: host, logger: logger,
-      port: udp_port)
+  def initialize(handler: Handler.new, logger: Logger.new('/dev/null'),
+                 host: '127.0.0.1', tcp_port: 0, udp_port: 0,
+                 tcp: TCP.new(handler: handler, host: host, logger: logger,
+                              port: tcp_port),
+                 udp: UDP.new(handler: handler, host: host, logger: logger,
+                              port: udp_port))
+    @tcp, @udp = tcp, udp
   end
 
   def join
