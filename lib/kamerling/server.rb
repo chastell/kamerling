@@ -12,17 +12,17 @@ module Kamerling class Server
     tcp.join
   end
 
-  def start tcp: tcp, udp: udp
+  def start
     tcp.start
     udp.start
     self
   end
 
-  def tcp_addr tcp: tcp
+  def tcp_addr
     tcp.addr
   end
 
-  def udp_addr udp: udp
+  def udp_addr
     udp.addr
   end
 
