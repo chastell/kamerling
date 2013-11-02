@@ -1,4 +1,7 @@
 require_relative 'kamerling/core_extensions'
+
+include Kamerling::CoreExtensions::Main
+
 require_relative 'kamerling/addr'
 require_relative 'kamerling/handler'
 require_relative 'kamerling/message'

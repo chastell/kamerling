@@ -15,5 +15,3 @@ module Kamerling module CoreExtensions module Main
     $VERBOSE = verbose
   end
 end end end
-
-include Kamerling::CoreExtensions::Main
