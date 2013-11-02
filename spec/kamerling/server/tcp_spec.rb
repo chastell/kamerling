@@ -3,8 +3,8 @@ require_relative '../../spec_helper'
 module Kamerling describe Server::TCP do
   describe '.new' do
     it 'sets up a TCP server on the given host and port' do
-      Server::TCP.new(host: '0.0.0.0', port: 2006).start
-      TCPSocket.open '0.0.0.0', 2006
+      Server::TCP.new(host: '0.0.0.0', port: 1981).start
+      TCPSocket.open '0.0.0.0', 1981
     end
 
     it 'defaults to localhost' do

@@ -3,8 +3,8 @@ require_relative '../../spec_helper'
 module Kamerling describe Server::UDP do
   describe '.new' do
     it 'sets up an UDP server on the given host and port' do
-      Server::UDP.new(host: '0.0.0.0', port: 2009).start
-      UDPSocket.new.connect '0.0.0.0', 2009
+      Server::UDP.new(host: '0.0.0.0', port: 1979).start
+      UDPSocket.new.connect '0.0.0.0', 1979
     end
 
     it 'defaults to localhost' do
