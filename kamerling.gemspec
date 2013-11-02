@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.test_files  = gem.files.grep %r{^spec/.*\.rb$}
 
   gem.add_dependency 'sequel'
+  gem.add_dependency 'sinatra'
   gem.add_dependency 'sqlite3'
 
   gem.add_development_dependency 'bogus',    '>= 0.1.3'
