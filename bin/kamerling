@@ -3,12 +3,13 @@
 require 'optparse'
 require_relative '../lib/kamerling'
 
-Config = Struct.new :db, :host, :tcp, :udp
+Config = Struct.new(*%i[db host http tcp udp])
 c      = Config.new nil, GServer::DEFAULT_HOST, 0, 0
 
 OptionParser.new do |opts|
   opts.on('--db foo.sqlite3', String,  'SQLite path') { |db|   c.db   = db   }
   opts.on('--host 127.0.0.1', String,  'server host') { |host| c.host = host }
+  opts.on('--http 0',         Integer, 'HTTP port')   { |http| c.http = http }
   opts.on('--tcp 0',          Integer, 'TCP port')    { |tcp|  c.tcp  = tcp  }
   opts.on('--udp 0',          Integer, 'UDP port')    { |udp|  c.udp  = udp  }
 end.parse! ARGV
@@ -19,8 +20,7 @@ logger = Logger.new $stdout
 logger.level = Logger::INFO
 
 Kamerling::Repos.db = Sequel.sqlite c.db
-server = Kamerling::Server.new host: c.host, logger: logger, tcp_port: c.tcp,
-  udp_port: c.udp
-server.audit = true
+server = Kamerling::Server.new logger: logger, host: c.host,
+  http_port: c.http, tcp_port: c.tcp, udp_port: c.udp
 server.start
 server.join
