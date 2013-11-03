@@ -1,5 +1,3 @@
-require 'net/http'
-
 require_relative '../../spec_helper'
 
 module Kamerling describe Server::HTTP do
