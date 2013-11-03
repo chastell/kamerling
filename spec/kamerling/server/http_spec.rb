@@ -3,6 +3,17 @@ require 'net/http'
 require_relative '../../spec_helper'
 
 module Kamerling describe Server::HTTP do
+  describe '#addr' do
+    it 'returns the server’s host + port as a TCP addr' do
+      capture_io do
+        server = Server::HTTP.new.start
+        400.times { run_all_threads }
+        server.addr.must_equal Addr['127.0.0.1', server.addr.port, :TCP]
+        server.stop
+      end
+    end
+  end
+
   describe '#start, #stop' do
     it 'starts/stops a HTTP server on the given host and port' do
       capture_io do
