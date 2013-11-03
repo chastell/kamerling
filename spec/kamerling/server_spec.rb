@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Server do
-  let(:server) { Server.new(host: '0.0.0.0').start }
+  let(:server) { Server.new host: '0.0.0.0' }
 
   describe '#join' do
     it 'allows joining the TCP server thread' do
@@ -9,10 +9,23 @@ module Kamerling describe Server do
     end
   end
 
-  describe '#start' do
-    it 'starts UDP and TCP servers on the given host and ports' do
-      TCPSocket.open        '0.0.0.0', server.tcp_addr.port
-      UDPSocket.new.connect '0.0.0.0', server.udp_addr.port
+  describe '#start, #stop' do
+    it 'starts/stops HTTP, UDP and TCP servers on the given host and ports' do
+      capture_io do
+        server.start
+        400.times { run_all_threads }
+        uri = URI.parse "http://0.0.0.0:#{server.http_addr.port}"
+        Net::HTTP.get_response(uri).must_be_kind_of Net::HTTPSuccess
+        TCPSocket.open        '0.0.0.0', server.tcp_addr.port
+        UDPSocket.new.connect '0.0.0.0', server.udp_addr.port
+        server.stop
+      end
+    end
+  end
+
+  describe '#http_addr' do
+    it 'returns the HTTP server’s Addr' do
+      server.http_addr.must_equal Addr['0.0.0.0', server.http_addr.port, :TCP]
     end
   end
 
