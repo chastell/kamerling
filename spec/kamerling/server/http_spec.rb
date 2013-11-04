@@ -8,6 +8,7 @@ module Kamerling describe Server::HTTP do
         400.times { run_all_threads }
         server.addr.must_equal Addr['127.0.0.1', server.addr.port, :TCP]
         server.stop
+        2.times { run_all_threads }
       end
     end
   end
@@ -20,6 +21,7 @@ module Kamerling describe Server::HTTP do
         uri = URI.parse 'http://0.0.0.0:2009'
         Net::HTTP.get_response(uri).must_be_kind_of Net::HTTPSuccess
         server.stop
+        2.times { run_all_threads }
       end
     end
   end

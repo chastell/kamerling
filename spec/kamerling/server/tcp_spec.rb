@@ -65,7 +65,7 @@ module Kamerling describe Server::TCP do
         socket << 'TCP message'
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
-      3.times { run_all_threads }
+      4.times { run_all_threads }
       logged.must_include "received #{tcp_addr} TCP message"
     end
   end
