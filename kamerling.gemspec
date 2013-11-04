@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'sequel'
   gem.add_dependency 'sinatra'
+  gem.add_dependency 'slim'
   gem.add_dependency 'sqlite3'
 
   gem.add_development_dependency 'bogus',    '>= 0.1.3'

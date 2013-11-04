@@ -1,21 +1,18 @@
 require 'sinatra/base'
+require 'slim'
 
 module Kamerling class HTTPAPI < Sinatra::Base
   get '/' do
-    <<-end.gsub(/^ {6}/, '')
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Kamerling</title>
-        </head>
-        <body>
-          <nav>
-            <ul>
-              <li><a href='/projects' id='projects'>projects</a></li>
-            </ul>
-          </nav>
-        </body>
-      </html>
+    slim <<-end.gsub(/^ {6}/, '')
+      doctype html
+      html
+        head
+          title Kamerling
+        body
+          nav
+            ul
+              li
+                a href='/projects' id='projects' projects
     end
   end
 end end
