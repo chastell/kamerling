@@ -6,14 +6,14 @@ module Kamerling describe HTTPAPI do
   let(:app) { HTTPAPI                           }
   let(:doc) { Nokogiri::HTML last_response.body }
 
-  describe '/' do
+  describe 'GET /' do
     it 'contains a link to projects' do
       get '/'
       doc.css('#projects').first['href'].must_equal '/projects'
     end
   end
 
-  describe '/projects' do
+  describe 'GET /projects' do
     it 'contains links to projects' do
       gimps = fake :project, uuid: UUID.new
       ecc   = fake :project, uuid: UUID.new
