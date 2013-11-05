@@ -24,4 +24,14 @@ module Kamerling describe HTTPAPI do
       links.must_include "/projects/#{ecc.uuid}"
     end
   end
+
+  describe 'POST /projects' do
+    it 'creates a new project' do
+      app.set repos: repos = fake(:repos, as: :class)
+      post '/projects', name: 'ECC'
+      repos.must_have_received :<<, [Project.new(name: 'ECC', uuid: anything)]
+      follow_redirect!
+      URI(last_request.url).path.must_equal '/projects'
+    end
+  end
 end end

@@ -11,4 +11,9 @@ module Kamerling class HTTPAPI < Sinatra::Base
   get '/projects' do
     warn_off { slim :projects, locals: { projects: settings.repos.projects } }
   end
+
+  post '/projects' do
+    settings.repos << Project.new(name: params[:name])
+    redirect '/projects'
+  end
 end end
