@@ -9,6 +9,6 @@ module Kamerling class HTTPAPI < Sinatra::Base
   end
 
   get '/projects' do
-    slim :projects, locals: { projects: settings.repos.projects }
+    warn_off { slim :projects, locals: { projects: settings.repos.projects } }
   end
 end end
