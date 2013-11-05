@@ -21,7 +21,7 @@ module Kamerling describe Server::HTTP do
         uri = URI.parse 'http://0.0.0.0:2009'
         Net::HTTP.get_response(uri).must_be_kind_of Net::HTTPSuccess
         server.stop
-        2.times { run_all_threads }
+        3.times { run_all_threads }
       end
     end
   end

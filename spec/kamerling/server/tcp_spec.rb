@@ -26,7 +26,7 @@ module Kamerling describe Server::TCP do
         socket << 'message'
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
-      3.times { run_all_threads }
+      4.times { run_all_threads }
       handler.must_have_received :handle, ['message', s_addr]
     end
   end
@@ -55,7 +55,7 @@ module Kamerling describe Server::TCP do
       tcp_addr = TCPSocket.open(*server.addr) do |socket|
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
-      3.times { run_all_threads }
+      4.times { run_all_threads }
       logged.must_include "connect #{tcp_addr}"
     end
 
