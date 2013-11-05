@@ -3,3 +3,5 @@ nav
     - projects.each do |project|
       li
         a href="/projects/#{project.uuid}" rel='project' = project.name
+form action='/projects' method='POST'
+  input name='name'
