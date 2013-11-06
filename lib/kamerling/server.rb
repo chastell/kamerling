@@ -2,12 +2,12 @@ require 'gserver'
 require 'logger'
 
 module Kamerling class Server
-  def initialize addrs: req(:addrs), handler: Handler.new,
-                 logger: Logger.new('/dev/null'), servers: nil
+  def initialize addrs: req(:addrs), logger: Logger.new('/dev/null'),
+                 servers: nil
     @servers = servers || {
       http: HTTP.new(addr: addrs[:http]),
-      tcp:  TCP.new(addr: addrs[:tcp], handler: handler, logger: logger),
-      udp:  UDP.new(addr: addrs[:udp], handler: handler, logger: logger),
+      tcp:  TCP.new(addr: addrs[:tcp], logger: logger),
+      udp:  UDP.new(addr: addrs[:udp], logger: logger),
     }
   end
 
