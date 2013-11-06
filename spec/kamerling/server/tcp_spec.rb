@@ -5,8 +5,7 @@ module Kamerling describe Server::TCP do
 
   describe '#addr' do
     it 'returns the server’s host + port as a TCP addr' do
-      server = Server::TCP.new addr: Addr['0.0.0.0', 1981, :TCP]
-      server.addr.must_equal Addr['0.0.0.0', 1981, :TCP]
+      Server::TCP.new(addr: addr).addr.must_equal addr
     end
   end
 
