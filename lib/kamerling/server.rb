@@ -3,41 +3,39 @@ require 'logger'
 
 module Kamerling class Server
   def initialize addrs: req(:addrs), handler: Handler.new,
-                 logger: Logger.new('/dev/null')
-    @http = HTTP.new addr: addrs[:http]
-    @tcp  = TCP.new  addr: addrs[:tcp], handler: handler, logger: logger
-    @udp  = UDP.new  addr: addrs[:udp], handler: handler, logger: logger
+                 logger: Logger.new('/dev/null'), servers: nil
+    @servers = servers || {
+      http: HTTP.new(addr: addrs[:http]),
+      tcp:  TCP.new(addr: addrs[:tcp], handler: handler, logger: logger),
+      udp:  UDP.new(addr: addrs[:udp], handler: handler, logger: logger),
+    }
   end
 
   def join
-    tcp.join
+    servers[:tcp].join
   end
 
   def start
-    http.start
-    tcp.start
-    udp.start
+    servers.values.each(&:start)
     self
   end
 
   def http_addr
-    http.addr
+    servers[:http].addr
   end
 
   def stop
-    http.stop
-    tcp.stop
-    udp.stop
+    servers.values.each(&:stop)
   end
 
   def tcp_addr
-    tcp.addr
+    servers[:tcp].addr
   end
 
   def udp_addr
-    udp.addr
+    servers[:udp].addr
   end
 
-  attr_reader :http, :tcp, :udp
-  private     :http, :tcp, :udp
+  attr_reader :servers
+  private     :servers
 end end
