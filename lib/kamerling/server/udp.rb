@@ -12,7 +12,7 @@ module Kamerling class Server::UDP
 
   def start
     logger.info "start #{addr}"
-    Thread.new do
+    @thread = Thread.new do
       loop do
         if IO.select [socket]
           input, conn = socket.recvfrom 2**16
@@ -26,6 +26,11 @@ module Kamerling class Server::UDP
     self
   end
 
-  attr_reader :handler, :logger, :socket
-  private     :handler, :logger, :socket
+  def stop
+    thread.exit
+    socket.close
+  end
+
+  attr_reader :handler, :logger, :socket, :thread
+  private     :handler, :logger, :socket, :thread
 end end

@@ -30,6 +30,15 @@ module Kamerling describe Server::UDP do
     end
   end
 
+  describe '#stop' do
+    it 'closes the socket (and thus allows rebinding to it)' do
+      udp  = Server::UDP.new.start
+      addr = udp.addr
+      udp.stop
+      UDPSocket.new.bind(*addr)
+    end
+  end
+
   describe '#addr' do
     it 'returns the server’s host + port as an UDP addr' do
       server = Server::UDP.new.start
