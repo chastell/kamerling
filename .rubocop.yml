@@ -34,9 +34,6 @@ MethodLength:
 MethodName:
   Enabled: false
 
-ParameterLists:
-  Enabled: false
-
 SignalException:
   Enabled: false
 
