@@ -17,17 +17,27 @@ module Kamerling describe Server do
     end
   end
 
-  describe '#start, #stop' do
-    it 'starts/stops HTTP, UDP and TCP servers on the given host and ports' do
-      capture_io do
-        server.start
-        400.times { run_all_threads }
-        uri = URI.parse "http://0.0.0.0:#{server.http_addr.port}"
-        Net::HTTP.get_response(uri).must_be_kind_of Net::HTTPSuccess
-        TCPSocket.open        '0.0.0.0', server.tcp_addr.port
-        UDPSocket.new.connect '0.0.0.0', server.udp_addr.port
-        server.stop
-      end
+  describe '#start' do
+    it 'starts all servers' do
+      servers = {
+        http: fake(Server::HTTP),
+        tcp:  fake(Server::TCP),
+        udp:  fake(Server::UDP),
+      }
+      Server.new(addrs: {}, servers: servers).start
+      servers.values.each { |server| server.must_have_received :start, [] }
+    end
+  end
+
+  describe '#stop' do
+    it 'stops all servers' do
+      servers = {
+        http: fake(Server::HTTP),
+        tcp:  fake(Server::TCP),
+        udp:  fake(Server::UDP),
+      }
+      Server.new(addrs: {}, servers: servers).start.stop
+      servers.values.each { |server| server.must_have_received :stop, [] }
     end
   end
 
