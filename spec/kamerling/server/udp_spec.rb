@@ -18,9 +18,7 @@ module Kamerling describe Server::UDP do
 
   describe '#stop' do
     it 'closes the socket (and thus allows rebinding to it)' do
-      server = Server::UDP.new(addr: addr).start
-      addr   = server.addr
-      server.stop
+      Server::UDP.new(addr: addr).start.stop
       UDPSocket.new.tap { |socket| socket.bind(*addr) }.close
     end
   end
