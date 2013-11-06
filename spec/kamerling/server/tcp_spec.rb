@@ -1,28 +1,18 @@
 require_relative '../../spec_helper'
 
 module Kamerling describe Server::TCP do
-  describe '.new' do
-    it 'sets up a TCP server on the given host and port' do
-      server = Server::TCP.new(host: '0.0.0.0', port: 1981).start
-      TCPSocket.open '0.0.0.0', 1981
-      server.stop
-    end
-
-    it 'defaults to localhost' do
-      Server::TCP.new(port: 1981).addr.host.must_equal '127.0.0.1'
-    end
-  end
+  let(:addr) { Addr['localhost', 1981, :TCP] }
 
   describe '#addr' do
     it 'returns the server’s host + port as a TCP addr' do
-      server = Server::TCP.new host: '0.0.0.0', port: 1981
+      server = Server::TCP.new addr: Addr['0.0.0.0', 1981, :TCP]
       server.addr.must_equal Addr['0.0.0.0', 1981, :TCP]
     end
   end
 
   describe '#start' do
     it 'listens on a TCP port and passes the received input to the handler' do
-      server = Server::TCP.new handler: handler = fake(:handler), port: 1981
+      server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
       server.start
       s_addr = TCPSocket.open(*server.addr) do |socket|
         socket << 'message'
@@ -36,7 +26,7 @@ module Kamerling describe Server::TCP do
 
   describe '#stop' do
     it 'stops the server' do
-      tcp  = Server::TCP.new(port: 1981).start
+      tcp  = Server::TCP.new(addr: addr).start
       addr = tcp.addr
       tcp.stop
       run_all_threads
@@ -48,7 +38,7 @@ module Kamerling describe Server::TCP do
     let(:log)    { StringIO.new                               }
     let(:logged) { log.tap(&:rewind).read                     }
     let(:logger) { Logger.new log                             }
-    let(:server) { Server::TCP.new logger: logger, port: 1981 }
+    let(:server) { Server::TCP.new addr: addr, logger: logger }
 
     after do
       server.stop

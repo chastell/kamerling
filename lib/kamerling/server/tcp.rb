@@ -1,14 +1,13 @@
 module Kamerling class Server::TCP < GServer
-  def initialize handler: Handler.new, host: '127.0.0.1',
-                 logger: Logger.new('/dev/null'), port: req(:port)
-    super port, host
+  attr_reader :addr
+
+  def initialize addr: req(:addr), handler: Handler.new,
+                 logger: Logger.new('/dev/null')
+    super addr.port, addr.host
+    @addr    = addr
     @audit   = true
     @handler = handler
     @logger  = logger
-  end
-
-  def addr
-    Addr[host, port, :TCP]
   end
 
   attr_reader :handler, :logger
