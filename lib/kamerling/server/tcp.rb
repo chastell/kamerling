@@ -1,6 +1,6 @@
 module Kamerling class Server::TCP < GServer
   def initialize handler: Handler.new, host: '127.0.0.1',
-                 logger: Logger.new('/dev/null'), port: 0
+                 logger: Logger.new('/dev/null'), port: req(:port)
     super port, host
     @audit   = true
     @handler = handler

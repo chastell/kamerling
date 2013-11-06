@@ -8,27 +8,21 @@ module Kamerling describe Server::TCP do
     end
 
     it 'defaults to localhost' do
-      Server::TCP.new.addr.host.must_equal '127.0.0.1'
-    end
-
-    it 'defaults to random, unused ports' do
-      s1, s2 = Server::TCP.new.start, Server::TCP.new.start
-      (1024..65_535).must_include s1.addr.port
-      (1024..65_535).must_include s2.addr.port
-      s1.addr.port.wont_equal s2.addr.port
+      Server::TCP.new(port: 1986).addr.host.must_equal '127.0.0.1'
     end
   end
 
   describe '#addr' do
     it 'returns the server’s host + port as a TCP addr' do
-      server = Server::TCP.new
+      server = Server::TCP.new port: 1985
       server.addr.must_equal Addr['127.0.0.1', server.addr.port, :TCP]
     end
   end
 
   describe '#start' do
     it 'listens on a TCP port and passes the received input to the handler' do
-      server = Server::TCP.new(handler: handler = fake(:handler)).start
+      server = Server::TCP.new handler: handler = fake(:handler), port: 1984
+      server.start
       s_addr = TCPSocket.open(*server.addr) do |socket|
         socket << 'message'
         Addr[*socket.local_address.ip_unpack, :TCP]
@@ -40,7 +34,7 @@ module Kamerling describe Server::TCP do
 
   describe '#stop' do
     it 'stops the server' do
-      tcp  = Server::TCP.new.start
+      tcp  = Server::TCP.new(port: 1983).start
       addr = tcp.addr
       tcp.stop
       run_all_threads
@@ -49,10 +43,15 @@ module Kamerling describe Server::TCP do
   end
 
   describe 'logging' do
-    let(:log)    { StringIO.new                   }
-    let(:logged) { log.tap(&:rewind).read         }
-    let(:logger) { Logger.new log                 }
-    let(:server) { Server::TCP.new logger: logger }
+    let(:log)    { StringIO.new                               }
+    let(:logged) { log.tap(&:rewind).read                     }
+    let(:logger) { Logger.new log                             }
+    let(:server) { Server::TCP.new logger: logger, port: 1982 }
+
+    after do
+      server.stop
+      run_all_threads
+    end
 
     it 'logs server starts' do
       server.start
