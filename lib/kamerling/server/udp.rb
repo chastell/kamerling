@@ -1,19 +1,16 @@
 module Kamerling class Server::UDP
-  def initialize handler: Handler.new, host: '127.0.0.1',
-                 logger: Logger.new('/dev/null'), port: req(:port)
-    @handler = handler
-    @host    = host
-    @logger  = logger
-    @port    = port
-  end
+  attr_reader :addr
 
-  def addr
-    Addr[host, port, :UDP]
+  def initialize addr: req(:addr), handler: Handler.new,
+                 logger: Logger.new('/dev/null')
+    @addr    = addr
+    @handler = handler
+    @logger  = logger
   end
 
   def start
     logger.info "start #{addr}"
-    @socket = UDPSocket.new.tap { |server| server.bind host, port }
+    @socket = UDPSocket.new.tap { |server| server.bind(*addr) }
     @thread = Thread.new do
       run_select_loop
     end
@@ -25,8 +22,8 @@ module Kamerling class Server::UDP
     socket.close
   end
 
-  attr_reader :handler, :host, :logger, :port, :socket, :thread
-  private     :handler, :host, :logger, :port, :socket, :thread
+  attr_reader :handler, :logger, :socket, :thread
+  private     :handler, :logger, :socket, :thread
 
   private
 

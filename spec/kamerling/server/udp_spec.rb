@@ -1,17 +1,11 @@
 require_relative '../../spec_helper'
 
 module Kamerling describe Server::UDP do
-  describe '.new' do
-    it 'defaults to localhost' do
-      server = Server::UDP.new(port: 1979).start
-      server.addr.host.must_equal '127.0.0.1'
-      server.stop
-    end
-  end
+  let(:addr) { Addr['localhost', 1979, :UDP] }
 
   describe '#start' do
     it 'listens on an UDP port and passes the received input to the handler' do
-      server = Server::UDP.new handler: handler = fake(:handler), port: 1979
+      server = Server::UDP.new addr: addr, handler: handler = fake(:handler)
       server.start
       client = UDPSocket.new.tap { |socket| socket.connect(*server.addr) }
       client.send 'message', 0
@@ -24,7 +18,7 @@ module Kamerling describe Server::UDP do
 
   describe '#stop' do
     it 'closes the socket (and thus allows rebinding to it)' do
-      server = Server::UDP.new(port: 1979).start
+      server = Server::UDP.new(addr: addr).start
       addr   = server.addr
       server.stop
       UDPSocket.new.tap { |socket| socket.bind(*addr) }.close
@@ -33,8 +27,8 @@ module Kamerling describe Server::UDP do
 
   describe '#addr' do
     it 'returns the server’s host + port as an UDP addr' do
-      server = Server::UDP.new(host: '0.0.0.0', port: 1979).start
-      server.addr.must_equal Addr['0.0.0.0', 1979, :UDP]
+      server = Server::UDP.new(addr: addr).start
+      server.addr.must_equal addr
       server.stop
     end
   end
@@ -43,7 +37,7 @@ module Kamerling describe Server::UDP do
     let(:log)    { StringIO.new                               }
     let(:logged) { log.tap(&:rewind).read                     }
     let(:logger) { Logger.new log                             }
-    let(:server) { Server::UDP.new logger: logger, port: 1979 }
+    let(:server) { Server::UDP.new addr: addr, logger: logger }
 
     after { server.stop }
 
