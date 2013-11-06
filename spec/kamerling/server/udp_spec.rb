@@ -3,36 +3,38 @@ require_relative '../../spec_helper'
 module Kamerling describe Server::UDP do
   describe '.new' do
     it 'defaults to localhost' do
-      Server::UDP.new(port: 1983).addr.host.must_equal '127.0.0.1'
+      server = Server::UDP.new(port: 1979).start
+      server.addr.host.must_equal '127.0.0.1'
+      server.stop
     end
   end
 
   describe '#start' do
     it 'listens on an UDP port and passes the received input to the handler' do
-      server = Server::UDP.new handler: handler = fake(:handler), port: 1982
+      server = Server::UDP.new handler: handler = fake(:handler), port: 1979
       server.start
       client = UDPSocket.new.tap { |s| s.connect(*server.addr) }
       client.send 'message', 0
       c_addr = Addr[client.addr[3], client.addr[1], :UDP]
       2.times { run_all_threads }
       handler.must_have_received :handle, ['message', c_addr]
+      server.stop
     end
   end
 
   describe '#stop' do
     it 'closes the socket (and thus allows rebinding to it)' do
-      udp  = Server::UDP.new(port: 1981).start
-      addr = udp.addr
-      udp.stop
-      UDPSocket.new.bind(*addr)
+      server = Server::UDP.new(port: 1979).start
+      addr   = server.addr
+      server.stop
+      UDPSocket.new.tap { |socket| socket.bind(*addr) }.close
     end
   end
 
   describe '#addr' do
     it 'returns the server’s host + port as an UDP addr' do
-      server = Server::UDP.new(host: '0.0.0.0', port: 1980).start
-      run_all_threads
-      server.addr.must_equal Addr['0.0.0.0', 1980, :UDP]
+      server = Server::UDP.new(host: '0.0.0.0', port: 1979).start
+      server.addr.must_equal Addr['0.0.0.0', 1979, :UDP]
       server.stop
     end
   end
