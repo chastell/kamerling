@@ -20,7 +20,12 @@ logger = Logger.new $stdout
 logger.level = Logger::INFO
 
 Kamerling::Repos.db = Sequel.sqlite c.db
-server = Kamerling::Server.new logger: logger, host: c.host,
-  http_port: c.http, tcp_port: c.tcp, udp_port: c.udp
+
+addrs = {
+  http: Kamerling::Addr[c.host, c.http, :TCP],
+  tcp:  Kamerling::Addr[c.host, c.tcp,  :TCP],
+  udp:  Kamerling::Addr[c.host, c.udp,  :UDP],
+}
+server = Kamerling::Server.new addrs: addrs, logger: logger
 server.start
 server.join
