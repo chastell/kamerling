@@ -26,6 +26,8 @@ module Kamerling class Server
 
   def stop
     http.stop
+    tcp.stop
+    udp.stop
   end
 
   def tcp_addr
