@@ -3,25 +3,26 @@ require_relative '../../spec_helper'
 module Kamerling describe Server::TCP do
   describe '.new' do
     it 'sets up a TCP server on the given host and port' do
-      Server::TCP.new(host: '0.0.0.0', port: 1981).start
+      server = Server::TCP.new(host: '0.0.0.0', port: 1981).start
       TCPSocket.open '0.0.0.0', 1981
+      server.stop
     end
 
     it 'defaults to localhost' do
-      Server::TCP.new(port: 1986).addr.host.must_equal '127.0.0.1'
+      Server::TCP.new(port: 1981).addr.host.must_equal '127.0.0.1'
     end
   end
 
   describe '#addr' do
     it 'returns the server’s host + port as a TCP addr' do
-      server = Server::TCP.new port: 1985
-      server.addr.must_equal Addr['127.0.0.1', server.addr.port, :TCP]
+      server = Server::TCP.new host: '0.0.0.0', port: 1981
+      server.addr.must_equal Addr['0.0.0.0', 1981, :TCP]
     end
   end
 
   describe '#start' do
     it 'listens on a TCP port and passes the received input to the handler' do
-      server = Server::TCP.new handler: handler = fake(:handler), port: 1984
+      server = Server::TCP.new handler: handler = fake(:handler), port: 1981
       server.start
       s_addr = TCPSocket.open(*server.addr) do |socket|
         socket << 'message'
@@ -29,12 +30,13 @@ module Kamerling describe Server::TCP do
       end
       4.times { run_all_threads }
       handler.must_have_received :handle, ['message', s_addr]
+      server.stop
     end
   end
 
   describe '#stop' do
     it 'stops the server' do
-      tcp  = Server::TCP.new(port: 1983).start
+      tcp  = Server::TCP.new(port: 1981).start
       addr = tcp.addr
       tcp.stop
       run_all_threads
@@ -46,7 +48,7 @@ module Kamerling describe Server::TCP do
     let(:log)    { StringIO.new                               }
     let(:logged) { log.tap(&:rewind).read                     }
     let(:logger) { Logger.new log                             }
-    let(:server) { Server::TCP.new logger: logger, port: 1982 }
+    let(:server) { Server::TCP.new logger: logger, port: 1981 }
 
     after do
       server.stop
