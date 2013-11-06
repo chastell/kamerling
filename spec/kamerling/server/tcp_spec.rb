@@ -37,19 +37,19 @@ module Kamerling describe Server::TCP do
     let(:logger) { Logger.new log                             }
     let(:server) { Server::TCP.new addr: addr, logger: logger }
 
+    before { server.start }
+
     after do
       server.stop
       run_all_threads
     end
 
     it 'logs server starts' do
-      server.start
-      run_all_threads
+      2.times { run_all_threads }
       logged.must_include "start #{server.addr}"
     end
 
     it 'logs server connects' do
-      server.start
       tcp_addr = TCPSocket.open(*server.addr) do |socket|
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
@@ -58,7 +58,6 @@ module Kamerling describe Server::TCP do
     end
 
     it 'logs messages received' do
-      server.start
       tcp_addr = TCPSocket.open(*server.addr) do |socket|
         socket << 'TCP message'
         Addr[*socket.local_address.ip_unpack, :TCP]
