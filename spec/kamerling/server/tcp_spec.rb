@@ -43,6 +43,7 @@ module Kamerling describe Server::TCP do
       tcp  = Server::TCP.new.start
       addr = tcp.addr
       tcp.stop
+      run_all_threads
       -> { TCPSocket.open(*addr) }.must_raise Errno::ECONNREFUSED
     end
   end
