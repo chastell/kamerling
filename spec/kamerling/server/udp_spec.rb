@@ -35,16 +35,15 @@ module Kamerling describe Server::UDP do
     let(:logger) { Logger.new log                             }
     let(:server) { Server::UDP.new addr: addr, logger: logger }
 
-    after { server.stop }
+    before { server.start }
+    after  { server.stop  }
 
     it 'logs server starts' do
-      server.start
       run_all_threads
       logged.must_include "start #{server.addr}"
     end
 
     it 'logs server connects' do
-      server.start
       client = UDPSocket.new.tap { |s| s.connect(*server.addr) }
       client.send '', 0
       addr = Addr[client.addr[3], client.addr[1], :UDP]
@@ -53,7 +52,6 @@ module Kamerling describe Server::UDP do
     end
 
     it 'logs messages received' do
-      server.start
       client = UDPSocket.new.tap { |s| s.connect(*server.addr) }
       client.send 'UDP message', 0
       addr = Addr[client.addr[3], client.addr[1], :UDP]
