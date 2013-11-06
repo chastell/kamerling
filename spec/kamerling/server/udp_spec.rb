@@ -13,7 +13,7 @@ module Kamerling describe Server::UDP do
     it 'listens on an UDP port and passes the received input to the handler' do
       server = Server::UDP.new handler: handler = fake(:handler), port: 1979
       server.start
-      client = UDPSocket.new.tap { |s| s.connect(*server.addr) }
+      client = UDPSocket.new.tap { |socket| socket.connect(*server.addr) }
       client.send 'message', 0
       c_addr = Addr[client.addr[3], client.addr[1], :UDP]
       2.times { run_all_threads }
