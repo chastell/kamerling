@@ -13,15 +13,7 @@ module Kamerling class Server::UDP
   def start
     logger.info "start #{addr}"
     @thread = Thread.new do
-      loop do
-        if IO.select [socket]
-          input, conn = socket.recvfrom 2**16
-          client_addr = Addr[conn[3], conn[1], :UDP]
-          logger.info "connect #{client_addr}"
-          logger.debug "received #{client_addr} #{input}"
-          handler.handle input, client_addr
-        end
-      end
+      run_select_loop
     end
     self
   end
@@ -33,4 +25,18 @@ module Kamerling class Server::UDP
 
   attr_reader :handler, :logger, :socket, :thread
   private     :handler, :logger, :socket, :thread
+
+  private
+
+  def run_select_loop
+    loop do
+      if IO.select [socket]
+        input, conn = socket.recvfrom 2**16
+        client_addr = Addr[conn[3], conn[1], :UDP]
+        logger.info "connect #{client_addr}"
+        logger.debug "received #{client_addr} #{input}"
+        handler.handle input, client_addr
+      end
+    end
+  end
 end end
