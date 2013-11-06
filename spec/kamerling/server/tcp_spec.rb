@@ -25,9 +25,7 @@ module Kamerling describe Server::TCP do
 
   describe '#stop' do
     it 'stops the server' do
-      tcp  = Server::TCP.new(addr: addr).start
-      addr = tcp.addr
-      tcp.stop
+      Server::TCP.new(addr: addr).start.stop
       run_all_threads
       -> { TCPSocket.open(*addr) }.must_raise Errno::ECONNREFUSED
     end
