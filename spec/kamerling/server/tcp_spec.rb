@@ -38,6 +38,15 @@ module Kamerling describe Server::TCP do
     end
   end
 
+  describe '#stop' do
+    it 'stops the server' do
+      tcp  = Server::TCP.new.start
+      addr = tcp.addr
+      tcp.stop
+      -> { TCPSocket.open(*addr) }.must_raise Errno::ECONNREFUSED
+    end
+  end
+
   describe 'logging' do
     let(:log)    { StringIO.new                   }
     let(:logged) { log.tap(&:rewind).read         }
