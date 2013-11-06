@@ -19,6 +19,13 @@ module Kamerling describe Server::TCP do
     end
   end
 
+  describe '#addr' do
+    it 'returns the server’s host + port as a TCP addr' do
+      server = Server::TCP.new
+      server.addr.must_equal Addr['127.0.0.1', server.addr.port, :TCP]
+    end
+  end
+
   describe '#start' do
     it 'listens on a TCP port and passes the received input to the handler' do
       server = Server::TCP.new(handler: handler = fake(:handler)).start
@@ -28,13 +35,6 @@ module Kamerling describe Server::TCP do
       end
       4.times { run_all_threads }
       handler.must_have_received :handle, ['message', s_addr]
-    end
-  end
-
-  describe '#addr' do
-    it 'returns the server’s host + port as a TCP addr' do
-      server = Server::TCP.new
-      server.addr.must_equal Addr['127.0.0.1', server.addr.port, :TCP]
     end
   end
 
