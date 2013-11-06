@@ -4,11 +4,8 @@ module Kamerling describe Server::HTTP do
   describe '#addr' do
     it 'returns the server’s host + port as a TCP addr' do
       capture_io do
-        server = Server::HTTP.new.start
-        400.times { run_all_threads }
-        server.addr.must_equal Addr['127.0.0.1', server.addr.port, :TCP]
-        server.stop
-        3.times { run_all_threads }
+        server = Server::HTTP.new(host: '0.0.0.0', port: 2009)
+        server.addr.must_equal Addr['0.0.0.0', 2009, :TCP]
       end
     end
   end

@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Server do
-  let(:server) { Server.new host: '0.0.0.0' }
+  let(:server) { Server.new host: '0.0.0.0', http_port: 2006 }
 
   describe '#join' do
     it 'allows joining the TCP server thread' do
