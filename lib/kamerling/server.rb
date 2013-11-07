@@ -20,20 +20,8 @@ module Kamerling class Server
     self
   end
 
-  def http_addr
-    servers[:http].addr
-  end
-
   def stop
     servers.values.each(&:stop)
-  end
-
-  def tcp_addr
-    servers[:tcp].addr
-  end
-
-  def udp_addr
-    servers[:udp].addr
   end
 
   attr_reader :servers
