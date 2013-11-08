@@ -1,39 +1,37 @@
-module Kamerling class Server::TCP < GServer
+module Kamerling class Server::TCP
   attr_reader :addr
 
   def initialize addr: req(:addr), handler: Handler.new,
                  logger: Logger.new('/dev/null')
-    super addr.port, addr.host
     @addr    = addr
-    @audit   = true
     @handler = handler
     @logger  = logger
   end
 
-  attr_reader :handler, :logger
-  private     :handler, :logger
-
-  private
-
-  def connecting client
-    logger.info "connect #{Addr[*client.remote_address.ip_unpack, :TCP]}"
-    true
-  end
-
-  def disconnecting *_
-  end
-
-  def serve io
-    addr  = Addr[*io.remote_address.ip_unpack, :TCP]
-    input = io.read
-    logger.debug "received #{addr} #{input}"
-    handler.handle input, addr
-  end
-
-  def starting
+  def start
     logger.info "start #{addr}"
+    @thread = Thread.new do
+      Socket.tcp_server_loop(*addr) do |socket|
+        handle_connection socket
+      end
+    end
+    self
   end
 
-  def stopping
+  def stop
+    thread.exit
+  end
+
+  attr_reader :handler, :logger, :thread
+  private     :handler, :logger, :thread
+
+  def handle_connection socket
+    c_addr = Addr[*socket.remote_address.ip_unpack, :TCP]
+    input  = socket.read
+    logger.info "connect #{c_addr}"
+    logger.debug "received #{c_addr} #{input}"
+    handler.handle input, c_addr
+  ensure
+    socket.close
   end
 end end
