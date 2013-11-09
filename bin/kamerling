@@ -28,4 +28,3 @@ addrs = {
 }
 server = Kamerling::Server.new addrs: addrs, logger: logger
 server.start
-server.join
