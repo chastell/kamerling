@@ -10,24 +10,23 @@ module Kamerling class Server::UDP
 
   def start
     logger.info "start #{addr}"
-    @socket = UDPSocket.new.tap { |server| server.bind(*addr) }
     @thread = Thread.new do
-      run_select_loop
+      run_select_loop UDPSocket.new.tap { |server| server.bind(*addr) }
     end
+    200.times { thread.run }
     self
   end
 
   def stop
-    thread.exit
-    socket.close
+    thread.exit.join
   end
 
-  attr_reader :handler, :logger, :socket, :thread
-  private     :handler, :logger, :socket, :thread
+  attr_reader :handler, :logger, :thread
+  private     :handler, :logger, :thread
 
   private
 
-  def run_select_loop
+  def run_select_loop socket
     loop do
       if IO.select [socket]
         input, conn = socket.recvfrom 2**16
@@ -37,5 +36,7 @@ module Kamerling class Server::UDP
         handler.handle input, client_addr
       end
     end
+  ensure
+    socket.close
   end
 end end

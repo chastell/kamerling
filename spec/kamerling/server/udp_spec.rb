@@ -4,15 +4,19 @@ module Kamerling describe Server::UDP do
   let(:addr) { Addr['localhost', 1979, :UDP] }
 
   describe '#start' do
-    it 'listens on an UDP port and passes the received input to the handler' do
+    it 'listens on an UDP port and passes received inputs to the handler' do
       server = Server::UDP.new addr: addr, handler: handler = fake(:handler)
       server.start
-      client = UDPSocket.new.tap { |socket| socket.connect(*server.addr) }
-      client.send 'message', 0
-      c_addr = Addr[client.addr[3], client.addr[1], :UDP]
+      foo = UDPSocket.new
+      bar = UDPSocket.new
+      foo.send 'foo', 0, *server.addr
+      bar.send 'bar', 0, *server.addr
+      foo_addr = Addr['127.0.0.1', foo.addr[1], :UDP]
+      bar_addr = Addr['127.0.0.1', bar.addr[1], :UDP]
       run_all_threads
-      handler.must_have_received :handle, ['message', c_addr]
       server.stop
+      handler.must_have_received :handle, ['foo', foo_addr]
+      handler.must_have_received :handle, ['bar', bar_addr]
     end
   end
 
@@ -43,17 +47,17 @@ module Kamerling describe Server::UDP do
     end
 
     it 'logs server connects' do
-      client = UDPSocket.new.tap { |s| s.connect(*server.addr) }
-      client.send '', 0
-      addr = Addr[client.addr[3], client.addr[1], :UDP]
+      client = UDPSocket.new
+      client.send '', 0, *server.addr
+      addr = Addr['127.0.0.1', client.addr[1], :UDP]
       run_all_threads
       logged.must_include "connect #{addr}"
     end
 
     it 'logs messages received' do
-      client = UDPSocket.new.tap { |s| s.connect(*server.addr) }
-      client.send 'UDP message', 0
-      addr = Addr[client.addr[3], client.addr[1], :UDP]
+      client = UDPSocket.new
+      client.send 'UDP message', 0, *server.addr
+      addr = Addr['127.0.0.1', client.addr[1], :UDP]
       run_all_threads
       logged.must_include "received #{addr} UDP message"
     end
