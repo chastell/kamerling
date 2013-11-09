@@ -15,6 +15,15 @@ module Kamerling class Server::TCP
         handle_connection socket
       end
     end
+    loop do
+      begin
+        TCPSocket.open(*addr).close
+      rescue Errno::ECONNREFUSED
+        retry
+      else
+        break
+      end
+    end
     self
   end
 

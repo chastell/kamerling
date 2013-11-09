@@ -13,7 +13,6 @@ module Kamerling describe Server::TCP do
     it 'listens on a TCP port and passes the received input to the handler' do
       server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
       server.start
-      run_all_threads
       s_addr = TCPSocket.open(*server.addr) do |socket|
         socket << 'message'
         Addr[*socket.local_address.ip_unpack, :TCP]
@@ -51,7 +50,6 @@ module Kamerling describe Server::TCP do
     end
 
     it 'logs server connects' do
-      run_all_threads
       tcp_addr = TCPSocket.open(*server.addr) do |socket|
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
@@ -60,7 +58,6 @@ module Kamerling describe Server::TCP do
     end
 
     it 'logs messages received' do
-      run_all_threads
       tcp_addr = TCPSocket.open(*server.addr) do |socket|
         socket << 'TCP message'
         Addr[*socket.local_address.ip_unpack, :TCP]
