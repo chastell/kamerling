@@ -13,6 +13,9 @@ CaseEquality:
 ConstantName:
   Enabled: false
 
+CyclomaticComplexity:
+  Enabled: false
+
 DefWithoutParentheses:
   Enabled: false
 
