@@ -22,5 +22,5 @@ end
 Thread.abort_on_exception = true
 
 def run_all_threads
-  sleep 0.05
+  sleep 0.001
 end
