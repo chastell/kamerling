@@ -6,11 +6,22 @@ module Kamerling class Server::HTTP
   end
 
   def start
-    Thread.new { HTTPAPI.run! bind: addr.host, port: addr.port }
+    @thread = Thread.new { HTTPAPI.run! bind: addr.host, port: addr.port }
+    loop { break if connectable? }
     self
   end
 
   def stop
-    HTTPAPI.quit!
+    thread.exit.join
+  end
+
+  attr_reader :thread
+  private     :thread
+
+  def connectable?
+    TCPSocket.open(*addr).close
+    true
+  rescue Errno::ECONNREFUSED
+    false
   end
 end end

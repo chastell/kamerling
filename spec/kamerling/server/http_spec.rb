@@ -13,7 +13,6 @@ module Kamerling describe Server::HTTP do
     it 'starts/stops a HTTP server on the given host and port' do
       capture_io do
         server = Server::HTTP.new(addr: addr).start
-        run_all_threads
         uri = URI.parse 'http://localhost:2009'
         Net::HTTP.get_response(uri).must_be_kind_of Net::HTTPSuccess
         server.stop
