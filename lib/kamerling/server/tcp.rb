@@ -20,7 +20,7 @@ module Kamerling class Server::TCP
   end
 
   def stop
-    thread.exit
+    thread.exit.join
   end
 
   attr_reader :handler, :logger, :thread

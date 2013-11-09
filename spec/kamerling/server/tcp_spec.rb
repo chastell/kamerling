@@ -10,16 +10,21 @@ module Kamerling describe Server::TCP do
   end
 
   describe '#start' do
-    it 'listens on a TCP port and passes the received input to the handler' do
+    it 'listens on a TCP port and passes received inputs to the handler' do
       server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
       server.start
-      s_addr = TCPSocket.open(*server.addr) do |socket|
-        socket << 'message'
+      s_addr_foo = TCPSocket.open(*server.addr) do |socket|
+        socket << 'foo'
+        Addr[*socket.local_address.ip_unpack, :TCP]
+      end
+      s_addr_bar = TCPSocket.open(*server.addr) do |socket|
+        socket << 'bar'
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
       run_all_threads
-      handler.must_have_received :handle, ['message', s_addr]
       server.stop
+      handler.must_have_received :handle, ['foo', s_addr_foo]
+      handler.must_have_received :handle, ['bar', s_addr_bar]
     end
   end
 
@@ -27,7 +32,7 @@ module Kamerling describe Server::TCP do
     it 'stops the server' do
       server = Server::TCP.new(addr: addr).start
       server.stop
-      -> { TCPSocket.open(*addr) }.must_raise Errno::ECONNREFUSED
+      -> { TCPSocket.open(*addr).close }.must_raise Errno::ECONNREFUSED
     end
   end
 
@@ -37,13 +42,8 @@ module Kamerling describe Server::TCP do
     let(:logger) { Logger.new log                             }
     let(:server) { Server::TCP.new addr: addr, logger: logger }
 
-    before do
-      server.start
-    end
-
-    after do
-      server.stop
-    end
+    before { server.start }
+    after  { server.stop  }
 
     it 'logs server starts' do
       logged.must_include "start #{server.addr}"
