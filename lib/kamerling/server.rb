@@ -7,10 +7,6 @@ module Kamerling class Server
     @servers = servers
   end
 
-  def join
-    servers[:tcp].join
-  end
-
   def start
     servers.values.each(&:start)
     self

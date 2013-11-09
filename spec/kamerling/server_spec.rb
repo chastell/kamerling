@@ -11,12 +11,6 @@ module Kamerling describe Server do
 
   let(:server) { Server.new addrs: addrs }
 
-  describe '#join' do
-    it 'allows joining the TCP server thread' do
-      server.must_respond_to :join
-    end
-  end
-
   describe '#start' do
     it 'starts all servers' do
       servers = {
