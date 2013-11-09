@@ -31,7 +31,5 @@ module Kamerling class Server::TCP
     logger.info "connect #{c_addr}"
     logger.debug "received #{c_addr} #{input}"
     handler.handle input, c_addr
-  ensure
-    socket.close
   end
 end end
