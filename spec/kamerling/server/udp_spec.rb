@@ -10,7 +10,7 @@ module Kamerling describe Server::UDP do
       client = UDPSocket.new.tap { |socket| socket.connect(*server.addr) }
       client.send 'message', 0
       c_addr = Addr[client.addr[3], client.addr[1], :UDP]
-      2.times { run_all_threads }
+      run_all_threads
       handler.must_have_received :handle, ['message', c_addr]
       server.stop
     end
@@ -39,7 +39,6 @@ module Kamerling describe Server::UDP do
     after  { server.stop  }
 
     it 'logs server starts' do
-      run_all_threads
       logged.must_include "start #{server.addr}"
     end
 
