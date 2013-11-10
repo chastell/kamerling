@@ -19,7 +19,7 @@ module Kamerling class Server::TCP
         handle_connection socket
       end
     end
-    loop { break if connectable? }
+    loop { break if addr.connectable? }
     self
   end
 
@@ -29,13 +29,6 @@ module Kamerling class Server::TCP
 
   attr_reader :handler, :logger, :thread
   private     :handler, :logger, :thread
-
-  def connectable?
-    TCPSocket.open(*addr).close
-    true
-  rescue Errno::ECONNREFUSED
-    false
-  end
 
   def handle_connection socket
     c_addr = Addr[*socket.remote_address.ip_unpack, :TCP]
