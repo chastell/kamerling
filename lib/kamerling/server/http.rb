@@ -6,7 +6,9 @@ module Kamerling class Server::HTTP
   end
 
   def start
-    @thread = Thread.new { HTTPAPI.run! bind: addr.host, port: addr.port }
+    @thread = Thread.new do
+      Rack::Handler::WEBrick.run HTTPAPI, Host: addr.host, Port: addr.port
+    end
     loop { break if connectable? }
     self
   end
