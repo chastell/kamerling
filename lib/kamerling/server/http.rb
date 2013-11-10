@@ -5,6 +5,10 @@ module Kamerling class Server::HTTP
     @addr = addr
   end
 
+  def join
+    thread.join
+  end
+
   def start
     @thread = Thread.new do
       Rack::Handler::WEBrick.run HTTPAPI, Host: addr.host, Port: addr.port

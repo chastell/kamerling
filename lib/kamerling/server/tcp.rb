@@ -8,6 +8,10 @@ module Kamerling class Server::TCP
     @logger  = logger
   end
 
+  def join
+    thread.join
+  end
+
   def start
     logger.info "start #{addr}"
     @thread = Thread.new do
