@@ -13,7 +13,7 @@ module Kamerling class Server::HTTP
     @thread = Thread.new do
       Rack::Handler::WEBrick.run HTTPAPI, Host: addr.host, Port: addr.port
     end
-    loop { break if connectable? }
+    loop { break if addr.connectable? }
     self
   end
 
@@ -23,11 +23,4 @@ module Kamerling class Server::HTTP
 
   attr_reader :thread
   private     :thread
-
-  def connectable?
-    TCPSocket.open(*addr).close
-    true
-  rescue Errno::ECONNREFUSED
-    false
-  end
 end end
