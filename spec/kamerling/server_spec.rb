@@ -12,6 +12,13 @@ module Kamerling describe Server do
   let(:server)  { Server.new addrs: addrs }
   let(:servers) { [fake(Server::HTTP), fake(Server::TCP), fake(Server::UDP)] }
 
+  describe '#join' do
+    it 'joins all servers' do
+      Server.new(addrs: {}, servers: servers).join
+      servers.each { |server| server.must_have_received :join, [] }
+    end
+  end
+
   describe '#start' do
     it 'starts all servers' do
       Server.new(addrs: {}, servers: servers).start
