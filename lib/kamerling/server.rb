@@ -8,12 +8,12 @@ module Kamerling class Server
   end
 
   def start
-    servers.values.each(&:start)
+    servers.each(&:start)
     self
   end
 
   def stop
-    servers.values.each(&:stop)
+    servers.each(&:stop)
   end
 
   attr_reader :servers
@@ -22,10 +22,10 @@ module Kamerling class Server
   private
 
   def servers_from addrs, logger
-    {
-      http: HTTP.new(addr: addrs[:http]),
-      tcp:  TCP.new(addr: addrs[:tcp], logger: logger),
-      udp:  UDP.new(addr: addrs[:udp], logger: logger),
-    }
+    [
+      HTTP.new(addr: addrs[:http]),
+      TCP.new(addr: addrs[:tcp], logger: logger),
+      UDP.new(addr: addrs[:udp], logger: logger),
+    ]
   end
 end end
