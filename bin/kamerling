@@ -27,4 +27,4 @@ addrs = {
   udp:  Kamerling::Addr[c.host, c.udp,  :UDP],
 }
 server = Kamerling::Server.new addrs: addrs, logger: logger
-server.start
+server.start.join
