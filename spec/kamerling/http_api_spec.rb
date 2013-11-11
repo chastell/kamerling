@@ -26,10 +26,21 @@ module Kamerling describe HTTPAPI do
   end
 
   describe 'POST /projects' do
-    it 'creates a new project' do
+    it 'creates a new project with a random UUID' do
       app.set repos: repos = fake(:repos, as: :class)
       post '/projects', name: 'ECC'
-      repos.must_have_received :<<, [Project.new(name: 'ECC', uuid: anything)]
+      project = Project.new name: 'ECC', uuid: any(String)
+      repos.must_have_received :<<, [project]
+    end
+
+    it 'creates a new project with the given UUID' do
+      app.set repos: repos = fake(:repos, as: :class)
+      post '/projects', name: 'ECC', uuid: uuid = UUID.new
+      repos.must_have_received :<<, [Project.new(name: 'ECC', uuid: uuid)]
+    end
+
+    it 'redirects to /projects' do
+      post '/projects', name: 'ECC'
       follow_redirect!
       URI(last_request.url).path.must_equal '/projects'
     end
