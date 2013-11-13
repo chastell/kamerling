@@ -5,14 +5,15 @@ module Kamerling describe Repo do
 
   describe '#<<' do
     it 'passes the Hash version of an object to the source' do
-      tune = Tune.new genre: :chap_hop
-      mock(source = fake) << { genre: :chap_hop, uuid: tune.uuid }
+      tune   = Tune.new genre: :chap_hop
+      source = fake Sequel::Dataset
+      mock(source) << { genre: :chap_hop, uuid: tune.uuid }
       Repo.new(Tune, source) << tune
     end
 
     it 'updates the source’s version if it exists there' do
-      dataset = fake
-      source  = fake
+      dataset = fake Sequel::Dataset
+      source  = fake Sequel::Dataset
       tune    = Tune.new genre: :chap_hop
       stub(source).<<(tune.to_h) { raise Sequel::UniqueConstraintViolation }
       stub(source).where(uuid: tune.uuid) { dataset }
@@ -37,7 +38,8 @@ module Kamerling describe Repo do
   describe '#all' do
     it 'returns all objects' do
       tune = Tune.new genre: :chap_hop, uuid: UUID.new
-      source = fake all: [{ genre: :chap_hop, uuid: tune.uuid }]
+      source = fake Sequel::Dataset,
+        all: [{ genre: :chap_hop, uuid: tune.uuid }]
       Repo.new(Tune, source).all.must_equal [tune]
     end
   end
@@ -50,7 +52,8 @@ module Kamerling describe Repo do
         { genre: :ragga, uuid: tunes.first.uuid },
         { genre: :reggae, uuid: tunes.last.uuid },
       ]
-      stub(source = fake).where(project_uuid: project.uuid) { results }
+      source = fake Sequel::Dataset
+      stub(source).where(project_uuid: project.uuid) { results }
       Repo.new(Tune, source).related_to(project).must_equal tunes
     end
   end
