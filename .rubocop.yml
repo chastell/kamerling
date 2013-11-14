@@ -7,6 +7,9 @@ AlignArray:
 AlignHash:
   Enabled: false
 
+AlignParameters:
+  Enabled: false
+
 CaseEquality:
   Enabled: false
 
