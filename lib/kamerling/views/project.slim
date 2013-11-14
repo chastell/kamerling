@@ -1,0 +1,5 @@
+nav
+  ul#tasks
+    - tasks.each do |task|
+      li
+        a href="/tasks/#{task.uuid}" rel='task' = task.done

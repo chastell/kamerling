@@ -27,6 +27,24 @@ module Kamerling describe HTTPAPI do
     end
   end
 
+  describe 'GET /projects/{uuid}' do
+    it 'contains links to tasks' do
+      gimps = fake :project, uuid: UUID.new
+      three = fake :task,    uuid: UUID.new
+      seven = fake :task,    uuid: UUID.new
+      project_repo = fake :repo
+      task_repo    = fake :repo
+      stub(repos).[](Project) { project_repo }
+      stub(repos).[](Task)    { task_repo    }
+      stub(project_repo).[](gimps.uuid) { gimps }
+      stub(task_repo).related_to(gimps) { [three, seven] }
+      get "/projects/#{gimps.uuid}"
+      links = doc.css('#tasks a[rel=task]').map { |a| a['href'] }
+      links.must_include "/tasks/#{three.uuid}"
+      links.must_include "/tasks/#{seven.uuid}"
+    end
+  end
+
   describe 'POST /projects' do
     it 'creates a new project with the given name and UUID' do
       post '/projects', name: 'ECC', uuid: uuid = UUID.new
