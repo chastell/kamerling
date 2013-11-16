@@ -3,10 +3,11 @@ require 'nokogiri'
 require_relative '../spec_helper'
 
 module Kamerling describe HTTPAPI do
-  fake :repos, as: :class
-
-  let(:app) { HTTPAPI.set repos: repos          }
-  let(:doc) { Nokogiri::HTML last_response.body }
+  let(:app)   { HTTPAPI.set repos: repos                        }
+  let(:doc)   { Nokogiri::HTML last_response.body               }
+  let(:ecc)   { fake :project, uuid: UUID.new                   }
+  let(:gimps) { fake :project, uuid: UUID.new                   }
+  let(:repos) { fake :repos, as: :class, projects: [gimps, ecc] }
 
   describe 'GET /' do
     it 'contains a link to projects' do
@@ -17,9 +18,6 @@ module Kamerling describe HTTPAPI do
 
   describe 'GET /projects' do
     it 'contains links to and UUIDs of projects' do
-      gimps = fake :project, uuid: UUID.new
-      ecc   = fake :project, uuid: UUID.new
-      stub(repos).projects { [gimps, ecc] }
       get '/projects'
       links = doc.css '#projects a[rel=project]'
       assert links.any? { |a| a['href']      == "/projects/#{gimps.uuid}" }
@@ -29,9 +27,8 @@ module Kamerling describe HTTPAPI do
 
   describe 'GET /projects/{uuid}' do
     it 'contains links to tasks' do
-      gimps = fake :project, uuid: UUID.new
-      three = fake :task,    uuid: UUID.new
-      seven = fake :task,    uuid: UUID.new
+      three = fake :task, uuid: UUID.new
+      seven = fake :task, uuid: UUID.new
       project_repo = fake :repo
       task_repo    = fake :repo
       stub(repos).[](Project) { project_repo }
