@@ -33,6 +33,10 @@ module Kamerling class Repos
       repos[Project].all
     end
 
+    def tasks_for project_uuid: req(:project_uuid)
+      repos[Task].related_to repos[Project][project_uuid]
+    end
+
     private
 
     def db
