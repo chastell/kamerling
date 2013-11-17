@@ -29,12 +29,7 @@ module Kamerling describe HTTPAPI do
     it 'contains links to tasks' do
       three = fake :task, uuid: UUID.new
       seven = fake :task, uuid: UUID.new
-      project_repo = fake :repo
-      task_repo    = fake :repo
-      stub(repos).[](Project) { project_repo }
-      stub(repos).[](Task)    { task_repo    }
-      stub(project_repo).[](gimps.uuid) { gimps }
-      stub(task_repo).related_to(gimps) { [three, seven] }
+      stub(repos).tasks_for(project_uuid: gimps.uuid) { [three, seven] }
       get "/projects/#{gimps.uuid}"
       links = doc.css('#tasks a[rel=task]').map { |a| a['href'] }
       links.must_include "/tasks/#{three.uuid}"
