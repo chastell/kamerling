@@ -1,3 +1,5 @@
+require 'logger'
+
 require_relative 'kamerling/core_extensions'
 
 include Kamerling::CoreExtensions::Main

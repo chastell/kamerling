@@ -1,6 +1,3 @@
-require 'gserver'
-require 'logger'
-
 module Kamerling class Server
   def initialize addrs: req(:addrs), logger: Logger.new('/dev/null'),
                  servers: servers_from(addrs, logger)
