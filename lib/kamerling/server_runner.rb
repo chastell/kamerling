@@ -5,9 +5,15 @@ module Kamerling class ServerRunner
 
   def initialize args, http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP
     @args = args
-    servers << http.new(addr: Addr[settings.host, settings.http, :TCP])
-    servers << tcp.new(addr:  Addr[settings.host, settings.tcp,  :TCP])
-    servers << udp.new(addr:  Addr[settings.host, settings.udp,  :UDP])
+    if settings.http
+      servers << http.new(addr: Addr[settings.host, settings.http, :TCP])
+    end
+    if settings.tcp
+      servers << tcp.new(addr:  Addr[settings.host, settings.tcp,  :TCP])
+    end
+    if settings.udp
+      servers << udp.new(addr:  Addr[settings.host, settings.udp,  :UDP])
+    end
   end
 
   def start
