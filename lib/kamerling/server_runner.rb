@@ -3,16 +3,13 @@ require 'optparse'
 module Kamerling class ServerRunner
   Settings = Struct.new(*%i[host http tcp udp])
 
-  def initialize args, http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP
+  def initialize args, classes: classes
     @args = args
-    if settings.http
-      servers << http.new(addr: Addr[settings.host, settings.http, :TCP])
-    end
-    if settings.tcp
-      servers << tcp.new(addr:  Addr[settings.host, settings.tcp,  :TCP])
-    end
-    if settings.udp
-      servers << udp.new(addr:  Addr[settings.host, settings.udp,  :UDP])
+    { http: :TCP, tcp: :TCP, udp: :UDP }.each do |type, prot|
+      port = settings.send type
+      if port
+        servers << classes[type].new(addr: Addr[settings.host, port, prot])
+      end
     end
   end
 
@@ -24,6 +21,10 @@ module Kamerling class ServerRunner
   private     :args
 
   private
+
+  def classes
+    { http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP }
+  end
 
   def servers
     @servers ||= []

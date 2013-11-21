@@ -13,7 +13,8 @@ module Kamerling describe ServerRunner do
       stub(http_cl).new(addr: Addr['0.0.0.0', 1234, :TCP]) { http }
       stub(tcp_cl).new(addr:  Addr['0.0.0.0', 3456, :TCP]) { tcp  }
       stub(udp_cl).new(addr:  Addr['0.0.0.0', 5678, :UDP]) { udp  }
-      ServerRunner.new(args, http: http_cl, tcp: tcp_cl, udp: udp_cl).start
+      classes = { http: http_cl, tcp: tcp_cl, udp: udp_cl }
+      ServerRunner.new(args, classes: classes).start
       http.must_have_received :start, []
       tcp.must_have_received :start,  []
       udp.must_have_received :start,  []
@@ -30,7 +31,8 @@ module Kamerling describe ServerRunner do
       stub(http_cl).new(addr: Addr['0.0.0.0', 1234, :TCP]) { http }
       stub(tcp_cl).new(addr:  Addr['0.0.0.0', 3456, :TCP]) { tcp  }
       stub(udp_cl).new(addr:  Addr['0.0.0.0', 5678, :UDP]) { udp  }
-      ServerRunner.new(args, http: http_cl, tcp: tcp_cl, udp: udp_cl).start
+      classes = { http: http_cl, tcp: tcp_cl, udp: udp_cl }
+      ServerRunner.new(args, classes: classes).start
       http.must_have_received :start, []
       tcp.wont_have_received :start,  []
       udp.wont_have_received :start,  []
