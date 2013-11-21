@@ -4,30 +4,24 @@ module Kamerling class ServerRunner
   Settings = Struct.new(*%i[host http tcp udp])
 
   def initialize args, classes: classes
-    @args = args
-    { http: :TCP, tcp: :TCP, udp: :UDP }.each do |type, prot|
+    @args    = args
+    @servers = { http: :TCP, tcp: :TCP, udp: :UDP }.map do |type, prot|
       port = settings.send type
-      if port
-        servers << classes[type].new(addr: Addr[settings.host, port, prot])
-      end
-    end
+      classes[type].new(addr: Addr[settings.host, port, prot]) if port
+    end.compact
   end
 
   def start
     servers.each(&:start)
   end
 
-  attr_reader :args
-  private     :args
+  attr_reader :args, :servers
+  private     :args, :servers
 
   private
 
   def classes
     { http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP }
-  end
-
-  def servers
-    @servers ||= []
   end
 
   def settings
