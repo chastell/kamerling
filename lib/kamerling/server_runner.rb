@@ -11,6 +11,10 @@ module Kamerling class ServerRunner
     end.compact
   end
 
+  def join
+    servers.each(&:join)
+  end
+
   def start
     servers.each(&:start)
   end
