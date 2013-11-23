@@ -15,6 +15,18 @@ module Kamerling describe ServerRunner do
     stub(udp_cl).new(addr:  Addr['0.0.0.0', 5678, :UDP]) { udp  }
   end
 
+  describe '.new' do
+    it 'hooks to the given database' do
+      args  = %w[--host 0.0.0.0 --db sqlite::memory:]
+      db    = fake { Sequel::SQLite::Database }
+      orm   = fake :sequel, as: :class
+      stub(orm).connect('sqlite::memory:') { db }
+      repos = fake :repos, as: :class
+      ServerRunner.new args, classes: classes, orm: orm, repos: repos
+      repos.must_have_received :db=, [db]
+    end
+  end
+
   describe '#join' do
     it 'joins all the created servers' do
       args = %w[--host 0.0.0.0 --http 1234]

@@ -1,10 +1,11 @@
 require 'optparse'
 
 module Kamerling class ServerRunner
-  Settings = Struct.new(*%i[host http tcp udp])
+  Settings = Struct.new(*%i[db host http tcp udp])
 
-  def initialize args, classes: classes
+  def initialize args, classes: classes, orm: Sequel, repos: Repos
     @args    = args
+    repos.db = orm.connect settings.db
     @servers = { http: :TCP, tcp: :TCP, udp: :UDP }.map do |type, prot|
       port = settings.send type
       classes[type].new(addr: Addr[settings.host, port, prot]) if port
@@ -30,8 +31,12 @@ module Kamerling class ServerRunner
 
   def settings
     @settings ||= Settings.new.tap do |sets|
+      sets.db   = 'sqlite::memory:'
       sets.host = '127.0.0.1'
       OptionParser.new do |opts|
+        opts.on("--db #{sets.db}", String, 'database') do |db|
+          sets.db = db
+        end
         opts.on("--host #{sets.host}", String, 'server host') do |host|
           sets.host = host
         end
