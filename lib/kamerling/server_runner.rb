@@ -30,8 +30,9 @@ module Kamerling class ServerRunner
 
   def settings
     @settings ||= Settings.new.tap do |sets|
+      sets.host = '127.0.0.1'
       OptionParser.new do |opts|
-        opts.on('--host 127.0.0.1', String, 'server host') do |host|
+        opts.on("--host #{sets.host}", String, 'server host') do |host|
           sets.host = host
         end
         opts.on('--http 0', Integer, 'HTTP port') { |http| sets.http = http }
