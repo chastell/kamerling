@@ -19,6 +19,7 @@ module Kamerling class ServerRunner
 
   def start
     servers.each(&:start)
+    self
   end
 
   attr_reader :args, :servers

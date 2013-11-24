@@ -58,5 +58,10 @@ module Kamerling describe ServerRunner do
       tcp.wont_have_received :start,  []
       udp.wont_have_received :start,  []
     end
+
+    it 'returns self' do
+      sr = ServerRunner.new [], classes: classes, logger: logger
+      sr.start.must_equal sr
+    end
   end
 end end
