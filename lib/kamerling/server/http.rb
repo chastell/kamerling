@@ -1,7 +1,7 @@
 module Kamerling class Server::HTTP
   attr_reader :addr
 
-  def initialize addr: req(:addr)
+  def initialize addr: req(:addr), logger: Logger.new('/dev/null')
     @addr = addr
   end
 
