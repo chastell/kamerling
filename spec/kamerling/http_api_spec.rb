@@ -26,14 +26,14 @@ module Kamerling describe HTTPAPI do
   end
 
   describe 'GET /projects/{uuid}' do
-    it 'contains links to tasks' do
+    it 'contains links to and UUIDs of tasks' do
       three = fake :task, uuid: UUID.new
       seven = fake :task, uuid: UUID.new
       stub(repos).tasks_for(project_uuid: gimps.uuid) { [three, seven] }
       get "/projects/#{gimps.uuid}"
-      links = doc.css('#tasks a[rel=task]').map { |a| a['href'] }
-      links.must_include "/tasks/#{three.uuid}"
-      links.must_include "/tasks/#{seven.uuid}"
+      links = doc.css '#tasks a[rel=task]'
+      assert links.any? { |a| a['href']      == "/tasks/#{three.uuid}" }
+      assert links.any? { |a| a['data-uuid'] == seven.uuid             }
     end
   end
 
