@@ -2,5 +2,5 @@ nav
   ul#tasks
     - tasks.each do |task|
       li
-        a data-uuid=task.uuid href="/tasks/#{task.uuid}" rel='task'
+        a data-done=task.done.to_s data-uuid=task.uuid href="/tasks/#{task.uuid}" rel='task'
           = task.done
