@@ -12,7 +12,7 @@ module Kamerling describe HTTPAPI do
   describe 'GET /' do
     it 'contains a link to projects' do
       get '/'
-      doc.css('#projects').first['href'].must_equal '/projects'
+      doc.at('#projects')['href'].must_equal '/projects'
     end
   end
 
@@ -20,8 +20,9 @@ module Kamerling describe HTTPAPI do
     it 'contains links to and UUIDs of projects' do
       get '/projects'
       links = doc.css '#projects a[rel=project]'
-      assert links.any? { |a| a['href']      == "/projects/#{gimps.uuid}" }
-      assert links.any? { |a| a['data-uuid'] == ecc.uuid                  }
+      links.size.must_equal 2
+      links.at("[data-uuid='#{gimps.uuid}']")['href']
+        .must_equal "/projects/#{gimps.uuid}"
     end
   end
 
@@ -32,8 +33,9 @@ module Kamerling describe HTTPAPI do
       stub(repos).tasks_for(project_uuid: gimps.uuid) { [three, seven] }
       get "/projects/#{gimps.uuid}"
       links = doc.css '#tasks a[rel=task]'
-      assert links.any? { |a| a['href']      == "/tasks/#{three.uuid}" }
-      assert links.any? { |a| a['data-uuid'] == seven.uuid             }
+      links.size.must_equal 2
+      links.at("[data-uuid='#{three.uuid}']")['href']
+        .must_equal "/tasks/#{three.uuid}"
     end
   end
 
