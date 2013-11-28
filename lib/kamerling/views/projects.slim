@@ -4,5 +4,6 @@ nav
       li
         a data-uuid=project.uuid href="/projects/#{project.uuid}" rel='project'
           = project.name
+
 form action='/projects' method='POST'
   input name='name'
