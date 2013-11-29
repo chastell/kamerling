@@ -9,13 +9,11 @@ module Kamerling describe Repos do
     end
 
     it 'can be chained' do
-      Repos.repos = {
-        String => str = fake(:repo),
-        Symbol => sym = fake(:repo),
-      }
+      str_repo, sym_repo = fake(:repo), fake(:repo)
+      Repos.repos = { String => str_repo, Symbol => sym_repo }
       Repos << 'str' << :sym
-      str.must_have_received :<<, ['str']
-      sym.must_have_received :<<, [:sym]
+      str_repo.must_have_received :<<, ['str']
+      sym_repo.must_have_received :<<, [:sym]
     end
   end
 
