@@ -1,4 +1,4 @@
-module Kamerling class Server::UDP
+module Kamerling module Server class UDP
   attr_reader :addr
 
   def initialize addr: req(:addr), handler: Handler.new,
@@ -43,4 +43,4 @@ module Kamerling class Server::UDP
   ensure
     socket.close
   end
-end end
+end end end

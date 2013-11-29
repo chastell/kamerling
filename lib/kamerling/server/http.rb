@@ -1,4 +1,4 @@
-module Kamerling class Server::HTTP
+module Kamerling module Server class HTTP
   attr_reader :addr
 
   def initialize addr: req(:addr), logger: Logger.new('/dev/null')
@@ -23,4 +23,4 @@ module Kamerling class Server::HTTP
 
   attr_reader :thread
   private     :thread
-end end
+end end end

@@ -1,4 +1,4 @@
-module Kamerling class Server::TCP
+module Kamerling module Server class TCP
   attr_reader :addr
 
   def initialize addr: req(:addr), handler: Handler.new,
@@ -39,4 +39,4 @@ module Kamerling class Server::TCP
   ensure
     socket.close
   end
-end end
+end end end
