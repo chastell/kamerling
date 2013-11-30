@@ -27,6 +27,13 @@ module Kamerling describe Repos do
     end
   end
 
+  describe '.clients' do
+    it 'returns all clients' do
+      Repos.repos = { Client => fake(:repo, all: all_clients = fake) }
+      Repos.clients.must_equal all_clients
+    end
+  end
+
   describe '.db=' do
     it 'auto-migrates the passed db' do
       db = Sequel.sqlite
