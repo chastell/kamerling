@@ -16,6 +16,18 @@ module Kamerling describe HTTPAPI do
     end
   end
 
+  describe 'GET /clients' do
+    it 'contains links to and UUIDs of clients' do
+      fpga = fake :client, uuid: UUID.new
+      stub(repos).clients { [fpga] }
+      get '/clients'
+      links = doc.css '#clients a[rel=client]'
+      links.size.must_equal 1
+      links.at("[data-uuid='#{fpga.uuid}']")['href']
+        .must_equal "/clients/#{fpga.uuid}"
+    end
+  end
+
   describe 'GET /projects' do
     it 'contains links to and UUIDs of projects' do
       get '/projects'

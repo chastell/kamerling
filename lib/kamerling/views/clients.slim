@@ -1,0 +1,6 @@
+nav
+  ul#clients
+    - clients.each do |client|
+      li
+        a data-uuid=client.uuid href="/clients/#{client.uuid}" rel='client'
+          = client.busy
