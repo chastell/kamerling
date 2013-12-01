@@ -10,8 +10,9 @@ module Kamerling describe HTTPAPI do
   let(:repos) { fake :repos, as: :class, projects: [gimps, ecc] }
 
   describe 'GET /' do
-    it 'contains a link to projects' do
+    it 'contains links to clients and projects' do
       get '/'
+      doc.at('#clients')['href'].must_equal '/clients'
       doc.at('#projects')['href'].must_equal '/projects'
     end
   end
