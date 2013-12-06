@@ -19,6 +19,10 @@ module Kamerling class Repos
       repos[Client].all
     end
 
+    def clients_for project
+      repos[Registration].related_to(project).map(&:client)
+    end
+
     def db= db
       warn_off { Sequel::Migrator.run db, "#{__dir__}/migrations" }
       @repos = nil
