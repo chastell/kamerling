@@ -81,6 +81,14 @@ module Kamerling describe Repos do
     end
   end
 
+  describe '.project' do
+    it 'returns the project with the given UUID' do
+      gimps = fake :project, uuid: UUID.new
+      Repos.repos = { Project => { gimps.uuid => gimps } }
+      Repos.project(gimps.uuid).must_equal gimps
+    end
+  end
+
   describe '.projects' do
     it 'returns all projects' do
       Repos.repos = { Project => fake(:repo, all: all_projects = fake) }

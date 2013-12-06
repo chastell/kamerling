@@ -37,6 +37,10 @@ module Kamerling class Repos
       repos[Task].related_to(project).reject(&:done).first
     end
 
+    def project project_uuid
+      repos[Project][project_uuid]
+    end
+
     def projects
       repos[Project].all
     end
