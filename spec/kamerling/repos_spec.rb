@@ -113,7 +113,7 @@ module Kamerling describe Repos do
     before { Repos.db = Sequel.sqlite }
 
     it 'makes sure objects can be stored and retrieved' do
-      addr = Addr['127.0.0.1', 1981, :TCP]
+      addr    = Addr['127.0.0.1', 1981, :TCP]
       client  = Client.new addr: addr, uuid: UUID.new
       project = Project.new name: 'project name', uuid: UUID.new
       task    = Task.new data: 'data', project: project, uuid: UUID.new
