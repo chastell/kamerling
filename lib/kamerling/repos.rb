@@ -30,7 +30,7 @@ module Kamerling class Repos
     end
 
     def free_clients_for project
-      repos[Registration].related_to(project).map(&:client).reject(&:busy)
+      clients_for(project).reject(&:busy)
     end
 
     def next_task_for project
