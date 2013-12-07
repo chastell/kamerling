@@ -43,7 +43,8 @@ module Kamerling describe HTTPAPI do
     it 'contains links to and info on the project’s tasks' do
       three = fake :task, done: false, uuid: UUID.new
       seven = fake :task, done: true,  uuid: UUID.new
-      stub(repos).tasks_for(project_uuid: gimps.uuid) { [three, seven] }
+      stub(repos).project(gimps.uuid) { gimps }
+      stub(repos).tasks_for(gimps) { [three, seven] }
       get "/projects/#{gimps.uuid}"
       links = doc.css '#tasks a[rel=task]'
       links.size.must_equal 2

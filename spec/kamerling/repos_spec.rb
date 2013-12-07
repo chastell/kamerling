@@ -97,15 +97,13 @@ module Kamerling describe Repos do
   end
 
   describe '.tasks_for' do
-    it 'returns all tasks for the given project UUID' do
-      project      = fake :project, uuid: UUID.new
-      tasks        = [fake(:task), fake(:task)]
-      project_repo = fake :repo
-      task_repo    = fake :repo
-      stub(project_repo).[](project.uuid) { project }
-      stub(task_repo).related_to(project) { tasks   }
-      Repos.repos = { Project => project_repo, Task => task_repo }
-      Repos.tasks_for(project_uuid: project.uuid).must_equal tasks
+    it 'returns all tasks for the given project' do
+      project   = fake :project
+      tasks     = [fake(:task), fake(:task)]
+      task_repo = fake :repo
+      stub(task_repo).related_to(project) { tasks }
+      Repos.repos = { Task => task_repo }
+      Repos.tasks_for(project).must_equal tasks
     end
   end
 

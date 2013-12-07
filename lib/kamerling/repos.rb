@@ -45,8 +45,8 @@ module Kamerling class Repos
       repos[Project].all
     end
 
-    def tasks_for project_uuid: req(:project_uuid)
-      repos[Task].related_to repos[Project][project_uuid]
+    def tasks_for project
+      repos[Task].related_to project
     end
 
     private
