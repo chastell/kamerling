@@ -20,8 +20,10 @@ module Kamerling class HTTPAPI < Sinatra::Base
   end
 
   get '/projects/:project_uuid' do
-    tasks = repos.tasks_for repos.project params['project_uuid']
-    warn_off { slim :project, locals: { tasks: tasks } }
+    project = repos.project params['project_uuid']
+    clients = repos.clients_for project
+    tasks   = repos.tasks_for project
+    warn_off { slim :project, locals: { clients: clients, tasks: tasks } }
   end
 
   post '/projects' do

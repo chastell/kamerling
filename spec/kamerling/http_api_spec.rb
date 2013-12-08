@@ -40,10 +40,26 @@ module Kamerling describe HTTPAPI do
   end
 
   describe 'GET /projects/{uuid}' do
+    it 'contains links to and info on the project’s clients' do
+      cpu = fake :client, busy: false, uuid: UUID.new
+      gpu = fake :client, busy: true,  uuid: UUID.new
+      stub(repos).project(gimps.uuid) { gimps }
+      stub(repos).clients_for(gimps) { [cpu, gpu] }
+      stub(repos).tasks_for(gimps) { [] }
+      get "/projects/#{gimps.uuid}"
+      links = doc.css '#clients a[rel=client]'
+      links.size.must_equal 2
+      links.at("[data-uuid='#{cpu.uuid}']")['href']
+        .must_equal "/clients/#{cpu.uuid}"
+      links.at("[data-uuid='#{cpu.uuid}']")['data-busy'].must_equal 'false'
+      links.at("[data-uuid='#{gpu.uuid}']")['data-busy'].must_equal 'true'
+    end
+
     it 'contains links to and info on the project’s tasks' do
       three = fake :task, done: false, uuid: UUID.new
       seven = fake :task, done: true,  uuid: UUID.new
       stub(repos).project(gimps.uuid) { gimps }
+      stub(repos).clients_for(gimps) { [] }
       stub(repos).tasks_for(gimps) { [three, seven] }
       get "/projects/#{gimps.uuid}"
       links = doc.css '#tasks a[rel=task]'
