@@ -40,12 +40,18 @@ module Kamerling describe HTTPAPI do
   end
 
   describe 'GET /projects/{uuid}' do
+    let(:cpu) { fake :client, busy: false, uuid: UUID.new }
+    let(:gpu) { fake :client, busy: true,  uuid: UUID.new }
+    let(:three) { fake :task, done: false, uuid: UUID.new }
+    let(:seven) { fake :task, done: true,  uuid: UUID.new }
+
+    before do
+      stub(repos).project(gimps.uuid) { gimps          }
+      stub(repos).clients_for(gimps)  { [cpu, gpu]     }
+      stub(repos).tasks_for(gimps)    { [three, seven] }
+    end
+
     it 'contains links to and info on the project’s clients' do
-      cpu = fake :client, busy: false, uuid: UUID.new
-      gpu = fake :client, busy: true,  uuid: UUID.new
-      stub(repos).project(gimps.uuid) { gimps }
-      stub(repos).clients_for(gimps) { [cpu, gpu] }
-      stub(repos).tasks_for(gimps) { [] }
       get "/projects/#{gimps.uuid}"
       links = doc.css '#clients a[rel=client]'
       links.size.must_equal 2
@@ -56,11 +62,6 @@ module Kamerling describe HTTPAPI do
     end
 
     it 'contains links to and info on the project’s tasks' do
-      three = fake :task, done: false, uuid: UUID.new
-      seven = fake :task, done: true,  uuid: UUID.new
-      stub(repos).project(gimps.uuid) { gimps }
-      stub(repos).clients_for(gimps) { [] }
-      stub(repos).tasks_for(gimps) { [three, seven] }
       get "/projects/#{gimps.uuid}"
       links = doc.css '#tasks a[rel=task]'
       links.size.must_equal 2
