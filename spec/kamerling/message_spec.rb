@@ -25,6 +25,10 @@ module Kamerling describe Message do
     it 'raises on unknown message types' do
       -> { Message.new 'MESS age' }.must_raise Message::UnknownType
     end
+
+    it 'doesn’t raise on empty messages' do
+      Message.new ''
+    end
   end
 
   describe '#client_uuid' do
