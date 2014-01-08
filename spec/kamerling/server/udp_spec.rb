@@ -48,7 +48,7 @@ module Kamerling describe Server::UDP do
 
     it 'logs server connects' do
       client = UDPSocket.new
-      client.send '', 0, *server.addr
+      client.send 'PING', 0, *server.addr
       addr = Addr['127.0.0.1', client.addr[1], :UDP]
       run_all_threads
       logged.must_include "connect #{addr}"
@@ -56,10 +56,10 @@ module Kamerling describe Server::UDP do
 
     it 'logs messages received' do
       client = UDPSocket.new
-      client.send 'UDP message', 0, *server.addr
+      client.send 'PING', 0, *server.addr
       addr = Addr['127.0.0.1', client.addr[1], :UDP]
       run_all_threads
-      logged.must_include "received #{addr} UDP message"
+      logged.must_include "received #{addr} PING"
     end
   end
 end end

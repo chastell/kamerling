@@ -59,11 +59,11 @@ module Kamerling describe Server::TCP do
 
     it 'logs messages received' do
       tcp_addr = TCPSocket.open(*server.addr) do |socket|
-        socket << 'TCP message'
+        socket << 'PING'
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
       run_all_threads
-      logged.must_include "received #{tcp_addr} TCP message"
+      logged.must_include "received #{tcp_addr} PING"
     end
   end
 end end
