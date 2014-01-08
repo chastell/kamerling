@@ -22,8 +22,9 @@ module Kamerling describe Handler do
         task_uuid: UUID['16B task    UUID'] }]
     end
 
-    it 'ignores undecipherable inputs' do
-      handler.handle 'MESS age', addr
+    it 'raises on unknown inputs' do
+      ex = -> { handler.handle 'MESS', addr }.must_raise Handler::UnknownInput
+      ex.message.must_equal 'MESS'
     end
   end
 end end

@@ -1,4 +1,6 @@
 module Kamerling class Handler
+  UnknownInput = Class.new RuntimeError
+
   def initialize(receiver: Receiver.new, registrar: Registrar.new)
     @receiver, @registrar = receiver, registrar
   end
@@ -13,7 +15,8 @@ module Kamerling class Handler
       receiver.receive addr: addr, client_uuid: message.client_uuid,
         data: message.payload, task_uuid: message.task_uuid
     end
-  rescue Message::UnknownType
+  rescue Message::UnknownType => exception
+    raise UnknownInput, exception.message
   end
 
   attr_reader :receiver, :registrar
