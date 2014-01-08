@@ -1,5 +1,5 @@
 module Kamerling class Message
-  KnownTypes  = %w[DATA RGST RSLT]
+  KnownTypes  = %w[DATA PING RGST RSLT]
   UnknownType = Class.new RuntimeError
 
   def self.[](client: req(:client), payload: req(:payload),
