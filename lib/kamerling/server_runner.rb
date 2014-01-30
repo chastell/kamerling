@@ -3,7 +3,7 @@ require 'optparse'
 module Kamerling class ServerRunner
   Settings = Struct.new(*%i[db host http tcp udp])
 
-  def initialize args, classes: classes, logger: Logger.new('/dev/null'),
+  def initialize args, classes: def_classes, logger: Logger.new('/dev/null'),
                  orm: Sequel, repos: Repos
     @args    = args
     repos.db = orm.connect settings.db
@@ -27,7 +27,7 @@ module Kamerling class ServerRunner
 
   private
 
-  def classes
+  def def_classes
     { http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP }
   end
 
