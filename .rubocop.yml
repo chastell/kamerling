@@ -22,9 +22,6 @@ ConstantName:
 CyclomaticComplexity:
   Enabled: false
 
-DefWithoutParentheses:
-  Enabled: false
-
 Documentation:
   Enabled: false
 
@@ -37,6 +34,9 @@ HandleExceptions:
 IndentationWidth:
   Enabled: false
 
+MethodDefParentheses:
+  Enabled: false
+
 MethodLength:
   Enabled: false
 
@@ -47,4 +47,7 @@ SignalException:
   Enabled: false
 
 SpaceAroundOperators:
+  Enabled: false
+
+TrailingComma:
   Enabled: false
