@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 module Kamerling describe Message do
   let(:mess) do
-    Message.new "DATA\0\0\0\0\0\0\0\0\0\0\0\0" +
+    Message.new "DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
       '16B client  UUID16B project UUID16B task    UUIDsome payload'
   end
 
