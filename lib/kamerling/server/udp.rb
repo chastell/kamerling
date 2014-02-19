@@ -30,14 +30,18 @@ module Kamerling module Server class UDP
 
   private
 
+  def handle_connection socket
+    input, conn = socket.recvfrom 2**16
+    client_addr = Addr[conn[3], conn[1], :UDP]
+    logger.info "connect #{client_addr}"
+    logger.debug "received #{client_addr} #{input}"
+    handler.handle input, client_addr
+  end
+
   def run_select_loop socket
     loop do
       if IO.select [socket]
-        input, conn = socket.recvfrom 2**16
-        client_addr = Addr[conn[3], conn[1], :UDP]
-        logger.info "connect #{client_addr}"
-        logger.debug "received #{client_addr} #{input}"
-        handler.handle input, client_addr
+        handle_connection socket
       end
     end
   ensure
