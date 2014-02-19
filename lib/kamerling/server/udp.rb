@@ -39,11 +39,7 @@ module Kamerling module Server class UDP
   end
 
   def run_select_loop socket
-    loop do
-      if IO.select [socket]
-        handle_connection socket
-      end
-    end
+    loop { handle_connection socket if IO.select [socket] }
   ensure
     socket.close
   end
