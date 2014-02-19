@@ -1,5 +1,5 @@
 module Kamerling class TaskDispatcher
-  def initialize(net_dispatcher: NetDispatcher.new, repos: Repos)
+  def initialize net_dispatcher: NetDispatcher.new, repos: Repos
     @net_dispatcher = net_dispatcher
     @repos          = repos
   end
@@ -18,8 +18,8 @@ module Kamerling class TaskDispatcher
 
   private
 
-  def dispatch_task(client: req(:client), project: req(:project),
-                    task: req(:task))
+  def dispatch_task client: req(:client), project: req(:project),
+                    task: req(:task)
     message = Message[client: client, payload: task.data, project: project,
       task: task, type: :DATA]
     net_dispatcher.dispatch client.addr, message.to_s
