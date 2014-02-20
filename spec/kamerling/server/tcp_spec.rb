@@ -26,6 +26,14 @@ module Kamerling describe Server::TCP do
       handler.must_have_received :handle, ['foo', s_addr_foo]
       handler.must_have_received :handle, ['bar', s_addr_bar]
     end
+
+    it 'doesn’t blow up on unknown inputs' do
+      server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
+      server.start
+      stub(handler).handle('foo', any(Addr)) { raise Handler::UnknownInput }
+      TCPSocket.open(*server.addr) { |socket| socket << 'foo' }
+      server.stop
+    end
   end
 
   describe '#stop' do
