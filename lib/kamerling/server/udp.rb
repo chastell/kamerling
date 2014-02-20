@@ -14,9 +14,7 @@ module Kamerling module Server class UDP
 
   def start
     logger.info "start #{addr}"
-    @thread = Thread.new do
-      run_select_loop UDPSocket.new.tap { |server| server.bind(*addr) }
-    end
+    @thread = Thread.new { run_loop }
     200.times { thread.run }
     self
   end
@@ -38,7 +36,8 @@ module Kamerling module Server class UDP
     handler.handle input, client_addr
   end
 
-  def run_select_loop socket
+  def run_loop
+    socket = UDPSocket.new.tap { |server| server.bind(*addr) }
     loop { handle_connection socket if IO.select [socket] }
   ensure
     socket.close
