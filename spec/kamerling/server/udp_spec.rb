@@ -18,6 +18,15 @@ module Kamerling describe Server::UDP do
       handler.must_have_received :handle, ['foo', foo_addr]
       handler.must_have_received :handle, ['bar', bar_addr]
     end
+
+    it 'doesn’t blow up on unknown inputs' do
+      server = Server::UDP.new addr: addr, handler: handler = fake(:handler)
+      server.start
+      stub(handler).handle('foo', any(Addr)) { raise Handler::UnknownInput }
+      UDPSocket.new.send 'foo', 0, *server.addr
+      run_all_threads
+      server.stop
+    end
   end
 
   describe '#stop' do

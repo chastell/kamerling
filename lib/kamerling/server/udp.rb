@@ -34,6 +34,7 @@ module Kamerling module Server class UDP
     logger.info "connect #{client_addr}"
     logger.debug "received #{client_addr} #{input}"
     handler.handle input, client_addr
+  rescue Handler::UnknownInput
   end
 
   def run_loop
