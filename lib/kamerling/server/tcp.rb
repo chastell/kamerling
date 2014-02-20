@@ -14,11 +14,7 @@ module Kamerling module Server class TCP
 
   def start
     logger.info "start #{addr}"
-    @thread = Thread.new do
-      Socket.tcp_server_loop(*addr) do |socket|
-        handle_connection socket
-      end
-    end
+    @thread = Thread.new { run_loop }
     loop { break if addr.connectable? }
     self
   end
@@ -38,5 +34,9 @@ module Kamerling module Server class TCP
     handler.handle input, c_addr
   ensure
     socket.close
+  end
+
+  def run_loop
+    Socket.tcp_server_loop(*addr) { |socket| handle_connection socket }
   end
 end end end
