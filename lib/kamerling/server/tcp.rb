@@ -1,11 +1,9 @@
 module Kamerling module Server class TCP
   attr_reader :addr
 
-  def initialize addr: req(:addr), handler: Handler.new,
-                 logger: Logger.new('/dev/null')
+  def initialize addr: req(:addr), handler: Handler.new
     @addr    = addr
     @handler = handler
-    @logger  = logger
   end
 
   def join
@@ -13,7 +11,6 @@ module Kamerling module Server class TCP
   end
 
   def start
-    logger.info "start #{addr}"
     @thread = Thread.new { run_loop }
     loop { break if addr.connectable? }
     self
@@ -23,14 +20,12 @@ module Kamerling module Server class TCP
     thread.exit.join
   end
 
-  attr_reader :handler, :logger, :thread
-  private     :handler, :logger, :thread
+  attr_reader :handler, :thread
+  private     :handler, :thread
 
   def handle_connection socket
     c_addr = Addr[*socket.remote_address.ip_unpack, :TCP]
     input  = socket.read
-    logger.info "connect #{c_addr}"
-    logger.debug "received #{c_addr} #{input}"
     handler.handle input, c_addr
   rescue Handler::UnknownInput
   ensure

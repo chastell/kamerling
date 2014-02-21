@@ -41,34 +41,4 @@ module Kamerling describe Server::UDP do
       Server::UDP.new(addr: addr).addr.must_equal addr
     end
   end
-
-  describe 'logging' do
-    let(:log)    { StringIO.new                               }
-    let(:logged) { log.tap(&:rewind).read                     }
-    let(:logger) { Logger.new log                             }
-    let(:server) { Server::UDP.new addr: addr, logger: logger }
-
-    before { server.start }
-    after  { server.stop  }
-
-    it 'logs server starts' do
-      logged.must_include "start #{server.addr}"
-    end
-
-    it 'logs server connects' do
-      client = UDPSocket.new
-      client.send 'PING', 0, *server.addr
-      addr = Addr['127.0.0.1', client.addr[1], :UDP]
-      run_all_threads
-      logged.must_include "connect #{addr}"
-    end
-
-    it 'logs messages received' do
-      client = UDPSocket.new
-      client.send 'PING', 0, *server.addr
-      addr = Addr['127.0.0.1', client.addr[1], :UDP]
-      run_all_threads
-      logged.must_include "received #{addr} PING"
-    end
-  end
 end end

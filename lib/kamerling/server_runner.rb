@@ -3,13 +3,12 @@ require 'optparse'
 module Kamerling class ServerRunner
   Settings = Struct.new(*%i[db host http tcp udp])
 
-  def initialize args, classes: def_classes, logger: Logger.new('/dev/null'),
-                 orm: Sequel, repos: Repos
+  def initialize args, classes: def_classes, orm: Sequel, repos: Repos
     @args    = args
     repos.db = orm.connect settings.db
     @servers = { http: :TCP, tcp: :TCP, udp: :UDP }.map do |type, prot|
       addr = Addr[settings.host, settings.send(type), prot]
-      classes[type].new addr: addr, logger: logger if addr.port
+      classes[type].new addr: addr if addr.port
     end.compact
   end
 

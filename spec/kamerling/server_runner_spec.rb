@@ -8,15 +8,14 @@ module Kamerling describe ServerRunner do
   let(:tcp_cl)  { fake(as: :class) { Server::TCP  }           }
   let(:udp_cl)  { fake(as: :class) { Server::UDP  }           }
   let(:classes) { { http: http_cl, tcp: tcp_cl, udp: udp_cl } }
-  let(:logger)  { fake :logger                                }
 
   before do
     http_addr = Addr['0.0.0.0', 1234, :TCP]
     tcp_addr  = Addr['0.0.0.0', 3456, :TCP]
     udp_addr  = Addr['0.0.0.0', 5678, :UDP]
-    stub(http_cl).new(addr: http_addr, logger: logger) { http }
-    stub(tcp_cl).new(addr:  tcp_addr,  logger: logger) { tcp  }
-    stub(udp_cl).new(addr:  udp_addr,  logger: logger) { udp  }
+    stub(http_cl).new(addr: http_addr) { http }
+    stub(tcp_cl).new(addr:  tcp_addr)  { tcp  }
+    stub(udp_cl).new(addr:  udp_addr)  { udp  }
   end
 
   describe '.new' do
@@ -26,8 +25,7 @@ module Kamerling describe ServerRunner do
       orm   = fake :sequel, as: :class
       stub(orm).connect('sqlite::memory:') { db }
       repos = fake :repos, as: :class
-      ServerRunner.new args, classes: classes, orm: orm, logger: logger,
-        repos: repos
+      ServerRunner.new args, classes: classes, orm: orm, repos: repos
       repos.must_have_received :db=, [db]
     end
   end
@@ -35,7 +33,7 @@ module Kamerling describe ServerRunner do
   describe '#join' do
     it 'joins all the created servers' do
       args = %w[--host 0.0.0.0 --http 1234]
-      ServerRunner.new(args, classes: classes, logger: logger).join
+      ServerRunner.new(args, classes: classes).join
       http.must_have_received :join, []
       tcp.wont_have_received :join,  []
       udp.wont_have_received :join,  []
@@ -45,7 +43,7 @@ module Kamerling describe ServerRunner do
   describe '#start' do
     it 'starts the servers based on the given command-line parameters' do
       args = %w[--host 0.0.0.0 --http 1234 --tcp 3456 --udp 5678]
-      ServerRunner.new(args, classes: classes, logger: logger).start
+      ServerRunner.new(args, classes: classes).start
       http.must_have_received :start, []
       tcp.must_have_received :start,  []
       udp.must_have_received :start,  []
@@ -53,14 +51,14 @@ module Kamerling describe ServerRunner do
 
     it 'starts only the servers for which the port was given' do
       args = %w[--host 0.0.0.0 --http 1234]
-      ServerRunner.new(args, classes: classes, logger: logger).start
+      ServerRunner.new(args, classes: classes).start
       http.must_have_received :start, []
       tcp.wont_have_received :start,  []
       udp.wont_have_received :start,  []
     end
 
     it 'returns self' do
-      sr = ServerRunner.new [], classes: classes, logger: logger
+      sr = ServerRunner.new [], classes: classes
       sr.start.must_equal sr
     end
   end

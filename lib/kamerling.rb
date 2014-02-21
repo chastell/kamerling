@@ -1,4 +1,3 @@
-require 'logger'
 require 'socket'
 
 require_relative 'kamerling/core_extensions'

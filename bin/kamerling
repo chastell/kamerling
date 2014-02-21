@@ -4,7 +4,4 @@ require_relative '../lib/kamerling'
 
 Thread.abort_on_exception = true
 
-logger = Logger.new $stdout
-logger.level = Logger::INFO
-
-Kamerling::ServerRunner.new(ARGV, logger: logger).start.join
+Kamerling::ServerRunner.new(ARGV).start.join

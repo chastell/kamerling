@@ -43,35 +43,4 @@ module Kamerling describe Server::TCP do
       -> { TCPSocket.open(*addr).close }.must_raise Errno::ECONNREFUSED
     end
   end
-
-  describe 'logging' do
-    let(:log)    { StringIO.new                               }
-    let(:logged) { log.tap(&:rewind).read                     }
-    let(:logger) { Logger.new log                             }
-    let(:server) { Server::TCP.new addr: addr, logger: logger }
-
-    before { server.start }
-    after  { server.stop  }
-
-    it 'logs server starts' do
-      logged.must_include "start #{server.addr}"
-    end
-
-    it 'logs server connects' do
-      tcp_addr = TCPSocket.open(*server.addr) do |socket|
-        Addr[*socket.local_address.ip_unpack, :TCP]
-      end
-      run_all_threads
-      logged.must_include "connect #{tcp_addr}"
-    end
-
-    it 'logs messages received' do
-      tcp_addr = TCPSocket.open(*server.addr) do |socket|
-        socket << 'PING'
-        Addr[*socket.local_address.ip_unpack, :TCP]
-      end
-      run_all_threads
-      logged.must_include "received #{tcp_addr} PING"
-    end
-  end
 end end
