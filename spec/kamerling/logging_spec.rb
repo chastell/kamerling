@@ -17,5 +17,16 @@ module Kamerling describe Logging do
       Server::TCP.new(addr: Addr['localhost', 1981, :TCP]).start.stop
       logged.must_include 'stop localhost:1981 (TCP)'
     end
+
+    it 'logs TCP server connects' do
+      server = Server::TCP.new(addr: Addr['localhost', 1981, :TCP])
+      server.start
+      tcp_addr = TCPSocket.open(*server.addr) do |socket|
+        Addr[*socket.local_address.ip_unpack, :TCP]
+      end
+      run_all_threads
+      server.stop
+      logged.must_include "connect #{tcp_addr}"
+    end
   end
 end end
