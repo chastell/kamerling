@@ -10,10 +10,11 @@ Gem::Specification.new do |gem|
   gem.executables = gem.files.grep(%r{^bin/}).map { |path| File.basename path }
   gem.test_files  = gem.files.grep %r{^spec/.*\.rb$}
 
-  gem.add_dependency 'sequel',  '~> 4.4'
-  gem.add_dependency 'sinatra', '~> 1.4'
-  gem.add_dependency 'slim',    '~> 2.0'
-  gem.add_dependency 'sqlite3', '~> 1.3'
+  gem.add_dependency 'after_do', '~> 0.3.0'
+  gem.add_dependency 'sequel',   '~> 4.4'
+  gem.add_dependency 'sinatra',  '~> 1.4'
+  gem.add_dependency 'slim',     '~> 2.0'
+  gem.add_dependency 'sqlite3',  '~> 1.3'
 
   gem.add_development_dependency 'bogus',          '~> 0.1.3'
   gem.add_development_dependency 'minitest',       '~> 5.0'

@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     kamerling (0.0.0)
+      after_do (~> 0.3.0)
       sequel (~> 4.4)
       sinatra (~> 1.4)
       slim (~> 2.0)
@@ -10,6 +11,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    after_do (0.3.0)
     ast (1.1.0)
     bogus (0.1.4)
       dependor (>= 0.0.4)
