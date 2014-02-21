@@ -10,5 +10,14 @@ module Kamerling describe Logging do
       stream.rewind
       stream.read.must_include 'start localhost:1981 (TCP)'
     end
+
+    it 'logs TCP server stops' do
+      stream = StringIO.new
+      Logging.new logger: Logger.new(stream)
+      server = Server::TCP.new addr: Addr['localhost', 1981, :TCP]
+      server.start.stop
+      stream.rewind
+      stream.read.must_include 'stop localhost:1981 (TCP)'
+    end
   end
 end end
