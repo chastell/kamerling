@@ -23,11 +23,15 @@ module Kamerling module Server class TCP
   attr_reader :handler, :thread
   private     :handler, :thread
 
-  def handle_connection socket
-    c_addr = Addr[*socket.remote_address.ip_unpack, :TCP]
-    input  = socket.read
-    handler.handle input, c_addr
+  def handle input, client_addr
+    handler.handle input, client_addr
   rescue Handler::UnknownInput
+  end
+
+  def handle_connection socket
+    client_addr = Addr[*socket.remote_address.ip_unpack, :TCP]
+    input       = socket.read
+    handle input, client_addr
   ensure
     socket.close
   end
