@@ -1,31 +1,33 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Logging do
-  let(:logged) { stream.tap(&:rewind).read }
-  let(:logger) { Logger.new stream         }
-  let(:stream) { StringIO.new              }
+  let(:logged)     { stream.tap(&:rewind).read                           }
+  let(:logger)     { Logger.new stream                                   }
+  let(:stream)     { StringIO.new                                        }
+  let(:tcp_server) { Server::TCP.new addr: Addr['localhost', 1981, :TCP] }
 
-  before { Logging.new logger: logger }
+  before do
+    Logging.new logger: logger
+    tcp_server.start
+  end
+
+  after { tcp_server.stop }
 
   describe '.new' do
     it 'logs TCP server starts' do
-      Server::TCP.new(addr: Addr['localhost', 1981, :TCP]).start.stop
       logged.must_include 'start localhost:1981 (TCP)'
     end
 
     it 'logs TCP server stops' do
-      Server::TCP.new(addr: Addr['localhost', 1981, :TCP]).start.stop
+      tcp_server.stop
       logged.must_include 'stop localhost:1981 (TCP)'
     end
 
     it 'logs TCP server connects' do
-      server = Server::TCP.new(addr: Addr['localhost', 1981, :TCP])
-      server.start
-      tcp_addr = TCPSocket.open(*server.addr) do |socket|
+      tcp_addr = TCPSocket.open(*tcp_server.addr) do |socket|
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
       run_all_threads
-      server.stop
       logged.must_include "connect #{tcp_addr}"
     end
   end
