@@ -30,5 +30,14 @@ module Kamerling describe Logging do
       run_all_threads
       logged.must_include "connect #{tcp_addr}"
     end
+
+    it 'logs TCP server receives' do
+      tcp_addr = TCPSocket.open(*tcp_server.addr) do |socket|
+        socket << 'PING'
+        Addr[*socket.local_address.ip_unpack, :TCP]
+      end
+      run_all_threads
+      logged.must_include "received #{tcp_addr} PING"
+    end
   end
 end end
