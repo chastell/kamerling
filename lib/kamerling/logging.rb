@@ -17,5 +17,9 @@ module Kamerling class Logging
     Server::TCP.after :stop do |*, server|
       logger.info "stop #{server.addr}"
     end
+    Server::UDP.extend AfterDo
+    Server::UDP.before :start do |*, server|
+      logger.info "start #{server.addr}"
+    end
   end
 end end

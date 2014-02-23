@@ -5,13 +5,18 @@ module Kamerling describe Logging do
   let(:logger)     { Logger.new stream                                   }
   let(:stream)     { StringIO.new                                        }
   let(:tcp_server) { Server::TCP.new addr: Addr['localhost', 1981, :TCP] }
+  let(:udp_server) { Server::UDP.new addr: Addr['localhost', 1979, :UDP] }
 
   before do
     Logging.new logger: logger
     tcp_server.start
+    udp_server.start
   end
 
-  after { tcp_server.stop }
+  after do
+    tcp_server.stop
+    udp_server.stop
+  end
 
   describe '.new' do
     it 'logs TCP server starts' do
@@ -38,6 +43,10 @@ module Kamerling describe Logging do
       end
       run_all_threads
       logged.must_include "received #{tcp_addr} PING"
+    end
+
+    it 'logs UDP server starts' do
+      logged.must_include 'start localhost:1979 (UDP)'
     end
   end
 end end
