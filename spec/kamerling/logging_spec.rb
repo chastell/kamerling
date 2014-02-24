@@ -53,5 +53,13 @@ module Kamerling describe Logging do
       udp_server.stop
       logged.must_include 'stop localhost:1979 (UDP)'
     end
+
+    it 'logs UDP server connects' do
+      udp_client = UDPSocket.new
+      udp_client.send 'PING', 0, *udp_server.addr
+      udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
+      run_all_threads
+      logged.must_include "connect #{udp_addr}"
+    end
   end
 end end
