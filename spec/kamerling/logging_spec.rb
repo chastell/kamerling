@@ -48,5 +48,10 @@ module Kamerling describe Logging do
     it 'logs UDP server starts' do
       logged.must_include 'start localhost:1979 (UDP)'
     end
+
+    it 'logs UDP server stops' do
+      udp_server.stop
+      logged.must_include 'stop localhost:1979 (UDP)'
+    end
   end
 end end
