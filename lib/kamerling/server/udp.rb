@@ -25,11 +25,15 @@ module Kamerling module Server class UDP
 
   private
 
+  def handle input, client_addr
+    handler.handle input, client_addr
+  rescue Handler::UnknownInput
+  end
+
   def handle_connection socket
     input, conn = socket.recvfrom 2**16
     client_addr = Addr[conn[3], conn[1], :UDP]
-    handler.handle input, client_addr
-  rescue Handler::UnknownInput
+    handle input, client_addr
   end
 
   def run_loop
