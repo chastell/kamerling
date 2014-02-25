@@ -23,6 +23,7 @@ module Kamerling class Logging
     end
     Server::UDP.before :handle do |input, client_addr|
       logger.info "connect #{client_addr}"
+      logger.debug "received #{client_addr} #{input}"
     end
     Server::UDP.after :stop do |*, server|
       logger.info "stop #{server.addr}"

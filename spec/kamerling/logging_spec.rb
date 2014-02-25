@@ -61,5 +61,13 @@ module Kamerling describe Logging do
       run_all_threads
       logged.must_include "connect #{udp_addr}"
     end
+
+    it 'logs TCP server receives' do
+      udp_client = UDPSocket.new
+      udp_client.send 'PING', 0, *udp_server.addr
+      udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
+      run_all_threads
+      logged.must_include "received #{udp_addr} PING"
+    end
   end
 end end
