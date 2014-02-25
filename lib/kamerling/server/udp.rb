@@ -1,34 +1,11 @@
-module Kamerling module Server class UDP
-  attr_reader :addr
-
-  def initialize addr: req(:addr), handler: Handler.new
-    @addr    = addr
-    @handler = handler
-  end
-
-  def join
-    thread.join
-  end
-
+module Kamerling module Server class UDP < Sock
   def start
     @thread = Thread.new { run_loop }
     200.times { thread.run }
     self
   end
 
-  def stop
-    thread.exit.join
-  end
-
-  attr_reader :handler, :thread
-  private     :handler, :thread
-
   private
-
-  def handle input, client_addr
-    handler.handle input, client_addr
-  rescue Handler::UnknownInput
-  end
 
   def handle_connection socket
     input, conn = socket.recvfrom 2**16
