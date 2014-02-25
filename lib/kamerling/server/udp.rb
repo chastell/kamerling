@@ -40,6 +40,6 @@ module Kamerling module Server class UDP
     socket = UDPSocket.new.tap { |server| server.bind(*addr) }
     loop { handle_connection socket if IO.select [socket] }
   ensure
-    socket.close
+    socket.close if socket
   end
 end end end
