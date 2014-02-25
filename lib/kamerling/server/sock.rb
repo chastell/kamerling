@@ -10,6 +10,12 @@ module Kamerling module Server class Sock
     thread.join
   end
 
+  def start
+    @thread = Thread.new { run_loop }
+    wait_till_started
+    self
+  end
+
   def stop
     thread.exit.join
   end

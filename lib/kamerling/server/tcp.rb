@@ -1,10 +1,4 @@
 module Kamerling module Server class TCP < Sock
-  def start
-    @thread = Thread.new { run_loop }
-    loop { break if addr.connectable? }
-    self
-  end
-
   private
 
   def handle_connection socket
@@ -17,5 +11,9 @@ module Kamerling module Server class TCP < Sock
 
   def run_loop
     Socket.tcp_server_loop(*addr) { |socket| handle_connection socket }
+  end
+
+  def wait_till_started
+    loop { break if addr.connectable? }
   end
 end end end

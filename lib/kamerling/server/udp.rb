@@ -1,10 +1,4 @@
 module Kamerling module Server class UDP < Sock
-  def start
-    @thread = Thread.new { run_loop }
-    200.times { thread.run }
-    self
-  end
-
   private
 
   def handle_connection socket
@@ -18,5 +12,9 @@ module Kamerling module Server class UDP < Sock
     loop { handle_connection socket if IO.select [socket] }
   ensure
     socket.close if socket
+  end
+
+  def wait_till_started
+    200.times { thread.run }
   end
 end end end
