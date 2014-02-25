@@ -37,9 +37,6 @@ IndentationWidth:
 MethodDefParentheses:
   Enabled: false
 
-MethodLength:
-  Enabled: false
-
 MethodName:
   Enabled: false
 
