@@ -3,26 +3,15 @@ require 'logger'
 
 module Kamerling class Logging
   def initialize logger: Logger.new($stdout)
-    Server::TCP.extend AfterDo
-    Server::TCP.before :start do |*, server|
+    Server::Sock.extend AfterDo
+    Server::Sock.before :start do |*, server|
       logger.info "start #{server.addr}"
     end
-    Server::TCP.before :handle do |input, client_addr|
+    Server::Sock.before :handle do |input, client_addr|
       logger.info "connect #{client_addr}"
       logger.debug "received #{client_addr} #{input}"
     end
-    Server::TCP.after :stop do |*, server|
-      logger.info "stop #{server.addr}"
-    end
-    Server::UDP.extend AfterDo
-    Server::UDP.before :start do |*, server|
-      logger.info "start #{server.addr}"
-    end
-    Server::UDP.before :handle do |input, client_addr|
-      logger.info "connect #{client_addr}"
-      logger.debug "received #{client_addr} #{input}"
-    end
-    Server::UDP.after :stop do |*, server|
+    Server::Sock.after :stop do |*, server|
       logger.info "stop #{server.addr}"
     end
   end
