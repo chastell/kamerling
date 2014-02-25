@@ -23,6 +23,8 @@ module Kamerling module Server class TCP
   attr_reader :handler, :thread
   private     :handler, :thread
 
+  private
+
   def handle input, client_addr
     handler.handle input, client_addr
   rescue Handler::UnknownInput
