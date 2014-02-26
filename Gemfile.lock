@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kamerling (0.0.0)
+    kamerling (0.0.1)
       after_do (~> 0.3.0)
       sequel (~> 4.4)
       sinatra (~> 1.4)
