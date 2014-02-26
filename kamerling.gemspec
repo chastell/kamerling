@@ -1,11 +1,12 @@
 Gem::Specification.new do |gem|
-  gem.name     = 'kamerling'
-  gem.version  = '0.0.0'
-  gem.summary  = 'Kamerling: a computation network server'
-  gem.homepage = 'https://github.com/chastell/kamerling'
-  gem.author   = 'Piotr Szotkowski'
-  gem.email    = 'p.szotkowski@tele.pw.edu.pl'
-  gem.license  = 'AGPL-3.0'
+  gem.name        = 'kamerling'
+  gem.version     = '0.0.0'
+  gem.summary     = 'Kamerling: a computation network server'
+  gem.homepage    = 'https://github.com/chastell/kamerling'
+  gem.author      = 'Piotr Szotkowski'
+  gem.email       = 'p.szotkowski@tele.pw.edu.pl'
+  gem.license     = 'AGPL-3.0'
+  gem.description = 'A network server for distributing computations across different clients speaking TCP or UDP.'
 
   gem.files       = `git ls-files -z`.split "\0"
   gem.executables = gem.files.grep(%r{^bin/}).map { |path| File.basename path }
