@@ -1,8 +1,10 @@
 require 'after_do'
 require 'logger'
 
-module Kamerling class Logging
-  def initialize logger: Logger.new($stdout)
+module Kamerling module Logging
+  module_function
+
+  def log_to logger: Logger.new($stdout)
     Server::Sock.extend AfterDo
     Server::Sock.before :start do |*, server|
       logger.info "start #{server.addr}"
