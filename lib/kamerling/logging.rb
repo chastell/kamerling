@@ -16,5 +16,9 @@ module Kamerling module Logging
     Server::Sock.after :stop do |*, server|
       logger.info "stop #{server.addr}"
     end
+    NetDispatcher.extend AfterDo
+    NetDispatcher.before :dispatch do |addr, bytes|
+      logger.debug "sent #{addr} #{bytes}"
+    end
   end
 end end
