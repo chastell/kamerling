@@ -18,7 +18,7 @@ module Kamerling describe Logging do
     udp_server.stop
   end
 
-  describe '.new' do
+  describe '.log_to' do
     it 'logs TCP server starts' do
       logged.must_include 'start localhost:1981 (TCP)'
     end
