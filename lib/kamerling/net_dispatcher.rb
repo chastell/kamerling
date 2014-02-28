@@ -1,4 +1,6 @@
-module Kamerling class NetDispatcher
+module Kamerling module NetDispatcher
+  module_function
+
   def dispatch addr, bytes
     case addr.prot
     when :TCP then TCPSocket.open(*addr) { |socket| socket << bytes }

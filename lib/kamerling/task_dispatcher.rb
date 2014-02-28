@@ -1,5 +1,5 @@
 module Kamerling class TaskDispatcher
-  def initialize net_dispatcher: NetDispatcher.new, repos: Repos
+  def initialize net_dispatcher: NetDispatcher, repos: Repos
     @net_dispatcher = net_dispatcher
     @repos          = repos
   end

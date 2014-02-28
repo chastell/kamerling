@@ -6,7 +6,7 @@ module Kamerling describe NetDispatcher do
       server = TCPServer.open 0
       thread = Thread.new { server.accept.read }
       addr   = Addr[server.addr[3], server.addr[1], :TCP]
-      NetDispatcher.new.dispatch addr, 'foo'
+      NetDispatcher.dispatch addr, 'foo'
       thread.value.must_equal 'foo'
     end
 
@@ -14,7 +14,7 @@ module Kamerling describe NetDispatcher do
       server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
       thread = Thread.new { server.recvfrom(2**16).first }
       addr   = Addr[server.addr[3], server.addr[1], :UDP]
-      NetDispatcher.new.dispatch addr, 'foo'
+      NetDispatcher.dispatch addr, 'foo'
       thread.value.must_equal 'foo'
     end
   end
