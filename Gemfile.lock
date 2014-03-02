@@ -60,7 +60,7 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.4.1)
       sexp_processor (~> 4.1)
-    sequel (4.7.0)
+    sequel (4.8.0)
     sexp_processor (4.4.1)
     sinatra (1.4.4)
       rack (~> 1.4)
