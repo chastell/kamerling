@@ -6,7 +6,17 @@ module Kamerling class Handler
   end
 
   def handle input, addr
-    message = Message.new input
+    process Message.new(input), addr
+  rescue Message::UnknownType => exception
+    raise UnknownInput, exception.message
+  end
+
+  attr_reader :receiver, :registrar
+  private     :receiver, :registrar
+
+  private
+
+  def process message, addr
     case message.type
     when :RGST
       registrar.register addr: addr, client_uuid: message.client_uuid,
@@ -15,10 +25,5 @@ module Kamerling class Handler
       receiver.receive addr: addr, client_uuid: message.client_uuid,
         data: message.payload, task_uuid: message.task_uuid
     end
-  rescue Message::UnknownType => exception
-    raise UnknownInput, exception.message
   end
-
-  attr_reader :receiver, :registrar
-  private     :receiver, :registrar
 end end
