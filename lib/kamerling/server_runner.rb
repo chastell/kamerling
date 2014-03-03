@@ -30,20 +30,18 @@ module Kamerling class ServerRunner
     { http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP }
   end
 
+  def defaults
+    Settings.new 'sqlite::memory:', '127.0.0.1'
+  end
+
   def settings
-    @settings ||= Settings.new.tap do |sets|
-      sets.db   = 'sqlite::memory:'
-      sets.host = '127.0.0.1'
-      OptionParser.new do |opts|
-        opts.on("--db #{sets.db}", String, 'database') do |db|
-          sets.db = db
-        end
-        opts.on("--host #{sets.host}", String, 'server host') do |host|
-          sets.host = host
-        end
-        opts.on('--http 0', Integer, 'HTTP port') { |http| sets.http = http }
-        opts.on('--tcp 0',  Integer, 'TCP port')  { |tcp|  sets.tcp  = tcp  }
-        opts.on('--udp 0',  Integer, 'UDP port')  { |udp|  sets.udp  = udp  }
+    @settings ||= defaults.tap do |set|
+      OptionParser.new do |opt|
+        opt.on("--db #{set.db}", String, 'database') { |db| set.db = db }
+        opt.on("--host #{set.host}", String, 'host') { |host| set.host = host }
+        opt.on('--http 0', Integer, 'HTTP port') { |http| set.http = http }
+        opt.on('--tcp 0',  Integer, 'TCP port')  { |tcp|  set.tcp  = tcp  }
+        opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  set.udp  = udp  }
       end.parse! args
     end
   end
