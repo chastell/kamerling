@@ -14,8 +14,8 @@ module Kamerling describe TaskDispatcher do
 
       TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos).dispatch
 
-      net_dispatcher.must_have_received :dispatch, [addr,
-        "DATA#{"\0" * 12}16B client  UUID16B project UUID16B task    UUIDdata"]
+      header = "DATA#{"\0" * 12}16B client  UUID16B project UUID16B task    "
+      net_dispatcher.must_have_received :dispatch, [addr, header + 'UUIDdata']
       client.must_have_received :busy=, [true]
       repos.must_have_received :<<, [client]
     end
