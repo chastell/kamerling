@@ -10,7 +10,7 @@ module Kamerling describe TaskDispatcher do
       repos   = fake :repos, as: :class, projects: [project]
       stub(repos).next_task_for(project) { task }
       stub(repos).free_clients_for(project) { [client] }
-      net_dispatcher = fake :net_dispatcher
+      net_dispatcher = fake :net_dispatcher, as: :class
 
       TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos).dispatch
 
