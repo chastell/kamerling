@@ -12,8 +12,8 @@ module Kamerling module Logging
   private
 
   def self.add_dispatcher_logging logger
-    NetDispatcher.extend AfterDo
-    NetDispatcher.before :dispatch do |addr, bytes|
+    NetDispatcher.singleton_class.extend AfterDo
+    NetDispatcher.singleton_class.before :dispatch do |addr, bytes|
       logger.debug "sent #{addr} #{bytes}"
     end
   end

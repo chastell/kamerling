@@ -71,7 +71,6 @@ module Kamerling describe Logging do
     end
 
     it 'logs packet dispatches' do
-      skip
       server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
       addr   = Addr[server.addr[3], server.addr[1], :UDP]
       NetDispatcher.dispatch addr, 'PING'
