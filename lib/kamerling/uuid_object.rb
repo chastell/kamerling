@@ -1,5 +1,7 @@
 module Kamerling
-  def self.UUIDObject *params
+  module_function
+
+  def UUIDObject *params
     class_definition_from attrs_from params
   end
 
