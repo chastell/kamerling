@@ -31,8 +31,5 @@ MethodDefParentheses:
 MethodName:
   Enabled: false
 
-SignalException:
-  Enabled: false
-
 TrailingComma:
   Enabled: false
