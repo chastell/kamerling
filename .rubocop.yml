@@ -28,8 +28,5 @@ IndentationWidth:
 MethodDefParentheses:
   Enabled: false
 
-MethodName:
-  Enabled: false
-
 TrailingComma:
   Enabled: false
