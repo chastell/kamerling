@@ -39,7 +39,7 @@ module Kamerling describe Repo do
     it 'returns all objects' do
       tune = Tune.new genre: :chap_hop, uuid: UUID.new
       source = fake Sequel::Dataset,
-        all: [{ genre: :chap_hop, uuid: tune.uuid }]
+                    all: [{ genre: :chap_hop, uuid: tune.uuid }]
       Repo.new(Tune, source).all.must_equal [tune]
     end
   end
