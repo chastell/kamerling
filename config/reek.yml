@@ -9,10 +9,6 @@ IrresponsibleModule:
 NestedIterators:
   max_allowed_nesting: 2
 
-UncommunicativeMethodName:
-  exclude:
-  - Kamerling#self.UUIDObject
-
 UnusedParameters:
   exclude:
   - Kamerling::Server::HTTP#initialize
