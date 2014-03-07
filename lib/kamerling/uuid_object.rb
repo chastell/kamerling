@@ -100,7 +100,7 @@ module Kamerling
     end
 
     def raises_from params
-      Hash[params.map { |param| [param, -> { raise "#{param} required" }] }]
+      Hash[params.map { |param| [param, -> { fail "#{param} required" }] }]
     end
   end
 end

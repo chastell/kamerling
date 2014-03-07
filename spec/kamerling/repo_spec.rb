@@ -15,7 +15,7 @@ module Kamerling describe Repo do
       dataset = fake Sequel::Dataset
       source  = fake Sequel::Dataset
       tune    = Tune.new genre: :chap_hop
-      stub(source).<<(tune.to_h) { raise Sequel::UniqueConstraintViolation }
+      stub(source).<<(tune.to_h) { fail Sequel::UniqueConstraintViolation }
       stub(source).where(uuid: tune.uuid) { dataset }
       Repo.new(Tune, source) << tune
       dataset.must_have_received :update, [tune.to_h]

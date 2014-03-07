@@ -30,7 +30,7 @@ module Kamerling describe Server::TCP do
     it 'doesn’t blow up on unknown inputs' do
       server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
       server.start
-      stub(handler).handle('foo', any(Addr)) { raise Handler::UnknownInput }
+      stub(handler).handle('foo', any(Addr)) { fail Handler::UnknownInput }
       TCPSocket.open(*server.addr) { |socket| socket << 'foo' }
       server.stop
     end

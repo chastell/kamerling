@@ -11,7 +11,7 @@ module Kamerling class Message
   def initialize raw
     @raw = raw
     type = raw[0..3]
-    raise UnknownType, type unless KnownTypes.include? type or type.empty?
+    fail UnknownType, type unless KnownTypes.include? type or type.empty?
   end
 
   def == other

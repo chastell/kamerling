@@ -22,7 +22,7 @@ module Kamerling describe Server::UDP do
     it 'doesn’t blow up on unknown inputs' do
       server = Server::UDP.new addr: addr, handler: handler = fake(:handler)
       server.start
-      stub(handler).handle('foo', any(Addr)) { raise Handler::UnknownInput }
+      stub(handler).handle('foo', any(Addr)) { fail Handler::UnknownInput }
       UDPSocket.new.send 'foo', 0, *server.addr
       run_all_threads
       server.stop
