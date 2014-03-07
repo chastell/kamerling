@@ -1,16 +1,9 @@
+inherit_from: rubocop-todo.yml
+
 AccessModifierIndentation:
   Enabled: false
 
-AlignHash:
-  Enabled: false
-
 AndOr:
-  Enabled: false
-
-CaseEquality:
-  Enabled: false
-
-ConstantName:
   Enabled: false
 
 Documentation:
@@ -19,14 +12,11 @@ Documentation:
 EndAlignment:
   Enabled: false
 
-HandleExceptions:
-  Enabled: false
-
 IndentationWidth:
   Enabled: false
 
 MethodDefParentheses:
-  Enabled: false
+  EnforcedStyle: require_no_parentheses
 
 TrailingComma:
-  Enabled: false
+  EnforcedStyleForMultiline: comma
