@@ -1,7 +1,5 @@
-module Kamerling
-  module_function
-
-  def UUIDObject *params
+module Kamerling class UUIDObject
+  def self.new *params
     class_definition_from attrs_from params
   end
 
@@ -103,4 +101,4 @@ module Kamerling
       Hash[params.map { |param| [param, -> { fail "#{param} required" }] }]
     end
   end
-end
+end end

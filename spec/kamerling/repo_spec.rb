@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Repo do
-  Tune = Kamerling.UUIDObject :genre
+  Tune = UUIDObject.new :genre
 
   describe '#<<' do
     it 'passes the Hash version of an object to the source' do

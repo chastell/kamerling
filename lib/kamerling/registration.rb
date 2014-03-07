@@ -1,2 +1,2 @@
-module Kamerling class Registration < UUIDObject :addr, :client, :project
+module Kamerling class Registration < UUIDObject.new :addr, :client, :project
 end end

@@ -1,2 +1,2 @@
-module Kamerling class Client < UUIDObject :addr, busy: false
+module Kamerling class Client < UUIDObject.new :addr, busy: false
 end end
