@@ -3,7 +3,7 @@ module Kamerling module CoreExtensions module Main
 
   def req param
     method   = caller.first[/`(.*)'$/, 1]
-    callsite = Class === self ? "#{name}.#{method}" : "#{self.class}##{method}"
+    callsite = is_a?(Class) ? "#{name}.#{method}" : "#{self.class}##{method}"
     fail "#{callsite}: param #{param} is required"
   end
 

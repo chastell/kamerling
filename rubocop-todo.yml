@@ -12,10 +12,6 @@ AlignHash:
   Enabled: false
 
 # Offence count: 1
-CaseEquality:
-  Enabled: false
-
-# Offence count: 1
 ConstantName:
   Enabled: false
 
