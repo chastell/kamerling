@@ -23,12 +23,6 @@ ConstantName:
 HandleExceptions:
   Enabled: false
 
-# Offence count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-MethodDefParentheses:
-  Enabled: false
-
 # Offence count: 3
 # Configuration parameters: CountComments.
 MethodLength:
