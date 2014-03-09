@@ -1,2 +1,3 @@
-module Kamerling class Task < UUIDObject.new :data, :project, done: false
-end end
+module Kamerling
+  Task = UUIDObject.new :data, :project, done: false
+end

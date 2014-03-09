@@ -1,2 +1,3 @@
-module Kamerling class Project < UUIDObject.new :name
-end end
+module Kamerling
+  Project = UUIDObject.new :name
+end

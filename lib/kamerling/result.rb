@@ -1,2 +1,3 @@
-module Kamerling class Result < UUIDObject.new :addr, :client, :data, :task
-end end
+module Kamerling
+  Result = UUIDObject.new :addr, :client, :data, :task
+end
