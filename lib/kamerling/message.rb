@@ -1,5 +1,4 @@
 module Kamerling class Message
-  KnownTypes  = %w[DATA PING RGST RSLT]
   UnknownType = Class.new RuntimeError
 
   def self.[] client: req(:client), payload: req(:payload),
@@ -11,7 +10,8 @@ module Kamerling class Message
   def initialize raw
     @raw = raw
     type = raw[0..3]
-    fail UnknownType, type unless KnownTypes.include? type or type.empty?
+    known_types = %w[DATA PING RGST RSLT]
+    fail UnknownType, type unless known_types.include? type or type.empty?
   end
 
   def == other
