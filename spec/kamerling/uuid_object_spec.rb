@@ -24,7 +24,7 @@ module Kamerling describe UUIDObject do
         Task    => { task.uuid    => task    },
       }
       hash = { client_uuid: client.uuid, project_uuid: project.uuid,
-        task_uuid: task.uuid, uuid: UUID.new }
+               task_uuid: task.uuid, uuid: UUID.new }
       complete = Complete.from_h hash, repos: repos
       complete.client.must_equal  client
       complete.project.must_equal project
@@ -76,7 +76,7 @@ module Kamerling describe UUIDObject do
       Addrble = UUIDObject.new :addr
       addrble = Addrble.new addr: Addr['127.0.0.1', 1981, :TCP]
       addrble.to_h.must_equal host: '127.0.0.1', port: 1981, prot: 'TCP',
-        uuid: anything
+                              uuid: anything
     end
 
     it 'serialises client' do

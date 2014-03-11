@@ -12,7 +12,7 @@ module Kamerling describe Message do
       project = fake :project, uuid: UUID.new
       task    = fake :task,    uuid: UUID.new
       message = Message[client: client, payload: 'pay', project: project,
-        task: task, type: :DATA]
+                        task: task, type: :DATA]
       message.client_uuid.must_equal client.uuid
       message.project_uuid.must_equal project.uuid
       message.task_uuid.must_equal task.uuid

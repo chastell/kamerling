@@ -6,11 +6,13 @@ module Kamerling describe Registrar do
 
     it 'registers that the given client can do the given project' do
       repos = { Client => { client.uuid => client },
-        Project => { project.uuid => project }, Registration => repo }
+                Project => { project.uuid => project }, Registration => repo }
       Registrar.new.register addr: addr, client_uuid: client.uuid,
-        project_uuid: project.uuid, repos: repos
+                             project_uuid: project.uuid, repos: repos
       repo.must_have_received :<<, [Registration.new(addr: addr,
-        client: client, project: project, uuid: anything)]
+                                                     client: client,
+                                                     project: project,
+                                                     uuid: anything)]
     end
   end
 end end

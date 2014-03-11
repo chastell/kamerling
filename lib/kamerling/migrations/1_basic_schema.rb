@@ -19,9 +19,9 @@ Sequel.migration do
       integer :port, null: false
       string  :prot, null: false
       foreign_key :client_uuid,  :clients,  index: true, null: false,
-        type: :uuid
+                                            type: :uuid
       foreign_key :project_uuid, :projects, index: true, null: false,
-        type: :uuid
+                                            type: :uuid
     end
 
     create_table :results do
@@ -39,7 +39,7 @@ Sequel.migration do
       boolean :done, null: false
       bytea   :data, null: false
       foreign_key :project_uuid, :projects, index: true, null: false,
-        type: :uuid
+                                            type: :uuid
     end
   end
 end
