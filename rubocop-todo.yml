@@ -9,8 +9,3 @@
 # Configuration parameters: CountComments.
 MethodLength:
   Max: 19
-
-# Offence count: 10
-# Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
-TrailingComma:
-  Enabled: false

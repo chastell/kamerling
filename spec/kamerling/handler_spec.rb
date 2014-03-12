@@ -10,9 +10,12 @@ module Kamerling describe Handler do
       client_uuid  = UUID['16B client  UUID']
       project_uuid = UUID['16B project UUID']
       handler.handle input, addr
-      registrar.must_have_received :register, [{ addr: addr,
-                                                 client_uuid: client_uuid,
-                                                 project_uuid: project_uuid }]
+      args = {
+        addr:         addr,
+        client_uuid:  client_uuid,
+        project_uuid: project_uuid,
+      }
+      registrar.must_have_received :register, [args]
     end
 
     it 'handles RSLT inputs' do
@@ -21,10 +24,13 @@ module Kamerling describe Handler do
       client_uuid = UUID['16B client  UUID']
       task_uuid   = UUID['16B task    UUID']
       handler.handle input, addr
-      receiver.must_have_received :receive, [{ addr: addr,
-                                               client_uuid: client_uuid,
-                                               data: 'data',
-                                               task_uuid: task_uuid }]
+      args = {
+        addr:        addr,
+        client_uuid: client_uuid,
+        data:        'data',
+        task_uuid:   task_uuid,
+      }
+      receiver.must_have_received :receive, [args]
     end
 
     it 'raises on unknown inputs' do

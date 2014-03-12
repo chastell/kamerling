@@ -23,8 +23,12 @@ module Kamerling describe UUIDObject do
         Project => { project.uuid => project },
         Task    => { task.uuid    => task    },
       }
-      hash = { client_uuid: client.uuid, project_uuid: project.uuid,
-               task_uuid: task.uuid, uuid: UUID.new }
+      hash = {
+        client_uuid:  client.uuid,
+        project_uuid: project.uuid,
+        task_uuid:    task.uuid,
+        uuid:         UUID.new,
+      }
       complete = Complete.from_h hash, repos: repos
       complete.client.must_equal  client
       complete.project.must_equal project
