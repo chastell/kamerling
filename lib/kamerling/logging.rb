@@ -5,26 +5,28 @@ module Kamerling module Logging
   module_function
 
   def log_to logger: Logger.new($stdout)
-    add_server_logging logger
-    add_dispatcher_logging logger
+    log_dispatcher_to logger
+    log_server_to     logger
   end
 
-  private
+  class << self
+    private
 
-  def self.add_dispatcher_logging logger
-    NetDispatcher.singleton_class.extend AfterDo
-    NetDispatcher.singleton_class.before :dispatch do |addr, bytes|
-      logger.debug "sent #{addr} #{bytes}"
+    def log_dispatcher_to logger
+      NetDispatcher.singleton_class.extend AfterDo
+      NetDispatcher.singleton_class.before :dispatch do |addr, bytes|
+        logger.debug "sent #{addr} #{bytes}"
+      end
     end
-  end
 
-  def self.add_server_logging logger
-    Server::Sock.extend  AfterDo
-    Server::Sock.before(:start) { |server| logger.info "start #{server.addr}" }
-    Server::Sock.after(:stop)   { |server| logger.info "stop #{server.addr}"  }
-    Server::Sock.before :handle do |input, client_addr|
-      logger.info "connect #{client_addr}"
-      logger.debug "received #{client_addr} #{input}"
+    def log_server_to logger
+      Server::Sock.extend AfterDo
+      Server::Sock.before(:start) { |srv| logger.info "start #{srv.addr}" }
+      Server::Sock.after(:stop)   { |srv| logger.info "stop #{srv.addr}"  }
+      Server::Sock.before :handle do |input, client_addr|
+        logger.info "connect #{client_addr}"
+        logger.debug "received #{client_addr} #{input}"
+      end
     end
   end
 end end
