@@ -12,6 +12,10 @@ Documentation:
 EndAlignment:
   Enabled: false
 
+HandleExceptions:
+  Exclude:
+    - lib/kamerling/server/sock.rb
+
 IndentationWidth:
   Enabled: false
 
