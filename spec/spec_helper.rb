@@ -9,14 +9,16 @@ require 'kamerling'
 
 Bogus.configure { |config| config.search_modules << Kamerling }
 
-module MiniTest::Spec::DSL
-  def fakes *args
-    args.map { |arg| fake arg }
-  end
-end
+module Minitest
+  class Spec
+    include Rack::Test::Methods
 
-class MiniTest::Spec
-  include Rack::Test::Methods
+    module DSL
+      def fakes *args
+        args.map { |arg| fake arg }
+      end
+    end
+  end
 end
 
 Thread.abort_on_exception = true
