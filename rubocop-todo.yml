@@ -10,11 +10,6 @@
 ClassAndModuleChildren:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-LineEndConcatenation:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: CountComments.
 MethodLength:
