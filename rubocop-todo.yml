@@ -14,9 +14,3 @@ ClassAndModuleChildren:
 # Configuration parameters: CountComments.
 MethodLength:
   Max: 19
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-PercentLiteralDelimiters:
-  Enabled: false

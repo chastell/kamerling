@@ -24,7 +24,7 @@ module Kamerling class ServerRunner
 
   private
 
-  Settings = Struct.new(*%i[db host http tcp udp])
+  Settings = Struct.new(*%i(db host http tcp udp))
 
   def def_classes
     { http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP }

@@ -20,7 +20,7 @@ module Kamerling describe ServerRunner do
 
   describe '.new' do
     it 'hooks to the given database' do
-      args  = %w[--host 0.0.0.0 --db sqlite::memory:]
+      args  = %w(--host 0.0.0.0 --db sqlite::memory:)
       db    = fake { Sequel::SQLite::Database }
       orm   = fake :sequel, as: :class
       stub(orm).connect('sqlite::memory:') { db }
@@ -32,7 +32,7 @@ module Kamerling describe ServerRunner do
 
   describe '#join' do
     it 'joins all the created servers' do
-      args = %w[--host 0.0.0.0 --http 1234]
+      args = %w(--host 0.0.0.0 --http 1234)
       ServerRunner.new(args, classes: classes).join
       http.must_have_received :join, []
       tcp.wont_have_received :join,  []
@@ -42,7 +42,7 @@ module Kamerling describe ServerRunner do
 
   describe '#start' do
     it 'starts the servers based on the given command-line parameters' do
-      args = %w[--host 0.0.0.0 --http 1234 --tcp 3456 --udp 5678]
+      args = %w(--host 0.0.0.0 --http 1234 --tcp 3456 --udp 5678)
       ServerRunner.new(args, classes: classes).start
       http.must_have_received :start, []
       tcp.must_have_received :start,  []
@@ -50,7 +50,7 @@ module Kamerling describe ServerRunner do
     end
 
     it 'starts only the servers for which the port was given' do
-      args = %w[--host 0.0.0.0 --http 1234]
+      args = %w(--host 0.0.0.0 --http 1234)
       ServerRunner.new(args, classes: classes).start
       http.must_have_received :start, []
       tcp.wont_have_received :start,  []

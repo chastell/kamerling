@@ -10,7 +10,7 @@ module Kamerling class Message
   def initialize raw
     @raw = raw
     type = raw[0..3]
-    known_types = %w[DATA PING RGST RSLT]
+    known_types = %w(DATA PING RGST RSLT)
     fail UnknownType, type unless known_types.include? type or type.empty?
   end
 
