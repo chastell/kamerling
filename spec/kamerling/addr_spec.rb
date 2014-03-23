@@ -19,6 +19,12 @@ module Kamerling describe Addr do
     end
   end
 
+  describe '#to_h' do
+    it 'returns a Hash with Integer and String values' do
+      addr.to_h.must_equal({ host: 'localhost', port: 1981, prot: 'TCP' })
+    end
+  end
+
   describe '#to_s' do
     it 'returns the Addr in ‘host:port (protocol)’ notation' do
       addr.to_s.must_equal 'localhost:1981 (TCP)'

@@ -11,6 +11,10 @@ module Kamerling
       [host, port]
     end
 
+    def to_h
+      super.merge prot: prot.to_s
+    end
+
     def to_s
       "#{host}:#{port} (#{prot})"
     end
