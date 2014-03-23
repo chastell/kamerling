@@ -15,4 +15,14 @@ module Kamerling describe UUIDEntity do
       AttrLess.new.uuid.wont_equal AttrLess.new.uuid
     end
   end
+
+  describe '#==' do
+    it 'reports UUID-based euqality' do
+      Actor = Class.new(UUIDEntity) { attribute :name, Symbol }
+      Actor.new(name: :laurel).wont_equal Actor.new name: :laurel
+      uuid = UUID.new
+      Actor.new(name: :laurel, uuid: uuid)
+        .must_equal Actor.new name: :hardy, uuid: uuid
+    end
+  end
 end end
