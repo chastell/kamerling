@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sinatra',  '~> 1.4'
   gem.add_dependency 'slim',     '~> 2.0'
   gem.add_dependency 'sqlite3',  '~> 1.3'
+  gem.add_dependency 'virtus',   '~> 1.0'
 
   gem.add_development_dependency 'bogus',          '~> 0.1.3'
   gem.add_development_dependency 'minitest',       '~> 5.0'
