@@ -25,4 +25,11 @@ module Kamerling describe UUIDEntity do
         .must_equal Actor.new name: :hardy, uuid: uuid
     end
   end
+
+  describe '#to_h' do
+    it 'serialises the object to a Hash' do
+      Hashble = Class.new(UUIDEntity) { attribute :param, Symbol }
+      Hashble.new(param: :val).to_h.must_equal param: :val, uuid: any(String)
+    end
+  end
 end end

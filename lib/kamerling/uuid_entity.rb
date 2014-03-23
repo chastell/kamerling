@@ -10,4 +10,6 @@ module Kamerling class UUIDEntity
   class << self
     alias from_h new
   end
+
+  alias to_h attributes
 end end
