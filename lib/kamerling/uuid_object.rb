@@ -17,16 +17,22 @@ module Kamerling class UUIDObject
       new_class = Class.new
       new_class.class_eval do
         define_singleton_method(:attrs) { attrs }
-        attrs.each do |attr, _|
-          define_method(attr)       { @values[attr]             }
-          define_method("#{attr}=") { |val| @values[attr] = val }
-        end
       end
+      define_attrs_on new_class
       define_from_h_on new_class
       define_initialize_on new_class
       define_eq_on new_class
       define_to_h_on new_class
       new_class
+    end
+
+    def define_attrs_on new_class
+      new_class.class_eval do
+        attrs.each do |attr, _|
+          define_method(attr)       { @values[attr]             }
+          define_method("#{attr}=") { |val| @values[attr] = val }
+        end
+      end
     end
 
     def define_from_h_on new_class
