@@ -8,8 +8,8 @@ module Kamerling class UUIDEntity
   attribute :uuid, String, default: -> * { UUID.new }
 
   class << self
-    alias from_h new
+    alias_method :from_h, :new
   end
 
-  alias to_h attributes
+  alias_method :to_h, :attributes
 end end
