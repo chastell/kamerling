@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    kamerling (0.0.1)
+    kamerling (0.0.2)
       after_do (~> 0.3.0)
       sequel (~> 4.4)
       sinatra (~> 1.4)
