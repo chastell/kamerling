@@ -1,7 +1,6 @@
 GIT
-  remote: git://github.com/chastell/virtus.git
-  revision: 838d3632977a46bab3278dfe09b20149498c8f89
-  branch: warning_free
+  remote: git://github.com/solnic/virtus.git
+  revision: c31940a63d1a4a2ac30032a0c01a9a217b5f5f82
   specs:
     virtus (1.0.2)
       axiom-types (~> 0.1)
