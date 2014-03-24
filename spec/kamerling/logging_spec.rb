@@ -8,7 +8,7 @@ module Kamerling describe Logging do
   let(:udp_server) { Server::UDP.new addr: Addr['localhost', 1979, :UDP] }
 
   before do
-    Logging.log_to logger: logger
+    Logging.log_to logger
     tcp_server.start
     udp_server.start
   end

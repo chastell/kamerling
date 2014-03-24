@@ -4,7 +4,7 @@ require 'logger'
 module Kamerling module Logging
   module_function
 
-  def log_to logger: Logger.new($stdout)
+  def log_to logger = Logger.new($stdout)
     log_dispatcher_to logger
     log_server_to     logger
   end
