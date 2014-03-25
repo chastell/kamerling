@@ -6,6 +6,7 @@ include Kamerling::CoreExtensions::Main
 
 require_relative 'kamerling/addr'
 require_relative 'kamerling/handler'
+require_relative 'kamerling/mapper'
 require_relative 'kamerling/message'
 require_relative 'kamerling/net_dispatcher'
 require_relative 'kamerling/receiver'
