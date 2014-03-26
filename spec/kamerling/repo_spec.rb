@@ -4,11 +4,12 @@ module Kamerling describe Repo do
   Tune = Class.new(UUIDEntity) { attribute :genre, Symbol }
 
   describe '#<<' do
-    it 'passes the Hash version of an object to the source' do
+    it 'passes the Hash version of an object to the source via a mapper' do
       tune   = Tune.new genre: :chap_hop
+      mapper = fake :mapper, as: :class, to_h: tune.to_h
       source = fake Sequel::Dataset
-      mock(source) << { genre: :chap_hop, uuid: tune.uuid }
-      Repo.new(Tune, source) << tune
+      Repo.new(Tune, source, mapper: mapper) << tune
+      source.must_have_received :<<, [tune.to_h]
     end
 
     it 'updates the source’s version if it exists there' do

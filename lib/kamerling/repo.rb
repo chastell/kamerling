@@ -1,12 +1,14 @@
 module Kamerling class Repo
   NotFound = Class.new RuntimeError
 
-  def initialize klass, source
-    @klass, @source = klass, source
+  def initialize klass, source, mapper: Mapper
+    @klass  = klass
+    @mapper = mapper
+    @source = source
   end
 
   def << object
-    hash = object.to_h
+    hash = mapper.to_h object
     warn_off { source << hash }
   rescue Sequel::UniqueConstraintViolation
     warn_off { source.where(uuid: object.uuid).update hash }
@@ -27,6 +29,6 @@ module Kamerling class Repo
     source.where(key => object.uuid).map { |hash| klass.from_h hash }
   end
 
-  attr_reader :klass, :source
-  private     :klass, :source
+  attr_reader :klass, :mapper, :source
+  private     :klass, :mapper, :source
 end end
