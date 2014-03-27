@@ -7,8 +7,4 @@ module Kamerling class Client < UUIDEntity
       client.addr = Addr[hash[:host], hash[:port], hash[:prot]]
     end
   end
-
-  def to_h
-    super.reject { |key, _| key == :addr }.merge addr.to_h
-  end
 end end
