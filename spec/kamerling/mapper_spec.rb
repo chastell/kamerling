@@ -8,6 +8,16 @@ module Kamerling describe Mapper do
                                      port: 1979, prot: 'TCP', uuid: client.uuid
     end
 
+    it 'returns the proper Hash representation of a Registration' do
+      addr    = Addr['127.0.0.1', 1979, :TCP]
+      client  = Client.new addr: addr, busy: true
+      project = Project.new name: 'project'
+      reg     = Registration.new addr: addr, client: client, project: project
+      Mapper.to_h(reg).must_equal client_uuid: client.uuid, host: '127.0.0.1',
+                                  port: 1979, prot: 'TCP',
+                                  project_uuid: project.uuid, uuid: reg.uuid
+    end
+
     it 'returns the proper Hash representation of a Tag' do
       project = Project.new name: 'project'
       task    = Task.new data: 'data', done: true, project: project
