@@ -21,7 +21,7 @@ module Kamerling class Repo
   end
 
   def all
-    source.all.map { |hash| klass.from_h hash }
+    source.all.map { |hash| mapper.from_h klass, hash }
   end
 
   def related_to object
