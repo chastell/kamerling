@@ -47,7 +47,7 @@ module Kamerling describe Repo do
   end
 
   describe '#related_to' do
-    it 'returns objects related to the given object' do
+    it 'returns objects related to the given object via a mapper' do
       ragga   = Tune.new genre: :ragga
       reggae  = Tune.new genre: :reggae
       project = fake :project, uuid: UUID.new
@@ -57,7 +57,11 @@ module Kamerling describe Repo do
       ]
       source = fake Sequel::Dataset
       stub(source).where(project_uuid: project.uuid) { results }
-      Repo.new(Tune, source).related_to(project).must_equal [ragga, reggae]
+      mapper = fake :mapper, as: :class
+      stub(mapper).from_h(Tune, { genre: :ragga,  uuid: ragga.uuid })  { ragga  }
+      stub(mapper).from_h(Tune, { genre: :reggae, uuid: reggae.uuid }) { reggae }
+      repo = Repo.new Tune, source, mapper: mapper
+      repo.related_to(project).must_equal [ragga, reggae]
     end
   end
 end end
