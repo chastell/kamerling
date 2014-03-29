@@ -48,15 +48,16 @@ module Kamerling describe Repo do
 
   describe '#related_to' do
     it 'returns objects related to the given object' do
-      tunes   = [Tune.new(genre: :ragga), Tune.new(genre: :reggae)]
+      ragga   = Tune.new genre: :ragga
+      reggae  = Tune.new genre: :reggae
       project = fake :project, uuid: UUID.new
       results = [
-        { genre: :ragga, uuid: tunes.first.uuid },
-        { genre: :reggae, uuid: tunes.last.uuid },
+        { genre: :ragga,  uuid: ragga.uuid  },
+        { genre: :reggae, uuid: reggae.uuid },
       ]
       source = fake Sequel::Dataset
       stub(source).where(project_uuid: project.uuid) { results }
-      Repo.new(Tune, source).related_to(project).must_equal tunes
+      Repo.new(Tune, source).related_to(project).must_equal [ragga, reggae]
     end
   end
 end end
