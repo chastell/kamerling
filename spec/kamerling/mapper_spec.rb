@@ -6,6 +6,14 @@ module Kamerling describe Mapper do
   let(:project) { Project.new name: 'project'                                }
   let(:task)    { Task.new data: 'data', done: true, project: project        }
 
+  describe '.from_h' do
+    it 'builds the proper Client from the Hash representation' do
+      hash = { busy: true, host: '127.0.0.1', port: 1979, prot: 'TCP',
+               uuid: client.uuid }
+      Mapper.from_h(Client, hash).must_equal client
+    end
+  end
+
   describe '.to_h' do
     it 'returns the proper Hash representation of a Client' do
       Mapper.to_h(client).must_equal busy: true, host: '127.0.0.1',

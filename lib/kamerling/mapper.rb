@@ -1,6 +1,11 @@
 module Kamerling class Mapper
   def self.from_h klass, hash
-    klass.from_h hash
+    case klass.name.split('::').last
+    when 'Client'
+      klass.from_h hash.merge addr: Addr[hash[:host], hash[:port], hash[:prot]]
+    else
+      klass.from_h hash
+    end
   end
 
   def self.to_h object
