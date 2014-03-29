@@ -24,11 +24,11 @@ module Kamerling describe Repo do
   end
 
   describe '#[]' do
-    it 'hydrates the object found in the repo' do
-      uuid   = UUID.new
-      source = { { uuid: uuid } => { genre: :chap_hop, uuid: uuid } }
-      Repo.new(Tune, source)[uuid]
-        .must_equal Tune.new genre: :chap_hop, uuid: uuid
+    it 'hydrates the object found in the repo via a mapper' do
+      tune   = Tune.new genre: :chap_hop
+      source = { { uuid: tune.uuid } => { genre: :chap_hop, uuid: tune.uuid } }
+      mapper = fake :mapper, as: :class, from_h: tune
+      Repo.new(Tune, source, mapper: mapper)[tune.uuid].must_equal tune
     end
 
     it 'raises NotFound if the object is not found in the repo' do

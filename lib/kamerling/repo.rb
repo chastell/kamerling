@@ -17,7 +17,7 @@ module Kamerling class Repo
   def [] uuid
     hash = warn_off { source[uuid: uuid] }
     fail NotFound, "#{klass} with UUID #{uuid}" unless hash
-    klass.from_h hash
+    mapper.from_h klass, hash
   end
 
   def all

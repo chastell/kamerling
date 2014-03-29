@@ -1,4 +1,8 @@
 module Kamerling class Mapper
+  def self.from_h klass, hash
+    klass.from_h hash
+  end
+
   def self.to_h object
     case object
     when Client
