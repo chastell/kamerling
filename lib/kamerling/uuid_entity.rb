@@ -7,9 +7,5 @@ module Kamerling class UUIDEntity
 
   attribute :uuid, String, default: -> * { UUID.new }
 
-  class << self
-    alias_method :from_h, :new
-  end
-
   alias_method :to_h, :attributes
 end end
