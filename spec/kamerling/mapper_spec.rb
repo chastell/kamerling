@@ -8,8 +8,13 @@ module Kamerling describe Mapper do
 
   describe '.from_h' do
     it 'builds the proper Client from the Hash representation' do
-      hash = { busy: true, host: '127.0.0.1', port: 1979, prot: 'TCP',
-               uuid: client.uuid }
+      hash = {
+        busy: true,
+        host: '127.0.0.1',
+        port: 1979,
+        prot: 'TCP',
+        uuid: client.uuid,
+      }
       Mapper.from_h(Client, hash).must_equal client
     end
   end
