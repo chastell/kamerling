@@ -58,8 +58,8 @@ module Kamerling describe Repo do
       source = fake Sequel::Dataset
       stub(source).where(project_uuid: project.uuid) { results }
       mapper = fake :mapper, as: :class
-      stub(mapper).from_h(Tune, { genre: :ragga,  uuid: ragga.uuid })  { ragga  }
-      stub(mapper).from_h(Tune, { genre: :reggae, uuid: reggae.uuid }) { reggae }
+      stub(mapper).from_h(Tune, genre: :ragga,  uuid: ragga.uuid)  { ragga  }
+      stub(mapper).from_h(Tune, genre: :reggae, uuid: reggae.uuid) { reggae }
       repo = Repo.new Tune, source, mapper: mapper
       repo.related_to(project).must_equal [ragga, reggae]
     end
