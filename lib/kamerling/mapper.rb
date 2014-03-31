@@ -9,30 +9,14 @@ module Kamerling class Mapper
   end
 
   def self.to_h object
-    case object
-    when Client
-      object.to_h.reject { |key, _| key == :addr }.merge object.addr.to_h
-    when Registration
-      object.to_h
-        .reject { |key, _| key == :addr    }
-        .merge(object.addr.to_h)
-        .reject { |key, _| key == :client  }
-        .merge(client_uuid:  object.client.uuid)
-        .reject { |key, _| key == :project }
-        .merge project_uuid: object.project.uuid
-    when Result
-      object.to_h
-        .reject { |key, _| key == :addr    }
-        .merge(object.addr.to_h)
-        .reject { |key, _| key == :client  }
-        .merge(client_uuid:  object.client.uuid)
-        .reject { |key, _| key == :task }
-        .merge task_uuid: object.task.uuid
-    when Task
-      object.to_h.reject { |key, _| key == :project }
-        .merge project_uuid: object.project.uuid
-    else
-      object.to_h
+    object.to_h.reduce({}) do |hash, (key, value)|
+      hash.merge case key
+                 when :addr    then value.to_h
+                 when :client  then { client_uuid:  value.uuid }
+                 when :project then { project_uuid: value.uuid }
+                 when :task    then { task_uuid:    value.uuid }
+                 else               { key => value }
+                 end
     end
   end
 end end
