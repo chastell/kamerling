@@ -1,7 +1,10 @@
 DuplicateMethodCall:
   exclude:
-  - Kamerling#self.class_definition_from
-  - Kamerling::Handler#handle
+    - Kamerling::Handler#handle
+    - Kamerling::Handler#process
+    - Kamerling::Logging#log_dispatcher
+    - Kamerling::Logging#log_server
+    - Kamerling::Mapper#self.to_h
 
 IrresponsibleModule:
   enabled: false
@@ -11,4 +14,4 @@ NestedIterators:
 
 UnusedParameters:
   exclude:
-  - Kamerling::Server::HTTP#initialize
+    - Kamerling::Server::HTTP#initialize
