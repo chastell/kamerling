@@ -34,15 +34,17 @@ module Kamerling class ServerRunner
     Settings.new 'sqlite::memory:', '127.0.0.1'
   end
 
+  def parse_into set
+    OptionParser.new do |opt|
+      opt.on("--db #{set.db}", String, 'database') { |db|   set.db   = db   }
+      opt.on("--host #{set.host}", String, 'host') { |host| set.host = host }
+      opt.on('--http 0', Integer, 'HTTP port')     { |http| set.http = http }
+      opt.on('--tcp 0',  Integer, 'TCP port')      { |tcp|  set.tcp  = tcp  }
+      opt.on('--udp 0',  Integer, 'UDP port')      { |udp|  set.udp  = udp  }
+    end.parse! args
+  end
+
   def settings
-    @settings ||= defaults.tap do |set|
-      OptionParser.new do |opt|
-        opt.on("--db #{set.db}", String, 'database') { |db| set.db = db }
-        opt.on("--host #{set.host}", String, 'host') { |host| set.host = host }
-        opt.on('--http 0', Integer, 'HTTP port') { |http| set.http = http }
-        opt.on('--tcp 0',  Integer, 'TCP port')  { |tcp|  set.tcp  = tcp  }
-        opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  set.udp  = udp  }
-      end.parse! args
-    end
+    @settings ||= defaults.tap { |set| parse_into set }
   end
 end end
