@@ -6,6 +6,12 @@ DuplicateMethodCall:
     - Kamerling::Logging#log_server
     - Kamerling::Mapper#self.to_h
 
+FeatureEnvy:
+  exclude:
+    # https://github.com/troessner/reek/issues/53
+    - Kamerling::NetDispatcher
+    - Kamerling::UUID
+
 IrresponsibleModule:
   enabled: false
 
@@ -15,3 +21,9 @@ NestedIterators:
 UnusedParameters:
   exclude:
     - Kamerling::Server::HTTP#initialize
+
+UtilityFunction:
+  exclude:
+    # https://github.com/troessner/reek/issues/27
+    - Kamerling::NetDispatcher
+    - Kamerling::UUID
