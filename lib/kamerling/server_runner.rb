@@ -24,9 +24,17 @@ module Kamerling class ServerRunner
 
   private
 
-  Settings = Struct.new(*%i(db host http tcp udp)) do
+  class Settings < Value
+    values do
+      attribute :db,   String
+      attribute :host, String
+      attribute :http, Integer
+      attribute :tcp,  Integer
+      attribute :udp,  Integer
+    end
+
     def initialize args
-      super 'sqlite::memory:', '127.0.0.1'
+      super db: 'sqlite::memory:', host: '127.0.0.1'
       OptionParser.new do |opt|
         opt.on("--db #{db}", String, 'database') { |db|   self.db   = db   }
         opt.on("--host #{host}", String, 'host') { |host| self.host = host }
