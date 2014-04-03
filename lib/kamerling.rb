@@ -1,9 +1,11 @@
 require 'socket'
+require 'virtus'
 
 require_relative 'kamerling/core_extensions'
 
 include Kamerling::CoreExtensions::Main
 
+require_relative 'kamerling/value'
 require_relative 'kamerling/addr'
 require_relative 'kamerling/handler'
 require_relative 'kamerling/mapper'
@@ -28,4 +30,3 @@ require_relative 'kamerling/registration'
 require_relative 'kamerling/task'
 require_relative 'kamerling/result'
 require_relative 'kamerling/logging'
-require_relative 'kamerling/value'
