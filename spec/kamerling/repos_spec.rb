@@ -126,11 +126,11 @@ module Kamerling describe Repos do
     end
 
     it 'makes sure objects can be updated' do
-      client = Client.new addr: Addr['127.0.0.1', 1979, :TCP], uuid: UUID.new
+      client = Client.new addr: Addr['127.0.0.1', 1979, :TCP]
       Repos << client
-      client.addr.port = 1981
+      client.busy = true
       Repos << client
-      Repos[Client][client.uuid].addr.port.must_equal 1981
+      assert Repos[Client][client.uuid].busy
     end
   end
 end end
