@@ -5,6 +5,8 @@ require 'slim'
 module Kamerling class HTTPAPI < Sinatra::Base
   extend Forwardable
 
+  delegate repos: :settings
+
   configure { set repos: Repos }
 
   get '/' do
@@ -31,8 +33,4 @@ module Kamerling class HTTPAPI < Sinatra::Base
     repos << Project.new(name: params['name'], uuid: uuid)
     redirect '/projects'
   end
-
-  private
-
-  delegate repos: :settings
 end end
