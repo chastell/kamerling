@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/solnic/virtus.git
-  revision: c31940a63d1a4a2ac30032a0c01a9a217b5f5f82
+  revision: 920b63472670c586f98ae0e28661784de6808100
   specs:
     virtus (1.0.2)
       axiom-types (~> 0.1)
