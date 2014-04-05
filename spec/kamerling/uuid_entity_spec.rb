@@ -9,7 +9,7 @@ module Kamerling describe UUIDEntity do
     end
 
     it 'deserialises the object from a Hash' do
-      Trivial = Class.new(UUIDEntity) { attribute :question, Symbol }
+      Trivial = Class.new(UUIDEntity) { attrs question: Symbol }
       Trivial.new(question: :answer).question.must_equal :answer
     end
   end

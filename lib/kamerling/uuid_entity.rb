@@ -6,4 +6,8 @@ module Kamerling class UUIDEntity
   attribute :uuid, String, default: -> * { UUID.new }
 
   alias_method :to_h, :attributes
+
+  def self.attrs hash = {}
+    hash.each { |name, klass| attribute name, klass }
+  end
 end end
