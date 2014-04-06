@@ -16,7 +16,7 @@ module Kamerling describe UUIDEntity do
 
   describe '#==' do
     it 'reports UUID-based euqality' do
-      Actor = Class.new(UUIDEntity) { attribute :name, Symbol }
+      Actor = Class.new(UUIDEntity) { attrs name: Symbol }
       Actor.new(name: :laurel).wont_equal Actor.new name: :laurel
       uuid = UUID.new
       Actor.new(name: :laurel, uuid: uuid)
@@ -26,7 +26,7 @@ module Kamerling describe UUIDEntity do
 
   describe '#to_h' do
     it 'serialises the object to a Hash' do
-      Hashble = Class.new(UUIDEntity) { attribute :param, Symbol }
+      Hashble = Class.new(UUIDEntity) { attrs param: Symbol }
       Hashble.new(param: :val).to_h.must_equal param: :val, uuid: any(String)
     end
   end

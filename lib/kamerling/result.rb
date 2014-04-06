@@ -1,6 +1,3 @@
 module Kamerling class Result < UUIDEntity
-  attribute :addr,   Addr
-  attribute :client, Client
-  attribute :data,   String
-  attribute :task,   Task
+  attrs addr: Addr, client: Client, data: String, task: Task
 end end

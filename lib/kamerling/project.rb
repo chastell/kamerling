@@ -1,3 +1,3 @@
 module Kamerling class Project < UUIDEntity
-  attribute :name, String
+  attrs name: String
 end end

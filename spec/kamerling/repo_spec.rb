@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 module Kamerling describe Repo do
-  Tune = Class.new(UUIDEntity) { attribute :genre, Symbol }
+  Tune = Class.new(UUIDEntity) { attrs genre: Symbol }
 
   describe '#<<' do
     it 'passes the Hash version of an object to the source via a mapper' do
