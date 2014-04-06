@@ -1,6 +1,13 @@
 require_relative '../spec_helper'
 
 module Kamerling describe UUIDEntity do
+  describe '.attrs' do
+    it 'allows defining attributes in a key → class manner' do
+      person = Class.new(UUIDEntity) { attrs name: String, born: Integer }
+      person.attribute_set.map(&:name).must_equal %i(uuid name born)
+    end
+  end
+
   describe '.new' do
     it 'creates a class with an UUID property defaulting to a random UUID' do
       AttrLess = Class.new UUIDEntity
