@@ -1,9 +1,5 @@
 module Kamerling class Addr < Value
-  values do
-    attribute :host, String
-    attribute :port, Integer
-    attribute :prot, Symbol
-  end
+  vals host: String, port: Integer, prot: Symbol
 
   def self.[] host, port, prot
     new host: host, port: port, prot: prot

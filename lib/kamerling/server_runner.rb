@@ -25,13 +25,7 @@ module Kamerling class ServerRunner
   private
 
   class Settings < Value
-    values do
-      attribute :db,   String
-      attribute :host, String
-      attribute :http, Integer
-      attribute :tcp,  Integer
-      attribute :udp,  Integer
-    end
+    vals db: String, host: String, http: Integer, tcp: Integer, udp: Integer
 
     def initialize args
       super db: 'sqlite::memory:', host: '127.0.0.1'
