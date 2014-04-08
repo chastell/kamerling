@@ -10,4 +10,10 @@ module Kamerling class UUIDEntity
   def self.attrs hash = {}
     hash.each { |name, klass| attribute name, klass }
   end
+
+  def self.defaults hash = {}
+    hash.each do |name, default|
+      attribute name, attribute_set[name].type, default: default
+    end
+  end
 end end

@@ -8,6 +8,16 @@ module Kamerling describe UUIDEntity do
     end
   end
 
+  describe '.defaults' do
+    it 'allows defining attribute defaults' do
+      song = Class.new(UUIDEntity) do
+        attrs title: String, genre: Symbol
+        defaults genre: :ragga
+      end
+      song.new.genre.must_equal :ragga
+    end
+  end
+
   describe '.new' do
     it 'creates a class with an UUID property defaulting to a random UUID' do
       AttrLess = Class.new UUIDEntity
