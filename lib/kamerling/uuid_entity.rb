@@ -13,7 +13,7 @@ module Kamerling class UUIDEntity
 
   def self.defaults hash = {}
     hash.each do |name, default|
-      attribute name, attribute_set[name].type, default: default
+      warn_off { attribute name, attribute_set[name].type, default: default }
     end
   end
 end end
