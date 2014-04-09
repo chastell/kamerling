@@ -1,4 +1,4 @@
 module Kamerling class Task < UUIDEntity
-  attrs data: String, project: Project
-  attribute :done, Boolean, default: false
+  attrs data: String, done: Boolean, project: Project
+  defaults done: false
 end end
