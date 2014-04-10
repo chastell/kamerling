@@ -20,31 +20,31 @@ module Kamerling describe UUIDEntity do
 
   describe '.new' do
     it 'creates a class with an UUID property defaulting to a random UUID' do
-      AttrLess = Class.new UUIDEntity
-      AttrLess.new.uuid.must_match(/\A\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/)
-      AttrLess.new.uuid.wont_equal AttrLess.new.uuid
+      attr_less = Class.new UUIDEntity
+      attr_less.new.uuid.must_match(/\A\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/)
+      attr_less.new.uuid.wont_equal attr_less.new.uuid
     end
 
     it 'deserialises the object from a Hash' do
-      Trivial = Class.new(UUIDEntity) { attrs question: Symbol }
-      Trivial.new(question: :answer).question.must_equal :answer
+      trivial = Class.new(UUIDEntity) { attrs question: Symbol }
+      trivial.new(question: :answer).question.must_equal :answer
     end
   end
 
   describe '#==' do
     it 'reports UUID-based euqality' do
-      Actor = Class.new(UUIDEntity) { attrs name: Symbol }
-      Actor.new(name: :laurel).wont_equal Actor.new name: :laurel
+      actor = Class.new(UUIDEntity) { attrs name: Symbol }
+      actor.new(name: :laurel).wont_equal actor.new name: :laurel
       uuid = UUID.new
-      Actor.new(name: :laurel, uuid: uuid)
-        .must_equal Actor.new name: :hardy, uuid: uuid
+      actor.new(name: :laurel, uuid: uuid)
+        .must_equal actor.new name: :hardy, uuid: uuid
     end
   end
 
   describe '#to_h' do
     it 'serialises the object to a Hash' do
-      Hashble = Class.new(UUIDEntity) { attrs param: Symbol }
-      Hashble.new(param: :val).to_h.must_equal param: :val, uuid: any(String)
+      hashble = Class.new(UUIDEntity) { attrs param: Symbol }
+      hashble.new(param: :val).to_h.must_equal param: :val, uuid: any(String)
     end
   end
 end end
