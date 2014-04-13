@@ -4,7 +4,7 @@ DuplicateMethodCall:
     - Kamerling::Handler#process
     - Kamerling::Logging#log_dispatcher
     - Kamerling::Logging#log_server
-    - Kamerling::Mapper#self.to_h
+    - Kamerling::Mapper#to_h
 
 FeatureEnvy:
   exclude:
@@ -25,5 +25,6 @@ UnusedParameters:
 UtilityFunction:
   exclude:
     # https://github.com/troessner/reek/issues/27
+    - Kamerling::Mapper
     - Kamerling::NetDispatcher
     - Kamerling::UUID
