@@ -1,3 +1,7 @@
+require 'equalizer'
+require 'virtus'
+require_relative 'uuid'
+
 module Kamerling class UUIDEntity
   include Equalizer.new :uuid
 

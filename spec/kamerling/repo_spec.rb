@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/repo'
 
 module Kamerling describe Repo do
   Tune = Class.new(UUIDEntity) { attrs genre: Symbol }

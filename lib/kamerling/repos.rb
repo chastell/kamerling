@@ -1,4 +1,9 @@
 warn_off { require 'sequel' }
+require_relative 'client'
+require_relative 'project'
+require_relative 'registration'
+require_relative 'repo'
+require_relative 'task'
 
 Sequel.extension :migration
 

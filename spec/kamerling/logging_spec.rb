@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/logging'
 
 module Kamerling describe Logging do
   let(:logged)     { stream.tap(&:rewind).read                           }

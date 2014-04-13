@@ -1,3 +1,6 @@
+warn_off { require 'sequel' }
+require_relative 'mapper'
+
 module Kamerling class Repo
   NotFound = Class.new RuntimeError
 

@@ -1,3 +1,6 @@
+require 'socket'
+require_relative 'value'
+
 module Kamerling class Addr < Value
   vals host: String, port: Integer, prot: Symbol
 

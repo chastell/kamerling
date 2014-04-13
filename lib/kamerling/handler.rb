@@ -1,3 +1,7 @@
+require_relative 'message'
+require_relative 'receiver'
+require_relative 'registrar'
+
 module Kamerling class Handler
   UnknownInput = Class.new RuntimeError
 

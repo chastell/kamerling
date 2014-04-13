@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/uuid_entity'
 
 module Kamerling describe UUIDEntity do
   describe '.attrs' do

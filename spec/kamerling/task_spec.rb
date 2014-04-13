@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/task'
 
 module Kamerling describe Task do
   describe '#done' do

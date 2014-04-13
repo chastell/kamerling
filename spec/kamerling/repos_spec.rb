@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/repos'
 
 module Kamerling describe Repos do
   describe '.<<' do

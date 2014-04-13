@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/mapper'
 
 module Kamerling describe Mapper do
   let(:addr)    { Addr['127.0.0.1', 1979, :TCP]                              }

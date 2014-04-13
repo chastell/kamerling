@@ -1,3 +1,8 @@
+require_relative 'client'
+require_relative 'repos'
+require_relative 'result'
+require_relative 'task'
+
 module Kamerling class Receiver
   def receive addr: req(:addr), client_uuid: req(:client_uuid),
               data: req(:data), repos: Repos, task_uuid: req(:task_uuid)

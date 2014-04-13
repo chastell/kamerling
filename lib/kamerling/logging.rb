@@ -1,5 +1,7 @@
 require 'after_do'
 require 'logger'
+require_relative 'net_dispatcher'
+require_relative 'server/sock'
 
 module Kamerling class Logging
   def self.log_to logger = Logger.new($stdout)

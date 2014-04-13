@@ -1,3 +1,8 @@
+require_relative 'client'
+require_relative 'project'
+require_relative 'registration'
+require_relative 'repos'
+
 module Kamerling class Registrar
   def register addr: req(:addr), client_uuid: req(:client_uuid),
                project_uuid: req(:project_uuid), repos: Repos

@@ -1,6 +1,6 @@
 require 'nokogiri'
-
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/http_api'
 
 module Kamerling describe HTTPAPI do
   let(:app)   { HTTPAPI.set repos: repos                        }

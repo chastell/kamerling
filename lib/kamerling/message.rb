@@ -1,3 +1,5 @@
+require_relative 'uuid'
+
 module Kamerling class Message
   UnknownType = Class.new RuntimeError
 

@@ -1,4 +1,11 @@
 require 'optparse'
+warn_off { require 'sequel' }
+require_relative 'addr'
+require_relative 'repos'
+require_relative 'server/http'
+require_relative 'server/tcp'
+require_relative 'server/udp'
+require_relative 'value'
 
 module Kamerling class ServerRunner
   def initialize args, classes: def_classes, orm: Sequel, repos: Repos

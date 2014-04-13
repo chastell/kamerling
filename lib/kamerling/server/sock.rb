@@ -1,3 +1,5 @@
+require_relative '../handler'
+
 module Kamerling module Server class Sock
   attr_reader :addr
 

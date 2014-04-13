@@ -1,3 +1,7 @@
+require_relative 'message'
+require_relative 'net_dispatcher'
+require_relative 'repos'
+
 module Kamerling class TaskDispatcher
   def initialize net_dispatcher: NetDispatcher, repos: Repos
     @net_dispatcher = net_dispatcher

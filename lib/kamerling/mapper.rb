@@ -1,3 +1,5 @@
+require_relative 'addr'
+
 module Kamerling module Mapper
   module_function
 

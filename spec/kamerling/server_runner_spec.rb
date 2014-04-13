@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/server_runner'
 
 module Kamerling describe ServerRunner do
   let(:http)    { fake { Server::HTTP }                       }

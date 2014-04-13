@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require_relative '../../../lib/kamerling/core_extensions/main'
 
 module Kamerling describe CoreExtensions::Main do
   describe '#req' do

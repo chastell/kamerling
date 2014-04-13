@@ -1,3 +1,7 @@
+require 'socket'
+require_relative '../addr'
+require_relative 'sock'
+
 module Kamerling module Server class UDP < Sock
   private
 

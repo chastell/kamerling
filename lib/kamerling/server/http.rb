@@ -1,3 +1,6 @@
+require 'rack'
+require_relative '../http_api'
+
 module Kamerling module Server class HTTP
   attr_reader :addr
 

@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require_relative '../../../lib/kamerling/server/udp'
 
 module Kamerling describe Server::UDP do
   let(:addr) { Addr['localhost', 1979, :UDP] }

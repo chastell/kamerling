@@ -1,6 +1,9 @@
 require 'forwardable'
 require 'sinatra/base'
 require 'slim'
+require_relative 'project'
+require_relative 'repos'
+require_relative 'uuid'
 
 module Kamerling class HTTPAPI < Sinatra::Base
   extend Forwardable

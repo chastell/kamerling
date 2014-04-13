@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require_relative '../../../lib/kamerling/server/http'
 
 module Kamerling describe Server::HTTP do
   let(:addr) { Addr['localhost', 2009, :TCP] }

@@ -1,3 +1,5 @@
+require 'socket'
+
 module Kamerling module NetDispatcher
   module_function
 
