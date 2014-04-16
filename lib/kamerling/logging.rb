@@ -22,7 +22,8 @@ module Kamerling class Logging
   def log_dispatcher
     NetDispatcher.singleton_class.extend AfterDo
     NetDispatcher.singleton_class.before :dispatch do |addr, bytes|
-      logger.debug "sent #{addr} #{bytes}"
+      hexes = bytes.unpack('H*').first.scan(/../).join ' '
+      logger.debug "sent #{addr} #{hexes}"
     end
   end
 
@@ -32,7 +33,8 @@ module Kamerling class Logging
     Server::Sock.after(:stop)   { |srv| logger.info "stop #{srv.addr}"  }
     Server::Sock.before :handle do |input, client_addr|
       logger.info "connect #{client_addr}"
-      logger.debug "received #{client_addr} #{input}"
+      hexes = input.unpack('H*').first.scan(/../).join ' '
+      logger.debug "received #{client_addr} #{hexes}"
     end
   end
 end end

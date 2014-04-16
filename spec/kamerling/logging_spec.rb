@@ -43,7 +43,7 @@ module Kamerling describe Logging do
         Addr[*socket.local_address.ip_unpack, :TCP]
       end
       run_all_threads
-      logged.must_include "received #{tcp_addr} PING"
+      logged.must_include "received #{tcp_addr} 50 49 4e 47"
     end
 
     it 'logs UDP server starts' do
@@ -68,14 +68,14 @@ module Kamerling describe Logging do
       udp_client.send 'PING', 0, *udp_server.addr
       udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
       run_all_threads
-      logged.must_include "received #{udp_addr} PING"
+      logged.must_include "received #{udp_addr} 50 49 4e 47"
     end
 
     it 'logs packet dispatches' do
       server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
       addr   = Addr[server.addr[3], server.addr[1], :UDP]
       NetDispatcher.dispatch addr, 'PING'
-      logged.must_include "sent #{addr} PING"
+      logged.must_include "sent #{addr} 50 49 4e 47"
     end
   end
 end end
