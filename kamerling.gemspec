@@ -10,8 +10,8 @@ Gem::Specification.new do |gem|
   gem.version     = '0.0.2'
 
   gem.files       = `git ls-files -z`.split "\0"
-  gem.executables = gem.files.grep(%r{^bin/}).map { |path| File.basename path }
-  gem.test_files  = gem.files.grep %r{^spec/.*\.rb$}
+  gem.executables = gem.files.grep(/^bin\//).map { |path| File.basename path }
+  gem.test_files  = gem.files.grep(/^spec\/.*\.rb$/)
 
   gem.add_dependency 'after_do', '~> 0.3.0'
   gem.add_dependency 'sequel',   '~> 4.4'
