@@ -1,6 +1,7 @@
 Gem::Specification.new do |gem|
   gem.author      = 'Piotr Szotkowski'
-  gem.description = 'A network server for distributing computations across different clients speaking TCP or UDP.'
+  gem.description = 'A network server for distributing computations across ' \
+                    'different clients speaking TCP or UDP.'
   gem.email       = 'p.szotkowski@tele.pw.edu.pl'
   gem.homepage    = 'https://github.com/chastell/kamerling'
   gem.license     = 'AGPL-3.0'
