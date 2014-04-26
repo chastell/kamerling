@@ -1,5 +1,12 @@
+require 'logger'
+require 'socket'
+require 'stringio'
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/logging'
+require_relative '../../lib/kamerling/net_dispatcher'
+require_relative '../../lib/kamerling/server/tcp'
+require_relative '../../lib/kamerling/server/udp'
 
 module Kamerling describe Logging do
   let(:logged)     { stream.tap(&:rewind).read                           }

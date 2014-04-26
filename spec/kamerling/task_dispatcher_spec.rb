@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/task_dispatcher'
+require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe TaskDispatcher do
   describe '#dispatch' do

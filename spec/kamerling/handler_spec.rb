@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/handler'
+require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe Handler do
   describe '#handle' do

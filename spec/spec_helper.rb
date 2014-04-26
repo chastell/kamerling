@@ -3,7 +3,6 @@ require 'minitest/autorun'
 require 'minitest/focus'
 require 'minitest/pride'
 require 'bogus/minitest/spec'
-require 'net/http'
 require 'rack/test'
 require 'kamerling'
 

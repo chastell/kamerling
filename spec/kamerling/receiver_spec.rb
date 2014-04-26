@@ -1,5 +1,8 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/receiver'
+require_relative '../../lib/kamerling/result'
+require_relative '../../lib/kamerling/task'
 
 module Kamerling describe Receiver do
   describe '#receive' do

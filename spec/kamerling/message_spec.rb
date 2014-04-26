@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/message'
+require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe Message do
   let(:mess) do

@@ -1,5 +1,8 @@
+warn_off { require 'sequel' }
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/repo'
+require_relative '../../lib/kamerling/uuid'
+require_relative '../../lib/kamerling/uuid_entity'
 
 module Kamerling describe Repo do
   Tune = Class.new(UUIDEntity) { attrs genre: Symbol }

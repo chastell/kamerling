@@ -1,5 +1,13 @@
+warn_off { require 'sequel' }
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/addr'
+require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/project'
+require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/repos'
+require_relative '../../lib/kamerling/result'
+require_relative '../../lib/kamerling/task'
+require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe Repos do
   describe '.<<' do
