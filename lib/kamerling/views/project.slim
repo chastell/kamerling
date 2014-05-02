@@ -2,10 +2,10 @@ nav
   ul#clients
     - clients.each do |client|
       li
-        a data-busy=client.busy.to_s data-uuid=client.uuid href="/clients/#{client.uuid}" rel='client'
+        a data-busy=client.busy.to_s data-type='client' data-uuid=client.uuid href="/clients/#{client.uuid}"
           = client.busy
   ul#tasks
     - tasks.each do |task|
       li
-        a data-done=task.done.to_s data-uuid=task.uuid href="/tasks/#{task.uuid}" rel='task'
+        a data-done=task.done.to_s data-type='task' data-uuid=task.uuid href="/tasks/#{task.uuid}"
           = task.done

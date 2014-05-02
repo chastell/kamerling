@@ -2,7 +2,7 @@ nav
   ul#projects
     - projects.each do |project|
       li
-        a data-uuid=project.uuid href="/projects/#{project.uuid}" rel='project'
+        a data-type='project' data-uuid=project.uuid href="/projects/#{project.uuid}"
           = project.name
 
 form action='/projects' method='POST'

@@ -24,7 +24,7 @@ module Kamerling describe HTTPAPI do
       fpga = fake :client, uuid: UUID.new
       stub(repos).clients { [fpga] }
       get '/clients'
-      links = doc.css '#clients a[rel=client]'
+      links = doc.css '#clients a[data-type=client]'
       links.size.must_equal 1
       links.at("[data-uuid='#{fpga.uuid}']")['href']
         .must_equal "/clients/#{fpga.uuid}"
@@ -34,7 +34,7 @@ module Kamerling describe HTTPAPI do
   describe 'GET /projects' do
     it 'contains links to and UUIDs of projects' do
       get '/projects'
-      links = doc.css '#projects a[rel=project]'
+      links = doc.css '#projects a[data-type=project]'
       links.size.must_equal 2
       links.at("[data-uuid='#{gimps.uuid}']")['href']
         .must_equal "/projects/#{gimps.uuid}"
@@ -55,7 +55,7 @@ module Kamerling describe HTTPAPI do
 
     it 'contains links to and info on the project’s clients' do
       get "/projects/#{gimps.uuid}"
-      links = doc.css '#clients a[rel=client]'
+      links = doc.css '#clients a[data-type=client]'
       links.size.must_equal 2
       links.at("[data-uuid='#{cpu.uuid}']")['href']
         .must_equal "/clients/#{cpu.uuid}"
@@ -65,7 +65,7 @@ module Kamerling describe HTTPAPI do
 
     it 'contains links to and info on the project’s tasks' do
       get "/projects/#{gimps.uuid}"
-      links = doc.css '#tasks a[rel=task]'
+      links = doc.css '#tasks a[data-type=task]'
       links.size.must_equal 2
       links.at("[data-uuid='#{three.uuid}']")['href']
         .must_equal "/tasks/#{three.uuid}"
