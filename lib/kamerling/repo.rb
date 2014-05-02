@@ -1,4 +1,4 @@
-warn_off { require 'sequel' }
+require 'sequel'
 require_relative 'mapper'
 
 module Kamerling class Repo

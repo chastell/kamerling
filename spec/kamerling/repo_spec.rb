@@ -1,4 +1,4 @@
-warn_off { require 'sequel' }
+require 'sequel'
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/repo'
 require_relative '../../lib/kamerling/uuid'

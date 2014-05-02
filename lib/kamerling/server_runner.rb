@@ -1,4 +1,4 @@
-warn_off { require 'sequel' }
+require 'sequel'
 require_relative 'addr'
 require_relative 'repos'
 require_relative 'server/http'
