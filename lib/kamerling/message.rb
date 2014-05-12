@@ -16,13 +16,15 @@ module Kamerling class Message
     fail UnknownType, type unless known_types.include? type or type.empty?
   end
 
-  def == other
-    raw == other.raw
-  end
-
   def client_uuid
     UUID[raw[16..31]]
   end
+
+  def eql? other
+    raw == other.raw
+  end
+
+  alias_method :==, :eql?
 
   def payload
     raw[64..-1]
