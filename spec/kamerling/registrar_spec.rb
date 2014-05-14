@@ -16,9 +16,10 @@ module Kamerling describe Registrar do
       }
       Registrar.new(repos: repos).register addr: addr,
                                            client_uuid: client.uuid,
-                                           project_uuid: project.uuid
+                                           project_uuid: project.uuid,
+                                           uuid: 'abcd'
       registration = Registration.new addr: addr, client: client,
-                                      project: project, uuid: anything
+                                      project: project, uuid: 'abcd'
       repo.must_have_received :<<, [registration]
     end
   end
