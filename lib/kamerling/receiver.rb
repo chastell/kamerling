@@ -9,12 +9,11 @@ module Kamerling class Receiver
     @repos = repos
   end
 
-  def receive addr: req(:addr), client_uuid: req(:client_uuid),
-              data: req(:data), task_uuid: req(:task_uuid), uuid: UUID.new
-    client = repos[Client][client_uuid]
-    task   = repos[Task][task_uuid]
-    result = Result.new addr: addr, client: client, data: data, task: task,
-                        uuid: uuid
+  def receive addr: req(:addr), message: req(:message), uuid: UUID.new
+    client = repos[Client][message.client_uuid]
+    task   = repos[Task][message.task_uuid]
+    result = Result.new addr: addr, client: client, data: message.payload,
+                        task: task, uuid: uuid
     client.busy = false
     task.done   = true
     repos << result << client << task

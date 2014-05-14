@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/handler'
+require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe Handler do
@@ -23,16 +24,9 @@ module Kamerling describe Handler do
     it 'handles RSLT inputs' do
       input = 'RSLT' + "\0" * 12 +
         '16B client  UUID16B project UUID16B task    UUIDdata'
-      client_uuid = UUID['16B client  UUID']
-      task_uuid   = UUID['16B task    UUID']
+      message = Message.new input
       handler.handle input, addr
-      args = {
-        addr:        addr,
-        client_uuid: client_uuid,
-        data:        'data',
-        task_uuid:   task_uuid,
-      }
-      receiver.must_have_received :receive, [args]
+      receiver.must_have_received :receive, [{ addr: addr, message: message }]
     end
 
     it 'raises on unknown inputs' do

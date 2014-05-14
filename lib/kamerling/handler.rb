@@ -26,8 +26,7 @@ module Kamerling class Handler
       registrar.register addr: addr, client_uuid: message.client_uuid,
                          project_uuid: message.project_uuid
     when :RSLT
-      receiver.receive addr: addr, client_uuid: message.client_uuid,
-                       data: message.payload, task_uuid: message.task_uuid
+      receiver.receive addr: addr, message: message
     end
   end
 end end

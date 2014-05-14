@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/receiver'
 require_relative '../../lib/kamerling/result'
 require_relative '../../lib/kamerling/task'
@@ -13,9 +14,10 @@ module Kamerling describe Receiver do
       stub(repos).<<(any_args) { repos }
       stub(repos).[](Client)   { fake :repo, :[] => client }
       stub(repos).[](Task)     { fake :repo, :[] => task   }
-      Receiver.new(repos: repos).receive addr: addr, client_uuid: client.uuid,
-                                         data: 'data', task_uuid: task.uuid,
-                                         uuid: 'abcd'
+      message  = fake :message, client_uuid: client.uuid, payload: 'data',
+                                task_uuid: task.uuid
+      receiver = Receiver.new repos: repos
+      receiver.receive addr: addr, message: message, uuid: 'abcd'
       result = Result.new addr: addr, client: client, data: 'data', task: task,
                           uuid: 'abcd'
       client.must_have_received :busy=, [false]
