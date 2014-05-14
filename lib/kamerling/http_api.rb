@@ -32,8 +32,9 @@ module Kamerling class HTTPAPI < Sinatra::Base
   end
 
   post '/projects' do
-    uuid = params.fetch('uuid') { UUID.new }
-    repos << Project.new(name: params['name'], uuid: uuid)
+    name = params.fetch 'name'
+    uuid = params.fetch 'uuid'
+    repos << Project.new(name: name, uuid: uuid)
     redirect '/projects'
   end
 

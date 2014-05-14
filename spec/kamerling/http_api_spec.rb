@@ -80,14 +80,8 @@ module Kamerling describe HTTPAPI do
       repos.must_have_received :<<, [Project.new(name: 'ECC', uuid: uuid)]
     end
 
-    it 'creates a new project with a random UUID if missing' do
-      post '/projects', name: 'ECC'
-      project = Project.new name: 'ECC', uuid: any(String)
-      repos.must_have_received :<<, [project]
-    end
-
     it 'redirects to /projects' do
-      post '/projects', name: 'ECC'
+      post '/projects', name: 'ECC', uuid: UUID.new
       follow_redirect!
       URI(last_request.url).path.must_equal '/projects'
     end
