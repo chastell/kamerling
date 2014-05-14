@@ -21,7 +21,7 @@ module Kamerling class Message
   end
 
   def eql? other
-    raw == other.raw
+    raw.eql? other.raw
   end
 
   alias_method :==, :eql?
@@ -47,5 +47,5 @@ module Kamerling class Message
   end
 
   attr_reader :raw
-  private     :raw
+  protected   :raw
 end end
