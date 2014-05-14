@@ -13,8 +13,8 @@ module Kamerling describe Receiver do
       stub(repos).<<(any_args) { repos }
       stub(repos).[](Client)   { fake :repo, :[] => client }
       stub(repos).[](Task)     { fake :repo, :[] => task   }
-      Receiver.new.receive addr: addr, client_uuid: client.uuid, data: 'data',
-                           repos: repos, task_uuid: task.uuid
+      Receiver.new(repos: repos).receive addr: addr, client_uuid: client.uuid,
+                                         data: 'data', task_uuid: task.uuid
       result = Result.new addr: addr, client: client, data: 'data', task: task,
                           uuid: anything
       client.must_have_received :busy=, [false]
