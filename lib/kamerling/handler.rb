@@ -22,11 +22,8 @@ module Kamerling class Handler
 
   def process message, addr
     case message.type
-    when :RGST
-      registrar.register addr: addr, client_uuid: message.client_uuid,
-                         project_uuid: message.project_uuid
-    when :RSLT
-      receiver.receive addr: addr, message: message
+    when :RGST then registrar.register addr: addr, message: message
+    when :RSLT then receiver.receive   addr: addr, message: message
     end
   end
 end end

@@ -6,19 +6,14 @@ require_relative '../../lib/kamerling/uuid'
 module Kamerling describe Handler do
   describe '#handle' do
     fakes :addr, :receiver, :registrar
+
     let(:handler) { Handler.new receiver: receiver, registrar: registrar }
 
     it 'handles RGST inputs' do
       input = 'RGST' + "\0" * 12 + '16B client  UUID16B project UUID'
-      client_uuid  = UUID['16B client  UUID']
-      project_uuid = UUID['16B project UUID']
+      message = Message.new input
       handler.handle input, addr
-      args = {
-        addr:         addr,
-        client_uuid:  client_uuid,
-        project_uuid: project_uuid,
-      }
-      registrar.must_have_received :register, [args]
+      registrar.must_have_received :register, [addr: addr, message: message]
     end
 
     it 'handles RSLT inputs' do
@@ -26,7 +21,7 @@ module Kamerling describe Handler do
         '16B client  UUID16B project UUID16B task    UUIDdata'
       message = Message.new input
       handler.handle input, addr
-      receiver.must_have_received :receive, [{ addr: addr, message: message }]
+      receiver.must_have_received :receive, [addr: addr, message: message]
     end
 
     it 'raises on unknown inputs' do

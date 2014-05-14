@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/registrar'
@@ -14,10 +15,10 @@ module Kamerling describe Registrar do
         Project      => { project.uuid => project },
         Registration => repo,
       }
-      Registrar.new(repos: repos).register addr: addr,
-                                           client_uuid: client.uuid,
-                                           project_uuid: project.uuid,
-                                           uuid: 'abcd'
+      message = fake :message, client_uuid: client.uuid,
+                               project_uuid: project.uuid
+      registrar = Registrar.new repos: repos
+      registrar.register addr: addr, message: message, uuid: 'abcd'
       registration = Registration.new addr: addr, client: client,
                                       project: project, uuid: 'abcd'
       repo.must_have_received :<<, [registration]

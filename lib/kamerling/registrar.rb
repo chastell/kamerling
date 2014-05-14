@@ -9,10 +9,9 @@ module Kamerling class Registrar
     @repos = repos
   end
 
-  def register addr: req(:addr), client_uuid: req(:client_uuid),
-               project_uuid: req(:project_uuid), uuid: UUID.new
-    client  = repos[Client][client_uuid]
-    project = repos[Project][project_uuid]
+  def register addr: req(:addr), message: req(:message), uuid: UUID.new
+    client  = repos[Client][message.client_uuid]
+    project = repos[Project][message.project_uuid]
     reg     = Registration.new addr: addr, client: client, project: project,
                                uuid: uuid
     repos[Registration] << reg
