@@ -45,8 +45,7 @@ module Kamerling describe Repo do
   describe '#all' do
     it 'returns all objects via a mapper' do
       tune = Tune.new genre: :chap_hop
-      source = fake Sequel::Dataset,
-                    all: [{ genre: :chap_hop, uuid: tune.uuid }]
+      source = fake Sequel::Dataset, all: [genre: :chap_hop, uuid: tune.uuid]
       mapper = fake :mapper, as: :class, from_h: tune
       Repo.new(Tune, source, mapper: mapper).all.must_equal [tune]
     end
