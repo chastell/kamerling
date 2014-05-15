@@ -1,4 +1,10 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/addr'
+require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/net_dispatcher'
+require_relative '../../lib/kamerling/project'
+require_relative '../../lib/kamerling/repos'
+require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_dispatcher'
 require_relative '../../lib/kamerling/uuid'
 

@@ -1,6 +1,7 @@
 require 'sequel'
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/addr'
+require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/server_runner'
 require_relative '../../lib/kamerling/server/http'
 require_relative '../../lib/kamerling/server/tcp'

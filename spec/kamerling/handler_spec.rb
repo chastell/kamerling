@@ -1,6 +1,9 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/handler'
 require_relative '../../lib/kamerling/message'
+require_relative '../../lib/kamerling/receiver'
+require_relative '../../lib/kamerling/registrar'
 require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe Handler do

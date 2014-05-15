@@ -1,7 +1,10 @@
 require 'nokogiri'
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/http_api'
 require_relative '../../lib/kamerling/project'
+require_relative '../../lib/kamerling/repos'
+require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe HTTPAPI do

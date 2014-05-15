@@ -1,5 +1,7 @@
 require 'sequel'
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/mapper'
+require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/repo'
 require_relative '../../lib/kamerling/uuid'
 require_relative '../../lib/kamerling/uuid_entity'

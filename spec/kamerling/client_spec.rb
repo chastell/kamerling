@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
 
 module Kamerling describe Client do

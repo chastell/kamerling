@@ -1,6 +1,7 @@
 require 'socket'
 require_relative '../../spec_helper'
 require_relative '../../../lib/kamerling/addr'
+require_relative '../../../lib/kamerling/handler'
 require_relative '../../../lib/kamerling/server/tcp'
 
 module Kamerling describe Server::TCP do
