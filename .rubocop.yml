@@ -12,7 +12,8 @@ EndAlignment:
 
 HandleExceptions:
   Exclude:
-    - lib/kamerling/server/sock.rb
+    - lib/kamerling/server/tcp.rb
+    - lib/kamerling/server/udp.rb
 
 IndentationWidth:
   Enabled: false
