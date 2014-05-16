@@ -1,18 +1,13 @@
-require_relative 'message'
 require_relative 'receiver'
 require_relative 'registrar'
 
 module Kamerling class Handler
-  UnknownInput = Class.new RuntimeError
-
   def initialize receiver: Receiver.new, registrar: Registrar.new
     @receiver, @registrar = receiver, registrar
   end
 
-  def handle input, addr
-    process Message.new(input), addr
-  rescue Message::UnknownType => exception
-    raise UnknownInput, exception.message
+  def handle message, addr
+    process message, addr
   end
 
   attr_reader :receiver, :registrar

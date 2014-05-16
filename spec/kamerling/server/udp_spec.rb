@@ -2,6 +2,7 @@ require 'socket'
 require_relative '../../spec_helper'
 require_relative '../../../lib/kamerling/addr'
 require_relative '../../../lib/kamerling/handler'
+require_relative '../../../lib/kamerling/message'
 require_relative '../../../lib/kamerling/server/udp'
 
 module Kamerling describe Server::UDP do
@@ -13,20 +14,19 @@ module Kamerling describe Server::UDP do
       server.start
       foo = UDPSocket.new
       bar = UDPSocket.new
-      foo.send 'foo', 0, *server.addr
-      bar.send 'bar', 0, *server.addr
+      foo.send 'DATA', 0, *server.addr
+      bar.send 'PING', 0, *server.addr
       foo_addr = Addr['127.0.0.1', foo.addr[1], :UDP]
       bar_addr = Addr['127.0.0.1', bar.addr[1], :UDP]
       run_all_threads
       server.stop
-      handler.must_have_received :handle, ['foo', foo_addr]
-      handler.must_have_received :handle, ['bar', bar_addr]
+      handler.must_have_received :handle, [Message.new('DATA'), foo_addr]
+      handler.must_have_received :handle, [Message.new('PING'), bar_addr]
     end
 
     it 'doesn’t blow up on unknown inputs' do
-      server = Server::UDP.new addr: addr, handler: handler = fake(:handler)
+      server = Server::UDP.new addr: addr
       server.start
-      stub(handler).handle('foo', any(Addr)) { fail Handler::UnknownInput }
       UDPSocket.new.send 'foo', 0, *server.addr
       run_all_threads
       server.stop

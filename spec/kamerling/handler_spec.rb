@@ -13,23 +13,15 @@ module Kamerling describe Handler do
     let(:handler) { Handler.new receiver: receiver, registrar: registrar }
 
     it 'handles RGST inputs' do
-      input = 'RGST' + "\0" * 12 + '16B client  UUID16B project UUID'
-      message = Message.new input
-      handler.handle input, addr
+      message = Message.new 'RGST'
+      handler.handle message, addr
       registrar.must_have_received :register, [addr: addr, message: message]
     end
 
     it 'handles RSLT inputs' do
-      input = 'RSLT' + "\0" * 12 +
-        '16B client  UUID16B project UUID16B task    UUIDdata'
-      message = Message.new input
-      handler.handle input, addr
+      message = Message.new 'RSLT'
+      handler.handle message, addr
       receiver.must_have_received :receive, [addr: addr, message: message]
-    end
-
-    it 'raises on unknown inputs' do
-      ex = -> { handler.handle 'MESS', addr }.must_raise Handler::UnknownInput
-      ex.message.must_equal 'MESS'
     end
   end
 end end
