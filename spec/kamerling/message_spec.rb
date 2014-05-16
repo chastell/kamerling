@@ -60,6 +60,13 @@ module Kamerling describe Message do
     end
   end
 
+  describe '#to_hex' do
+    it 'returns a hex representation of the message' do
+      assert mess.to_hex.start_with? '44 41 54 41'
+      assert mess.to_hex.end_with?   '70 61 79 6c 6f 61 64'
+    end
+  end
+
   describe '#to_s' do
     it 'returns the raw bytes' do
       mess.to_s.must_equal "#{mess.type}\0\0\0\0\0\0\0\0\0\0\0\0" \

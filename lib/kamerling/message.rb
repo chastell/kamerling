@@ -38,6 +38,10 @@ module Kamerling class Message
     UUID[raw[48..63]]
   end
 
+  def to_hex
+    raw.unpack('H*').first.scan(/../).join ' '
+  end
+
   def to_s
     raw
   end
