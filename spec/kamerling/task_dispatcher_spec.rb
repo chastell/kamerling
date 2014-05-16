@@ -1,6 +1,7 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/net_dispatcher'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/repos'
@@ -22,8 +23,9 @@ module Kamerling describe TaskDispatcher do
 
       TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos).dispatch
 
-      header = "DATA#{"\0" * 12}16B client  UUID16B project UUID16B task    "
-      net_dispatcher.must_have_received :dispatch, [addr, header + 'UUIDdata']
+      message = Message[client: client, payload: 'data', project: project,
+                        task: task, type: 'DATA']
+      net_dispatcher.must_have_received :dispatch, [addr, message]
       client.must_have_received :busy=, [true]
       repos.must_have_received :<<, [client]
     end
