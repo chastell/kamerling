@@ -1,5 +1,6 @@
 require 'socket'
 require_relative '../addr'
+require_relative '../message'
 require_relative 'sock'
 
 module Kamerling module Server class UDP < Sock
@@ -8,7 +9,8 @@ module Kamerling module Server class UDP < Sock
   def handle_connection socket
     input, conn = socket.recvfrom 2**16
     client_addr = Addr[conn[3], conn[1], :UDP]
-    handle input, client_addr
+    handle Message.new(input), client_addr
+  rescue Message::UnknownType
   end
 
   def run_loop

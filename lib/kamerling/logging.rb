@@ -34,9 +34,9 @@ module Kamerling class Logging
     Server::Sock.extend AfterDo
     Server::Sock.before(:start) { |srv| logger.info "start #{srv.addr}" }
     Server::Sock.after(:stop)   { |srv| logger.info "stop #{srv.addr}"  }
-    Server::Sock.before :handle do |input, client_addr|
+    Server::Sock.before :handle do |message, client_addr|
       logger.info "connect #{client_addr}"
-      logger.debug "received #{client_addr} #{bytes_in_hex input}"
+      logger.debug "received #{client_addr} #{message.to_hex}"
     end
   end
 end end
