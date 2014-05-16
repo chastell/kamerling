@@ -26,7 +26,7 @@ module Kamerling class Logging
   def log_dispatcher
     NetDispatcher.singleton_class.extend AfterDo
     NetDispatcher.singleton_class.before :dispatch do |addr, message|
-      logger.debug "sent #{addr} #{bytes_in_hex message.to_s}"
+      logger.debug "sent #{addr} #{message.to_hex}"
     end
   end
 
