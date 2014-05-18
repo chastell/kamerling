@@ -19,10 +19,6 @@ module Kamerling class Logging
 
   private
 
-  def bytes_in_hex bytes
-    bytes.unpack('H*').first.scan(/../).join ' '
-  end
-
   def log_dispatcher
     NetDispatcher.singleton_class.extend AfterDo
     NetDispatcher.singleton_class.before :dispatch do |addr, message|
