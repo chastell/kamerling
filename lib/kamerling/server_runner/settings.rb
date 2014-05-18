@@ -1,4 +1,5 @@
 require 'optparse'
+require_relative '../addr'
 require_relative '../value'
 
 module Kamerling class ServerRunner; class Settings < Value
@@ -13,5 +14,13 @@ module Kamerling class ServerRunner; class Settings < Value
       opt.on('--tcp 0',  Integer, 'TCP port')  { |tcp|  self.tcp  = tcp  }
       opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  self.udp  = udp  }
     end.parse! args
+  end
+
+  def server_addrs
+    {
+      http: Addr[host, http, :TCP],
+      tcp:  Addr[host, tcp,  :TCP],
+      udp:  Addr[host, udp,  :UDP],
+    }.select { |_, addr| addr.port }
   end
 end end end
