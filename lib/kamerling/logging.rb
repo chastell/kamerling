@@ -28,11 +28,19 @@ module Kamerling class Logging
 
   def log_server
     Server::Sock.extend AfterDo
-    Server::Sock.before(:start) { |srv| logger.info "start #{srv.addr}" }
-    Server::Sock.after(:stop)   { |srv| logger.info "stop #{srv.addr}"  }
+    log_server_lifecycle
+    log_server_communication
+  end
+
+  def log_server_communication
     Server::Sock.before :handle do |message, client_addr|
       logger.info "connect #{client_addr}"
       logger.debug "received #{client_addr} #{message.to_hex}"
     end
+  end
+
+  def log_server_lifecycle
+    Server::Sock.before(:start) { |srv| logger.info "start #{srv.addr}" }
+    Server::Sock.after(:stop)   { |srv| logger.info "stop #{srv.addr}"  }
   end
 end end
