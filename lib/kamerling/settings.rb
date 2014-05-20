@@ -1,8 +1,8 @@
 require 'optparse'
-require_relative '../addr'
-require_relative '../value'
+require_relative 'addr'
+require_relative 'value'
 
-module Kamerling class ServerRunner; class Settings < Value
+module Kamerling class Settings < Value
   vals db: String, host: String, http: Integer, tcp: Integer, udp: Integer
 
   def initialize args
@@ -23,4 +23,4 @@ module Kamerling class ServerRunner; class Settings < Value
       udp:  Addr[host, udp,  :UDP],
     }.select { |_, addr| addr.port }
   end
-end end end
+end end

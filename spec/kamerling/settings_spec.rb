@@ -1,8 +1,8 @@
-require_relative '../../spec_helper'
-require_relative '../../../lib/kamerling/addr'
-require_relative '../../../lib/kamerling/server_runner/settings'
+require_relative '../spec_helper'
+require_relative '../../lib/kamerling/addr'
+require_relative '../../lib/kamerling/settings'
 
-module Kamerling class ServerRunner; describe Settings do
+module Kamerling describe Settings do
   let(:args) { %w(--db db --host 0.0.0.0 --http 2009 --tcp 1981 --udp 1979) }
 
   describe '.new' do
@@ -31,4 +31,4 @@ module Kamerling class ServerRunner; describe Settings do
       )
     end
   end
-end end end
+end end
