@@ -1,4 +1,5 @@
 require_relative '../handler'
+require_relative '../message'
 
 module Kamerling module Server class Sock
   attr_reader :addr
@@ -27,7 +28,8 @@ module Kamerling module Server class Sock
 
   private
 
-  def handle message, client_addr
-    handler.handle message, client_addr
+  def handle input, client_addr
+    handler.handle Message.new(input), client_addr
+  rescue Message::UnknownType
   end
 end end end

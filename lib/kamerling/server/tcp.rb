@@ -1,6 +1,5 @@
 require 'socket'
 require_relative '../addr'
-require_relative '../message'
 require_relative 'sock'
 
 module Kamerling module Server class TCP < Sock
@@ -9,8 +8,7 @@ module Kamerling module Server class TCP < Sock
   def handle_connection socket
     client_addr = Addr[*socket.remote_address.ip_unpack, :TCP]
     input       = socket.read
-    handle Message.new(input), client_addr
-  rescue Message::UnknownType
+    handle input, client_addr
   ensure
     socket.close
   end
