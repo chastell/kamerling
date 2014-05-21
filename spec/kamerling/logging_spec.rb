@@ -4,6 +4,7 @@ require 'stringio'
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/logging'
+require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/net_dispatcher'
 require_relative '../../lib/kamerling/server/tcp'
 require_relative '../../lib/kamerling/server/udp'
@@ -70,7 +71,7 @@ module Kamerling describe Logging do
       logged.must_include "connect #{udp_addr}"
     end
 
-    it 'logs TCP server receives' do
+    it 'logs UDP server receives' do
       udp_client = UDPSocket.new
       udp_client.send 'PING', 0, *udp_server.addr
       udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
