@@ -54,6 +54,15 @@ module Kamerling describe Logging do
       logged.must_include "received #{tcp_addr} 50 49 4e 47"
     end
 
+    it 'logs TCP unknown message types' do
+      tcp_addr = TCPSocket.open(*tcp_server.addr) do |socket|
+        socket << 'foo'
+        Addr[*socket.local_address.ip_unpack, :TCP]
+      end
+      run_all_threads
+      logged.must_include "received #{tcp_addr} unknown message type"
+    end
+
     it 'logs UDP server starts' do
       logged.must_include 'start localhost:1979 (UDP)'
     end
@@ -77,6 +86,14 @@ module Kamerling describe Logging do
       udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
       run_all_threads
       logged.must_include "received #{udp_addr} 50 49 4e 47"
+    end
+
+    it 'logs UDP unknown message types' do
+      udp_client = UDPSocket.new
+      udp_client.send 'foo', 0, *udp_server.addr
+      udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
+      run_all_threads
+      logged.must_include "received #{udp_addr} unknown message type"
     end
 
     it 'logs packet dispatches' do

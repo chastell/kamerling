@@ -38,6 +38,7 @@ module Kamerling class Logging
         logger.info "connect #{client_addr}"
         logger.debug "received #{client_addr} #{Message.new(input).to_hex}"
       rescue Message::UnknownType
+        logger.debug "received #{client_addr} unknown message type"
       end
     end
   end
