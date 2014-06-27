@@ -9,7 +9,9 @@ require_relative '../../lib/kamerling/repo'
 
 module Kamerling describe Registrar do
   describe '#register' do
-    fakes :addr, :client, :project, :repo
+    fakes :addr, :project, :repo
+
+    let(:client) { fake :client, uuid: UUID.new }
 
     let :mess do
       fake :message, client_uuid: client.uuid, project_uuid: project.uuid
@@ -19,7 +21,7 @@ module Kamerling describe Registrar do
 
     let :repos do
       {
-        Client       => { client.uuid  => client  },
+        Client       => fake(:repo, :[] => client),
         Project      => { project.uuid => project },
         Registration => repo,
       }
@@ -30,6 +32,11 @@ module Kamerling describe Registrar do
       registration = Registration.new addr: addr, client: client,
                                       project: project, uuid: 'abcd'
       repo.must_have_received :<<, [registration]
+    end
+
+    it 'updates the clien’t addr' do
+      registrar.register addr: addr, message: mess, uuid: 'abcd'
+      repos[Client].must_have_received :<<, [any(Client)]
     end
 
     it 'doesn’t blow up when a new client tries to register' do
