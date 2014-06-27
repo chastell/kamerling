@@ -15,6 +15,8 @@ module Kamerling describe Registrar do
       fake :message, client_uuid: client.uuid, project_uuid: project.uuid
     end
 
+    let(:registrar) { Registrar.new repos: repos }
+
     let :repos do
       {
         Client       => { client.uuid  => client  },
@@ -24,7 +26,6 @@ module Kamerling describe Registrar do
     end
 
     it 'registers that the given client can do the given project' do
-      registrar = Registrar.new repos: repos
       registrar.register addr: addr, message: mess, uuid: 'abcd'
       registration = Registration.new addr: addr, client: client,
                                       project: project, uuid: 'abcd'
@@ -34,7 +35,6 @@ module Kamerling describe Registrar do
     it 'doesn’t blow up when a new client tries to register' do
       client_repo = fake :repo, :[] => -> { fail Repo::NotFound }
       repos[Client] = client_repo
-      registrar = Registrar.new repos: repos
       registrar.register addr: addr, message: mess, uuid: 'abcd'
       client_repo.must_have_received :<<, [any(Client)]
     end
