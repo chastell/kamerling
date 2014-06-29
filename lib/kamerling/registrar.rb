@@ -10,11 +10,7 @@ module Kamerling class Registrar
   end
 
   def register addr: req(:addr), message: req(:message), uuid: UUID.new
-    client = begin
-      repos[Client][message.client_uuid]
-    rescue Repo::NotFound
-      Client.new uuid: message.client_uuid
-    end
+    client = find_or_create_client message.client_uuid
     client.addr = addr
     repos[Client] << client
     project = repos[Project][message.project_uuid]
@@ -25,4 +21,12 @@ module Kamerling class Registrar
 
   attr_reader :repos
   private     :repos
+
+  private
+
+  def find_or_create_client client_uuid
+    repos[Client][client_uuid]
+  rescue Repo::NotFound
+    Client.new uuid: client_uuid
+  end
 end end
