@@ -31,5 +31,6 @@ module Kamerling module Server class Sock
   def handle input, client_addr
     handler.handle Message.new(input), client_addr
   rescue Message::UnknownType
+    nil
   end
 end end end
