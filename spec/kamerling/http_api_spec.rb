@@ -28,9 +28,8 @@ module Kamerling describe HTTPAPI do
       stub(repos).clients { [fpga] }
       get '/clients'
       links = doc.css '#clients a[data-type=client]'
-      links.size.must_equal 1
-      links.at("[data-uuid='#{fpga.uuid}']")['href']
-        .must_equal "/clients/#{fpga.uuid}"
+      links.first['data-uuid'].must_equal fpga.uuid
+      links.first['href'].must_equal "/clients/#{fpga.uuid}"
     end
   end
 
