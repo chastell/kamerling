@@ -32,4 +32,10 @@ module Kamerling describe Addr do
       addr.to_s.must_equal 'localhost:1981 (TCP)'
     end
   end
+
+  describe '#uri' do
+    it 'returns and URI-like representation of the Addr' do
+      addr.uri.must_equal 'tcp://localhost:1981'
+    end
+  end
 end end
