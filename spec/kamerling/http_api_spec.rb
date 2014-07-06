@@ -23,12 +23,13 @@ module Kamerling describe HTTPAPI do
   end
 
   describe 'GET /clients' do
-    it 'contains links to, addresses and UUIDs of clients' do
-      fpga = fake :client, addr: Addr['127.0.0.1', 1981, :TCP], uuid: UUID.new
+    it 'contains information on clients' do
+      fpga = Client.new addr: Addr['127.0.0.1', 1981, :TCP], busy: true
       stub(repos).clients { [fpga] }
       get '/clients'
       links = doc.css '#clients a[data-type=client]'
       links.first['data-addr'].must_equal 'tcp://127.0.0.1:1981'
+      links.first['data-busy'].must_equal 'true'
       links.first['data-uuid'].must_equal fpga.uuid
       links.first['href'].must_equal "/clients/#{fpga.uuid}"
     end
