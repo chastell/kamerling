@@ -9,8 +9,9 @@ require_relative '../../lib/kamerling/repo'
 
 module Kamerling describe Registrar do
   describe '#register' do
-    fakes :addr, :project
+    fakes :project
 
+    let(:addr)   { Addr.new                     }
     let(:client) { fake :client, uuid: UUID.new }
 
     let :mess do

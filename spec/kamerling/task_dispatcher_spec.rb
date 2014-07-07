@@ -12,7 +12,7 @@ require_relative '../../lib/kamerling/uuid'
 module Kamerling describe TaskDispatcher do
   describe '#dispatch' do
     it 'dispatches tasks to free clients and marks them as busy' do
-      addr    = fake :addr
+      addr    = Addr.new
       client  = fake :client, addr: addr, uuid: UUID['16B client  UUID']
       project = fake :project, uuid: UUID['16B project UUID']
       task    = fake :task, data: 'data', uuid: UUID['16B task    UUID']

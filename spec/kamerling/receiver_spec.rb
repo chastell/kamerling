@@ -10,9 +10,10 @@ require_relative '../../lib/kamerling/task'
 
 module Kamerling describe Receiver do
   describe '#receive' do
-    fakes :addr, :client, :task
+    fakes :client, :task
 
     it 'saves the result and updates client and task' do
+      addr  = Addr.new
       repos = fake :repos, as: :class
       stub(repos).<<(any_args) { repos }
       stub(repos).[](Client)   { fake :repo, :[] => client }
