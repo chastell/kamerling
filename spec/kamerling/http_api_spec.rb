@@ -46,8 +46,8 @@ module Kamerling describe HTTPAPI do
   end
 
   describe 'GET /projects/{uuid}' do
-    let(:cpu) { fake :client, busy: false, uuid: UUID.new }
-    let(:gpu) { fake :client, busy: true,  uuid: UUID.new }
+    let(:cpu) { Client.new busy: false }
+    let(:gpu) { Client.new busy: true  }
     let(:three) { fake :task, done: false, uuid: UUID.new }
     let(:seven) { fake :task, done: true,  uuid: UUID.new }
 

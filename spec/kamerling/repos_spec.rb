@@ -29,7 +29,7 @@ module Kamerling describe Repos do
 
   describe '.[]' do
     it 'allows querying for repository objects' do
-      client = fake :client, uuid: UUID.new
+      client = Client.new
       Repos.repos = { Client => {} }
       Repos[Client][client.uuid].must_be_nil
       Repos.repos = { Client => { client.uuid => client } }
@@ -46,7 +46,7 @@ module Kamerling describe Repos do
 
   describe '.clients_for' do
     it 'returns all clients for the given project' do
-      clients  = [fake(:client), fake(:client)]
+      clients  = [Client.new, Client.new]
       project  = fake :project
       regs     = clients.map { |client| fake :registration, client: client }
       reg_repo = fake :repo
@@ -67,8 +67,8 @@ module Kamerling describe Repos do
 
   describe '.free_clients_for' do
     it 'returns free clients for the given project' do
-      busy_client = fake :client, busy: true
-      free_client = fake :client, busy: false
+      busy_client = Client.new busy: true
+      free_client = Client.new busy: false
       busy_reg    = fake :registration, client: busy_client
       free_reg    = fake :registration, client: free_client
       project     = fake :project
@@ -122,7 +122,7 @@ module Kamerling describe Repos do
 
     it 'makes sure objects can be stored and retrieved' do
       addr    = Addr['127.0.0.1', 1981, :TCP]
-      client  = Client.new addr: addr, uuid: UUID.new
+      client  = Client.new addr: addr
       project = Project.new name: 'project name', uuid: UUID.new
       task    = Task.new data: 'data', project: project, uuid: UUID.new
       reg     = Registration.new addr: addr, client: client, project: project

@@ -13,7 +13,7 @@ module Kamerling describe TaskDispatcher do
   describe '#dispatch' do
     it 'dispatches tasks to free clients and marks them as busy' do
       addr    = Addr.new
-      client  = fake :client, addr: addr, uuid: UUID['16B client  UUID']
+      client  = Client.new addr: addr, uuid: UUID['16B client  UUID']
       project = fake :project, uuid: UUID['16B project UUID']
       task    = fake :task, data: 'data', uuid: UUID['16B task    UUID']
       repos   = fake :repos, as: :class, projects: [project]
@@ -26,7 +26,7 @@ module Kamerling describe TaskDispatcher do
       message = Message[client: client, payload: 'data', project: project,
                         task: task, type: 'DATA']
       net_dispatcher.must_have_received :dispatch, [addr, message]
-      client.must_have_received :busy=, [true]
+      assert client.busy
       repos.must_have_received :<<, [client]
     end
   end

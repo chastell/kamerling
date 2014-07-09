@@ -11,8 +11,8 @@ module Kamerling describe Registrar do
   describe '#register' do
     fakes :project
 
-    let(:addr)   { Addr.new                     }
-    let(:client) { fake :client, uuid: UUID.new }
+    let(:addr)   { Addr.new   }
+    let(:client) { Client.new }
 
     let :mess do
       fake :message, client_uuid: client.uuid, project_uuid: project.uuid
