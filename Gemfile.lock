@@ -46,7 +46,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     mini_portile (0.6.0)
-    minitest (5.3.5)
+    minitest (5.4.0)
     minitest-focus (1.1.0)
       minitest (>= 4, < 6)
     nokogiri (1.6.2.1)
