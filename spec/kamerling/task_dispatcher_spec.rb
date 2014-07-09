@@ -14,7 +14,7 @@ module Kamerling describe TaskDispatcher do
     it 'dispatches tasks to free clients and marks them as busy' do
       addr    = Addr.new
       client  = Client.new addr: addr, uuid: UUID['16B client  UUID']
-      project = fake :project, uuid: UUID['16B project UUID']
+      project = Project.new uuid: UUID['16B project UUID']
       task    = fake :task, data: 'data', uuid: UUID['16B task    UUID']
       repos   = fake :repos, as: :class, projects: [project]
       stub(repos).next_task_for(project) { task }

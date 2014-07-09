@@ -55,7 +55,7 @@ module Kamerling describe Repo do
     it 'returns objects related to the given object via a mapper' do
       ragga   = Tune.new genre: :ragga
       reggae  = Tune.new genre: :reggae
-      project = fake :project, uuid: UUID.new
+      project = Project.new
       results = [
         { genre: :ragga,  uuid: ragga.uuid  },
         { genre: :reggae, uuid: reggae.uuid },

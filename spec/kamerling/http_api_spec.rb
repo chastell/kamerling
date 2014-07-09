@@ -10,8 +10,8 @@ require_relative '../../lib/kamerling/uuid'
 module Kamerling describe HTTPAPI do
   let(:app)   { HTTPAPI.set repos: repos                        }
   let(:doc)   { Nokogiri::HTML last_response.body               }
-  let(:ecc)   { fake :project, uuid: UUID.new                   }
-  let(:gimps) { fake :project, uuid: UUID.new                   }
+  let(:ecc)   { Project.new                                     }
+  let(:gimps) { Project.new                                     }
   let(:repos) { fake :repos, as: :class, projects: [gimps, ecc] }
 
   describe 'GET /' do

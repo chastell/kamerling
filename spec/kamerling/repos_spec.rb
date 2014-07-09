@@ -47,7 +47,7 @@ module Kamerling describe Repos do
   describe '.clients_for' do
     it 'returns all clients for the given project' do
       clients  = [Client.new, Client.new]
-      project  = fake :project
+      project  = Project.new
       regs     = clients.map { |client| fake :registration, client: client }
       reg_repo = fake :repo
       stub(reg_repo).related_to(project) { regs }
@@ -71,7 +71,7 @@ module Kamerling describe Repos do
       free_client = Client.new busy: false
       busy_reg    = fake :registration, client: busy_client
       free_reg    = fake :registration, client: free_client
-      project     = fake :project
+      project     = Project.new
       repo        = fake :repo
       stub(repo).related_to(project) { [busy_reg, free_reg] }
       Repos.repos = { Registration => repo }
@@ -81,7 +81,7 @@ module Kamerling describe Repos do
 
   describe '.next_task_for' do
     it 'returns the next task for the given project' do
-      project   = fake :project
+      project   = Project.new
       done_task = fake :task, done: true
       new_task  = fake :task, done: false
       repo      = fake :repo
@@ -93,7 +93,7 @@ module Kamerling describe Repos do
 
   describe '.project' do
     it 'returns the project with the given UUID' do
-      gimps = fake :project, uuid: UUID.new
+      gimps = Project.new
       Repos.repos = { Project => { gimps.uuid => gimps } }
       Repos.project(gimps.uuid).must_equal gimps
     end
@@ -108,7 +108,7 @@ module Kamerling describe Repos do
 
   describe '.tasks_for' do
     it 'returns all tasks for the given project' do
-      project   = fake :project
+      project   = Project.new
       tasks     = [fake(:task), fake(:task)]
       task_repo = fake :repo
       stub(task_repo).related_to(project) { tasks }

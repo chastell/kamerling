@@ -14,7 +14,7 @@ module Kamerling describe Message do
   describe '.[]' do
     it 'constructs a new message' do
       client  = Client.new
-      project = fake :project, uuid: UUID.new
+      project = Project.new
       task    = fake :task,    uuid: UUID.new
       message = Message[client: client, payload: 'pay', project: project,
                         task: task, type: :DATA]
