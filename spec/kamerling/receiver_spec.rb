@@ -18,8 +18,8 @@ module Kamerling describe Receiver do
       stub(repos).<<(any_args) { repos }
       stub(repos).[](Client)   { fake :repo, :[] => client }
       stub(repos).[](Task)     { fake :repo, :[] => task   }
-      message  = fake :message, client_uuid: client.uuid, payload: 'data',
-                                task_uuid: task.uuid
+      message = Message[client: client, payload: 'data', project: Project.new,
+                        task: task, type: :RSLT]
       receiver = Receiver.new repos: repos
       receiver.receive addr: addr, message: message, uuid: 'abcd'
       result = Result.new addr: addr, client: client, data: 'data', task: task,
