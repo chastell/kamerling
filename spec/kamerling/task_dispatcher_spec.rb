@@ -15,7 +15,7 @@ module Kamerling describe TaskDispatcher do
       addr    = Addr.new
       client  = Client.new addr: addr, uuid: UUID['16B client  UUID']
       project = Project.new uuid: UUID['16B project UUID']
-      task    = fake :task, data: 'data', uuid: UUID['16B task    UUID']
+      task    = Task.new data: 'data', uuid: UUID['16B task    UUID']
       repos   = fake :repos, as: :class, projects: [project]
       stub(repos).next_task_for(project) { task }
       stub(repos).free_clients_for(project) { [client] }

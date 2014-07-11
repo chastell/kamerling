@@ -82,8 +82,8 @@ module Kamerling describe Repos do
   describe '.next_task_for' do
     it 'returns the next task for the given project' do
       project   = Project.new
-      done_task = fake :task, done: true
-      new_task  = fake :task, done: false
+      done_task = Task.new done: true
+      new_task  = Task.new done: false
       repo      = fake :repo
       stub(repo).related_to(project) { [done_task, new_task] }
       Repos.repos = { Task => repo }
@@ -109,7 +109,7 @@ module Kamerling describe Repos do
   describe '.tasks_for' do
     it 'returns all tasks for the given project' do
       project   = Project.new
-      tasks     = [fake(:task), fake(:task)]
+      tasks     = [Task.new, Task.new]
       task_repo = fake :repo
       stub(task_repo).related_to(project) { tasks }
       Repos.repos = { Task => task_repo }

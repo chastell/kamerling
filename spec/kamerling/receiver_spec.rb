@@ -10,11 +10,10 @@ require_relative '../../lib/kamerling/task'
 
 module Kamerling describe Receiver do
   describe '#receive' do
-    fakes :task
-
     it 'saves the result and updates client and task' do
       addr   = Addr.new
       client = Client.new busy: true
+      task   = Task.new done: false
       repos  = fake :repos, as: :class
       stub(repos).<<(any_args) { repos }
       stub(repos).[](Client)   { fake :repo, :[] => client }
@@ -26,7 +25,7 @@ module Kamerling describe Receiver do
       result = Result.new addr: addr, client: client, data: 'data', task: task,
                           uuid: 'abcd'
       refute client.busy
-      task.must_have_received   :done=, [true]
+      assert task.done
       repos.must_have_received  :<<,    [client]
       repos.must_have_received  :<<,    [task]
       repos.must_have_received  :<<,    [result]
