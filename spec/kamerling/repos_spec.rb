@@ -48,7 +48,7 @@ module Kamerling describe Repos do
     it 'returns all clients for the given project' do
       clients  = [Client.new, Client.new]
       project  = Project.new
-      regs     = clients.map { |client| fake :registration, client: client }
+      regs     = clients.map { |client| Registration.new client: client }
       reg_repo = fake :repo
       stub(reg_repo).related_to(project) { regs }
       Repos.repos = { Registration => reg_repo }
@@ -69,8 +69,8 @@ module Kamerling describe Repos do
     it 'returns free clients for the given project' do
       busy_client = Client.new busy: true
       free_client = Client.new busy: false
-      busy_reg    = fake :registration, client: busy_client
-      free_reg    = fake :registration, client: free_client
+      busy_reg    = Registration.new client: busy_client
+      free_reg    = Registration.new client: free_client
       project     = Project.new
       repo        = fake :repo
       stub(repo).related_to(project) { [busy_reg, free_reg] }
