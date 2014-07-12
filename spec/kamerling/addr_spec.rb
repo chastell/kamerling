@@ -34,8 +34,8 @@ module Kamerling describe Addr do
   end
 
   describe '#uri' do
-    it 'returns and URI-like representation of the Addr' do
-      addr.uri.must_equal 'tcp://localhost:1981'
+    it 'returns and URI representation of the Addr' do
+      addr.uri.must_equal URI.parse 'tcp://localhost:1981'
     end
   end
 end end

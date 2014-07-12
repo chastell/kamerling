@@ -1,4 +1,5 @@
 require 'socket'
+require 'uri'
 require_relative 'value'
 
 module Kamerling class Addr < Value
@@ -28,6 +29,6 @@ module Kamerling class Addr < Value
   end
 
   def uri
-    "#{prot.downcase}://#{host}:#{port}"
+    URI.parse "#{prot.downcase}://#{host}:#{port}"
   end
 end end
