@@ -6,16 +6,15 @@ module Kamerling class Message
 
   def self.build client: req(:client), payload: req(:payload),
                  project: req(:project), task: req(:task), type: req(:type)
-    new raw: "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
+    new "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
       UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
   end
 
   def self.parse raw
-    new raw: raw
+    new raw
   end
 
-  def initialize client: nil, payload: nil, project: nil, raw: nil, task: nil,
-                 type: raw[0..3].to_sym
+  def initialize raw
     fail UnknownType, type unless KNOWN_TYPES.include? type or type.empty?
     @raw = raw || raw_from(client, payload, project, task, type)
   end
