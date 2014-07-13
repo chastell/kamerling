@@ -9,6 +9,10 @@ module Kamerling class Message
       UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
   end
 
+  def self.parse raw
+    new raw
+  end
+
   def initialize raw
     @raw = raw
     type = raw[0..3]

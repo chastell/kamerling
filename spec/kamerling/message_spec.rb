@@ -26,13 +26,13 @@ module Kamerling describe Message do
     end
   end
 
-  describe '.new' do
+  describe '.parse' do
     it 'raises on unknown message types' do
-      -> { Message.new 'MESS age' }.must_raise Message::UnknownType
+      -> { Message.parse 'MESS age' }.must_raise Message::UnknownType
     end
 
     it 'doesn’t raise on empty messages' do
-      Message.new ''
+      Message.parse ''
     end
   end
 
