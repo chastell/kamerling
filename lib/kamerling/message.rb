@@ -1,6 +1,7 @@
 require_relative 'uuid'
 
 module Kamerling class Message
+  KNOWN_TYPES = %i(DATA PING RGST RSLT)
   UnknownType = Class.new RuntimeError
 
   def self.parse raw
@@ -9,10 +10,9 @@ module Kamerling class Message
 
   def initialize client: nil, payload: nil, project: nil, raw: nil, task: nil,
                  type: raw[0..3].to_sym
+    fail UnknownType, type unless KNOWN_TYPES.include? type or type.empty?
     @raw = raw || "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
       UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
-    known_types = %i(DATA PING RGST RSLT)
-    fail UnknownType, type unless known_types.include? type or type.empty?
   end
 
   def client_uuid
