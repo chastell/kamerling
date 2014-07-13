@@ -9,8 +9,7 @@ module Kamerling class Message
 
   def initialize client: nil, payload: nil, project: nil, raw: nil, task: nil,
                  type: raw[0..3].to_sym
-    @raw   = raw
-    @raw ||= "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
+    @raw = raw || "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
       UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
     known_types = %i(DATA PING RGST RSLT)
     fail UnknownType, type unless known_types.include? type or type.empty?
