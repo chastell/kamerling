@@ -29,7 +29,7 @@ module Kamerling module Server class Sock
   private
 
   def handle input, client_addr
-    handler.handle Message.new(input), client_addr
+    handler.handle Message.parse(input), client_addr
   rescue Message::UnknownType
     nil
   end

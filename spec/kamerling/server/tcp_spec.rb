@@ -28,8 +28,8 @@ module Kamerling describe Server::TCP do
       end
       run_all_threads
       server.stop
-      handler.must_have_received :handle, [Message.new('DATA'), s_addr_foo]
-      handler.must_have_received :handle, [Message.new('PING'), s_addr_bar]
+      handler.must_have_received :handle, [Message.parse('DATA'), s_addr_foo]
+      handler.must_have_received :handle, [Message.parse('PING'), s_addr_bar]
     end
 
     it 'doesn’t blow up on unknown inputs' do

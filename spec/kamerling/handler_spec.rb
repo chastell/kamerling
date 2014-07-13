@@ -14,13 +14,13 @@ module Kamerling describe Handler do
     let(:handler) { Handler.new receiver: receiver, registrar: registrar }
 
     it 'handles RGST inputs' do
-      message = Message.new 'RGST'
+      message = Message.parse 'RGST'
       handler.handle message, addr
       registrar.must_have_received :register, [addr: addr, message: message]
     end
 
     it 'handles RSLT inputs' do
-      message = Message.new 'RSLT'
+      message = Message.parse 'RSLT'
       handler.handle message, addr
       receiver.must_have_received :receive, [addr: addr, message: message]
     end

@@ -7,7 +7,7 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe Message do
   let(:mess) do
-    Message.new "DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
+    Message.parse "DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
       '16B client  UUID16B project UUID16B task    UUIDsome payload'
   end
 

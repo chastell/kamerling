@@ -99,7 +99,7 @@ module Kamerling describe Logging do
     it 'logs packet dispatches' do
       server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
       addr   = Addr[server.addr[3], server.addr[1], :UDP]
-      NetDispatcher.dispatch addr, Message.new('PING')
+      NetDispatcher.dispatch addr, Message.parse('PING')
       logged.must_include "sent #{addr} 50 49 4e 47"
     end
   end
