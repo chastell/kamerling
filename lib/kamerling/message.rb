@@ -6,8 +6,8 @@ module Kamerling class Message
 
   def self.build client: req(:client), payload: req(:payload),
                  project: req(:project), task: req(:task), type: req(:type)
-    new "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
-      UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
+    new [type, "\0\0\0\0\0\0\0\0\0\0\0\0", UUID.bin(client.uuid),
+         UUID.bin(project.uuid), UUID.bin(task.uuid), payload].join
   end
 
   def self.parse raw
