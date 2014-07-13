@@ -25,7 +25,7 @@ module Kamerling class Addr < Value
   end
 
   def to_s
-    "#{host}:#{port} (#{prot})"
+    uri.to_s
   end
 
   def uri

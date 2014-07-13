@@ -28,8 +28,8 @@ module Kamerling describe Addr do
   end
 
   describe '#to_s' do
-    it 'returns the Addr in ‘host:port (protocol)’ notation' do
-      addr.to_s.must_equal 'localhost:1981 (TCP)'
+    it 'returns the Addr in URI notation' do
+      addr.to_s.must_equal 'tcp://localhost:1981'
     end
   end
 

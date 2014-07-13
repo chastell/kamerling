@@ -29,12 +29,12 @@ module Kamerling describe Logging do
 
   describe '.log_to' do
     it 'logs TCP server starts' do
-      logged.must_include 'start localhost:1981 (TCP)'
+      logged.must_include 'start tcp://localhost:1981'
     end
 
     it 'logs TCP server stops' do
       tcp_server.stop
-      logged.must_include 'stop localhost:1981 (TCP)'
+      logged.must_include 'stop tcp://localhost:1981'
     end
 
     it 'logs TCP server connects' do
@@ -64,12 +64,12 @@ module Kamerling describe Logging do
     end
 
     it 'logs UDP server starts' do
-      logged.must_include 'start localhost:1979 (UDP)'
+      logged.must_include 'start udp://localhost:1979'
     end
 
     it 'logs UDP server stops' do
       udp_server.stop
-      logged.must_include 'stop localhost:1979 (UDP)'
+      logged.must_include 'stop udp://localhost:1979'
     end
 
     it 'logs UDP server connects' do
