@@ -11,8 +11,7 @@ module Kamerling class Message
   def initialize client: nil, payload: nil, project: nil, raw: nil, task: nil,
                  type: raw[0..3].to_sym
     fail UnknownType, type unless KNOWN_TYPES.include? type or type.empty?
-    @raw = raw || "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
-      UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
+    @raw = raw || raw_from(client, payload, project, task, type)
   end
 
   def client_uuid
@@ -51,4 +50,11 @@ module Kamerling class Message
 
   attr_reader :raw
   protected   :raw
+
+  private
+
+  def raw_from client, payload, project, task, type
+    "#{type}\0\0\0\0\0\0\0\0\0\0\0\0" + UUID.bin(client.uuid) +
+      UUID.bin(project.uuid) + UUID.bin(task.uuid) + payload
+  end
 end end
