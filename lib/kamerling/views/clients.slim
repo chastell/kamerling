@@ -2,5 +2,5 @@ nav
   ul#clients
     - clients.each do |client|
       li
-        a data-addr=client.addr.uri data-busy=client.busy.to_s data-type='client' data-uuid=client.uuid href="/clients/#{client.uuid}"
+        a data-addr=client.addr data-busy=client.busy.to_s data-type='client' data-uuid=client.uuid href="/clients/#{client.uuid}"
           = client.busy
