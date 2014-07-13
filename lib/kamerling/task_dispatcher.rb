@@ -24,8 +24,8 @@ module Kamerling class TaskDispatcher
 
   def dispatch_task client: req(:client), project: req(:project),
                     task: req(:task)
-    message = Message.new client: client, payload: task.data, project: project,
-                          task: task, type: :DATA
+    message = Message.build client: client, payload: task.data,
+                            project: project, task: task, type: :DATA
     net_dispatcher.dispatch client.addr, message
     client.busy = true
     repos << client

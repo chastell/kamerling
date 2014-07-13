@@ -23,8 +23,8 @@ module Kamerling describe TaskDispatcher do
 
       TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos).dispatch
 
-      message = Message.new client: client, payload: 'data', project: project,
-                            task: task, type: :DATA
+      message = Message.build client: client, payload: 'data', project: project,
+                              task: task, type: :DATA
       net_dispatcher.must_have_received :dispatch, [addr, message]
       assert client.busy
       repos.must_have_received :<<, [client]

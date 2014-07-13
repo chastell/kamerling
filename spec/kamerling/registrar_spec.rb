@@ -14,8 +14,8 @@ module Kamerling describe Registrar do
     let(:project) { Project.new }
 
     let :mess do
-      Message.new client: client, payload: 'data', project: project,
-                  task: Task.new, type: :RGST
+      Message.build client: client, payload: 'data', project: project,
+                    task: Task.new, type: :RGST
     end
 
     let(:registrar) { Registrar.new repos: repos }
