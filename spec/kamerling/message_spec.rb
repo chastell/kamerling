@@ -11,13 +11,13 @@ module Kamerling describe Message do
       '16B client  UUID16B project UUID16B task    UUIDsome payload'
   end
 
-  describe '.new' do
+  describe '.build' do
     it 'constructs a new message' do
       client  = Client.new
       project = Project.new
       task    = Task.new
-      message = Message.new client: client, payload: 'pay', project: project,
-                            task: task, type: :DATA
+      message = Message.build client: client, payload: 'pay', project: project,
+                              task: task, type: :DATA
       message.client_uuid.must_equal client.uuid
       message.project_uuid.must_equal project.uuid
       message.task_uuid.must_equal task.uuid
