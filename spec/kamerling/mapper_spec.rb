@@ -32,6 +32,18 @@ module Kamerling describe Mapper do
                                      port: 1979, prot: 'TCP', uuid: client.uuid
     end
 
+    it 'returns the proper Hash representation of a Dispatch' do
+      dispatched_at = Time.new(2014, 7, 6, 5, 4, 3)
+      dispatch = Dispatch.new addr: addr, client: client,
+                              dispatched_at: dispatched_at, project: project,
+                              task: task
+      Mapper.to_h(dispatch).must_equal client_uuid: client.uuid,
+                                       dispatched_at: dispatched_at,
+                                       host: '127.0.0.1', port: 1979,
+                                       prot: 'TCP', project_uuid: project.uuid,
+                                       task_uuid: task.uuid, uuid: dispatch.uuid
+    end
+
     it 'returns the proper Hash representation of a Registration' do
       reg = Registration.new addr: addr, client: client, project: project
       Mapper.to_h(reg).must_equal client_uuid: client.uuid, host: '127.0.0.1',
