@@ -14,8 +14,10 @@ module Kamerling describe Server::UDP do
       server.start
       foo = UDPSocket.new
       bar = UDPSocket.new
-      foo.send 'DATA', 0, *server.addr
-      bar.send 'PING', 0, *server.addr
+      3.times do
+        foo.send 'DATA', 0, *server.addr
+        bar.send 'PING', 0, *server.addr
+      end
       foo_addr = Addr['127.0.0.1', foo.addr[1], :UDP]
       bar_addr = Addr['127.0.0.1', bar.addr[1], :UDP]
       run_all_threads
