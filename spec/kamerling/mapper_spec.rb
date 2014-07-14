@@ -40,11 +40,13 @@ module Kamerling describe Mapper do
     end
 
     it 'returns the proper Hash representation of a Result' do
-      result = Result.new addr: addr, client: client, data: 'res', task: task
+      received_at = Time.new(2014, 7, 6, 5, 4, 3)
+      result = Result.new addr: addr, client: client, data: 'res',
+                          received_at: received_at, task: task
       Mapper.to_h(result).must_equal client_uuid: client.uuid, data: 'res',
                                      host: '127.0.0.1', port: 1979,
-                                     prot: 'TCP', task_uuid: task.uuid,
-                                     uuid: result.uuid
+                                     prot: 'TCP', received_at: received_at,
+                                     task_uuid: task.uuid, uuid: result.uuid
     end
 
     it 'returns the proper Hash representation of a Tag' do
