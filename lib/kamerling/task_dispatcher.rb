@@ -1,3 +1,4 @@
+require_relative 'dispatch'
 require_relative 'message'
 require_relative 'net_dispatcher'
 require_relative 'repos'
@@ -26,8 +27,11 @@ module Kamerling class TaskDispatcher
                     task: req(:task)
     message = Message.build client: client, payload: task.data,
                             project: project, task: task, type: :DATA
+    dispatch = Dispatch.new addr: client.addr, client: client, project: project,
+                            task: task
     net_dispatcher.dispatch client.addr, message
     client.busy = true
     repos << client
+    repos << dispatch
   end
 end end
