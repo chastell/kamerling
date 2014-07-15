@@ -25,10 +25,13 @@ module Kamerling describe TaskDispatcher do
   end
 
   describe '#dispatch' do
-    it 'dispatches tasks to free clients and marks them as busy' do
+    it 'dispatches tasks to free clients' do
       message = Message.build client: client, payload: 'data', project: project,
                               task: task, type: :DATA
       net_dispatcher.must_have_received :dispatch, [addr, message]
+    end
+
+    it 'dispatches marks clients as busy' do
       assert client.busy
       repos.must_have_received :<<, [client]
     end
