@@ -38,7 +38,7 @@ module Kamerling describe TaskDispatcher do
 
     it 'creates and stores a Dispatch object along the way' do
       TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos).dispatch
-      repos.must_have_received :<<, [Dispatch.new(uuid: anything)]
+      repos.must_have_received :<<, [any(Dispatch)]
     end
   end
 end end
