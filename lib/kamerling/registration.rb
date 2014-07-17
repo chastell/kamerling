@@ -4,5 +4,5 @@ require_relative 'project'
 require_relative 'uuid_entity'
 
 module Kamerling class Registration < UUIDEntity
-  attrs addr: Addr, client: Client, project: Project
+  attrs addr: Addr, client: Client, project: Project, registered_at: Time
 end end

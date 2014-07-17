@@ -45,10 +45,13 @@ module Kamerling describe Mapper do
     end
 
     it 'returns the proper Hash representation of a Registration' do
-      reg = Registration.new addr: addr, client: client, project: project
+      registered_at = Time.new(2014, 7, 6, 5, 4, 3)
+      reg = Registration.new addr: addr, client: client, project: project,
+                             registered_at: registered_at
       Mapper.to_h(reg).must_equal client_uuid: client.uuid, host: '127.0.0.1',
                                   port: 1979, prot: 'TCP',
-                                  project_uuid: project.uuid, uuid: reg.uuid
+                                  project_uuid: project.uuid,
+                                  registered_at: registered_at, uuid: reg.uuid
     end
 
     it 'returns the proper Hash representation of a Result' do
