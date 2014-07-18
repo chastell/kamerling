@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/solnic/virtus.git
-  revision: 92b533526fa92ddd5b064dd0c3e5f3206f578a16
+  revision: 2572ebe4c8346b51b372e1bf813940047db3f648
   specs:
     virtus (1.0.2)
       axiom-types (~> 0.1)
@@ -82,7 +82,7 @@ GEM
     ruby2ruby (2.1.1)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
-    ruby_parser (3.6.1)
+    ruby_parser (3.6.2)
       sexp_processor (~> 4.1)
     sequel (4.12.0)
     sexp_processor (4.4.3)
@@ -93,7 +93,7 @@ GEM
     slim (2.0.3)
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
-    slop (3.5.0)
+    slop (3.6.0)
     sqlite3 (1.3.9)
     temple (0.6.8)
     thread_safe (0.3.4)
