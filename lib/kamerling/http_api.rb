@@ -41,6 +41,7 @@ module Kamerling class HTTPAPI < Sinatra::Base
 
   post '/projects/dispatch' do
     task_dispatcher.dispatch
+    redirect '/projects'
   end
 
   private

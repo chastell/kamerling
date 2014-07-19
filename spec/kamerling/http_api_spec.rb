@@ -98,5 +98,11 @@ module Kamerling describe HTTPAPI do
       post '/projects/dispatch'
       task_dispatcher.must_have_received :dispatch, []
     end
+
+    it 'redirects to /projects' do
+      post '/projects/dispatch'
+      follow_redirect!
+      URI(last_request.url).path.must_equal '/projects'
+    end
   end
 end end
