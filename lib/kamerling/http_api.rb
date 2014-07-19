@@ -32,15 +32,15 @@ module Kamerling class HTTPAPI < Sinatra::Base
     render_template :project, locals: { clients: clients, tasks: tasks }
   end
 
-  post '/dispatch' do
-    task_dispatcher.dispatch
-  end
-
   post '/projects' do
     name = params.fetch 'name'
     uuid = params.fetch 'uuid'
     repos << Project.new(name: name, uuid: uuid)
     redirect '/projects'
+  end
+
+  post '/projects/dispatch' do
+    task_dispatcher.dispatch
   end
 
   private

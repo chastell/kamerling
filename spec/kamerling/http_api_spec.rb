@@ -80,13 +80,6 @@ module Kamerling describe HTTPAPI do
     end
   end
 
-  describe 'POST /dispatch' do
-    it 'dispatches tasks to all free clients' do
-      post '/dispatch'
-      task_dispatcher.must_have_received :dispatch, []
-    end
-  end
-
   describe 'POST /projects' do
     it 'creates a new project with the given name and UUID' do
       post '/projects', name: 'ECC', uuid: uuid = UUID.new
@@ -97,6 +90,13 @@ module Kamerling describe HTTPAPI do
       post '/projects', name: 'ECC', uuid: UUID.new
       follow_redirect!
       URI(last_request.url).path.must_equal '/projects'
+    end
+  end
+
+  describe 'POST /projects/dispatch' do
+    it 'dispatches tasks to all free clients' do
+      post '/projects/dispatch'
+      task_dispatcher.must_have_received :dispatch, []
     end
   end
 end end
