@@ -3,14 +3,15 @@ require 'sinatra/base'
 require 'slim'
 require_relative 'project'
 require_relative 'repos'
+require_relative 'task_dispatcher'
 require_relative 'uuid'
 
 module Kamerling class HTTPAPI < Sinatra::Base
   extend Forwardable
 
-  delegate repos: :settings
+  delegate %i(task_dispatcher repos) => :settings
 
-  configure { set repos: Repos }
+  configure { set task_dispatcher: TaskDispatcher.new, repos: Repos }
 
   get '/' do
     render_template :root
@@ -29,6 +30,10 @@ module Kamerling class HTTPAPI < Sinatra::Base
     clients = repos.clients_for project
     tasks   = repos.tasks_for project
     render_template :project, locals: { clients: clients, tasks: tasks }
+  end
+
+  post '/dispatch' do
+    task_dispatcher.dispatch
   end
 
   post '/projects' do

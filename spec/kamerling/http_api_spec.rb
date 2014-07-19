@@ -5,14 +5,16 @@ require_relative '../../lib/kamerling/http_api'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
+require_relative '../../lib/kamerling/task_dispatcher'
 require_relative '../../lib/kamerling/uuid'
 
 module Kamerling describe HTTPAPI do
-  let(:app)   { HTTPAPI.set repos: repos                        }
-  let(:doc)   { Nokogiri::HTML last_response.body               }
-  let(:ecc)   { Project.new                                     }
-  let(:gimps) { Project.new                                     }
-  let(:repos) { fake :repos, as: :class, projects: [gimps, ecc] }
+  let(:app)   { HTTPAPI.set repos: repos, task_dispatcher: task_dispatcher }
+  let(:doc)   { Nokogiri::HTML last_response.body                          }
+  let(:ecc)   { Project.new                                                }
+  let(:gimps) { Project.new                                                }
+  let(:repos) { fake :repos, as: :class, projects: [gimps, ecc]            }
+  let(:task_dispatcher) { fake :task_dispatcher }
 
   describe 'GET /' do
     it 'contains links to clients and projects' do
@@ -75,6 +77,13 @@ module Kamerling describe HTTPAPI do
         .must_equal "/tasks/#{three.uuid}"
       links.at("[data-uuid='#{three.uuid}']")['data-done'].must_equal 'false'
       links.at("[data-uuid='#{seven.uuid}']")['data-done'].must_equal 'true'
+    end
+  end
+
+  describe 'POST /dispatch' do
+    it 'dispatches tasks to all free clients' do
+      post '/dispatch'
+      task_dispatcher.must_have_received :dispatch, []
     end
   end
 
