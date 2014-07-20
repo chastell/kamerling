@@ -90,10 +90,13 @@ module Kamerling describe Logging do
 
     it 'logs UDP unknown message types' do
       udp_client = UDPSocket.new
-      3.times { udp_client.send 'foo', 0, *udp_server.addr }
-      udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
+      addrs = Array.new 3 do
+        udp_client.send 'foo', 0, *udp_server.addr
+        Addr['127.0.0.1', udp_client.addr[1], :UDP]
+      end
       run_all_threads
-      logged.must_include "received #{udp_addr} unknown message type"
+      log_lines = addrs.map { |addr| "received #{addr} unknown message type" }
+      assert log_lines.any? { |line| logged.include? line }
     end
 
     it 'logs packet dispatches' do
