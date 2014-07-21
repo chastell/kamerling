@@ -18,12 +18,10 @@ module Kamerling describe Server::UDP do
         foo.send 'DATA', 0, *server.addr
         bar.send 'PING', 0, *server.addr
       end
-      foo_addr = Addr['127.0.0.1', foo.addr[1], :UDP]
-      bar_addr = Addr['127.0.0.1', bar.addr[1], :UDP]
       run_all_threads
       server.stop
-      handler.must_have_received :handle, [Message.parse('DATA'), foo_addr]
-      handler.must_have_received :handle, [Message.parse('PING'), bar_addr]
+      handler.must_have_received :handle, [Message.parse('DATA'), any(Addr)]
+      handler.must_have_received :handle, [Message.parse('PING'), any(Addr)]
     end
 
     it 'doesn’t blow up on unknown inputs' do
