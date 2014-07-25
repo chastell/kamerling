@@ -24,6 +24,11 @@ module Kamerling describe Mapper do
       }
       Mapper.from_h(Client, hash).to_h.must_equal client.to_h
     end
+
+    it 'builds the proper Project from the Hash representation' do
+      hash = { name: 'project', uuid: project.uuid }
+      Mapper.from_h(Project, hash).to_h.must_equal project.to_h
+    end
   end
 
   describe '.to_h' do
