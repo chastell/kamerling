@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - tmp/**/*
+
 AccessModifierIndentation:
   Enabled: false
 
