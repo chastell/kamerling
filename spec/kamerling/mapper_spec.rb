@@ -22,7 +22,7 @@ module Kamerling describe Mapper do
         prot: 'TCP',
         uuid: client.uuid,
       }
-      Mapper.from_h(Client, hash).must_equal client
+      Mapper.from_h(Client, hash).to_h.must_equal client.to_h
     end
   end
 
