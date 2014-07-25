@@ -47,5 +47,15 @@ module Kamerling describe UUIDEntity do
       hashble = Class.new(UUIDEntity) { attrs param: Symbol }
       hashble.new(param: :val).to_h.must_equal param: :val, uuid: any(String)
     end
+
+    it 'serialises related UUIDEntities' do
+      child  = Class.new(UUIDEntity) { attrs name: String }
+      parent = Class.new(UUIDEntity) { attrs child: child, name: String }
+      zosia  = child.new name: 'Zosia'
+      marta  = parent.new child: zosia, name: 'Marta'
+      zosia_hash = { name: 'Zosia', uuid: zosia.uuid }
+      marta_hash = { child: zosia_hash, name: 'Marta', uuid:  marta.uuid }
+      marta.to_h.must_equal marta_hash
+    end
   end
 end end
