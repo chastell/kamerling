@@ -3,10 +3,11 @@ require_relative 'addr'
 module Kamerling module Mapper
   module_function
 
-  def from_h klass, hash
+  def from_h klass, hash, repos: Repos
     attributes = hash.map do |key, value|
       case key
       when :host, :port, :prot then [:addr, Addr.new(hash)]
+      when :project_uuid       then [:project, repos[Project][value]]
       else                          [key, value]
       end
     end.to_h

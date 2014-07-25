@@ -29,6 +29,17 @@ module Kamerling describe Mapper do
       hash = { name: 'project', uuid: project.uuid }
       Mapper.from_h(Project, hash).to_h.must_equal project.to_h
     end
+
+    it 'builds the proper Task from the Hash representation' do
+      repos = { Project => { project.uuid => project } }
+      hash  = {
+        data:         'data',
+        done:         true,
+        project_uuid: project.uuid,
+        uuid:         task.uuid,
+      }
+      Mapper.from_h(Task, hash, repos: repos).to_h.must_equal task.to_h
+    end
   end
 
   describe '.to_h' do
