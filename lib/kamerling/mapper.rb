@@ -4,8 +4,13 @@ module Kamerling module Mapper
   module_function
 
   def from_h klass, hash
-    hash = hash.merge addr: Addr[hash[:host], hash[:port], hash[:prot]]
-    klass.new hash
+    attributes = hash.map do |key, value|
+      case key
+      when :host, :port, :prot then [:addr, Addr.new(hash)]
+      else                          [key, value]
+      end
+    end.to_h
+    klass.new attributes
   end
 
   def to_h object
