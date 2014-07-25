@@ -10,12 +10,10 @@ module Kamerling module Mapper
 
   def to_h object
     object.to_h.reduce({}) do |hash, (key, value)|
-      hash.merge case key
-                 when :addr    then value.to_h
-                 when :client  then { client_uuid:  value[:uuid] }
-                 when :project then { project_uuid: value[:uuid] }
-                 when :task    then { task_uuid:    value[:uuid] }
-                 else               { key => value }
+      hash.merge case value
+                 when Addr then value.to_h
+                 when Hash then { :"#{key}_uuid" => value[:uuid] }
+                 else           { key => value }
                  end
     end
   end
