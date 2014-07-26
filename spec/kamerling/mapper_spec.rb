@@ -15,6 +15,14 @@ module Kamerling describe Mapper do
   let(:task)    { Task.new data: 'data', done: true, project: project        }
 
   describe '.from_h' do
+    let :repos do
+      {
+        Client  => { client.uuid  => client  },
+        Project => { project.uuid => project },
+        Task    => { task.uuid    => task    },
+      }
+    end
+
     it 'builds the proper Client from the Hash representation' do
       hash = {
         busy: true,
@@ -27,11 +35,6 @@ module Kamerling describe Mapper do
     end
 
     it 'builds the proper Dispatch from the Hash representation' do
-      repos = {
-        Client  => { client.uuid => client   },
-        Project => { project.uuid => project },
-        Task    => { task.uuid   => task     },
-      }
       dispatch = Dispatch.new addr: addr, client: client, project: project,
                               task: task
       hash = {
@@ -54,10 +57,6 @@ module Kamerling describe Mapper do
     end
 
     it 'builds the proper Registration from the Hash representation' do
-      repos = {
-        Client  => { client.uuid  => client  },
-        Project => { project.uuid => project },
-      }
       reg = Registration.new addr: addr, client: client, project: project
       hash = {
         client_uuid:   client.uuid,
@@ -72,10 +71,6 @@ module Kamerling describe Mapper do
     end
 
     it 'builds the proper Result from the Hash representation' do
-      repos = {
-        Client => { client.uuid => client },
-        Task   => { task.uuid   => task   },
-      }
       result = Result.new addr: addr, client: client, data: 'data', task: task
       hash = {
         client_uuid: client.uuid,
@@ -91,8 +86,7 @@ module Kamerling describe Mapper do
     end
 
     it 'builds the proper Task from the Hash representation' do
-      repos = { Project => { project.uuid => project } }
-      hash  = {
+      hash = {
         data:         'data',
         done:         true,
         project_uuid: project.uuid,
