@@ -48,6 +48,25 @@ module Kamerling describe Mapper do
       Mapper.from_h(Registration, hash, repos: repos).to_h.must_equal reg.to_h
     end
 
+    it 'builds the proper Result from the Hash representation' do
+      repos = {
+        Client => { client.uuid => client },
+        Task   => { task.uuid   => task   },
+      }
+      result = Result.new addr: addr, client: client, data: 'data', task: task
+      hash = {
+        client_uuid: client.uuid,
+        data:        'data',
+        host:        '127.0.0.1',
+        port:        1979,
+        prot:        'TCP',
+        received_at: any(Time),
+        task_uuid:   task.uuid,
+        uuid:        result.uuid,
+      }
+      Mapper.from_h(Result, hash, repos: repos).to_h.must_equal result.to_h
+    end
+
     it 'builds the proper Task from the Hash representation' do
       repos = { Project => { project.uuid => project } }
       hash  = {

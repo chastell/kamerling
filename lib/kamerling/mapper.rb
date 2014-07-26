@@ -9,6 +9,7 @@ module Kamerling module Mapper
       when :client_uuid        then [:client, repos[Client][value]]
       when :host, :port, :prot then [:addr, Addr.new(hash)]
       when :project_uuid       then [:project, repos[Project][value]]
+      when :task_uuid          then [:task, repos[Task][value]]
       else                          [key, value]
       end
     end.to_h
