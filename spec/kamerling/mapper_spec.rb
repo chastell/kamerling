@@ -1,6 +1,7 @@
 require_relative '../spec_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/dispatch'
 require_relative '../../lib/kamerling/mapper'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/registration'
@@ -23,6 +24,28 @@ module Kamerling describe Mapper do
         uuid: client.uuid,
       }
       Mapper.from_h(Client, hash).to_h.must_equal client.to_h
+    end
+
+    it 'builds the proper Dispatch from the Hash representation' do
+      repos = {
+        Client  => { client.uuid => client   },
+        Project => { project.uuid => project },
+        Task    => { task.uuid   => task     },
+      }
+      dispatch = Dispatch.new addr: addr, client: client, project: project,
+                              task: task
+      hash = {
+        client_uuid:   client.uuid,
+        data:          'data',
+        dispatched_at: any(Time),
+        host:          '127.0.0.1',
+        port:          1979,
+        project_uuid:  project.uuid,
+        prot:          'TCP',
+        task_uuid:     task.uuid,
+        uuid:          dispatch.uuid,
+      }
+      Mapper.from_h(Dispatch, hash, repos: repos).to_h.must_equal dispatch.to_h
     end
 
     it 'builds the proper Project from the Hash representation' do
