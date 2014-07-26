@@ -6,6 +6,7 @@ module Kamerling module Mapper
   def from_h klass, hash, repos: Repos
     attributes = hash.map do |key, value|
       case key
+      when :client_uuid        then [:client, repos[Client][value]]
       when :host, :port, :prot then [:addr, Addr.new(hash)]
       when :project_uuid       then [:project, repos[Project][value]]
       else                          [key, value]
