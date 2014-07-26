@@ -6,16 +6,17 @@ module Kamerling module Mapper
   def from_h klass, hash, repos: Repos
     attributes = hash.map do |key, value|
       case key
-      when :host, :port, :prot
-        [:addr, Addr.new(hash)]
-      when /_uuid$/
-        type = key[/(.*)_uuid$/, 1].to_sym
-        [type, repos[Kamerling.const_get(type.capitalize)][value]]
-      else
-        [key, value]
+      when :host, :port, :prot then [:addr, Addr.new(hash)]
+      when /_uuid$/            then object_pair_from key, value, repos
+      else                          [key, value]
       end
     end.to_h
     klass.new attributes
+  end
+
+  def object_pair_from key, value, repos
+    type = key[/(.*)_uuid$/, 1].to_sym
+    [type, repos[Kamerling.const_get(type.capitalize)][value]]
   end
 
   def to_h object
