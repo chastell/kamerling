@@ -33,8 +33,10 @@ module Kamerling describe Repo do
     it 'hydrates the object found in the repo via a mapper' do
       tune   = Tune.new genre: :chap_hop
       source = { { uuid: tune.uuid } => { genre: :chap_hop, uuid: tune.uuid } }
-      mapper = fake :mapper, as: :class, from_h: tune
-      Repo.new(Tune, source, mapper: mapper)[tune.uuid].must_equal tune
+      mapper = fake :mapper, as: :class
+      stub(mapper).from_h(Tune, genre: :chap_hop, uuid: tune.uuid) { tune }
+      retrieved = Repo.new(Tune, source, mapper: mapper)[tune.uuid]
+      retrieved.to_h.must_equal tune.to_h
     end
 
     it 'raises NotFound if the object is not found in the repo' do
