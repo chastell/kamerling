@@ -5,46 +5,48 @@ require_relative '../../../lib/kamerling/handler'
 require_relative '../../../lib/kamerling/message'
 require_relative '../../../lib/kamerling/server/tcp'
 
-module Kamerling describe Server::TCP do
-  let(:addr) { Addr['localhost', 1981, :TCP] }
+module Kamerling
+  describe Server::TCP do
+    let(:addr) { Addr['localhost', 1981, :TCP] }
 
-  describe '#addr' do
-    it 'returns the server’s host + port as a TCP addr' do
-      Server::TCP.new(addr: addr).addr.must_equal addr
-    end
-  end
-
-  describe '#start' do
-    it 'listens on a TCP port and passes received inputs to the handler' do
-      server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
-      server.start
-      s_addr_foo = TCPSocket.open(*server.addr) do |socket|
-        socket << 'DATA'
-        Addr[*socket.local_address.ip_unpack, :TCP]
+    describe '#addr' do
+      it 'returns the server’s host + port as a TCP addr' do
+        Server::TCP.new(addr: addr).addr.must_equal addr
       end
-      s_addr_bar = TCPSocket.open(*server.addr) do |socket|
-        socket << 'PING'
-        Addr[*socket.local_address.ip_unpack, :TCP]
+    end
+
+    describe '#start' do
+      it 'listens on a TCP port and passes received inputs to the handler' do
+        server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
+        server.start
+        s_addr_foo = TCPSocket.open(*server.addr) do |socket|
+          socket << 'DATA'
+          Addr[*socket.local_address.ip_unpack, :TCP]
+        end
+        s_addr_bar = TCPSocket.open(*server.addr) do |socket|
+          socket << 'PING'
+          Addr[*socket.local_address.ip_unpack, :TCP]
+        end
+        run_all_threads
+        server.stop
+        handler.must_have_received :handle, [Message.parse('DATA'), s_addr_foo]
+        handler.must_have_received :handle, [Message.parse('PING'), s_addr_bar]
       end
-      run_all_threads
-      server.stop
-      handler.must_have_received :handle, [Message.parse('DATA'), s_addr_foo]
-      handler.must_have_received :handle, [Message.parse('PING'), s_addr_bar]
+
+      it 'doesn’t blow up on unknown inputs' do
+        server = Server::TCP.new addr: addr
+        server.start
+        TCPSocket.open(*server.addr) { |socket| socket << 'foo' }
+        server.stop
+      end
     end
 
-    it 'doesn’t blow up on unknown inputs' do
-      server = Server::TCP.new addr: addr
-      server.start
-      TCPSocket.open(*server.addr) { |socket| socket << 'foo' }
-      server.stop
+    describe '#stop' do
+      it 'stops the server' do
+        server = Server::TCP.new(addr: addr).start
+        server.stop
+        -> { TCPSocket.open(*addr).close }.must_raise Errno::ECONNREFUSED
+      end
     end
   end
-
-  describe '#stop' do
-    it 'stops the server' do
-      server = Server::TCP.new(addr: addr).start
-      server.stop
-      -> { TCPSocket.open(*addr).close }.must_raise Errno::ECONNREFUSED
-    end
-  end
-end end
+end
