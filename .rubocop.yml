@@ -11,12 +11,6 @@ AndOr:
 Documentation:
   Enabled: false
 
-EndAlignment:
-  Enabled: false
-
-IndentationWidth:
-  Enabled: false
-
 MethodDefParentheses:
   EnforcedStyle: require_no_parentheses
 
