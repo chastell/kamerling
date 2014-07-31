@@ -10,11 +10,11 @@ module Kamerling
 
     attribute :uuid, String, default: -> * { UUID.new }
 
-    def self.attrs hash = {}
+    def self.attrs(hash = {})
       hash.each { |name, klass| attribute name, klass }
     end
 
-    def self.defaults hash = {}
+    def self.defaults(hash = {})
       hash.each do |name, default|
         warn_off { attribute name, attribute_set[name].type, default: default }
       end

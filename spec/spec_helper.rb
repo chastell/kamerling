@@ -13,7 +13,7 @@ module Minitest
     include Rack::Test::Methods
 
     module DSL
-      def fakes *args
+      def fakes(*args)
         args.map { |arg| fake arg }
       end
     end

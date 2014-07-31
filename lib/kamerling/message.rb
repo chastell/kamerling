@@ -5,17 +5,17 @@ module Kamerling
     KNOWN_TYPES = %i(DATA PING RGST RSLT)
     UnknownType = Class.new RuntimeError
 
-    def self.build client: req(:client), payload: req(:payload),
-                  project: req(:project), task: req(:task), type: req(:type)
+    def self.build(client: req(:client), payload: req(:payload),
+                   project: req(:project), task: req(:task), type: req(:type))
       new [type, "\0\0\0\0\0\0\0\0\0\0\0\0", UUID.bin(client.uuid),
            UUID.bin(project.uuid), UUID.bin(task.uuid), payload].join
     end
 
-    def self.parse raw
+    def self.parse(raw)
       new raw
     end
 
-    def initialize raw
+    def initialize(raw)
       @raw = raw
       fail UnknownType, type unless KNOWN_TYPES.include? type or type.empty?
     end
@@ -24,7 +24,7 @@ module Kamerling
       UUID[raw[16..31]]
     end
 
-    def eql? other
+    def eql?(other)
       raw.eql? other.raw
     end
 

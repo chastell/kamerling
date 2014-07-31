@@ -4,7 +4,7 @@ module Kamerling
   module NetDispatcher
     module_function
 
-    def dispatch addr, message
+    def dispatch(addr, message)
       bytes = message.to_s
       case addr.prot
       when :TCP then TCPSocket.open(*addr) { |socket| socket << bytes }

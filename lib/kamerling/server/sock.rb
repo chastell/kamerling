@@ -6,7 +6,7 @@ module Kamerling
     class Sock
       attr_reader :addr
 
-      def initialize addr: req(:addr), handler: Handler.new
+      def initialize(addr: req(:addr), handler: Handler.new)
         @addr    = addr
         @handler = handler
       end
@@ -30,7 +30,7 @@ module Kamerling
 
       private
 
-      def handle input, client_addr
+      def handle(input, client_addr)
         handler.handle Message.parse(input), client_addr
       rescue Message::UnknownType
         nil

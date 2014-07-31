@@ -6,7 +6,7 @@ module Kamerling
   class Addr < Value
     vals host: String, port: Integer, prot: Symbol
 
-    def self.[] host, port, prot
+    def self.[](host, port, prot)
       new host: host, port: port, prot: prot
     end
 

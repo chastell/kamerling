@@ -5,20 +5,20 @@ module Kamerling
   class Repo
     NotFound = Class.new RuntimeError
 
-    def initialize klass, source, mapper: Mapper
+    def initialize(klass, source, mapper: Mapper)
       @klass  = klass
       @mapper = mapper
       @source = source
     end
 
-    def << object
+    def <<(object)
       hash = mapper.to_h object
       warn_off { source << hash }
     rescue Sequel::UniqueConstraintViolation
       warn_off { source.where(uuid: object.uuid).update hash }
     end
 
-    def [] uuid
+    def [](uuid)
       hash = warn_off { source[uuid: uuid] }
       fail NotFound, "#{klass} with UUID #{uuid}" unless hash
       mapper.from_h klass, hash
@@ -28,7 +28,7 @@ module Kamerling
       source.all.map { |hash| mapper.from_h klass, hash }
     end
 
-    def related_to object
+    def related_to(object)
       key = "#{object.class.name.split('::').last.downcase}_uuid".to_sym
       source.where(key => object.uuid).map { |hash| mapper.from_h klass, hash }
     end

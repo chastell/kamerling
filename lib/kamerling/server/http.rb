@@ -6,7 +6,7 @@ module Kamerling
     class HTTP
       attr_reader :addr
 
-      def initialize addr: req(:addr)
+      def initialize(addr: req(:addr))
         @addr = addr
       end
 

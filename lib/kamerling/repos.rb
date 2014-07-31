@@ -12,12 +12,12 @@ module Kamerling
     class << self
       attr_writer :repos
 
-      def << object
+      def <<(object)
         repos[object.class] << object
         self
       end
 
-      def [] klass
+      def [](klass)
         repos[klass]
       end
 
@@ -25,25 +25,25 @@ module Kamerling
         repos[Client].all
       end
 
-      def clients_for project
+      def clients_for(project)
         repos[Registration].related_to(project).map(&:client)
       end
 
-      def db= db
+      def db=(db)
         warn_off { Sequel::Migrator.run db, "#{__dir__}/migrations" }
         @repos = nil
         @db    = db
       end
 
-      def free_clients_for project
+      def free_clients_for(project)
         clients_for(project).reject(&:busy)
       end
 
-      def next_task_for project
+      def next_task_for(project)
         repos[Task].related_to(project).reject(&:done).first
       end
 
-      def project project_uuid
+      def project(project_uuid)
         repos[Project][project_uuid]
       end
 
@@ -51,7 +51,7 @@ module Kamerling
         repos[Project].all
       end
 
-      def tasks_for project
+      def tasks_for(project)
         repos[Task].related_to project
       end
 

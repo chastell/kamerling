@@ -5,11 +5,11 @@ require_relative 'server/sock'
 
 module Kamerling
   class Logging
-    def self.log_to logger = Logger.new($stdout)
+    def self.log_to(logger = Logger.new($stdout))
       new logger
     end
 
-    def initialize logger
+    def initialize(logger)
       @logger = logger
       log_dispatcher
       log_server

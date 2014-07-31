@@ -3,7 +3,7 @@ module Kamerling
     module Main
       module_function
 
-      def req param
+      def req(param)
         meth     = caller.first[/`(.*)'$/, 1]
         callsite = is_a?(Class) ? "#{name}.#{meth}" : "#{self.class}##{meth}"
         fail "#{callsite}: param #{param} is required"

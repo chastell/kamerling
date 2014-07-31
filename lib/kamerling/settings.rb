@@ -6,7 +6,7 @@ module Kamerling
   class Settings < Value
     vals db: String, host: String, http: Integer, tcp: Integer, udp: Integer
 
-    def initialize args
+    def initialize(args)
       super db: 'sqlite::memory:', host: '127.0.0.1'
       OptionParser.new do |opt|
         opt.on("--db #{db}", String, 'database') { |db|   self.db   = db   }
