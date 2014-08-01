@@ -66,8 +66,8 @@ module Kamerling
       end
 
       it 'returns self' do
-        sr = ServerRunner.new [], classes: classes
-        sr.start.must_equal sr
+        server_runner = ServerRunner.new [], classes: classes
+        server_runner.start.must_equal server_runner
       end
     end
   end

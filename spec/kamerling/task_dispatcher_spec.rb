@@ -32,7 +32,7 @@ module Kamerling
         net_dispatcher.must_have_received :dispatch, [addr, message]
       end
 
-      it 'dispatches marks clients as busy' do
+      it 'marks clients as busy and persists the change' do
         assert client.busy
         repos.must_have_received :<<, [client]
       end

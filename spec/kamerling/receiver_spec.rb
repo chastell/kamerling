@@ -27,9 +27,9 @@ module Kamerling
                             task: task, uuid: 'abcd'
         refute client.busy
         assert task.done
-        repos.must_have_received  :<<,    [client]
-        repos.must_have_received  :<<,    [task]
-        repos.must_have_received  :<<,    [result]
+        repos.must_have_received :<<, [client]
+        repos.must_have_received :<<, [result]
+        repos.must_have_received :<<, [task]
       end
     end
   end
