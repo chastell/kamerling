@@ -13,9 +13,8 @@ module Kamerling
     describe '#<<' do
       it 'passes the Hash version of an object to the source via a mapper' do
         tune   = Tune.new genre: :chap_hop
-        mapper = fake :mapper, as: :class, to_h: tune.to_h
         source = fake Sequel::Dataset
-        Repo.new(Tune, source, mapper: mapper) << tune
+        Repo.new(Tune, source) << tune
         source.must_have_received :<<, [tune.to_h]
       end
 
