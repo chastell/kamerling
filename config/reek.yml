@@ -5,6 +5,7 @@ DuplicateMethodCall:
     - Kamerling::Logging#log_dispatcher
     - Kamerling::Logging#log_server
     - Kamerling::Mapper#to_h
+    - Kamerling::TaskDispatcher#dispatch_task
 
 FeatureEnvy:
   exclude:
