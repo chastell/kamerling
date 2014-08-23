@@ -1,9 +1,12 @@
+require 'equalizer'
 require_relative 'uuid'
 
 module Kamerling
   class Message
     KNOWN_TYPES = %i(DATA PING RGST RSLT)
     UnknownType = Class.new RuntimeError
+
+    include Equalizer.new :raw
 
     def self.build(client: req(:client), payload: req(:payload),
                    project: req(:project), task: req(:task), type: req(:type))
@@ -23,12 +26,6 @@ module Kamerling
     def client_uuid
       UUID[raw[16..31]]
     end
-
-    def eql?(other)
-      raw.eql? other.raw
-    end
-
-    alias_method :==, :eql?
 
     def payload
       raw[64..-1]
