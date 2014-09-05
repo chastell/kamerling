@@ -6,6 +6,6 @@ require_relative 'uuid_entity'
 module Kamerling
   class Registration < UUIDEntity
     attrs addr: Addr, client: Client, project: Project, registered_at: Time
-    defaults registered_at: -> * { Time.now }
+    defaults registered_at: -> (*) { Time.now }
   end
 end

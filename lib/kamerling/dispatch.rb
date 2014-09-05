@@ -8,6 +8,6 @@ module Kamerling
   class Dispatch < UUIDEntity
     attrs addr: Addr, client: Client, dispatched_at: Time, project: Project,
           task: Task
-    defaults dispatched_at: -> * { Time.now }
+    defaults dispatched_at: -> (*) { Time.now }
   end
 end

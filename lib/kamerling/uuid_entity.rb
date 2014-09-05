@@ -8,7 +8,7 @@ module Kamerling
 
     include Virtus.model
 
-    attribute :uuid, String, default: -> * { UUID.new }
+    attribute :uuid, String, default: -> (*) { UUID.new }
 
     def self.attrs(hash = {})
       hash.each { |name, klass| attribute name, klass }
