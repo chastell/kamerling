@@ -22,7 +22,7 @@ module Kamerling
 
     def log_dispatcher
       NetDispatcher.singleton_class.extend AfterDo
-      NetDispatcher.singleton_class.before :dispatch do |addr, message|
+      NetDispatcher.singleton_class.before(:dispatch) do |addr, message|
         logger.debug "sent #{addr} #{message.to_hex}"
       end
     end
@@ -34,7 +34,7 @@ module Kamerling
     end
 
     def log_server_communication
-      Server::Sock.before :handle do |input, client_addr|
+      Server::Sock.before(:handle) do |input, client_addr|
         begin
           logger.info "connect #{client_addr}"
           logger.debug "received #{client_addr} #{Message.parse(input).to_hex}"
