@@ -6,8 +6,8 @@ module Kamerling
     describe '.new' do
       it 'creates a class with value semantics' do
         address = Class.new(Value) { vals street: String }
-        address.new(street: 'Folsom').must_equal address.new street: 'Folsom'
-        address.new(street: 'Folsom').wont_equal address.new street: 'Fair'
+        address.new(street: 'Folsom').must_equal address.new(street: 'Folsom')
+        address.new(street: 'Folsom').wont_equal address.new(street: 'Fair')
       end
     end
 

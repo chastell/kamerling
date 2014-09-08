@@ -14,7 +14,7 @@ module Minitest
 
     module DSL
       def fakes(*args)
-        args.map { |arg| fake arg }
+        args.map { |arg| fake(arg) }
       end
     end
   end

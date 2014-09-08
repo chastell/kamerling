@@ -11,11 +11,11 @@ require_relative '../../lib/kamerling/server/udp'
 
 module Kamerling
   describe Logging do
-    let(:logged)     { stream.tap(&:rewind).read                           }
-    let(:logger)     { Logger.new stream                                   }
-    let(:stream)     { StringIO.new                                        }
-    let(:tcp_server) { Server::TCP.new addr: Addr['localhost', 1981, :TCP] }
-    let(:udp_server) { Server::UDP.new addr: Addr['localhost', 1979, :UDP] }
+    let(:logged)     { stream.tap(&:rewind).read                            }
+    let(:logger)     { Logger.new(stream)                                   }
+    let(:stream)     { StringIO.new                                         }
+    let(:tcp_server) { Server::TCP.new(addr: Addr['localhost', 1981, :TCP]) }
+    let(:udp_server) { Server::UDP.new(addr: Addr['localhost', 1979, :UDP]) }
 
     before do
       Logging.log_to logger
@@ -91,13 +91,13 @@ module Kamerling
 
       it 'logs UDP unknown message types' do
         udp_client = UDPSocket.new
-        addrs = Array.new 3 do
+        addrs = Array.new(3) do
           udp_client.send 'foo', 0, *udp_server.addr
           Addr['127.0.0.1', udp_client.addr[1], :UDP]
         end
         run_all_threads
         log_lines = addrs.map { |addr| "received #{addr} unknown message type" }
-        assert log_lines.any? { |line| logged.include? line }
+        assert log_lines.any? { |line| logged.include?(line) }
       end
 
       it 'logs packet dispatches' do

@@ -49,8 +49,8 @@ module Kamerling
       it 'returns all clients for the given project' do
         clients  = [Client.new, Client.new]
         project  = Project.new
-        regs     = clients.map { |client| Registration.new client: client }
-        reg_repo = fake :repo
+        regs     = clients.map { |client| Registration.new(client: client) }
+        reg_repo = fake(:repo)
         stub(reg_repo).related_to(project) { regs }
         Repos.repos = { Registration => reg_repo }
         Repos.clients_for(project).must_equal clients
@@ -68,12 +68,12 @@ module Kamerling
 
     describe '.free_clients_for' do
       it 'returns free clients for the given project' do
-        busy_client = Client.new busy: true
-        free_client = Client.new busy: false
-        busy_reg    = Registration.new client: busy_client
-        free_reg    = Registration.new client: free_client
+        busy_client = Client.new(busy: true)
+        free_client = Client.new(busy: false)
+        busy_reg    = Registration.new(client: busy_client)
+        free_reg    = Registration.new(client: free_client)
         project     = Project.new
-        repo        = fake :repo
+        repo        = fake(:repo)
         stub(repo).related_to(project) { [busy_reg, free_reg] }
         Repos.repos = { Registration => repo }
         Repos.free_clients_for(project).must_equal [free_client]
@@ -83,9 +83,9 @@ module Kamerling
     describe '.next_task_for' do
       it 'returns the next task for the given project' do
         project   = Project.new
-        done_task = Task.new done: true
-        new_task  = Task.new done: false
-        repo      = fake :repo
+        done_task = Task.new(done: true)
+        new_task  = Task.new(done: false)
+        repo      = fake(:repo)
         stub(repo).related_to(project) { [done_task, new_task] }
         Repos.repos = { Task => repo }
         Repos.next_task_for(project).must_equal new_task
@@ -111,7 +111,7 @@ module Kamerling
       it 'returns all tasks for the given project' do
         project   = Project.new
         tasks     = [Task.new, Task.new]
-        task_repo = fake :repo
+        task_repo = fake(:repo)
         stub(task_repo).related_to(project) { tasks }
         Repos.repos = { Task => task_repo }
         Repos.tasks_for(project).must_equal tasks
@@ -123,11 +123,11 @@ module Kamerling
 
       it 'makes sure objects can be stored and retrieved' do
         addr    = Addr['127.0.0.1', 1981, :TCP]
-        client  = Client.new addr: addr
-        project = Project.new name: 'project name', uuid: UUID.new
-        task    = Task.new data: 'data', project: project, uuid: UUID.new
-        reg     = Registration.new addr: addr, client: client, project: project
-        res     = Result.new addr: addr, client: client, data: 'da', task: task
+        client  = Client.new(addr: addr)
+        project = Project.new(name: 'project name', uuid: UUID.new)
+        task    = Task.new(data: 'data', project: project, uuid: UUID.new)
+        reg     = Registration.new(addr: addr, client: client, project: project)
+        res     = Result.new(addr: addr, client: client, data: 'da', task: task)
         Repos << client << project << task << reg << res
         Repos[Client][client.uuid].must_equal client
         Repos[Project][project.uuid].must_equal project
@@ -137,7 +137,7 @@ module Kamerling
       end
 
       it 'makes sure objects can be updated' do
-        client = Client.new addr: Addr['127.0.0.1', 1979, :TCP]
+        client = Client.new(addr: Addr['127.0.0.1', 1979, :TCP])
         Repos << client
         client.busy = true
         Repos << client

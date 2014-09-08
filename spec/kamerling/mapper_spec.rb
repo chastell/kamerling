@@ -10,13 +10,13 @@ require_relative '../../lib/kamerling/task'
 
 module Kamerling
   describe Mapper do
-    let(:addr)    { Addr['127.0.0.1', 1979, :TCP]                              }
-    let(:client)  { Client.new addr: Addr['127.0.0.1', 1979, :TCP], busy: true }
-    let(:project) { Project.new name: 'project'                                }
-    let(:task)    { Task.new data: 'data', done: true, project: project        }
+    let(:addr)    { Addr['127.0.0.1', 1979, :TCP]                        }
+    let(:client)  { Client.new(addr: addr, busy: true)                   }
+    let(:project) { Project.new(name: 'project')                         }
+    let(:task)    { Task.new(data: 'data', done: true, project: project) }
 
     describe '.from_h' do
-      let :repos do
+      let(:repos) do
         {
           Client  => { client.uuid  => client  },
           Project => { project.uuid => project },
@@ -36,8 +36,8 @@ module Kamerling
       end
 
       it 'builds the proper Dispatch from the Hash representation' do
-        dispatch = Dispatch.new addr: addr, client: client, project: project,
-                                task: task
+        dispatch = Dispatch.new(addr: addr, client: client, project: project,
+                                task: task)
         hash = {
           client_uuid:   client.uuid,
           data:          'data',
@@ -49,7 +49,7 @@ module Kamerling
           task_uuid:     task.uuid,
           uuid:          dispatch.uuid,
         }
-        mapped = Mapper.from_h Dispatch, hash, repos: repos
+        mapped = Mapper.from_h(Dispatch, hash, repos: repos)
         mapped.to_h.must_equal dispatch.to_h
       end
 
@@ -59,7 +59,7 @@ module Kamerling
       end
 
       it 'builds the proper Registration from the Hash representation' do
-        reg = Registration.new addr: addr, client: client, project: project
+        reg = Registration.new(addr: addr, client: client, project: project)
         hash = {
           client_uuid:   client.uuid,
           host:          '127.0.0.1',
@@ -73,7 +73,8 @@ module Kamerling
       end
 
       it 'builds the proper Result from the Hash representation' do
-        result = Result.new addr: addr, client: client, data: 'data', task: task
+        result = Result.new(addr: addr, client: client, data: 'data',
+                            task: task)
         hash = {
           client_uuid: client.uuid,
           data:        'data',
@@ -107,9 +108,9 @@ module Kamerling
 
       it 'returns the proper Hash representation of a Dispatch' do
         dispatched_at = Time.new(2014, 7, 6, 5, 4, 3)
-        dispatch = Dispatch.new addr: addr, client: client,
+        dispatch = Dispatch.new(addr: addr, client: client,
                                 dispatched_at: dispatched_at, project: project,
-                                task: task
+                                task: task)
         Mapper.to_h(dispatch).must_equal client_uuid:   client.uuid,
                                          dispatched_at: dispatched_at,
                                          host:          '127.0.0.1',
@@ -122,8 +123,8 @@ module Kamerling
 
       it 'returns the proper Hash representation of a Registration' do
         registered_at = Time.new(2014, 7, 6, 5, 4, 3)
-        reg = Registration.new addr: addr, client: client, project: project,
-                               registered_at: registered_at
+        reg = Registration.new(addr: addr, client: client, project: project,
+                               registered_at: registered_at)
         Mapper.to_h(reg).must_equal client_uuid: client.uuid, host: '127.0.0.1',
                                     port: 1979, prot: 'TCP',
                                     project_uuid: project.uuid,
@@ -132,8 +133,8 @@ module Kamerling
 
       it 'returns the proper Hash representation of a Result' do
         received_at = Time.new(2014, 7, 6, 5, 4, 3)
-        result = Result.new addr: addr, client: client, data: 'res',
-                            received_at: received_at, task: task
+        result = Result.new(addr: addr, client: client, data: 'res',
+                            received_at: received_at, task: task)
         Mapper.to_h(result).must_equal client_uuid: client.uuid, data: 'res',
                                        host: '127.0.0.1', port: 1979,
                                        prot: 'TCP', received_at: received_at,

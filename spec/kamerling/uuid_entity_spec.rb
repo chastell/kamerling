@@ -22,7 +22,7 @@ module Kamerling
 
     describe '.new' do
       it 'creates a class with an UUID property defaulting to a random UUID' do
-        attr_less = Class.new UUIDEntity
+        attr_less = Class.new(UUIDEntity)
         attr_less.new.uuid.must_match(/\A\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/)
         attr_less.new.uuid.wont_equal attr_less.new.uuid
       end
@@ -36,10 +36,10 @@ module Kamerling
     describe '#==' do
       it 'reports UUID-based euqality' do
         actor = Class.new(UUIDEntity) { attrs name: Symbol }
-        actor.new(name: :laurel).wont_equal actor.new name: :laurel
+        actor.new(name: :laurel).wont_equal actor.new(name: :laurel)
         uuid = UUID.new
         actor.new(name: :laurel, uuid: uuid)
-          .must_equal actor.new name: :hardy, uuid: uuid
+          .must_equal actor.new(name: :hardy, uuid: uuid)
       end
     end
 
@@ -52,10 +52,10 @@ module Kamerling
       it 'serialises related UUIDEntities' do
         child  = Class.new(UUIDEntity) { attrs name: String }
         parent = Class.new(UUIDEntity) { attrs child: child, name: String }
-        zosia  = child.new name: 'Zosia'
-        marta  = parent.new child: zosia, name: 'Marta'
+        zosia  = child.new(name: 'Zosia')
+        marta  = parent.new(child: zosia, name: 'Marta')
         zosia_hash = { name: 'Zosia', uuid: zosia.uuid }
-        marta_hash = { child: zosia_hash, name: 'Marta', uuid:  marta.uuid }
+        marta_hash = { child: zosia_hash, name: 'Marta', uuid: marta.uuid }
         marta.to_h.must_equal marta_hash
       end
     end

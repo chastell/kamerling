@@ -14,14 +14,14 @@ module Kamerling
       let(:client)  { Client.new  }
       let(:project) { Project.new }
 
-      let :mess do
-        Message.build client: client, payload: 'data', project: project,
-                      task: Task.new, type: :RGST
+      let(:mess) do
+        Message.build(client: client, payload: 'data', project: project,
+                      task: Task.new, type: :RGST)
       end
 
-      let(:registrar) { Registrar.new repos: repos }
+      let(:registrar) { Registrar.new(repos: repos) }
 
-      let :repos do
+      let(:repos) do
         {
           Client       => fake(:repo, :[] => client),
           Project      => fake(:repo, :[] => project),
@@ -31,8 +31,8 @@ module Kamerling
 
       it 'registers that the given client can do the given project' do
         registrar.register addr: addr, message: mess, uuid: 'abcd'
-        registration = Registration.new addr: addr, client: client,
-                                        project: project, uuid: 'abcd'
+        registration = Registration.new(addr: addr, client: client,
+                                        project: project, uuid: 'abcd')
         repos[Registration].must_have_received :<<, [registration]
       end
 
@@ -42,7 +42,7 @@ module Kamerling
       end
 
       it 'doesn’t blow up when a new client tries to register' do
-        repos[Client] = fake :repo, :[] => -> { fail Repo::NotFound }
+        repos[Client] = fake(:repo, :[] => -> { fail Repo::NotFound })
         registrar.register addr: addr, message: mess, uuid: 'abcd'
         repos[Client].must_have_received :<<, [any(Client)]
       end

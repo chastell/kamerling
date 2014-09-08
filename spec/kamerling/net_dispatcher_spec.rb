@@ -8,7 +8,7 @@ module Kamerling
   describe NetDispatcher do
     describe '#dispatch' do
       it 'dispatches messages to TCP clients' do
-        server = TCPServer.open 0
+        server = TCPServer.open(0)
         thread = Thread.new { server.accept.read }
         addr   = Addr[server.addr[3], server.addr[1], :TCP]
         NetDispatcher.dispatch addr, Message.parse('PING')

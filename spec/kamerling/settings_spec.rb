@@ -13,7 +13,7 @@ module Kamerling
       end
 
       it 'parses the passed settings' do
-        settings = Settings.new args
+        settings = Settings.new(args)
         settings.db.must_equal   'db'
         settings.host.must_equal '0.0.0.0'
         settings.http.must_equal 2009

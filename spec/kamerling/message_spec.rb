@@ -8,8 +8,8 @@ require_relative '../../lib/kamerling/uuid'
 module Kamerling
   describe Message do
     let(:mess) do
-      Message.parse "DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
-        '16B client  UUID16B project UUID16B task    UUIDsome payload'
+      Message.parse("DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
+        '16B client  UUID16B project UUID16B task    UUIDsome payload')
     end
 
     describe '.build' do
@@ -17,8 +17,8 @@ module Kamerling
         client  = Client.new
         project = Project.new
         task    = Task.new
-        message = Message.build client: client, payload: 'pay',
-                                project: project, task: task, type: :DATA
+        message = Message.build(client: client, payload: 'pay',
+                                project: project, task: task, type: :DATA)
         message.client_uuid.must_equal client.uuid
         message.project_uuid.must_equal project.uuid
         message.task_uuid.must_equal task.uuid
@@ -29,11 +29,11 @@ module Kamerling
 
     describe '.parse' do
       it 'raises on unknown message types' do
-        -> { Message.parse 'MESS age' }.must_raise Message::UnknownType
+        -> { Message.parse('MESS age') }.must_raise Message::UnknownType
       end
 
       it 'doesn’t raise on empty messages' do
-        Message.parse ''
+        Message.parse('')
       end
     end
 
@@ -63,8 +63,8 @@ module Kamerling
 
     describe '#to_hex' do
       it 'returns a hex representation of the message' do
-        assert mess.to_hex.start_with? '44 41 54 41'
-        assert mess.to_hex.end_with?   '70 61 79 6c 6f 61 64'
+        assert mess.to_hex.start_with?('44 41 54 41')
+        assert mess.to_hex.end_with?('70 61 79 6c 6f 61 64')
       end
     end
 

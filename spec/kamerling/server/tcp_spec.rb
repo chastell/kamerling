@@ -17,7 +17,7 @@ module Kamerling
 
     describe '#start' do
       it 'listens on a TCP port and passes received inputs to the handler' do
-        server = Server::TCP.new addr: addr, handler: handler = fake(:handler)
+        server = Server::TCP.new(addr: addr, handler: handler = fake(:handler))
         server.start
         s_addr_foo = TCPSocket.open(*server.addr) do |socket|
           socket << 'DATA'
@@ -34,7 +34,7 @@ module Kamerling
       end
 
       it 'doesn’t blow up on unknown inputs' do
-        server = Server::TCP.new addr: addr
+        server = Server::TCP.new(addr: addr)
         server.start
         TCPSocket.open(*server.addr) { |socket| socket << 'foo' }
         server.stop

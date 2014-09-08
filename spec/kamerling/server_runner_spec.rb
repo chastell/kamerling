@@ -30,9 +30,9 @@ module Kamerling
       it 'hooks to the given database' do
         args  = %w(--host 0.0.0.0 --db sqlite::memory:)
         db    = fake { Sequel::SQLite::Database }
-        orm   = fake :sequel, as: :class
+        orm   = fake(:sequel, as: :class)
         stub(orm).connect('sqlite::memory:') { db }
-        repos = fake :repos, as: :class
+        repos = fake(:repos, as: :class)
         ServerRunner.new args, classes: classes, orm: orm, repos: repos
         repos.must_have_received :db=, [db]
       end
@@ -66,7 +66,7 @@ module Kamerling
       end
 
       it 'returns self' do
-        server_runner = ServerRunner.new [], classes: classes
+        server_runner = ServerRunner.new([], classes: classes)
         server_runner.start.must_equal server_runner
       end
     end

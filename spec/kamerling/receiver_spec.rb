@@ -13,18 +13,18 @@ module Kamerling
     describe '#receive' do
       it 'saves the result and updates client and task' do
         addr   = Addr.new
-        client = Client.new busy: true
-        task   = Task.new done: false
-        repos  = fake :repos, as: :class
+        client = Client.new(busy: true)
+        task   = Task.new(done: false)
+        repos  = fake(:repos, as: :class)
         stub(repos).<<(any_args) { repos }
-        stub(repos).[](Client)   { fake :repo, :[] => client }
-        stub(repos).[](Task)     { fake :repo, :[] => task   }
-        message = Message.build client: client, payload: 'data',
-                                project: Project.new, task: task, type: :RSLT
-        receiver = Receiver.new repos: repos
+        stub(repos).[](Client)   { fake(:repo, :[] => client) }
+        stub(repos).[](Task)     { fake(:repo, :[] => task)   }
+        message = Message.build(client: client, payload: 'data',
+                                project: Project.new, task: task, type: :RSLT)
+        receiver = Receiver.new(repos: repos)
         receiver.receive addr: addr, message: message, uuid: 'abcd'
-        result = Result.new addr: addr, client: client, data: 'data',
-                            task: task, uuid: 'abcd'
+        result = Result.new(addr: addr, client: client, data: 'data',
+                            task: task, uuid: 'abcd')
         refute client.busy
         assert task.done
         repos.must_have_received :<<, [client]

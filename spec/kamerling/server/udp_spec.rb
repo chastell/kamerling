@@ -11,7 +11,7 @@ module Kamerling
 
     describe '#start' do
       it 'listens on an UDP port and passes received inputs to the handler' do
-        server = Server::UDP.new addr: addr, handler: handler = fake(:handler)
+        server = Server::UDP.new(addr: addr, handler: handler = fake(:handler))
         server.start
         foo = UDPSocket.new
         bar = UDPSocket.new
@@ -26,7 +26,7 @@ module Kamerling
       end
 
       it 'doesn’t blow up on unknown inputs' do
-        server = Server::UDP.new addr: addr
+        server = Server::UDP.new(addr: addr)
         server.start
         UDPSocket.new.send 'foo', 0, *server.addr
         run_all_threads
