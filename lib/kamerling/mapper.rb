@@ -8,11 +8,11 @@ module Kamerling
       attributes = Hash[hash.map do |key, value|
         case key
         when :host, :port, :prot then [:addr, Addr.new(hash)]
-        when /_uuid$/            then object_pair_from key, value, repos
+        when /_uuid$/            then object_pair_from(key, value, repos)
         else                          [key, value]
         end
       end]
-      klass.new attributes
+      klass.new(attributes)
     end
 
     def object_pair_from(key, value, repos)

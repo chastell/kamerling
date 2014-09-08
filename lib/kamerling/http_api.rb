@@ -27,15 +27,15 @@ module Kamerling
     end
 
     get '/projects/:project_uuid' do
-      project = repos.project params['project_uuid']
-      clients = repos.clients_for project
-      tasks   = repos.tasks_for project
+      project = repos.project(params['project_uuid'])
+      clients = repos.clients_for(project)
+      tasks   = repos.tasks_for(project)
       render_template :project, locals: { clients: clients, tasks: tasks }
     end
 
     post '/projects' do
-      name = params.fetch 'name'
-      uuid = params.fetch 'uuid'
+      name = params.fetch('name')
+      uuid = params.fetch('uuid')
       repos << Project.new(name: name, uuid: uuid)
       redirect '/projects'
     end

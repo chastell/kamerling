@@ -13,8 +13,8 @@ module Kamerling
     def receive(addr: req(:addr), message: req(:message), uuid: UUID.new)
       client = repos[Client][message.client_uuid]
       task   = repos[Task][message.task_uuid]
-      result = Result.new addr: addr, client: client, data: message.payload,
-                          task: task, uuid: uuid
+      result = Result.new(addr: addr, client: client, data: message.payload,
+                          task: task, uuid: uuid)
       client.busy = false
       task.done   = true
       repos << result << client << task

@@ -7,7 +7,7 @@ module Kamerling
     vals host: String, port: Integer, prot: Symbol
 
     def self.[](host, port, prot)
-      new host: host, port: port, prot: prot
+      new(host: host, port: port, prot: prot)
     end
 
     def connectable?
@@ -22,7 +22,7 @@ module Kamerling
     end
 
     def to_h
-      attributes.merge prot: prot.to_s
+      attributes.merge(prot: prot.to_s)
     end
 
     def to_s
@@ -30,7 +30,7 @@ module Kamerling
     end
 
     def uri
-      URI.parse "#{prot.downcase}://#{host}:#{port}"
+      URI.parse("#{prot.downcase}://#{host}:#{port}")
     end
   end
 end

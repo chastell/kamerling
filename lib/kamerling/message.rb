@@ -4,23 +4,23 @@ require_relative 'uuid'
 module Kamerling
   class Message
     KNOWN_TYPES = %i(DATA PING RGST RSLT)
-    UnknownType = Class.new RuntimeError
+    UnknownType = Class.new(RuntimeError)
 
-    include Equalizer.new :raw
+    include Equalizer.new(:raw)
 
     def self.build(client: req(:client), payload: req(:payload),
                    project: req(:project), task: req(:task), type: req(:type))
-      new [type, "\0\0\0\0\0\0\0\0\0\0\0\0", UUID.bin(client.uuid),
-           UUID.bin(project.uuid), UUID.bin(task.uuid), payload].join
+      new([type, "\0\0\0\0\0\0\0\0\0\0\0\0", UUID.bin(client.uuid),
+           UUID.bin(project.uuid), UUID.bin(task.uuid), payload].join)
     end
 
     def self.parse(raw)
-      new raw
+      new(raw)
     end
 
     def initialize(raw)
       @raw = raw
-      fail UnknownType, type unless KNOWN_TYPES.include? type or type.empty?
+      fail UnknownType, type unless KNOWN_TYPES.include?(type) or type.empty?
     end
 
     def client_uuid
@@ -40,7 +40,7 @@ module Kamerling
     end
 
     def to_hex
-      raw.unpack('H*').first.scan(/../).join ' '
+      raw.unpack('H*').first.scan(/../).join(' ')
     end
 
     def to_s

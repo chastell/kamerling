@@ -5,11 +5,11 @@ module Kamerling
     module_function
 
     def [](bin)
-      bin.unpack('H8H4H4H4H12').join '-'
+      bin.unpack('H8H4H4H4H12').join('-')
     end
 
     def bin(uuid)
-      [uuid.tr('-', '')].pack 'H*'
+      [uuid.tr('-', '')].pack('H*')
     end
 
     def new
