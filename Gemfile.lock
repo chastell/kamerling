@@ -97,7 +97,7 @@ GEM
     temple (0.6.8)
     thread_safe (0.3.4)
     tilt (1.4.1)
-    timers (4.0.0)
+    timers (4.0.1)
       hitimes
     virtus (1.0.3)
       axiom-types (~> 0.1)
