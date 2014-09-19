@@ -11,7 +11,7 @@ require_relative '../../lib/kamerling/task'
 module Kamerling
   describe Mapper do
     let(:addr)    { Addr['127.0.0.1', 1979, :TCP]                        }
-    let(:client)  { Client.new(addr: addr, busy: true)                   }
+    let(:client)  { Client.new(addr: addr, busy: true, type: :FPGA)      }
     let(:project) { Project.new(name: 'project')                         }
     let(:task)    { Task.new(data: 'data', done: true, project: project) }
 
@@ -30,6 +30,7 @@ module Kamerling
           host: '127.0.0.1',
           port: 1979,
           prot: 'TCP',
+          type: 'FPGA',
           uuid: client.uuid,
         }
         Mapper.from_h(Client, hash).to_h.must_equal client.to_h
@@ -103,7 +104,7 @@ module Kamerling
       it 'returns the proper Hash representation of a Client' do
         Mapper.to_h(client).must_equal busy: true, host: '127.0.0.1',
                                        port: 1979, prot: 'TCP',
-                                       uuid: client.uuid
+                                       type: 'FPGA', uuid: client.uuid
       end
 
       it 'returns the proper Hash representation of a Dispatch' do
