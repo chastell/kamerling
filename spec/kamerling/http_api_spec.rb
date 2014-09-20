@@ -27,12 +27,14 @@ module Kamerling
 
     describe 'GET /clients' do
       it 'contains information on clients' do
-        fpga = Client.new(addr: Addr['127.0.0.1', 1981, :TCP], busy: true)
+        addr = Addr['127.0.0.1', 1981, :TCP]
+        fpga = Client.new(addr: addr, busy: true, type: :FPGA)
         stub(repos).clients { [fpga] }
         get '/clients'
         links = doc.css('#clients a[data-class=client]')
         links.first['data-addr'].must_equal 'tcp://127.0.0.1:1981'
         links.first['data-busy'].must_equal 'true'
+        links.first['data-type'].must_equal 'FPGA'
         links.first['data-uuid'].must_equal fpga.uuid
         links.first['href'].must_equal "/clients/#{fpga.uuid}"
       end
