@@ -10,11 +10,11 @@ Minimal docs on the HTTP API (which happens to use XHTML and so should be mostly
 
 `GET /` returns links to clients (at `#clients [href]`) and project (at `#projects [href]`).
 
-`GET /clients` contains information on and links to clients (at `#clients [data-type=client]`).
+`GET /clients` contains information on and links to clients (at `#clients [data-class=client]`).
 
-`GET /projects` contains links to projects (at `#projects [data-type=project]`).
+`GET /projects` contains links to projects (at `#projects [data-class=project]`).
 
-`GET /projects/{uuid}` contains client (at `#clients [data-type=client]` and task (at `#tasks [data-type=task]`) information on a given project.
+`GET /projects/{uuid}` contains client (at `#clients [data-class=client]` and task (at `#tasks [data-class=task]`) information on a given project.
 
 `POST /projects` creates a new project (given a `name` and an `uuid`).
 

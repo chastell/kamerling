@@ -30,7 +30,7 @@ module Kamerling
         fpga = Client.new(addr: Addr['127.0.0.1', 1981, :TCP], busy: true)
         stub(repos).clients { [fpga] }
         get '/clients'
-        links = doc.css('#clients a[data-type=client]')
+        links = doc.css('#clients a[data-class=client]')
         links.first['data-addr'].must_equal 'tcp://127.0.0.1:1981'
         links.first['data-busy'].must_equal 'true'
         links.first['data-uuid'].must_equal fpga.uuid
@@ -41,7 +41,7 @@ module Kamerling
     describe 'GET /projects' do
       it 'contains links to and UUIDs of projects' do
         get '/projects'
-        links = doc.css('#projects a[data-type=project]')
+        links = doc.css('#projects a[data-class=project]')
         links.size.must_equal 2
         links.at("[data-uuid='#{gimps.uuid}']")['href']
           .must_equal "/projects/#{gimps.uuid}"
@@ -62,7 +62,7 @@ module Kamerling
 
       it 'contains links to and info on the project’s clients' do
         get "/projects/#{gimps.uuid}"
-        links = doc.css('#clients a[data-type=client]')
+        links = doc.css('#clients a[data-class=client]')
         links.size.must_equal 2
         links.at("[data-uuid='#{cpu.uuid}']")['href']
           .must_equal "/clients/#{cpu.uuid}"
@@ -72,7 +72,7 @@ module Kamerling
 
       it 'contains links to and info on the project’s tasks' do
         get "/projects/#{gimps.uuid}"
-        links = doc.css('#tasks a[data-type=task]')
+        links = doc.css('#tasks a[data-class=task]')
         links.size.must_equal 2
         links.at("[data-uuid='#{three.uuid}']")['href']
           .must_equal "/tasks/#{three.uuid}"
