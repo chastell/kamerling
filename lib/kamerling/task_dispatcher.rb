@@ -24,8 +24,7 @@ module Kamerling
 
     private
 
-    def dispatch_task(client: req(:client), project: req(:project),
-                      task: req(:task))
+    def dispatch_task(client:, project:, task:)
       message = Message.build(client: client, payload: task.data,
                               project: project, task: task, type: :DATA)
       dispatch = Dispatch.new(addr: client.addr, client: client,

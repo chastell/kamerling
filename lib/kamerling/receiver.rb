@@ -10,7 +10,7 @@ module Kamerling
       @repos = repos
     end
 
-    def receive(addr: req(:addr), message: req(:message), uuid: UUID.new)
+    def receive(addr:, message:, uuid: UUID.new)
       client = repos[Client][message.client_uuid]
       task   = repos[Task][message.task_uuid]
       result = Result.new(addr: addr, client: client, data: message.payload,
