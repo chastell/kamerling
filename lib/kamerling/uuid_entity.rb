@@ -21,9 +21,9 @@ module Kamerling
     end
 
     def to_h
-      Hash[attributes.map do |key, value|
+      attributes.map do |key, value|
         value.is_a?(UUIDEntity) ? [key, value.to_h] : [key, value]
-      end]
+      end.to_h
     end
   end
 end
