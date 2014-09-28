@@ -51,8 +51,8 @@ module Kamerling
     end
 
     describe 'GET /projects/{uuid}' do
-      let(:cpu) { Client.new(busy: false) }
-      let(:gpu) { Client.new(busy: true)  }
+      let(:cpu) { Client.new(busy: false, type: :CPU) }
+      let(:gpu) { Client.new(busy: true,  type: :GPU) }
       let(:three) { Task.new(done: false) }
       let(:seven) { Task.new(done: true)  }
 
@@ -70,6 +70,8 @@ module Kamerling
           .must_equal "/clients/#{cpu.uuid}"
         links.at("[data-uuid='#{cpu.uuid}']")['data-busy'].must_equal 'false'
         links.at("[data-uuid='#{gpu.uuid}']")['data-busy'].must_equal 'true'
+        links.at("[data-uuid='#{cpu.uuid}']")['data-type'].must_equal 'CPU'
+        links.at("[data-uuid='#{gpu.uuid}']")['data-type'].must_equal 'GPU'
       end
 
       it 'contains links to and info on the project’s tasks' do

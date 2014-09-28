@@ -2,7 +2,7 @@ nav
   ul#clients
     - clients.each do |client|
       li
-        a data-busy=client.busy.to_s data-class='client' data-uuid=client.uuid href="/clients/#{client.uuid}"
+        a data-busy=client.busy.to_s data-class='client' data-type=client.type data-uuid=client.uuid href="/clients/#{client.uuid}"
           = client.uuid
         = "busy: #{client.busy.to_s}"
   ul#tasks
