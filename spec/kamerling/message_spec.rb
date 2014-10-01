@@ -37,6 +37,16 @@ module Kamerling
       end
     end
 
+    describe '#client_type' do
+      it 'returns the client’s type' do
+        mess.client_type.must_equal :"\0\0\0\0"
+        fpga_mess = Message.parse("RGSTFPGA\0\0\0\0\0\0\0\0" \
+                                  '16B client  UUID16B project UUID' \
+                                  '16B task    UUID')
+        fpga_mess.client_type.must_equal :FPGA
+      end
+    end
+
     describe '#client_uuid' do
       it 'returns the client UUID' do
         mess.client_uuid.must_equal '31364220-636c-6965-6e74-202055554944'

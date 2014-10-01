@@ -22,6 +22,10 @@ module Kamerling
       fail UnknownType, type unless KNOWN_TYPES.include?(type) or type.empty?
     end
 
+    def client_type
+      raw[4..7].to_sym
+    end
+
     def client_uuid
       UUID[raw[16..31]]
     end
