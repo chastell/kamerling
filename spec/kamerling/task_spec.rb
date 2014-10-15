@@ -6,7 +6,7 @@ module Kamerling
   describe Task do
     describe '#done' do
       it 'defaults to false' do
-        Task.new(data: 'data', project: Project.new).done.must_equal false
+        refute Task.new(data: 'data', project: Project.new).done
       end
     end
   end
