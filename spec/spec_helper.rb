@@ -21,5 +21,5 @@ module Minitest
 end
 
 def run_all_threads
-  sleep 0.001
+  Thread.list.each(&:run)
 end
