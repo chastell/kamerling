@@ -1,4 +1,4 @@
-require 'sequel'
+warn_off { require 'sequel' }
 require_relative 'client'
 require_relative 'project'
 require_relative 'registration'
