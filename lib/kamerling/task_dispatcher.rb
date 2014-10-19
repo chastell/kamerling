@@ -10,7 +10,7 @@ module Kamerling
       @repos          = repos
     end
 
-    def dispatch
+    def dispatch_all
       repos.projects.each do |project|
         repos.free_clients_for(project).each do |client|
           task = repos.next_task_for(project)

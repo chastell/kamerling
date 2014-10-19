@@ -101,7 +101,7 @@ module Kamerling
     describe 'POST /projects/dispatch' do
       it 'dispatches tasks to all free clients' do
         post '/projects/dispatch'
-        task_dispatcher.must_have_received :dispatch, []
+        task_dispatcher.must_have_received :dispatch_all, []
       end
 
       it 'redirects to /projects' do

@@ -41,7 +41,7 @@ module Kamerling
     end
 
     post '/projects/dispatch' do
-      task_dispatcher.dispatch
+      task_dispatcher.dispatch_all
       redirect '/projects'
     end
 

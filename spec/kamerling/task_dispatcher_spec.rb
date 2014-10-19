@@ -22,10 +22,11 @@ module Kamerling
     before do
       stub(repos).next_task_for(project) { task }
       stub(repos).free_clients_for(project) { [client] }
-      TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos).dispatch
+      td = TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos)
+      td.dispatch_all
     end
 
-    describe '#dispatch' do
+    describe '#dispatch_all' do
       it 'dispatches tasks to free clients' do
         message = Message.build(client: client, payload: 'data',
                                 project: project, task: task, type: :DATA)
@@ -39,7 +40,7 @@ module Kamerling
 
       it 'creates and stores a Dispatch object along the way' do
         td = TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos)
-        td.dispatch
+        td.dispatch_all
         repos.must_have_received :<<, [any(Dispatch)]
       end
     end
