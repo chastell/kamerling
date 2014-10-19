@@ -39,8 +39,6 @@ module Kamerling
       end
 
       it 'creates and stores a Dispatch object along the way' do
-        td = TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos)
-        td.dispatch_all
         repos.must_have_received :<<, [any(Dispatch)]
       end
     end
