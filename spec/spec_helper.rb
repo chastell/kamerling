@@ -21,5 +21,5 @@ module Minitest
 end
 
 def run_all_threads
-  Thread.list.each(&:run)
+  2.times { Thread.list.each(&:run) }
 end
