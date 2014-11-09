@@ -6,6 +6,10 @@ require_relative 'uuid'
 
 module Kamerling
   class Receiver
+    def self.receive(addr:, message:, repos: Repos, uuid: UUID.new)
+      new(repos: repos).receive addr: addr, message: message, uuid: uuid
+    end
+
     def initialize(repos: Repos)
       @repos = repos
     end
