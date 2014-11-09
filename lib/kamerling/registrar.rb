@@ -6,6 +6,10 @@ require_relative 'uuid'
 
 module Kamerling
   class Registrar
+    def self.register(addr:, message:, repos: Repos, uuid: UUID.new)
+      new(repos: repos).register addr: addr, message: message, uuid: uuid
+    end
+
     def initialize(repos: Repos)
       @repos = repos
     end

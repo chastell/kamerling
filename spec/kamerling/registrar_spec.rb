@@ -9,7 +9,7 @@ require_relative '../../lib/kamerling/repo'
 
 module Kamerling
   describe Registrar do
-    describe '#register' do
+    describe '.register' do
       let(:addr)    { Addr.new    }
       let(:client)  { Client.new  }
       let(:project) { Project.new }
@@ -18,8 +18,6 @@ module Kamerling
         Message.build(client: client, payload: 'data', project: project,
                       task: Task.new, type: :RGST)
       end
-
-      let(:registrar) { Registrar.new(repos: repos) }
 
       let(:repos) do
         {
@@ -30,20 +28,20 @@ module Kamerling
       end
 
       it 'registers that the given client can do the given project' do
-        registrar.register addr: addr, message: mess, uuid: 'abcd'
+        Registrar.register addr: addr, message: mess, repos: repos, uuid: 'abcd'
         registration = Registration.new(addr: addr, client: client,
                                         project: project, uuid: 'abcd')
         repos[Registration].must_have_received :<<, [registration]
       end
 
       it 'updates the clien’t addr' do
-        registrar.register addr: addr, message: mess, uuid: 'abcd'
+        Registrar.register addr: addr, message: mess, repos: repos, uuid: 'abcd'
         repos[Client].must_have_received :<<, [any(Client)]
       end
 
       it 'doesn’t blow up when a new client tries to register' do
         repos[Client] = fake(:repo, :[] => -> { fail Repo::NotFound })
-        registrar.register addr: addr, message: mess, uuid: 'abcd'
+        Registrar.register addr: addr, message: mess, repos: repos, uuid: 'abcd'
         repos[Client].must_have_received :<<, [any(Client)]
       end
     end
