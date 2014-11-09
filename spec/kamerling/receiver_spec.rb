@@ -22,12 +22,10 @@ module Kamerling
         message = Message.build(client: client, payload: 'data',
                                 project: Project.new, task: task, type: :RSLT)
         Receiver.receive addr: addr, message: message, repos: repos
-        result = Result.new(addr: addr, client: client, data: 'data',
-                            task: task, uuid: any(String))
         refute client.busy
         assert task.done
         repos.must_have_received :<<, [client]
-        repos.must_have_received :<<, [result]
+        repos.must_have_received :<<, [any(Result)]
         repos.must_have_received :<<, [task]
       end
     end
