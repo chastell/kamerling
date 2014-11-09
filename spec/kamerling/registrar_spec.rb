@@ -29,9 +29,7 @@ module Kamerling
 
       it 'registers that the given client can do the given project' do
         Registrar.register addr: addr, message: mess, repos: repos, uuid: 'abcd'
-        registration = Registration.new(addr: addr, client: client,
-                                        project: project, uuid: 'abcd')
-        repos[Registration].must_have_received :<<, [registration]
+        repos[Registration].must_have_received :<<, [any(Registration)]
       end
 
       it 'updates the clien’t addr' do
