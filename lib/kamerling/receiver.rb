@@ -15,10 +15,6 @@ module Kamerling
     end
 
     def receive
-      client = repos[Client][message.client_uuid]
-      task   = repos[Task][message.task_uuid]
-      result = Result.new(addr: addr, client: client, data: message.payload,
-                          task: task, uuid: uuid)
       client.busy = false
       task.done   = true
       repos << result << client << task
@@ -26,5 +22,20 @@ module Kamerling
 
     attr_reader :addr, :message, :repos, :uuid
     private     :addr, :message, :repos, :uuid
+
+    private
+
+    def client
+      @client ||= repos[Client][message.client_uuid]
+    end
+
+    def result
+      Result.new(addr: addr, client: client, data: message.payload, task: task,
+                 uuid: uuid)
+    end
+
+    def task
+      @task ||= repos[Task][message.task_uuid]
+    end
   end
 end
