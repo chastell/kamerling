@@ -6,20 +6,19 @@ require_relative 'uuid'
 
 module Kamerling
   class Registrar
-    def self.register(addr:, message:, repos: Repos, uuid: UUID.new)
-      new(repos: repos).register addr: addr, message: message, uuid: uuid
+    def self.register(addr:, message:, repos: Repos)
+      new(repos: repos).register addr: addr, message: message
     end
 
     def initialize(repos: Repos)
       @repos = repos
     end
 
-    def register(addr:, message:, uuid: UUID.new)
+    def register(addr:, message:)
       client = find_or_create_client(addr: addr, uuid: message.client_uuid)
       repos[Client] << client
       project = repos[Project][message.project_uuid]
-      reg     = Registration.new(addr: addr, client: client, project: project,
-                                 uuid: uuid)
+      reg     = Registration.new(addr: addr, client: client, project: project)
       repos[Registration] << reg
     end
 

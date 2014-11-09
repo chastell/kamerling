@@ -28,18 +28,18 @@ module Kamerling
       end
 
       it 'registers that the given client can do the given project' do
-        Registrar.register addr: addr, message: mess, repos: repos, uuid: 'abcd'
+        Registrar.register addr: addr, message: mess, repos: repos
         repos[Registration].must_have_received :<<, [any(Registration)]
       end
 
       it 'updates the clien’t addr' do
-        Registrar.register addr: addr, message: mess, repos: repos, uuid: 'abcd'
+        Registrar.register addr: addr, message: mess, repos: repos
         repos[Client].must_have_received :<<, [any(Client)]
       end
 
       it 'doesn’t blow up when a new client tries to register' do
         repos[Client] = fake(:repo, :[] => -> { fail Repo::NotFound })
-        Registrar.register addr: addr, message: mess, repos: repos, uuid: 'abcd'
+        Registrar.register addr: addr, message: mess, repos: repos
         repos[Client].must_have_received :<<, [any(Client)]
       end
     end
