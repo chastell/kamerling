@@ -15,10 +15,8 @@ module Kamerling
     end
 
     def register
-      client  = find_or_create_client(addr: addr, uuid: message.client_uuid)
-      project = repos[Project][message.project_uuid]
       repos << client
-      repos << Registration.new(addr: addr, client: client, project: project)
+      repos << registration
     end
 
     attr_reader :addr, :message, :repos
@@ -26,10 +24,22 @@ module Kamerling
 
     private
 
+    def client
+      @client ||= find_or_create_client(addr: addr, uuid: message.client_uuid)
+    end
+
     def find_or_create_client(addr:, uuid:)
       repos[Client][uuid].tap { |client| client.addr = addr }
     rescue Repo::NotFound
       Client.new(addr: addr, uuid: uuid)
+    end
+
+    def project
+      @project ||= repos[Project][message.project_uuid]
+    end
+
+    def registration
+      Registration.new(addr: addr, client: client, project: project)
     end
   end
 end
