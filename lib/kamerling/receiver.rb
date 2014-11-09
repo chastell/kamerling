@@ -7,14 +7,14 @@ require_relative 'uuid'
 module Kamerling
   class Receiver
     def self.receive(addr:, message:, repos: Repos, uuid: UUID.new)
-      new(repos: repos).receive addr: addr, message: message, uuid: uuid
+      new(addr: addr, message: message, repos: repos, uuid: uuid).receive
     end
 
-    def initialize(repos: Repos)
-      @repos = repos
+    def initialize(addr:, message:, repos:, uuid:)
+      @addr, @message, @repos, @uuid = addr, message, repos, uuid
     end
 
-    def receive(addr:, message:, uuid: UUID.new)
+    def receive
       client = repos[Client][message.client_uuid]
       task   = repos[Task][message.task_uuid]
       result = Result.new(addr: addr, client: client, data: message.payload,
@@ -24,7 +24,7 @@ module Kamerling
       repos << result << client << task
     end
 
-    attr_reader :repos
-    private     :repos
+    attr_reader :addr, :message, :repos, :uuid
+    private     :addr, :message, :repos, :uuid
   end
 end
