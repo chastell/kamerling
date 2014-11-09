@@ -25,7 +25,7 @@ module Kamerling
     private
 
     def find_or_create_client(addr:, uuid:)
-      repos[Client][uuid].tap { |client| client.uuid = uuid }
+      repos[Client][uuid].tap { |client| client.addr = addr }
     rescue Repo::NotFound
       Client.new(addr: addr, uuid: uuid)
     end
