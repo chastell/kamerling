@@ -9,8 +9,8 @@ require_relative '../../lib/kamerling/uuid'
 module Kamerling
   describe Handler do
     describe '#handle' do
-      fake :receiver, as: :class
-      fake :registrar
+      fake :receiver,  as: :class
+      fake :registrar, as: :class
 
       let(:addr)    { Addr.new                                              }
       let(:handler) { Handler.new(receiver: receiver, registrar: registrar) }

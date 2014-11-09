@@ -3,7 +3,7 @@ require_relative 'registrar'
 
 module Kamerling
   class Handler
-    def initialize(receiver: Receiver, registrar: Registrar.new)
+    def initialize(receiver: Receiver, registrar: Registrar)
       @receiver, @registrar = receiver, registrar
     end
 
