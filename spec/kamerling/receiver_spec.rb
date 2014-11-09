@@ -21,9 +21,9 @@ module Kamerling
         stub(repos).[](Task)     { fake(:repo, :[] => task)   }
         message = Message.build(client: client, payload: 'data',
                                 project: Project.new, task: task, type: :RSLT)
-        Receiver.receive addr: addr, message: message, repos: repos, uuid: 'foo'
+        Receiver.receive addr: addr, message: message, repos: repos
         result = Result.new(addr: addr, client: client, data: 'data',
-                            task: task, uuid: 'foo')
+                            task: task, uuid: any(String))
         refute client.busy
         assert task.done
         repos.must_have_received :<<, [client]
