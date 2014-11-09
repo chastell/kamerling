@@ -19,28 +19,29 @@ module Kamerling
                       task: Task.new, type: :RGST)
       end
 
-      let(:repos) do
-        {
-          Client       => fake(:repo, :[] => client),
-          Project      => fake(:repo, :[] => project),
-          Registration => fake(:repo),
-        }
+      let(:repos) { fake(:repos, as: :class) }
+
+      before do
+        stub(repos).[](Client)       { fake(:repo, :[] => client)  }
+        stub(repos).[](Project)      { fake(:repo, :[] => project) }
+        stub(repos).[](Registration) { fake(:repo)                 }
       end
 
       it 'registers that the given client can do the given project' do
         Registrar.register addr: addr, message: mess, repos: repos
-        repos[Registration].must_have_received :<<, [any(Registration)]
+        repos.must_have_received :<<, [any(Registration)]
       end
 
       it 'updates the clien’t addr' do
         Registrar.register addr: addr, message: mess, repos: repos
-        repos[Client].must_have_received :<<, [any(Client)]
+        repos.must_have_received :<<, [client]
       end
 
       it 'doesn’t blow up when a new client tries to register' do
-        repos[Client] = fake(:repo, :[] => -> { fail Repo::NotFound })
+        empty_repo = fake(:repo, :[] => -> { fail Repo::NotFound })
+        stub(repos).[](Client) { empty_repo }
         Registrar.register addr: addr, message: mess, repos: repos
-        repos[Client].must_have_received :<<, [any(Client)]
+        repos.must_have_received :<<, [client]
       end
     end
   end

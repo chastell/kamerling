@@ -15,11 +15,10 @@ module Kamerling
     end
 
     def register(addr:, message:)
-      client = find_or_create_client(addr: addr, uuid: message.client_uuid)
-      repos[Client] << client
+      client  = find_or_create_client(addr: addr, uuid: message.client_uuid)
       project = repos[Project][message.project_uuid]
-      reg     = Registration.new(addr: addr, client: client, project: project)
-      repos[Registration] << reg
+      repos << client
+      repos << Registration.new(addr: addr, client: client, project: project)
     end
 
     attr_reader :repos
