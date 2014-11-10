@@ -26,13 +26,13 @@ module Kamerling
     private
 
     def client
-      @client ||= find_or_create_client(addr: addr, uuid: message.client_uuid)
+      @client ||= find_or_create_client
     end
 
-    def find_or_create_client(addr:, uuid:)
-      repos[Client][uuid]
+    def find_or_create_client
+      repos[Client][message.client_uuid]
     rescue Repo::NotFound
-      Client.new(addr: addr, uuid: uuid)
+      Client.new(addr: addr, uuid: message.client_uuid)
     end
 
     def project
