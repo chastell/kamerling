@@ -10,7 +10,7 @@ module Kamerling
       new(addr: addr, message: message, repos: repos).register
     end
 
-    def initialize(addr:, message:, repos: Repos)
+    def initialize(addr:, message:, repos:)
       @addr, @message, @repos = addr, message, repos
     end
 
