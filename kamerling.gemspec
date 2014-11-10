@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.license     = 'AGPL-3.0'
   gem.name        = 'kamerling'
   gem.summary     = 'Kamerling: a computation network server'
-  gem.version     = '0.0.2'
+  gem.version     = '0.0.3'
 
   gem.files       = `git ls-files -z`.split("\0")
   gem.executables = gem.files.grep(/^bin\//).map { |path| File.basename(path) }
