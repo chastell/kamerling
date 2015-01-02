@@ -8,9 +8,9 @@ module Kamerling
       private
 
       def handle_connection(socket)
-        client_addr = Addr[*socket.remote_address.ip_unpack, :TCP]
-        input       = socket.read
-        handle input, client_addr
+        addr  = Addr[*socket.remote_address.ip_unpack, :TCP]
+        input = socket.read
+        handle input, addr
       ensure
         socket.close
       end

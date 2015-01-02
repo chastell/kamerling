@@ -34,12 +34,12 @@ module Kamerling
     end
 
     def log_server_communication
-      Server::Sock.before(:handle) do |input, client_addr|
+      Server::Sock.before(:handle) do |input, addr|
         begin
-          logger.info "connect #{client_addr}"
-          logger.debug "received #{client_addr} #{Message.parse(input).to_hex}"
+          logger.info "connect #{addr}"
+          logger.debug "received #{addr} #{Message.parse(input).to_hex}"
         rescue Message::UnknownType
-          logger.debug "received #{client_addr} unknown message type"
+          logger.debug "received #{addr} unknown message type"
         end
       end
     end
