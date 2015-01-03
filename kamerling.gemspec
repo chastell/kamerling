@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
 
   gem.files       = `git ls-files -z`.split("\0")
   gem.executables = gem.files.grep(/^bin\//).map { |path| File.basename(path) }
-  gem.test_files  = gem.files.grep(/^spec\/.*\.rb$/)
+  gem.test_files  = gem.files.grep(/^test\/.*\.rb$/)
 
   gem.add_dependency 'after_do',  '~> 0.3.0'
   gem.add_dependency 'equalizer', '~> 0.0.9'

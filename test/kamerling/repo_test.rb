@@ -1,5 +1,5 @@
 require 'sequel'
-require_relative '../spec_helper'
+require_relative '../test_helper'
 require_relative '../../lib/kamerling/mapper'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/repo'
