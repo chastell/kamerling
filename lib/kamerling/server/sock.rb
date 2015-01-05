@@ -30,8 +30,8 @@ module Kamerling
 
       private
 
-      def handle(input, addr)
-        handler.handle Message.parse(input), addr
+      def handle(input, addr:)
+        handler.handle Message.parse(input), addr: addr
       rescue Message::UnknownType
         nil
       end

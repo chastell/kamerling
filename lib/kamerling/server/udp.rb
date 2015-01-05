@@ -10,7 +10,7 @@ module Kamerling
       def handle_connection(socket)
         input, conn = socket.recvfrom 2**16
         addr = Addr[conn[3], conn[1], :UDP]
-        handle input, addr
+        handle input, addr: addr
       end
 
       def run_loop

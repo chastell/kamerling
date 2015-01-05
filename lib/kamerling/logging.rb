@@ -34,7 +34,8 @@ module Kamerling
     end
 
     def log_server_communication
-      Server::Sock.before(:handle) do |input, addr|
+      Server::Sock.before(:handle) do |input, kwargs|
+        addr = kwargs[:addr]
         begin
           logger.info "connect #{addr}"
           logger.debug "received #{addr} #{Message.parse(input).to_hex}"
