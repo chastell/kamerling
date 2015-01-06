@@ -11,7 +11,7 @@ module Kamerling
         server = TCPServer.open(0)
         thread = Thread.new { server.accept.read }
         addr   = Addr[server.addr[3], server.addr[1], :TCP]
-        NetDispatcher.dispatch addr, Message.parse('PING')
+        NetDispatcher.dispatch Message.parse('PING'), addr: addr
         thread.value.must_equal 'PING'
       end
 
@@ -19,7 +19,7 @@ module Kamerling
         server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
         thread = Thread.new { server.recvfrom(2**16).first }
         addr   = Addr[server.addr[3], server.addr[1], :UDP]
-        NetDispatcher.dispatch addr, Message.parse('PING')
+        NetDispatcher.dispatch Message.parse('PING'), addr: addr
         thread.value.must_equal 'PING'
       end
     end

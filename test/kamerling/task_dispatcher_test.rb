@@ -30,7 +30,7 @@ module Kamerling
       it 'dispatches tasks to free clients' do
         message = Message.build(client: client, payload: 'data',
                                 project: project, task: task, type: :DATA)
-        net_dispatcher.must_have_received :dispatch, [addr, message]
+        net_dispatcher.must_have_received :dispatch, [message, addr: addr]
       end
 
       it 'marks clients as busy and persists the change' do

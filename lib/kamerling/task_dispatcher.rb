@@ -29,7 +29,7 @@ module Kamerling
                               project: project, task: task, type: :DATA)
       dispatch = Dispatch.new(addr: client.addr, client: client,
                               project: project, task: task)
-      net_dispatcher.dispatch client.addr, message
+      net_dispatcher.dispatch message, addr: client.addr
       client.busy = true
       repos << client
       repos << dispatch
