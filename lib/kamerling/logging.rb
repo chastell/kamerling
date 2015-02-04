@@ -15,8 +15,7 @@ module Kamerling
       log_server
     end
 
-    attr_reader :logger
-    private     :logger
+    private_attr_reader :logger
 
     private
 

@@ -33,7 +33,6 @@ module Kamerling
       source.where(key => object.uuid).map { |hash| mapper.from_h(klass, hash) }
     end
 
-    attr_reader :klass, :mapper, :source
-    private     :klass, :mapper, :source
+    private_attr_reader :klass, :mapper, :source
   end
 end

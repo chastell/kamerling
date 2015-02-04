@@ -19,8 +19,7 @@ module Kamerling
       end
     end
 
-    attr_reader :net_dispatcher, :repos
-    private     :net_dispatcher, :repos
+    private_attr_reader :net_dispatcher, :repos
 
     private
 

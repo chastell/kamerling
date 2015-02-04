@@ -14,7 +14,6 @@ module Kamerling
       end
     end
 
-    attr_reader :receiver, :registrar
-    private     :receiver, :registrar
+    private_attr_reader :receiver, :registrar
   end
 end

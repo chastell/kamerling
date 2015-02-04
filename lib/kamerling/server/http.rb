@@ -26,8 +26,7 @@ module Kamerling
         thread.exit.join
       end
 
-      attr_reader :thread
-      private     :thread
+      private_attr_reader :thread
     end
   end
 end

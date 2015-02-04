@@ -25,8 +25,7 @@ module Kamerling
       self
     end
 
-    attr_reader :servers
-    private     :servers
+    private_attr_reader :servers
 
     private
 

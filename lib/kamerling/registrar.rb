@@ -20,8 +20,7 @@ module Kamerling
       repos << registration
     end
 
-    attr_reader :addr, :message, :repos
-    private     :addr, :message, :repos
+    private_attr_reader :addr, :message, :repos
 
     private
 
