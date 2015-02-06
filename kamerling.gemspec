@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'after_do',     '~> 0.3.0'
   gem.add_dependency 'equalizer',    '~> 0.0.9'
-  gem.add_dependency 'private_attr', '~> 0.1.0'
+  gem.add_dependency 'private_attr', '~> 1.0'
   gem.add_dependency 'sequel',       '~> 4.4'
   gem.add_dependency 'sinatra',      '~> 1.4'
   gem.add_dependency 'slim',         '~> 2.0'
