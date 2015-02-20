@@ -4,7 +4,7 @@ PATH
     kamerling (0.0.3)
       after_do (~> 0.3.0)
       equalizer (~> 0.0.9)
-      private_attr (~> 1.0)
+      private_attr (~> 1.1)
       sequel (~> 4.4)
       sinatra (~> 1.4)
       slim (~> 3.0)
