@@ -15,7 +15,8 @@ Style/HashSyntax:
     - test/kamerling/registrar_test.rb
 
 Style/SingleSpaceBeforeFirstArg:
-  Enabled: false
+  Exclude:
+    - lib/kamerling/migrations/**/*
 
 Style/TrailingComma:
   EnforcedStyleForMultiline: comma
