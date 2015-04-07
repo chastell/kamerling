@@ -27,6 +27,20 @@ module Kamerling
       end
     end
 
+    describe '.data' do
+      it 'constructs a new DATA message' do
+        client  = Client.new
+        project = Project.new
+        task    = Task.new(data: 'pay')
+        message = Message.data(client: client, project: project, task: task)
+        message.client_uuid.must_equal client.uuid
+        message.project_uuid.must_equal project.uuid
+        message.task_uuid.must_equal task.uuid
+        message.payload.must_equal 'pay'
+        message.type.must_equal :DATA
+      end
+    end
+
     describe '.parse' do
       it 'raises on unknown message types' do
         -> { Message.parse('MESS age') }.must_raise Message::UnknownType

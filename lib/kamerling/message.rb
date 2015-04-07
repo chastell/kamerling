@@ -13,6 +13,11 @@ module Kamerling
            UUID.bin(project.uuid), UUID.bin(task.uuid), payload].join)
     end
 
+    def self.data(client:, project:, task:)
+      build(client: client, payload: task.data, project: project, task: task,
+            type: :DATA)
+    end
+
     def self.parse(raw)
       new(raw)
     end
