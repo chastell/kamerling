@@ -28,8 +28,7 @@ module Kamerling
 
     describe '#dispatch_all' do
       it 'dispatches tasks to free clients' do
-        message = Message.build(client: client, payload: 'data',
-                                project: project, task: task, type: :DATA)
+        message = Message.data(client: client, project: project, task: task)
         net_dispatcher.must_have_received :dispatch, [message, addr: addr]
       end
 
