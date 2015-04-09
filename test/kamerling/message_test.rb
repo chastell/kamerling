@@ -51,6 +51,17 @@ module Kamerling
       end
     end
 
+    describe '.rgst' do
+      it 'constructs a new RGST message' do
+        client  = Client.new
+        project = Project.new
+        message = Message.rgst(client: client, project: project)
+        message.client_uuid.must_equal client.uuid
+        message.project_uuid.must_equal project.uuid
+        message.type.must_equal :RGST
+      end
+    end
+
     describe '#client_type' do
       it 'returns the client’s type' do
         mess.client_type.must_equal :"\0\0\0\0"
