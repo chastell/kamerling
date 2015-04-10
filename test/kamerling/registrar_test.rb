@@ -14,10 +14,7 @@ module Kamerling
       let(:client)  { Client.new  }
       let(:project) { Project.new }
 
-      let(:mess) do
-        Message.build(client: client, payload: 'data', project: project,
-                      task: Task.new, type: :RGST)
-      end
+      let(:mess) { Message.rgst(client: client, project: project) }
 
       let(:repos) { fake(:repos, as: :class) }
 
