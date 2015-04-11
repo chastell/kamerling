@@ -27,6 +27,11 @@ module Kamerling
             type: :RGST)
     end
 
+    def self.rslt(client:, payload:, task:)
+      build(client: client, payload: payload, project: task.project, task: task,
+            type: :RSLT)
+    end
+
     def initialize(raw)
       @raw = raw
       fail UnknownType, type unless KNOWN_TYPES.include?(type) or type.empty?

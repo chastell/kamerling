@@ -62,6 +62,18 @@ module Kamerling
       end
     end
 
+    describe '.rslt' do
+      it 'constructs a new RSLT message' do
+        client  = Client.new
+        task    = Task.new(project: Project.new)
+        message = Message.rslt(client: client, payload: 'data', task: task)
+        message.client_uuid.must_equal client.uuid
+        message.payload.must_equal 'data'
+        message.task_uuid.must_equal task.uuid
+        message.type.must_equal :RSLT
+      end
+    end
+
     describe '#client_type' do
       it 'returns the client’s type' do
         mess.client_type.must_equal :"\0\0\0\0"
