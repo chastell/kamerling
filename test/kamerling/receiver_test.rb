@@ -14,13 +14,12 @@ module Kamerling
       it 'saves the result and updates client and task' do
         addr   = Addr.new
         client = Client.new(busy: true)
-        task   = Task.new(done: false)
+        task   = Task.new(done: false, project: Project.new)
         repos  = fake(:repos, as: :class)
         stub(repos).<<(any_args) { repos }
         stub(repos).[](Client)   { fake(:repo, :[] => client) }
         stub(repos).[](Task)     { fake(:repo, :[] => task)   }
-        message = Message.build(client: client, payload: 'data',
-                                project: Project.new, task: task, type: :RSLT)
+        message = Message.rslt(client: client, payload: 'data', task: task)
         Receiver.receive addr: addr, message: message, repos: repos
         refute client.busy
         assert task.done
