@@ -20,6 +20,10 @@ module Kamerling
       end
     end
 
+    def self.null
+      new(uuid: '00000000-0000-0000-0000-000000000000')
+    end
+
     def to_h
       attributes.map do |key, value|
         value.is_a?(UUIDEntity) ? [key, value.to_h] : [key, value]

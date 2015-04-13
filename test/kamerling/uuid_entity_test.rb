@@ -33,6 +33,13 @@ module Kamerling
       end
     end
 
+    describe '.null' do
+      it 'returns a new entity with an all-zero UUID' do
+        nullable = Class.new(UUIDEntity)
+        nullable.null.uuid.must_equal '00000000-0000-0000-0000-000000000000'
+      end
+    end
+
     describe '#==' do
       it 'reports UUID-based euqality' do
         actor = Class.new(UUIDEntity) { attrs name: Symbol }
