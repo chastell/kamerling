@@ -8,7 +8,7 @@ module Kamerling
 
     include Equalizer.new(:raw)
 
-    def self.build(client:, payload:, project:, task: Task.null, type:)
+    def self.build(client:, payload: '', project:, task: Task.null, type:)
       new([type, "\0\0\0\0\0\0\0\0\0\0\0\0", UUID.bin(client.uuid),
            UUID.bin(project.uuid), UUID.bin(task.uuid), payload].join)
     end
@@ -23,7 +23,7 @@ module Kamerling
     end
 
     def self.rgst(client:, project:)
-      build(client: client, payload: '', project: project, type: :RGST)
+      build(client: client, project: project, type: :RGST)
     end
 
     def self.rslt(client:, payload:, task:)
