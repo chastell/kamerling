@@ -30,5 +30,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake',           '~> 10.1'
   gem.add_development_dependency 'reek',           '~> 2.1'
   gem.add_development_dependency 'rerun',          '~> 0.10.0'
-  gem.add_development_dependency 'rubocop',        '~> 0.30.0'
+  gem.add_development_dependency 'rubocop',        '~> 0.32.0'
 end
