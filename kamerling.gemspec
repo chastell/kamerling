@@ -28,7 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'nokogiri',       '~> 1.6'
   gem.add_development_dependency 'rack-test',      '~> 0.6.2'
   gem.add_development_dependency 'rake',           '~> 10.1'
-  gem.add_development_dependency 'reek',           '~> 2.0'
+  gem.add_development_dependency 'reek',           '~> 2.1'
   gem.add_development_dependency 'rerun',          '~> 0.10.0'
   gem.add_development_dependency 'rubocop',        '~> 0.30.0'
 end

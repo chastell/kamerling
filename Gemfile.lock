@@ -122,7 +122,7 @@ DEPENDENCIES
   nokogiri (~> 1.6)
   rack-test (~> 0.6.2)
   rake (~> 10.1)
-  reek (~> 2.0)
+  reek (~> 2.1)
   rerun (~> 0.10.0)
   rubocop (~> 0.30.0)
 

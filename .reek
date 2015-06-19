@@ -7,12 +7,6 @@ DuplicateMethodCall:
     - Kamerling::Mapper#to_h
     - Kamerling::TaskDispatcher#dispatch_task
 
-FeatureEnvy:
-  exclude:
-    # https://github.com/troessner/reek/issues/53
-    - Kamerling::NetDispatcher
-    - Kamerling::UUID
-
 IrresponsibleModule:
   enabled: false
 
