@@ -20,7 +20,8 @@ module Kamerling
       end
 
       it 'can be chained' do
-        str_repo, sym_repo = fake(:repo), fake(:repo)
+        str_repo = fake(:repo)
+        sym_repo = fake(:repo)
         Repos.repos = { String => str_repo, Symbol => sym_repo }
         Repos << 'str' << :sym
         str_repo.must_have_received :<<, ['str']

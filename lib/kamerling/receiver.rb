@@ -10,7 +10,9 @@ module Kamerling
     end
 
     def initialize(addr:, message:, repos:)
-      @addr, @message, @repos = addr, message, repos
+      @addr    = addr
+      @message = message
+      @repos   = repos
     end
 
     def receive
