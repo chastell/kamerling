@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'virtus',       '~> 1.0'
 
   gem.add_development_dependency 'bogus',          '~> 0.1.3'
-  gem.add_development_dependency 'minitest',       '~> 5.0'
+  gem.add_development_dependency 'minitest',       '~> 5.6'
   gem.add_development_dependency 'minitest-focus', '~> 1.1'
   gem.add_development_dependency 'nokogiri',       '~> 1.6'
   gem.add_development_dependency 'rack-test',      '~> 0.6.2'
