@@ -8,7 +8,7 @@ require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/result'
 require_relative '../../lib/kamerling/task'
 
-module Kamerling
+module Kamerling                          # rubocop:disable Metrics/ModuleLength
   describe Mapper do
     let(:addr)    { Addr['127.0.0.1', 1979, :TCP]                        }
     let(:client)  { Client.new(addr: addr, busy: true, type: :FPGA)      }

@@ -10,7 +10,7 @@ require_relative '../../lib/kamerling/result'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/uuid'
 
-module Kamerling
+module Kamerling                          # rubocop:disable Metrics/ModuleLength
   describe Repos do
     describe '.<<' do
       it 'shuffles the object into the right repo' do

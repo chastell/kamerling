@@ -5,7 +5,7 @@ require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/uuid'
 
-module Kamerling
+module Kamerling                          # rubocop:disable Metrics/ModuleLength
   describe Message do
     let(:mess) do
       Message.parse("DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
