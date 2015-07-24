@@ -12,14 +12,3 @@ IrresponsibleModule:
 
 NestedIterators:
   max_allowed_nesting: 2
-
-UnusedParameters:
-  exclude:
-    - Kamerling::Server::HTTP#initialize
-
-UtilityFunction:
-  exclude:
-    # https://github.com/troessner/reek/issues/27
-    - Kamerling::Mapper
-    - Kamerling::NetDispatcher
-    - Kamerling::UUID
