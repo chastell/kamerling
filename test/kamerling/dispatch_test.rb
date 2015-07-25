@@ -9,7 +9,7 @@ module Kamerling
       end
 
       it 'defaults to the time of Dispatch’s creation' do
-        Dispatch.new.dispatched_at.wont_equal Dispatch.new.dispatched_at
+        _(Dispatch.new.dispatched_at).wont_equal Dispatch.new.dispatched_at
       end
     end
   end
