@@ -20,8 +20,8 @@ module Kamerling
     describe 'GET /' do
       it 'contains links to clients and projects' do
         get '/'
-        doc.at('#clients')['href'].must_equal '/clients'
-        doc.at('#projects')['href'].must_equal '/projects'
+        _(doc.at('#clients')['href']).must_equal '/clients'
+        _(doc.at('#projects')['href']).must_equal '/projects'
       end
     end
 
@@ -32,11 +32,11 @@ module Kamerling
         stub(repos).clients { [fpga] }
         get '/clients'
         links = doc.css('#clients a[data-class=client]')
-        links.first['data-addr'].must_equal 'tcp://127.0.0.1:1981'
-        links.first['data-busy'].must_equal 'true'
-        links.first['data-type'].must_equal 'FPGA'
-        links.first['data-uuid'].must_equal fpga.uuid
-        links.first['href'].must_equal "/clients/#{fpga.uuid}"
+        _(links.first['data-addr']).must_equal 'tcp://127.0.0.1:1981'
+        _(links.first['data-busy']).must_equal 'true'
+        _(links.first['data-type']).must_equal 'FPGA'
+        _(links.first['data-uuid']).must_equal fpga.uuid
+        _(links.first['href']).must_equal "/clients/#{fpga.uuid}"
       end
     end
 
@@ -44,8 +44,8 @@ module Kamerling
       it 'contains links to and UUIDs of projects' do
         get '/projects'
         links = doc.css('#projects a[data-class=project]')
-        links.size.must_equal 2
-        links.at("[data-uuid='#{gimps.uuid}']")['href']
+        _(links.size).must_equal 2
+        _(links.at("[data-uuid='#{gimps.uuid}']")['href'])
           .must_equal "/projects/#{gimps.uuid}"
       end
     end
@@ -65,49 +65,51 @@ module Kamerling
       it 'contains links to and info on the project’s clients' do
         get "/projects/#{gimps.uuid}"
         links = doc.css('#clients a[data-class=client]')
-        links.size.must_equal 2
-        links.at("[data-uuid='#{cpu.uuid}']")['href']
+        _(links.size).must_equal 2
+        _(links.at("[data-uuid='#{cpu.uuid}']")['href'])
           .must_equal "/clients/#{cpu.uuid}"
-        links.at("[data-uuid='#{cpu.uuid}']")['data-busy'].must_equal 'false'
-        links.at("[data-uuid='#{gpu.uuid}']")['data-busy'].must_equal 'true'
-        links.at("[data-uuid='#{cpu.uuid}']")['data-type'].must_equal 'CPU'
-        links.at("[data-uuid='#{gpu.uuid}']")['data-type'].must_equal 'GPU'
+        _(links.at("[data-uuid='#{cpu.uuid}']")['data-busy']).must_equal 'false'
+        _(links.at("[data-uuid='#{gpu.uuid}']")['data-busy']).must_equal 'true'
+        _(links.at("[data-uuid='#{cpu.uuid}']")['data-type']).must_equal 'CPU'
+        _(links.at("[data-uuid='#{gpu.uuid}']")['data-type']).must_equal 'GPU'
       end
 
       it 'contains links to and info on the project’s tasks' do
         get "/projects/#{gimps.uuid}"
         links = doc.css('#tasks a[data-class=task]')
-        links.size.must_equal 2
-        links.at("[data-uuid='#{three.uuid}']")['href']
+        _(links.size).must_equal 2
+        _(links.at("[data-uuid='#{three.uuid}']")['href'])
           .must_equal "/tasks/#{three.uuid}"
-        links.at("[data-uuid='#{three.uuid}']")['data-done'].must_equal 'false'
-        links.at("[data-uuid='#{seven.uuid}']")['data-done'].must_equal 'true'
+        _(links.at("[data-uuid='#{three.uuid}']")['data-done'])
+          .must_equal 'false'
+        _(links.at("[data-uuid='#{seven.uuid}']")['data-done'])
+          .must_equal 'true'
       end
     end
 
     describe 'POST /projects' do
       it 'creates a new project with the given name and UUID' do
         post '/projects', name: 'ECC', uuid: uuid = UUID.new
-        repos.must_have_received :<<, [Project.new(name: 'ECC', uuid: uuid)]
+        _(repos).must_have_received :<<, [Project.new(name: 'ECC', uuid: uuid)]
       end
 
       it 'redirects to /projects' do
         post '/projects', name: 'ECC', uuid: UUID.new
         follow_redirect!
-        URI(last_request.url).path.must_equal '/projects'
+        _(URI(last_request.url).path).must_equal '/projects'
       end
     end
 
     describe 'POST /projects/dispatch' do
       it 'dispatches tasks to all free clients' do
         post '/projects/dispatch'
-        task_dispatcher.must_have_received :dispatch_all, []
+        _(task_dispatcher).must_have_received :dispatch_all, []
       end
 
       it 'redirects to /projects' do
         post '/projects/dispatch'
         follow_redirect!
-        URI(last_request.url).path.must_equal '/projects'
+        _(URI(last_request.url).path).must_equal '/projects'
       end
     end
   end
