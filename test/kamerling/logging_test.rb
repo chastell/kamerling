@@ -30,12 +30,12 @@ module Kamerling
 
     describe '.log_to' do
       it 'logs TCP server starts' do
-        logged.must_include 'start tcp://localhost:1981'
+        _(logged).must_include 'start tcp://localhost:1981'
       end
 
       it 'logs TCP server stops' do
         tcp_server.stop
-        logged.must_include 'stop tcp://localhost:1981'
+        _(logged).must_include 'stop tcp://localhost:1981'
       end
 
       it 'logs TCP server connects' do
@@ -43,7 +43,7 @@ module Kamerling
           Addr[*socket.local_address.ip_unpack, :TCP]
         end
         run_all_threads
-        logged.must_include "connect #{tcp_addr}"
+        _(logged).must_include "connect #{tcp_addr}"
       end
 
       it 'logs TCP server receives' do
@@ -52,7 +52,7 @@ module Kamerling
           Addr[*socket.local_address.ip_unpack, :TCP]
         end
         run_all_threads
-        logged.must_include "received #{tcp_addr} 50 49 4e 47"
+        _(logged).must_include "received #{tcp_addr} 50 49 4e 47"
       end
 
       it 'logs TCP unknown message types' do
@@ -61,16 +61,16 @@ module Kamerling
           Addr[*socket.local_address.ip_unpack, :TCP]
         end
         run_all_threads
-        logged.must_include "received #{tcp_addr} unknown message type"
+        _(logged).must_include "received #{tcp_addr} unknown message type"
       end
 
       it 'logs UDP server starts' do
-        logged.must_include 'start udp://localhost:1979'
+        _(logged).must_include 'start udp://localhost:1979'
       end
 
       it 'logs UDP server stops' do
         udp_server.stop
-        logged.must_include 'stop udp://localhost:1979'
+        _(logged).must_include 'stop udp://localhost:1979'
       end
 
       it 'logs UDP server connects' do
@@ -78,7 +78,7 @@ module Kamerling
         udp_client.send 'PING', 0, *udp_server.addr
         udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
         run_all_threads
-        logged.must_include "connect #{udp_addr}"
+        _(logged).must_include "connect #{udp_addr}"
       end
 
       it 'logs UDP server receives' do
@@ -86,7 +86,7 @@ module Kamerling
         udp_client.send 'PING', 0, *udp_server.addr
         udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
         run_all_threads
-        logged.must_include "received #{udp_addr} 50 49 4e 47"
+        _(logged).must_include "received #{udp_addr} 50 49 4e 47"
       end
 
       it 'logs UDP unknown message types' do
@@ -104,7 +104,7 @@ module Kamerling
         server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
         addr   = Addr[server.addr[3], server.addr[1], :UDP]
         NetDispatcher.dispatch Message.parse('PING'), addr: addr
-        logged.must_include "sent #{addr} 50 49 4e 47"
+        _(logged).must_include "sent #{addr} 50 49 4e 47"
       end
     end
   end
