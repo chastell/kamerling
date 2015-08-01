@@ -33,7 +33,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
           type: 'FPGA',
           uuid: client.uuid,
         }
-        Mapper.from_h(Client, hash).to_h.must_equal client.to_h
+        _(Mapper.from_h(Client, hash).to_h).must_equal client.to_h
       end
 
       it 'builds the proper Dispatch from the Hash representation' do
@@ -51,12 +51,12 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
           uuid:          dispatch.uuid,
         }
         mapped = Mapper.from_h(Dispatch, hash, repos: repos)
-        mapped.to_h.must_equal dispatch.to_h
+        _(mapped.to_h).must_equal dispatch.to_h
       end
 
       it 'builds the proper Project from the Hash representation' do
         hash = { name: 'project', uuid: project.uuid }
-        Mapper.from_h(Project, hash).to_h.must_equal project.to_h
+        _(Mapper.from_h(Project, hash).to_h).must_equal project.to_h
       end
 
       it 'builds the proper Registration from the Hash representation' do
@@ -70,7 +70,8 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
           registered_at: any(Time),
           uuid:          reg.uuid,
         }
-        Mapper.from_h(Registration, hash, repos: repos).to_h.must_equal reg.to_h
+        hash = Mapper.from_h(Registration, hash, repos: repos).to_h
+        _(hash).must_equal reg.to_h
       end
 
       it 'builds the proper Result from the Hash representation' do
@@ -86,7 +87,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
           task_uuid:   task.uuid,
           uuid:        result.uuid,
         }
-        Mapper.from_h(Result, hash, repos: repos).to_h.must_equal result.to_h
+        _(Mapper.from_h(Result, hash, repos: repos).to_h).must_equal result.to_h
       end
 
       it 'builds the proper Task from the Hash representation' do
@@ -96,15 +97,15 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
           project_uuid: project.uuid,
           uuid:         task.uuid,
         }
-        Mapper.from_h(Task, hash, repos: repos).to_h.must_equal task.to_h
+        _(Mapper.from_h(Task, hash, repos: repos).to_h).must_equal task.to_h
       end
     end
 
     describe '.to_h' do
       it 'returns the proper Hash representation of a Client' do
-        Mapper.to_h(client).must_equal busy: true, host: '127.0.0.1',
-                                       port: 1979, prot: 'TCP',
-                                       type: 'FPGA', uuid: client.uuid
+        _(Mapper.to_h(client)).must_equal busy: true, host: '127.0.0.1',
+                                          port: 1979, prot: 'TCP',
+                                          type: 'FPGA', uuid: client.uuid
       end
 
       it 'returns the proper Hash representation of a Dispatch' do
@@ -112,39 +113,44 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         dispatch = Dispatch.new(addr: addr, client: client,
                                 dispatched_at: dispatched_at, project: project,
                                 task: task)
-        Mapper.to_h(dispatch).must_equal client_uuid:   client.uuid,
-                                         dispatched_at: dispatched_at,
-                                         host:          '127.0.0.1',
-                                         port:          1979,
-                                         prot:          'TCP',
-                                         project_uuid:  project.uuid,
-                                         task_uuid:     task.uuid,
-                                         uuid:          dispatch.uuid
+        _(Mapper.to_h(dispatch)).must_equal client_uuid:   client.uuid,
+                                            dispatched_at: dispatched_at,
+                                            host:          '127.0.0.1',
+                                            port:          1979,
+                                            prot:          'TCP',
+                                            project_uuid:  project.uuid,
+                                            task_uuid:     task.uuid,
+                                            uuid:          dispatch.uuid
       end
 
       it 'returns the proper Hash representation of a Registration' do
         registered_at = Time.new(2014, 7, 6, 5, 4, 3)
         reg = Registration.new(addr: addr, client: client, project: project,
                                registered_at: registered_at)
-        Mapper.to_h(reg).must_equal client_uuid: client.uuid, host: '127.0.0.1',
-                                    port: 1979, prot: 'TCP',
-                                    project_uuid: project.uuid,
-                                    registered_at: registered_at, uuid: reg.uuid
+        _(Mapper.to_h(reg)).must_equal client_uuid:   client.uuid,
+                                       host:          '127.0.0.1',
+                                       port:          1979,
+                                       prot:          'TCP',
+                                       project_uuid:  project.uuid,
+                                       registered_at: registered_at,
+                                       uuid:          reg.uuid
       end
 
       it 'returns the proper Hash representation of a Result' do
         received_at = Time.new(2014, 7, 6, 5, 4, 3)
         result = Result.new(addr: addr, client: client, data: 'res',
                             received_at: received_at, task: task)
-        Mapper.to_h(result).must_equal client_uuid: client.uuid, data: 'res',
-                                       host: '127.0.0.1', port: 1979,
-                                       prot: 'TCP', received_at: received_at,
-                                       task_uuid: task.uuid, uuid: result.uuid
+        _(Mapper.to_h(result)).must_equal client_uuid: client.uuid, data: 'res',
+                                          host: '127.0.0.1', port: 1979,
+                                          prot: 'TCP', received_at: received_at,
+                                          task_uuid: task.uuid,
+                                          uuid: result.uuid
       end
 
       it 'returns the proper Hash representation of a Tag' do
-        Mapper.to_h(task).must_equal data: 'data', done: true,
-                                     project_uuid: project.uuid, uuid: task.uuid
+        _(Mapper.to_h(task)).must_equal data: 'data', done: true,
+                                        project_uuid: project.uuid,
+                                        uuid: task.uuid
       end
     end
   end
