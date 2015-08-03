@@ -23,9 +23,9 @@ module Kamerling
         Receiver.receive addr: addr, message: message, repos: repos
         refute client.busy
         assert task.done
-        repos.must_have_received :<<, [client]
-        repos.must_have_received :<<, [any(Result)]
-        repos.must_have_received :<<, [task]
+        _(repos).must_have_received :<<, [client]
+        _(repos).must_have_received :<<, [any(Result)]
+        _(repos).must_have_received :<<, [task]
       end
     end
   end
