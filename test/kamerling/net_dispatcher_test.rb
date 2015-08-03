@@ -12,7 +12,7 @@ module Kamerling
         thread = Thread.new { server.accept.read }
         addr   = Addr[server.addr[3], server.addr[1], :TCP]
         NetDispatcher.dispatch Message.parse('PING'), addr: addr
-        thread.value.must_equal 'PING'
+        _(thread.value).must_equal 'PING'
       end
 
       it 'dispatches messages to UDP clients' do
@@ -20,7 +20,7 @@ module Kamerling
         thread = Thread.new { server.recvfrom(2**16).first }
         addr   = Addr[server.addr[3], server.addr[1], :UDP]
         NetDispatcher.dispatch Message.parse('PING'), addr: addr
-        thread.value.must_equal 'PING'
+        _(thread.value).must_equal 'PING'
       end
     end
   end
