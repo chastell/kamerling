@@ -10,7 +10,8 @@ module Kamerling
       end
 
       it 'defaults to the time of Registration’s creation' do
-        Registration.new.registered_at.wont_equal Registration.new.registered_at
+        registered_at = Registration.new.registered_at
+        _(registered_at).wont_equal Registration.new.registered_at
       end
     end
   end
