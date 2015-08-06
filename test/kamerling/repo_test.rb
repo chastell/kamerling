@@ -15,7 +15,7 @@ module Kamerling
         tune   = Tune.new(genre: :chap_hop)
         source = fake(Sequel::Dataset)
         Repo.new(Tune, source) << tune
-        source.must_have_received :<<, [tune.to_h]
+        _(source).must_have_received :<<, [tune.to_h]
       end
 
       it 'updates the source’s version if it exists there' do
@@ -25,7 +25,7 @@ module Kamerling
         stub(source).<<(tune.to_h) { fail Sequel::UniqueConstraintViolation }
         stub(source).where(uuid: tune.uuid) { dataset }
         Repo.new(Tune, source) << tune
-        dataset.must_have_received :update, [tune.to_h]
+        _(dataset).must_have_received :update, [tune.to_h]
       end
     end
 
@@ -37,11 +37,11 @@ module Kamerling
         mapper = fake(:mapper, as: :class)
         stub(mapper).from_h(Tune, hash) { tune }
         retrieved = Repo.new(Tune, source, mapper: mapper)[tune.uuid]
-        retrieved.to_h.must_equal tune.to_h
+        _(retrieved.to_h).must_equal tune.to_h
       end
 
       it 'raises NotFound if the object is not found in the repo' do
-        -> { Repo.new(Tune, {})[UUID.new] }.must_raise Repo::NotFound
+        _(-> { Repo.new(Tune, {})[UUID.new] }).must_raise Repo::NotFound
       end
     end
 
@@ -50,7 +50,7 @@ module Kamerling
         tune = Tune.new(genre: :chap_hop)
         source = fake(Sequel::Dataset, all: [genre: :chap_hop, uuid: tune.uuid])
         mapper = fake(:mapper, as: :class, from_h: tune)
-        Repo.new(Tune, source, mapper: mapper).all.must_equal [tune]
+        _(Repo.new(Tune, source, mapper: mapper).all).must_equal [tune]
       end
     end
 
@@ -69,7 +69,7 @@ module Kamerling
         stub(mapper).from_h(Tune, genre: :ragga,  uuid: ragga.uuid)  { ragga  }
         stub(mapper).from_h(Tune, genre: :reggae, uuid: reggae.uuid) { reggae }
         repo = Repo.new(Tune, source, mapper: mapper)
-        repo.related_to(project).must_equal [ragga, reggae]
+        _(repo.related_to(project)).must_equal [ragga, reggae]
       end
     end
   end
