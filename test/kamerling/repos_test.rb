@@ -16,7 +16,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       it 'shuffles the object into the right repo' do
         Repos.repos = { Object => repo = fake(:repo) }
         Repos.<< object = Object.new
-        repo.must_have_received :<<, [object]
+        _(repo).must_have_received :<<, [object]
       end
 
       it 'can be chained' do
@@ -24,8 +24,8 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         sym_repo = fake(:repo)
         Repos.repos = { String => str_repo, Symbol => sym_repo }
         Repos << 'str' << :sym
-        str_repo.must_have_received :<<, ['str']
-        sym_repo.must_have_received :<<, [:sym]
+        _(str_repo).must_have_received :<<, ['str']
+        _(sym_repo).must_have_received :<<, [:sym]
       end
     end
 
@@ -33,9 +33,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       it 'allows querying for repository objects' do
         client = Client.new
         Repos.repos = { Client => {} }
-        Repos[Client][client.uuid].must_be_nil
+        _(Repos[Client][client.uuid]).must_be_nil
         Repos.repos = { Client => { client.uuid => client } }
-        Repos[Client][client.uuid].must_equal client
+        _(Repos[Client][client.uuid]).must_equal client
       end
     end
 
@@ -54,16 +54,16 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         reg_repo = fake(:repo)
         stub(reg_repo).related_to(project) { regs }
         Repos.repos = { Registration => reg_repo }
-        Repos.clients_for(project).must_equal clients
+        _(Repos.clients_for(project)).must_equal clients
       end
     end
 
     describe '.db=' do
       it 'auto-migrates the passed db' do
         db = Sequel.sqlite
-        warn_off { db.tables.wont_include :schema_info }
+        warn_off { _(db.tables).wont_include :schema_info }
         Repos.db = db
-        warn_off { db.tables.must_include :schema_info }
+        warn_off { _(db.tables).must_include :schema_info }
       end
     end
 
@@ -77,7 +77,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         repo        = fake(:repo)
         stub(repo).related_to(project) { [busy_reg, free_reg] }
         Repos.repos = { Registration => repo }
-        Repos.free_clients_for(project).must_equal [free_client]
+        _(Repos.free_clients_for(project)).must_equal [free_client]
       end
     end
 
@@ -89,7 +89,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         repo      = fake(:repo)
         stub(repo).related_to(project) { [done_task, new_task] }
         Repos.repos = { Task => repo }
-        Repos.next_task_for(project).must_equal new_task
+        _(Repos.next_task_for(project)).must_equal new_task
       end
     end
 
@@ -97,7 +97,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       it 'returns the project with the given UUID' do
         gimps = Project.new
         Repos.repos = { Project => { gimps.uuid => gimps } }
-        Repos.project(gimps.uuid).must_equal gimps
+        _(Repos.project(gimps.uuid)).must_equal gimps
       end
     end
 
@@ -115,7 +115,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         task_repo = fake(:repo)
         stub(task_repo).related_to(project) { tasks }
         Repos.repos = { Task => task_repo }
-        Repos.tasks_for(project).must_equal tasks
+        _(Repos.tasks_for(project)).must_equal tasks
       end
     end
 
@@ -130,11 +130,11 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         reg     = Registration.new(addr: addr, client: client, project: project)
         res     = Result.new(addr: addr, client: client, data: 'da', task: task)
         Repos << client << project << task << reg << res
-        Repos[Client][client.uuid].must_equal client
-        Repos[Project][project.uuid].must_equal project
-        Repos[Registration][reg.uuid].must_equal reg
-        Repos[Result][res.uuid].must_equal res
-        Repos[Task][task.uuid].must_equal task
+        _(Repos[Client][client.uuid]).must_equal client
+        _(Repos[Project][project.uuid]).must_equal project
+        _(Repos[Registration][reg.uuid]).must_equal reg
+        _(Repos[Result][res.uuid]).must_equal res
+        _(Repos[Task][task.uuid]).must_equal task
       end
 
       it 'makes sure objects can be updated' do
