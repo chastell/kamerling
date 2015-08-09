@@ -9,7 +9,7 @@ module Kamerling
       end
 
       it 'defaults to the time of Result’s creation' do
-        Result.new.received_at.wont_equal Result.new.received_at
+        _(Result.new.received_at).wont_equal Result.new.received_at
       end
     end
   end
