@@ -9,7 +9,7 @@ module Kamerling
 
     describe '#addr' do
       it 'returns the server’s host + port as a TCP addr' do
-        Server::HTTP.new(addr: addr).addr.must_equal addr
+        _(Server::HTTP.new(addr: addr).addr).must_equal addr
       end
     end
 
@@ -18,7 +18,7 @@ module Kamerling
         capture_io do
           server = Server::HTTP.new(addr: addr).start
           uri = URI.parse('http://localhost:2009')
-          Net::HTTP.get_response(uri).must_be_kind_of Net::HTTPSuccess
+          _(Net::HTTP.get_response(uri)).must_be_kind_of Net::HTTPSuccess
           server.stop
         end
       end
