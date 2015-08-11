@@ -11,7 +11,7 @@ module Kamerling
 
     describe '#addr' do
       it 'returns the server’s host + port as a TCP addr' do
-        Server::TCP.new(addr: addr).addr.must_equal addr
+        _(Server::TCP.new(addr: addr).addr).must_equal addr
       end
     end
 
@@ -29,10 +29,10 @@ module Kamerling
         end
         run_all_threads
         server.stop
-        handler.must_have_received :handle,
-                                   [Message.parse('DATA'), addr: s_addr_foo]
-        handler.must_have_received :handle,
-                                   [Message.parse('PING'), addr: s_addr_bar]
+        _(handler).must_have_received :handle,
+                                      [Message.parse('DATA'), addr: s_addr_foo]
+        _(handler).must_have_received :handle,
+                                      [Message.parse('PING'), addr: s_addr_bar]
       end
 
       it 'doesn’t blow up on unknown inputs' do
@@ -47,7 +47,7 @@ module Kamerling
       it 'stops the server' do
         server = Server::TCP.new(addr: addr).start
         server.stop
-        -> { TCPSocket.open(*addr).close }.must_raise Errno::ECONNREFUSED
+        _(-> { TCPSocket.open(*addr).close }).must_raise Errno::ECONNREFUSED
       end
     end
   end
