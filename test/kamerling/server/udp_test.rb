@@ -21,10 +21,10 @@ module Kamerling
         end
         run_all_threads
         server.stop
-        handler.must_have_received :handle,
-                                   [Message.parse('DATA'), addr: any(Addr)]
-        handler.must_have_received :handle,
-                                   [Message.parse('PING'), addr: any(Addr)]
+        _(handler).must_have_received :handle,
+                                      [Message.parse('DATA'), addr: any(Addr)]
+        _(handler).must_have_received :handle,
+                                      [Message.parse('PING'), addr: any(Addr)]
       end
 
       it 'doesn’t blow up on unknown inputs' do
@@ -45,7 +45,7 @@ module Kamerling
 
     describe '#addr' do
       it 'returns the server’s host + port as an UDP addr' do
-        Server::UDP.new(addr: addr).addr.must_equal addr
+        _(Server::UDP.new(addr: addr).addr).must_equal addr
       end
     end
   end
