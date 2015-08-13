@@ -8,24 +8,24 @@ module Kamerling
 
     describe '.new' do
       it 'has sane defaults' do
-        Settings.new([]).db.must_equal 'sqlite::memory:'
-        Settings.new([]).host.must_equal '127.0.0.1'
+        _(Settings.new([]).db).must_equal 'sqlite::memory:'
+        _(Settings.new([]).host).must_equal '127.0.0.1'
       end
 
       it 'parses the passed settings' do
         settings = Settings.new(args)
-        settings.db.must_equal 'db'
-        settings.host.must_equal '0.0.0.0'
-        settings.http.must_equal 2009
-        settings.tcp.must_equal 1981
-        settings.udp.must_equal 1979
+        _(settings.db).must_equal 'db'
+        _(settings.host).must_equal '0.0.0.0'
+        _(settings.http).must_equal 2009
+        _(settings.tcp).must_equal 1981
+        _(settings.udp).must_equal 1979
       end
     end
 
     describe '#server_addrs' do
       it 'returns the server Addrs' do
-        Settings.new([]).server_addrs.must_equal({})
-        Settings.new(args).server_addrs.must_equal(
+        _(Settings.new([]).server_addrs).must_equal({})
+        _(Settings.new(args).server_addrs).must_equal(
           http: Addr['0.0.0.0', 2009, :TCP],
           tcp:  Addr['0.0.0.0', 1981, :TCP],
           udp:  Addr['0.0.0.0', 1979, :UDP],
