@@ -34,7 +34,7 @@ module Kamerling
         stub(orm).connect('sqlite::memory:') { db }
         repos = fake(:repos, as: :class)
         ServerRunner.new args, classes: classes, orm: orm, repos: repos
-        repos.must_have_received :db=, [db]
+        _(repos).must_have_received :db=, [db]
       end
     end
 
@@ -67,7 +67,7 @@ module Kamerling
 
       it 'returns self' do
         server_runner = ServerRunner.new([], classes: classes)
-        server_runner.start.must_equal server_runner
+        _(server_runner.start).must_equal server_runner
       end
     end
   end
