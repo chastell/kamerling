@@ -11,12 +11,6 @@ Style/Documentation:
 Style/ExtraSpacing:
   Enabled: false
 
-Style/HashSyntax:
-  Exclude:
-    # https://github.com/bbatsov/rubocop/issues/1764
-    - test/kamerling/receiver_test.rb
-    - test/kamerling/registrar_test.rb
-
 Style/SingleSpaceBeforeFirstArg:
   Exclude:
     - lib/kamerling/migrations/**/*
