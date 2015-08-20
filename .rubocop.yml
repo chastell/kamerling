@@ -8,6 +8,9 @@ Style/AndOr:
 Style/Documentation:
   Enabled: false
 
+Style/ExtraSpacing:
+  Enabled: false
+
 Style/HashSyntax:
   Exclude:
     # https://github.com/bbatsov/rubocop/issues/1764
