@@ -45,10 +45,6 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       it 'raises on unknown message types' do
         _(-> { Message.parse('MESS age') }).must_raise Message::UnknownType
       end
-
-      it 'doesn’t raise on empty messages' do
-        Message.parse('')
-      end
     end
 
     describe '.rgst' do

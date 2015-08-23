@@ -33,7 +33,7 @@ module Kamerling
 
     def initialize(raw)
       @raw = raw
-      fail UnknownType, type unless KNOWN_TYPES.include?(type) or type.empty?
+      fail UnknownType, type unless KNOWN_TYPES.include?(type)
     end
 
     def client_type
