@@ -1,11 +1,5 @@
 DuplicateMethodCall:
-  exclude:
-    - Kamerling::Handler#handle
-    - Kamerling::Handler#process
-    - Kamerling::Logging#log_dispatcher
-    - Kamerling::Logging#log_server
-    - Kamerling::Mapper#to_h
-    - Kamerling::TaskDispatcher#dispatch_task
+  max_calls: 2
 
 IrresponsibleModule:
   enabled: false
