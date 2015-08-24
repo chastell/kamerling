@@ -9,7 +9,7 @@ require_relative 'settings'
 module Kamerling
   class ServerRunner
     def initialize(args, classes: def_classes, orm: Sequel, repos: Repos)
-      settings = Settings.new(args)
+      settings = Settings.from_args(args)
       repos.db = orm.connect(settings.db)
       @servers = settings.server_addrs.map do |type, addr|
         classes[type].new(addr: addr)

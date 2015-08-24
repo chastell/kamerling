@@ -6,15 +6,20 @@ module Kamerling
   class Settings < Value
     vals db: String, host: String, http: Integer, tcp: Integer, udp: Integer
 
-    def initialize(args)
-      super db: 'sqlite::memory:', host: '127.0.0.1'
-      OptionParser.new do |opt|
-        opt.on("--db #{db}", String, 'database') { |db|   self.db   = db   }
-        opt.on("--host #{host}", String, 'host') { |host| self.host = host }
-        opt.on('--http 0', Integer, 'HTTP port') { |http| self.http = http }
-        opt.on('--tcp 0',  Integer, 'TCP port')  { |tcp|  self.tcp  = tcp  }
-        opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  self.udp  = udp  }
-      end.parse! args
+    def self.from_args(args)
+      new(parse(args))
+    end
+
+    def self.parse(args)
+      { db: 'sqlite::memory:', host: '127.0.0.1' }.tap do |hash|
+        OptionParser.new do |opt|
+          opt.on("--db #{hash[:db]}", String)      { |db|   hash[:db]   = db   }
+          opt.on("--host #{hash[:host]}", String)  { |host| hash[:host] = host }
+          opt.on('--http 0', Integer, 'HTTP port') { |http| hash[:http] = http }
+          opt.on('--tcp 0',  Integer, 'TCP port')  { |tcp|  hash[:tcp]  = tcp  }
+          opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  hash[:udp]  = udp  }
+        end.parse args
+      end
     end
 
     def server_addrs
