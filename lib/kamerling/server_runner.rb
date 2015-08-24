@@ -25,9 +25,9 @@ module Kamerling
       self
     end
 
-    private_attr_reader :servers
-
     private
+
+    private_attr_reader :servers
 
     def def_classes
       { http: Server::HTTP, tcp: Server::TCP, udp: Server::UDP }

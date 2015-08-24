@@ -22,9 +22,9 @@ module Kamerling
       repos << registration
     end
 
-    private_attr_reader :addr, :message, :repos
-
     private
+
+    private_attr_reader :addr, :message, :repos
 
     def client
       @client ||= find_or_create_client

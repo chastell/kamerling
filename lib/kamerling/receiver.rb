@@ -21,9 +21,9 @@ module Kamerling
       repos << result << client << task
     end
 
-    private_attr_reader :addr, :message, :repos
-
     private
+
+    private_attr_reader :addr, :message, :repos
 
     def client
       @client ||= repos[Client][message.client_uuid]

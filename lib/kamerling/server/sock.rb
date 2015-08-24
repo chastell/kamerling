@@ -25,9 +25,9 @@ module Kamerling
         thread.exit.join
       end
 
-      private_attr_reader :handler, :thread
-
       private
+
+      private_attr_reader :handler, :thread
 
       def handle(input, addr:)
         handler.handle Message.parse(input), addr: addr
