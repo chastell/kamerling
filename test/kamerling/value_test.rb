@@ -3,6 +3,16 @@ require_relative '../../lib/kamerling/value'
 
 module Kamerling
   describe Value do
+    describe '.defaults' do
+      it 'allows defining attribute defaults' do
+        address = Class.new(Value) do
+          vals city: String
+          defaults city: 'Ess-Eff'
+        end
+        _(address.new.city).must_equal 'Ess-Eff'
+      end
+    end
+
     describe '.new' do
       it 'creates a class with value semantics' do
         address = Class.new(Value) { vals street: String }
