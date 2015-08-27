@@ -10,7 +10,15 @@ module Kamerling
       new(parse(args))
     end
 
-    def self.parse(args)
+    def server_addrs
+      {
+        http: Addr[host, http, :TCP],
+        tcp:  Addr[host, tcp,  :TCP],
+        udp:  Addr[host, udp,  :UDP],
+      }.select { |_, addr| addr.port }
+    end
+
+    private_class_method def self.parse(args)
       { db: 'sqlite::memory:', host: '127.0.0.1' }.tap do |hash|
         OptionParser.new do |opt|
           opt.on("--db #{hash[:db]}", String)      { |db|   hash[:db]   = db   }
@@ -20,14 +28,6 @@ module Kamerling
           opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  hash[:udp]  = udp  }
         end.parse args
       end
-    end
-
-    def server_addrs
-      {
-        http: Addr[host, http, :TCP],
-        tcp:  Addr[host, tcp,  :TCP],
-        udp:  Addr[host, udp,  :UDP],
-      }.select { |_, addr| addr.port }
     end
   end
 end
