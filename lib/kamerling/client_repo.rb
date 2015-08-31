@@ -7,7 +7,10 @@ module Kamerling
     end
 
     def <<(client)
-      warn_off { clients << Mapper.to_h(client) }
+      hash = Mapper.to_h(client)
+      warn_off { clients << hash }
+    rescue Sequel::UniqueConstraintViolation
+      warn_off { clients.where(uuid: client.uuid).update hash }
     end
 
     private
