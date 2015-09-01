@@ -13,6 +13,10 @@ module Kamerling
       warn_off { clients.where(uuid: client.uuid).update hash }
     end
 
+    def all
+      warn_off { clients.all }.map { |hash| Mapper.from_h(Client, hash) }
+    end
+
     private
 
     private_attr_reader :clients

@@ -39,5 +39,20 @@ module Kamerling
         _(warn_off { db[:clients].first }).must_equal row
       end
     end
+
+    describe '#all' do
+      it 'returns all the rows as Clients' do
+        warn_off do
+          db[:clients].insert(uuid: 'UDP client', busy: false,
+                              host: '127.0.0.1', port: 1979, prot: 'UDP')
+          db[:clients].insert(uuid: 'TCP client', busy: true,
+                              host: 'localhost', port: 1981, prot: 'TCP')
+        end
+        _(repo.all).must_equal [
+          Client.new(uuid: 'UDP client'),
+          Client.new(uuid: 'TCP client'),
+        ]
+      end
+    end
   end
 end
