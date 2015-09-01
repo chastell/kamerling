@@ -84,7 +84,7 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
     ruby-progressbar (1.7.5)
-    sequel (4.25.0)
+    sequel (4.26.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -96,7 +96,7 @@ GEM
     temple (0.7.6)
     thread_safe (0.3.5)
     tilt (2.0.1)
-    timers (4.0.1)
+    timers (4.0.4)
       hitimes
     unparser (0.2.4)
       abstract_type (~> 0.0.7)
