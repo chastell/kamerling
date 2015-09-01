@@ -17,6 +17,10 @@ module Kamerling
       warn_off { clients.all }.map { |hash| Mapper.from_h(Client, hash) }
     end
 
+    def fetch(uuid)
+      Mapper.from_h(Client, warn_off { clients[uuid: uuid] })
+    end
+
     private
 
     private_attr_reader :clients
