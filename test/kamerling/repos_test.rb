@@ -61,9 +61,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
     describe '.db=' do
       it 'auto-migrates the passed db' do
         db = Sequel.sqlite
-        warn_off { _(db.tables).wont_include :schema_info }
+        _(db.tables).wont_include :schema_info
         Repos.db = db
-        warn_off { _(db.tables).must_include :schema_info }
+        _(db.tables).must_include :schema_info
       end
     end
 

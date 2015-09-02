@@ -48,7 +48,7 @@ module Kamerling
     private
 
     def render_template(template, locals: {})
-      warn_off { slim template, locals: locals }
+      slim template, locals: locals
     end
   end
 end

@@ -20,34 +20,30 @@ module Kamerling
 
     before do
       path = "#{__dir__}/../../lib/kamerling/migrations"
-      warn_off { Sequel::Migrator.run db, path }
+      Sequel::Migrator.run db, path
     end
 
     describe '#<<' do
       it 'adds a new Client to the repo' do
-        assert warn_off { db[:clients].empty? }
+        assert db[:clients].empty?
         repo << client
-        _(warn_off { db[:clients].first }).must_equal row
+        _(db[:clients].first).must_equal row
       end
 
       it 'updates the row if the Client exists' do
-        warn_off do
-          db[:clients].insert(uuid: 'an UUID', busy: false, host: '127.0.0.1',
-                              port: 1979, prot: 'UDP')
-        end
+        db[:clients].insert(uuid: 'an UUID', busy: false, host: '127.0.0.1',
+                            port: 1979, prot: 'UDP')
         repo << client
-        _(warn_off { db[:clients].first }).must_equal row
+        _(db[:clients].first).must_equal row
       end
     end
 
     describe '#all' do
       it 'returns all the rows as Clients' do
-        warn_off do
-          db[:clients].insert(uuid: 'UDP client', busy: false,
-                              host: '127.0.0.1', port: 1979, prot: 'UDP')
-          db[:clients].insert(uuid: 'TCP client', busy: true,
-                              host: 'localhost', port: 1981, prot: 'TCP')
-        end
+        db[:clients].insert(uuid: 'UDP client', busy: false, host: '127.0.0.1',
+                            port: 1979, prot: 'UDP')
+        db[:clients].insert(uuid: 'TCP client', busy: true, host: 'localhost',
+                            port: 1981, prot: 'TCP')
         _(repo.all).must_equal [
           Client.new(uuid: 'UDP client'),
           Client.new(uuid: 'TCP client'),
@@ -57,10 +53,8 @@ module Kamerling
 
     describe '#fetch' do
       it 'returns the Client with the given UUID' do
-        warn_off do
-          db[:clients].insert(uuid: 'an UUID', busy: false, host: '127.0.0.1',
-                              port: 1979, prot: 'UDP')
-        end
+        db[:clients].insert(uuid: 'an UUID', busy: false, host: '127.0.0.1',
+                            port: 1979, prot: 'UDP')
         _(repo.fetch('an UUID')).must_equal client
       end
     end

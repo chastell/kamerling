@@ -1,4 +1,4 @@
-warn_off { require 'sequel' }
+require 'sequel'
 require_relative 'client'
 require_relative 'project'
 require_relative 'registration'
@@ -30,7 +30,7 @@ module Kamerling
       end
 
       def db=(db)
-        warn_off { Sequel::Migrator.run db, "#{__dir__}/migrations" }
+        Sequel::Migrator.run db, "#{__dir__}/migrations"
         @repos = nil
         @db    = db
       end
@@ -64,7 +64,7 @@ module Kamerling
       def repos
         @repos ||= Hash.new do |repos, klass|
           table = "#{klass.name.split('::').last.downcase}s".to_sym
-          repos[klass] = Repo.new(klass, warn_off { db[table] })
+          repos[klass] = Repo.new(klass, db[table])
         end
       end
     end

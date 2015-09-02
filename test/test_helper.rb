@@ -1,3 +1,5 @@
+require 'ruby_warning_filter'
+$stderr = RubyWarningFilter.new($stderr)
 ENV['MT_NO_EXPECTATIONS'] = 'true'
 require 'bundler/setup'
 require 'minitest/autorun'

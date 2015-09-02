@@ -6,7 +6,7 @@ module Kamerling
 
     def self.defaults(hash = {})
       hash.each do |name, default|
-        warn_off { attribute name, attribute_set[name].type, default: default }
+        attribute name, attribute_set[name].type, default: default
       end
     end
 

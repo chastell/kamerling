@@ -13,13 +13,13 @@ module Kamerling
 
     def <<(object)
       hash = mapper.to_h(object)
-      warn_off { source << hash }
+      source << hash
     rescue Sequel::UniqueConstraintViolation
-      warn_off { source.where(uuid: object.uuid).update hash }
+      source.where(uuid: object.uuid).update hash
     end
 
     def [](uuid)
-      hash = warn_off { source[uuid: uuid] }
+      hash = source[uuid: uuid]
       fail NotFound, "#{klass} with UUID #{uuid}" unless hash
       mapper.from_h(klass, hash)
     end
