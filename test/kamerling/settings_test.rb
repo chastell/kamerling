@@ -29,6 +29,12 @@ module Kamerling
       end
     end
 
+    describe '#client_db' do
+      it 'returns a db for ClientRepo' do
+        _(Settings.new.client_db).must_be_kind_of Sequel::Database
+      end
+    end
+
     describe '#server_addrs' do
       it 'returns the server Addrs' do
         _(Settings.from_args([]).server_addrs).must_equal({})

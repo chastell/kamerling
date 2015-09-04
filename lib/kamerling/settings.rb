@@ -1,4 +1,5 @@
 require 'optparse'
+require 'sequel'
 require_relative 'addr'
 require_relative 'value'
 
@@ -9,6 +10,10 @@ module Kamerling
 
     def self.from_args(args)
       new(parse(args))
+    end
+
+    def client_db
+      Sequel.connect(db)
     end
 
     def server_addrs
