@@ -1,3 +1,5 @@
+require 'sequel'
+require_relative 'client'
 require_relative 'mapper'
 
 module Kamerling
