@@ -5,26 +5,26 @@ require_relative 'mapper'
 module Kamerling
   class ClientRepo
     def initialize(db)
-      @clients = db[:clients]
+      @table = db[:clients]
     end
 
     def <<(client)
       hash = Mapper.to_h(client)
-      clients << hash
+      table << hash
     rescue Sequel::UniqueConstraintViolation
-      clients.where(uuid: client.uuid).update hash
+      table.where(uuid: client.uuid).update hash
     end
 
     def all
-      clients.all.map { |hash| Mapper.from_h(Client, hash) }
+      table.all.map { |hash| Mapper.from_h(Client, hash) }
     end
 
     def fetch(uuid)
-      Mapper.from_h(Client, clients[uuid: uuid])
+      Mapper.from_h(Client, table[uuid: uuid])
     end
 
     private
 
-    private_attr_reader :clients
+    private_attr_reader :table
   end
 end
