@@ -1,10 +1,11 @@
 require 'sequel'
 require_relative 'client'
 require_relative 'mapper'
+require_relative 'settings'
 
 module Kamerling
   class ClientRepo
-    def initialize(db)
+    def initialize(db = Settings.new.client_db)
       @table = db[:clients]
     end
 
