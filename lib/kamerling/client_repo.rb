@@ -1,11 +1,13 @@
 require 'sequel'
 require_relative 'client'
 require_relative 'mapper'
+require_relative 'new_repo'
 require_relative 'settings'
 
 module Kamerling
-  class ClientRepo
+  class ClientRepo < NewRepo
     def initialize(db = Settings.new.client_db)
+      @klass = Client
       @table = db[:clients]
     end
 
@@ -18,10 +20,6 @@ module Kamerling
 
     def all
       table.all.map { |hash| Mapper.from_h(Client, hash) }
-    end
-
-    def fetch(uuid)
-      Mapper.from_h(Client, table[uuid: uuid])
     end
 
     private

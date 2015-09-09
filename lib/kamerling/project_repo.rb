@@ -1,14 +1,11 @@
 require_relative 'project'
-require_relative 'mapper'
+require_relative 'new_repo'
 
 module Kamerling
-  class ProjectRepo
+  class ProjectRepo < NewRepo
     def initialize(db)
+      @klass = Project
       @table = db[:projects]
-    end
-
-    def fetch(uuid)
-      Mapper.from_h(Project, table[uuid: uuid])
     end
 
     private
