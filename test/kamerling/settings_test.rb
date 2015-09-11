@@ -29,9 +29,9 @@ module Kamerling
       end
     end
 
-    describe '#client_db' do
-      it 'returns a db for ClientRepo' do
-        _(Settings.new.client_db).must_be_kind_of Sequel::Database
+    describe '#db_conn' do
+      it 'returns a db connection for repos' do
+        _(Settings.new.db_conn).must_be_kind_of Sequel::Database
       end
     end
 

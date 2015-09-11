@@ -12,7 +12,7 @@ module Kamerling
       new(parse(args))
     end
 
-    def client_db
+    def db_conn
       Sequel.connect(db)
     end
 

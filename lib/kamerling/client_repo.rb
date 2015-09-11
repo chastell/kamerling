@@ -5,7 +5,7 @@ require_relative 'settings'
 
 module Kamerling
   class ClientRepo < NewRepo
-    def initialize(db = Settings.new.client_db)
+    def initialize(db = Settings.new.db_conn)
       @klass = Client
       @table = db[:clients]
     end
