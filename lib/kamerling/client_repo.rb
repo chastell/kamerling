@@ -1,4 +1,3 @@
-require 'sequel'
 require_relative 'client'
 require_relative 'mapper'
 require_relative 'new_repo'
@@ -9,13 +8,6 @@ module Kamerling
     def initialize(db = Settings.new.client_db)
       @klass = Client
       @table = db[:clients]
-    end
-
-    def <<(client)
-      hash = Mapper.to_h(client)
-      table << hash
-    rescue Sequel::UniqueConstraintViolation
-      table.where(uuid: client.uuid).update hash
     end
 
     def all

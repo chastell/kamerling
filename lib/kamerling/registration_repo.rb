@@ -1,11 +1,9 @@
+require_relative 'new_repo'
+
 module Kamerling
-  class RegistrationRepo
+  class RegistrationRepo < NewRepo
     def initialize(db)
       @table = db[:registrations]
-    end
-
-    def <<(registration)
-      table << Mapper.to_h(registration)
     end
 
     private
