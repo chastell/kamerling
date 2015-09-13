@@ -3,7 +3,7 @@ require_relative 'new_repo'
 
 module Kamerling
   class ProjectRepo < NewRepo
-    def initialize(db)
+    def initialize(db = Settings.new.db_conn)
       @klass = Project
       @table = db[:projects]
     end
