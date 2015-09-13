@@ -16,6 +16,6 @@ module Kamerling
 
     private
 
-    private_attr_reader :klass
+    private_attr_reader :klass, :table
   end
 end

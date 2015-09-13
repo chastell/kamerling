@@ -13,9 +13,5 @@ module Kamerling
     def all
       table.all.map { |hash| Mapper.from_h(Client, hash) }
     end
-
-    private
-
-    private_attr_reader :table
   end
 end
