@@ -2,6 +2,7 @@ require 'sequel'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/repo'
@@ -36,6 +37,12 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         _(Repos[Client][client.uuid]).must_be_nil
         Repos.repos = { Client => { client.uuid => client } }
         _(Repos[Client][client.uuid]).must_equal client
+      end
+    end
+
+    describe '.client_repo' do
+      it 'returns a ClientRepo' do
+        _(Repos.client_repo).must_be_kind_of ClientRepo
       end
     end
 

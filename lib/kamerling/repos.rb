@@ -1,5 +1,6 @@
 require 'sequel'
 require_relative 'client'
+require_relative 'client_repo'
 require_relative 'project'
 require_relative 'registration'
 require_relative 'repo'
@@ -19,6 +20,10 @@ module Kamerling
 
       def [](klass)
         repos[klass]
+      end
+
+      def client_repo
+        @client_repo ||= ClientRepo.new
       end
 
       def clients
