@@ -2,6 +2,7 @@ require 'sequel'
 require_relative 'client'
 require_relative 'client_repo'
 require_relative 'project'
+require_relative 'project_repo'
 require_relative 'registration'
 require_relative 'repo'
 require_relative 'task'
@@ -46,6 +47,10 @@ module Kamerling
 
       def next_task_for(project)
         repos[Task].related_to(project).reject(&:done).first
+      end
+
+      def project_repo
+        @project_repo ||= ProjectRepo.new
       end
 
       def project(project_uuid)

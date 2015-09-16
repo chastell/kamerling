@@ -4,6 +4,7 @@ require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/project'
+require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/repo'
 require_relative '../../lib/kamerling/repos'
@@ -105,6 +106,12 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         gimps = Project.new
         Repos.repos = { Project => { gimps.uuid => gimps } }
         _(Repos.project(gimps.uuid)).must_equal gimps
+      end
+    end
+
+    describe '.project_repo' do
+      it 'returns a ProjectRepo' do
+        _(Repos.project_repo).must_be_kind_of ProjectRepo
       end
     end
 
