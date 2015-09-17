@@ -6,6 +6,7 @@ require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/registration'
+require_relative '../../lib/kamerling/registration_repo'
 require_relative '../../lib/kamerling/repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/result'
@@ -119,6 +120,12 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       it 'returns all projects' do
         Repos.repos = { Project => fake(:repo, all: all_projects = fake) }
         Repos.projects.must_equal all_projects
+      end
+    end
+
+    describe '.registration_repo' do
+      it 'returns a RegistrationRepo' do
+        _(Repos.registration_repo).must_be_kind_of RegistrationRepo
       end
     end
 

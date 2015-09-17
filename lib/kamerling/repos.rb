@@ -4,6 +4,7 @@ require_relative 'client_repo'
 require_relative 'project'
 require_relative 'project_repo'
 require_relative 'registration'
+require_relative 'registration_repo'
 require_relative 'repo'
 require_relative 'task'
 
@@ -59,6 +60,10 @@ module Kamerling
 
       def projects
         repos[Project].all
+      end
+
+      def registration_repo
+        @registration_repo ||= RegistrationRepo.new
       end
 
       def tasks_for(project)
