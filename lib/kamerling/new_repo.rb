@@ -11,7 +11,8 @@ module Kamerling
     end
 
     def fetch(uuid)
-      Mapper.from_h(klass, table[uuid: uuid])
+      hash = table[uuid: uuid]
+      hash ? Mapper.from_h(klass, hash) : yield
     end
 
     private
