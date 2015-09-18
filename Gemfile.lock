@@ -70,7 +70,7 @@ GEM
     rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    reek (3.3.1)
+    reek (3.4.0)
       parser (~> 2.2.2.5)
       private_attr (~> 1.1)
       rainbow (~> 2.0)
