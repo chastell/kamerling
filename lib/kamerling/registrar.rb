@@ -18,8 +18,8 @@ module Kamerling
 
     def register
       client.addr = addr
-      repos << client
-      repos << registration
+      repos.client_repo << client
+      repos.registration_repo << registration
     end
 
     private
@@ -31,13 +31,13 @@ module Kamerling
     end
 
     def find_or_create_client
-      repos[Client][message.client_uuid]
-    rescue Repo::NotFound
-      Client.new(addr: addr, uuid: message.client_uuid)
+      repos.client_repo.fetch(message.client_uuid) do
+        Client.new(addr: addr, uuid: message.client_uuid)
+      end
     end
 
     def project
-      @project ||= repos[Project][message.project_uuid]
+      @project ||= repos.project_repo.fetch(message.project_uuid)
     end
 
     def registration
