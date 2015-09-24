@@ -18,6 +18,17 @@ module Kamerling
       Sequel::Migrator.run db, path
     end
 
+    describe '#all' do
+      it 'returns all Projects' do
+        table.insert name: 'Golomb', uuid: 'Golomb UUID'
+        table.insert name: 'GIMPS',  uuid: 'GIMPS UUID'
+        _(repo.all).must_equal [
+          Project.new(uuid: 'Golomb UUID'),
+          Project.new(uuid: 'GIMPS UUID'),
+        ]
+      end
+    end
+
     describe '#fetch' do
       it 'returns the Project with the given UUID' do
         table.insert row
