@@ -9,9 +9,5 @@ module Kamerling
       @klass = Client
       @table = db[:clients]
     end
-
-    def all
-      table.all.map { |hash| Mapper.from_h(Client, hash) }
-    end
   end
 end

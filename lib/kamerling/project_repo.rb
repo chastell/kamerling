@@ -8,10 +8,6 @@ module Kamerling
       @table = db[:projects]
     end
 
-    def all
-      table.all.map { |hash| Mapper.from_h(Project, hash) }
-    end
-
     private
 
     private_attr_reader :table
