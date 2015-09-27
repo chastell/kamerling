@@ -20,24 +20,26 @@ module Kamerling
                        uuid: 'rUUID')
     end
     let(:project) { Project.new(name: 'GIMPS', uuid: 'pUUID') }
+    let(:row) do
+      { client_uuid: 'cUUID', host: 'localhost', port: 1981,
+        project_uuid: 'pUUID', prot: 'TCP', registered_at: any(Time),
+        uuid: 'rUUID' }
+    end
     let(:repo) { RegistrationRepo.new(db) }
     let(:table) { db[:registrations] }
 
     before do
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
+      db[:clients] << Mapper.to_h(client)
+      db[:projects] << Mapper.to_h(project)
     end
 
     describe '#<<' do
       it 'adds a new Registration to the repo' do
         assert table.empty?
-        db[:clients] << Mapper.to_h(client)
-        db[:projects] << Mapper.to_h(project)
         repo << entity
-        _(table.first).must_equal client_uuid: 'cUUID', host: 'localhost',
-                                  port: 1981, project_uuid: 'pUUID',
-                                  prot: 'TCP', registered_at: any(Time),
-                                  uuid: 'rUUID'
+        _(table.first).must_equal row
       end
     end
   end
