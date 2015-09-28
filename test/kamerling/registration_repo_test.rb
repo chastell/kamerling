@@ -5,9 +5,12 @@ require_relative '../../lib/kamerling/mapper'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/registration_repo'
+require_relative 'new_repo_behaviour'
 
 module Kamerling
   describe RegistrationRepo do
+    include NewRepoBehaviour
+
     Sequel.extension :migration
 
     let(:addr) { Addr['localhost', 1981, :TCP] }
@@ -33,14 +36,6 @@ module Kamerling
       Sequel::Migrator.run db, path
       db[:clients] << Mapper.to_h(client)
       db[:projects] << Mapper.to_h(project)
-    end
-
-    describe '#<<' do
-      it 'adds a new Registration to the repo' do
-        assert table.empty?
-        repo << entity
-        _(table.first).must_equal row
-      end
     end
   end
 end

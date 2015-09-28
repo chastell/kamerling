@@ -2,9 +2,12 @@ require 'sequel'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
+require_relative 'new_repo_behaviour'
 
 module Kamerling
   describe ClientRepo do
+    include NewRepoBehaviour
+
     Sequel.extension :migration
 
     let(:db) { Sequel.sqlite }
@@ -25,12 +28,6 @@ module Kamerling
     end
 
     describe '#<<' do
-      it 'adds a new Client to the repo' do
-        assert table.empty?
-        repo << entity
-        _(table.first).must_equal row
-      end
-
       it 'updates the row if the Client exists' do
         table.insert(uuid: 'an UUID', busy: false, host: '127.0.0.1',
                      port: 1979, prot: 'UDP')
