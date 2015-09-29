@@ -51,8 +51,7 @@ module Kamerling
 
     describe '#fetch' do
       it 'returns the Client with the given UUID' do
-        table.insert(uuid: 'an UUID', busy: false, host: '127.0.0.1',
-                     port: 1979, prot: 'UDP')
+        table.insert row
         _(repo.fetch('an UUID')).must_equal entity
       end
 
