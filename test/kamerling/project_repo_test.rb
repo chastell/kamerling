@@ -31,12 +31,5 @@ module Kamerling
         ]
       end
     end
-
-    describe '#fetch' do
-      it 'returns the Project with the given UUID' do
-        table.insert row
-        _(repo.fetch('an UUID')).must_equal entity
-      end
-    end
   end
 end

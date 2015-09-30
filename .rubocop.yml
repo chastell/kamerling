@@ -2,6 +2,14 @@ AllCops:
   Exclude:
     - tmp/**/*
 
+Metrics/AbcSize:
+  Exclude:
+    - test/kamerling/*_behaviour.rb
+
+Metrics/MethodLength:
+  Exclude:
+    - test/kamerling/*_behaviour.rb
+
 Style/AndOr:
   Enabled: false
 

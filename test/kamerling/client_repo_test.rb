@@ -50,11 +50,6 @@ module Kamerling
     end
 
     describe '#fetch' do
-      it 'returns the Client with the given UUID' do
-        table.insert row
-        _(repo.fetch('an UUID')).must_equal entity
-      end
-
       it 'evaluates the block if the given UUID is missing' do
         evaluated = false
         repo.fetch('an UUID') { evaluated = true }
