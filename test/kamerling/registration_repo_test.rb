@@ -1,4 +1,5 @@
 require 'sequel'
+require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/mapper'
@@ -20,13 +21,13 @@ module Kamerling
     let(:db) { Sequel.sqlite }
     let(:entity) do
       Registration.new(addr: addr, client: client, project: project,
-                       uuid: 'rUUID')
+                       registered_at: Time.new('2015-01-01'), uuid: 'an UUID')
     end
     let(:project) { Project.new(name: 'GIMPS', uuid: 'pUUID') }
     let(:row) do
       { client_uuid: 'cUUID', host: 'localhost', port: 1981,
-        project_uuid: 'pUUID', prot: 'TCP', registered_at: any(Time),
-        uuid: 'rUUID' }
+        project_uuid: 'pUUID', prot: 'TCP',
+        registered_at: Time.new('2015-01-01'), uuid: 'an UUID' }
     end
     let(:repo) { RegistrationRepo.new(db) }
     let(:table) { db[:registrations] }
