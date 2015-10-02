@@ -48,13 +48,5 @@ module Kamerling
         ]
       end
     end
-
-    describe '#fetch' do
-      it 'evaluates the block if the given UUID is missing' do
-        evaluated = false
-        repo.fetch('an UUID') { evaluated = true }
-        assert evaluated
-      end
-    end
   end
 end

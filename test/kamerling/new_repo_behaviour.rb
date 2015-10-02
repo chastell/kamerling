@@ -15,6 +15,12 @@ module Kamerling
             table.insert row
             _(repo.fetch('an UUID')).must_equal entity
           end
+
+          it 'evaluates the block if the given UUID is missing' do
+            evaluated = false
+            repo.fetch('an UUID') { evaluated = true }
+            assert evaluated
+          end
         end
       end
     end
