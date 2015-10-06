@@ -16,6 +16,17 @@ module Kamerling
     let(:row)    { { name: 'GIMPS', uuid: 'an UUID' }          }
     let(:table)  { db[:projects]                               }
 
+    let(:entities) do
+      [Project.new(uuid: 'Golomb UUID'), Project.new(uuid: 'GIMPS UUID')]
+    end
+
+    let(:rows) do
+      [
+        { name: 'Golomb', uuid: 'Golomb UUID' },
+        { name: 'GIMPS',  uuid: 'GIMPS UUID'  },
+      ]
+    end
+
     before do
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
@@ -23,12 +34,8 @@ module Kamerling
 
     describe '#all' do
       it 'returns all Projects' do
-        table.insert name: 'Golomb', uuid: 'Golomb UUID'
-        table.insert name: 'GIMPS',  uuid: 'GIMPS UUID'
-        _(repo.all).must_equal [
-          Project.new(uuid: 'Golomb UUID'),
-          Project.new(uuid: 'GIMPS UUID'),
-        ]
+        rows.each { |row| table << row }
+        _(repo.all).must_equal entities
       end
     end
   end
