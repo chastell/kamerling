@@ -1,8 +1,8 @@
+require_relative 'entity'
 require_relative 'project'
-require_relative 'uuid_entity'
 
 module Kamerling
-  class Task < UUIDEntity
+  class Task < Entity
     attrs data: String, done: Boolean, project: Project
     defaults done: false
   end

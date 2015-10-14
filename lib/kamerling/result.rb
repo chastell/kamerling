@@ -1,10 +1,10 @@
 require_relative 'addr'
 require_relative 'client'
+require_relative 'entity'
 require_relative 'task'
-require_relative 'uuid_entity'
 
 module Kamerling
-  class Result < UUIDEntity
+  class Result < Entity
     attrs addr: Addr, client: Client, data: String, received_at: Time,
           task: Task
     defaults received_at: -> (*) { Time.now }

@@ -1,18 +1,18 @@
 require_relative '../test_helper'
-require_relative '../../lib/kamerling/uuid_entity'
+require_relative '../../lib/kamerling/entity'
 
 module Kamerling
-  describe UUIDEntity do
+  describe Entity do
     describe '.attrs' do
       it 'allows defining attributes in a key → class manner' do
-        person = Class.new(UUIDEntity) { attrs name: String, born: Integer }
+        person = Class.new(Entity) { attrs name: String, born: Integer }
         _(person.attribute_set.map(&:name)).must_equal %i(uuid name born)
       end
     end
 
     describe '.defaults' do
       it 'allows defining attribute defaults' do
-        song = Class.new(UUIDEntity) do
+        song = Class.new(Entity) do
           attrs title: String, genre: Symbol
           defaults genre: :ragga
         end
@@ -22,27 +22,27 @@ module Kamerling
 
     describe '.new' do
       it 'creates a class with an UUID property defaulting to a random UUID' do
-        attr_less = Class.new(UUIDEntity)
+        attr_less = Class.new(Entity)
         _(attr_less.new.uuid).must_match(/\A\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/)
         _(attr_less.new.uuid).wont_equal attr_less.new.uuid
       end
 
       it 'deserialises the object from a Hash' do
-        trivial = Class.new(UUIDEntity) { attrs question: Symbol }
+        trivial = Class.new(Entity) { attrs question: Symbol }
         _(trivial.new(question: :answer).question).must_equal :answer
       end
     end
 
     describe '.null' do
       it 'returns a new entity with an all-zero UUID' do
-        nullable = Class.new(UUIDEntity)
+        nullable = Class.new(Entity)
         _(nullable.null.uuid).must_equal '00000000-0000-0000-0000-000000000000'
       end
     end
 
     describe '#==' do
       it 'reports UUID-based euqality' do
-        actor = Class.new(UUIDEntity) { attrs name: Symbol }
+        actor = Class.new(Entity) { attrs name: Symbol }
         _(actor.new(name: :laurel)).wont_equal actor.new(name: :laurel)
         uuid = UUID.new
         laurel = actor.new(name: :laurel, uuid: uuid)
@@ -53,14 +53,14 @@ module Kamerling
 
     describe '#to_h' do
       it 'serialises the object to a Hash' do
-        hashble = Class.new(UUIDEntity) { attrs param: Symbol }
+        hashble = Class.new(Entity) { attrs param: Symbol }
         hash = hashble.new(param: :val).to_h
         _(hash).must_equal param: :val, uuid: any(String)
       end
 
       it 'serialises related UUIDEntities' do
-        child  = Class.new(UUIDEntity) { attrs name: String }
-        parent = Class.new(UUIDEntity) { attrs child: child, name: String }
+        child  = Class.new(Entity) { attrs name: String }
+        parent = Class.new(Entity) { attrs child: child, name: String }
         zosia  = child.new(name: 'Zosia')
         marta  = parent.new(child: zosia, name: 'Marta')
         zosia_hash = { name: 'Zosia', uuid: zosia.uuid }

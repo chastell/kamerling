@@ -1,7 +1,7 @@
-require_relative 'uuid_entity'
+require_relative 'entity'
 
 module Kamerling
-  class Project < UUIDEntity
+  class Project < Entity
     attrs name: String
   end
 end

@@ -1,8 +1,8 @@
 require_relative 'addr'
-require_relative 'uuid_entity'
+require_relative 'entity'
 
 module Kamerling
-  class Client < UUIDEntity
+  class Client < Entity
     attrs addr: Addr, busy: Boolean, type: Symbol
     defaults busy: false
 

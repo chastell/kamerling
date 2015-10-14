@@ -1,14 +1,14 @@
 require 'sequel'
 require_relative '../test_helper'
+require_relative '../../lib/kamerling/entity'
 require_relative '../../lib/kamerling/mapper'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/repo'
 require_relative '../../lib/kamerling/uuid'
-require_relative '../../lib/kamerling/uuid_entity'
 
 module Kamerling
   describe Repo do
-    Tune = Class.new(UUIDEntity) { attrs genre: Symbol }
+    Tune = Class.new(Entity) { attrs genre: Symbol }
 
     describe '#<<' do
       it 'passes the Hash version of an object to the source via a mapper' do

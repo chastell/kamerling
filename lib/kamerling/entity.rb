@@ -3,7 +3,7 @@ require 'virtus'
 require_relative 'uuid'
 
 module Kamerling
-  class UUIDEntity
+  class Entity
     include Equalizer.new(:uuid)
 
     include Virtus.model
@@ -26,7 +26,7 @@ module Kamerling
 
     def to_h
       attributes.map do |key, value|
-        value.is_a?(UUIDEntity) ? [key, value.to_h] : [key, value]
+        value.is_a?(Entity) ? [key, value.to_h] : [key, value]
       end.to_h
     end
   end
