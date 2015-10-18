@@ -11,7 +11,7 @@ module Kamerling
     end
 
     def all
-      table.all.map { |hash| Mapper.from_h(klass, hash) }
+      table.all.map { |hash| klass.new(hash) }
     end
 
     def fetch(uuid)
