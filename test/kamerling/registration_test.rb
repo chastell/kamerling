@@ -13,6 +13,10 @@ module Kamerling
         registered_at = Registration.new.registered_at
         _(registered_at).wont_equal Registration.new.registered_at
       end
+
+      it 'is in UTC' do
+        _(Registration.new.registered_at.zone).must_equal 'UTC'
+      end
     end
   end
 end
