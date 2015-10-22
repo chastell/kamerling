@@ -1,10 +1,9 @@
 require 'sequel'
-require_relative 'mapper'
 
 module Kamerling
   class NewRepo
     def <<(object)
-      hash = Mapper.to_h(object)
+      hash = object.new_to_h
       table << hash
     rescue Sequel::UniqueConstraintViolation
       table.where(uuid: object.uuid).update hash
