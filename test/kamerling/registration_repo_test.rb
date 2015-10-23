@@ -2,7 +2,6 @@ require 'sequel'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
-require_relative '../../lib/kamerling/mapper'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/registration_repo'
@@ -38,8 +37,8 @@ module Kamerling
     before do
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
-      db[:clients] << Mapper.to_h(client)
-      db[:projects] << Mapper.to_h(project)
+      db[:clients] << client.new_to_h
+      db[:projects] << project.new_to_h
     end
   end
 end
