@@ -9,10 +9,6 @@ module Kamerling
       table.where(uuid: object.uuid).update hash
     end
 
-    def all
-      table.all.map { |hash| klass.new(hash) }
-    end
-
     def fetch(uuid)
       hash = table[uuid: uuid]
       hash ? klass.new(hash) : yield
