@@ -21,6 +21,10 @@ module Kamerling
             repo.fetch('an UUID') { evaluated = true }
             assert evaluated
           end
+
+          it 'raises NotFound if the UUID is missing and there is no block' do
+            _(-> { repo.fetch('an UUID') }).must_raise NewRepo::NotFound
+          end
         end
       end
     end

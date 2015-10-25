@@ -2,6 +2,8 @@ require 'sequel'
 
 module Kamerling
   class NewRepo
+    NotFound = Class.new(RuntimeError)
+
     def <<(object)
       hash = object.new_to_h
       table << hash
@@ -10,8 +12,11 @@ module Kamerling
     end
 
     def fetch(uuid)
-      hash = table[uuid: uuid]
-      hash ? klass.new(hash) : yield
+      case
+      when hash = table[uuid: uuid] then klass.new(hash)
+      when block_given?             then yield
+      else fail NotFound
+      end
     end
 
     private
