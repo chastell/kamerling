@@ -11,6 +11,10 @@ module Kamerling
       it 'defaults to the time of Result’s creation' do
         _(Result.new.received_at).wont_equal Result.new.received_at
       end
+
+      it 'is in UTC' do
+        _(Result.new.received_at.zone).must_equal 'UTC'
+      end
     end
   end
 end
