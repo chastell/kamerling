@@ -7,6 +7,7 @@ require_relative 'registration'
 require_relative 'registration_repo'
 require_relative 'repo'
 require_relative 'task'
+require_relative 'task_repo'
 
 Sequel.extension :migration
 
@@ -64,6 +65,10 @@ module Kamerling
 
       def registration_repo
         @registration_repo ||= RegistrationRepo.new
+      end
+
+      def task_repo
+        @task_repo ||= TaskRepo.new
       end
 
       def tasks_for(project)
