@@ -10,6 +10,7 @@ require_relative '../../lib/kamerling/registration_repo'
 require_relative '../../lib/kamerling/repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/result'
+require_relative '../../lib/kamerling/result_repo'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
 require_relative '../../lib/kamerling/uuid'
@@ -127,6 +128,12 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
     describe '.registration_repo' do
       it 'returns a RegistrationRepo' do
         _(Repos.registration_repo).must_be_kind_of RegistrationRepo
+      end
+    end
+
+    describe '.result_repo' do
+      it 'returns a ResultRepo' do
+        _(Repos.result_repo).must_be_kind_of ResultRepo
       end
     end
 

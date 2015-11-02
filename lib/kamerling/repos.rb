@@ -6,6 +6,7 @@ require_relative 'project_repo'
 require_relative 'registration'
 require_relative 'registration_repo'
 require_relative 'repo'
+require_relative 'result_repo'
 require_relative 'task'
 require_relative 'task_repo'
 
@@ -65,6 +66,10 @@ module Kamerling
 
       def registration_repo
         @registration_repo ||= RegistrationRepo.new
+      end
+
+      def result_repo
+        @result_repo ||= ResultRepo.new
       end
 
       def task_repo
