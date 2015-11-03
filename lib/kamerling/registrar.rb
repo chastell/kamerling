@@ -27,11 +27,7 @@ module Kamerling
     private_attr_reader :addr, :message, :repos
 
     def client
-      @client ||= find_or_create_client
-    end
-
-    def find_or_create_client
-      repos.client_repo.fetch(message.client_uuid) do
+      @client ||= repos.client_repo.fetch(message.client_uuid) do
         Client.new(addr: addr, uuid: message.client_uuid)
       end
     end
