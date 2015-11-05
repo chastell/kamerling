@@ -1,7 +1,5 @@
-require_relative 'client'
 require_relative 'repos'
 require_relative 'result'
-require_relative 'task'
 
 module Kamerling
   class Receiver
@@ -18,7 +16,7 @@ module Kamerling
     def receive
       client.busy = false
       task.done   = true
-      repos << result << client << task
+      persist
     end
 
     private
@@ -26,7 +24,13 @@ module Kamerling
     private_attr_reader :addr, :message, :repos
 
     def client
-      @client ||= repos[Client][message.client_uuid]
+      @client ||= repos.client_repo.fetch(message.client_uuid)
+    end
+
+    def persist
+      repos.client_repo << client
+      repos.result_repo << result
+      repos.task_repo << task
     end
 
     def result
@@ -34,7 +38,7 @@ module Kamerling
     end
 
     def task
-      @task ||= repos[Task][message.task_uuid]
+      @task ||= repos.task_repo.fetch(message.task_uuid)
     end
   end
 end
