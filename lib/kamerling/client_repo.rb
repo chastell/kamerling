@@ -9,5 +9,9 @@ module Kamerling
       @klass = Client
       @table = db[:clients]
     end
+
+    def all
+      table.all.map(&Client.method(:new))
+    end
   end
 end
