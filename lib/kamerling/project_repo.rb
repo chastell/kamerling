@@ -8,6 +8,10 @@ module Kamerling
       @table = db[:projects]
     end
 
+    def all
+      table.all.map(&Project.method(:new))
+    end
+
     private
 
     private_attr_reader :table

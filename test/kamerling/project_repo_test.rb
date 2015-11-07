@@ -20,5 +20,14 @@ module Kamerling
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
     end
+
+    describe '#all' do
+      it 'returns all Projects' do
+        table.insert name: 'ECC',   uuid: 'ECC id'
+        table.insert name: 'GIMPS', uuid: 'GIMPS id'
+        projects = [Project.new(uuid: 'ECC id'), Project.new(uuid: 'GIMPS id')]
+        _(repo.all).must_equal projects
+      end
+    end
   end
 end
