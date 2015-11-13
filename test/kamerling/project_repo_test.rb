@@ -29,5 +29,22 @@ module Kamerling
         _(repo.all).must_equal projects
       end
     end
+
+    describe '#fetch_with_clients_and_tasks' do
+      it 'returns a Project with all of its Clients and Tasks' do
+        db[:clients].insert busy: false, host: 'localhost', port: 1979,
+                            prot: 'UDP', uuid: 'cUUID'
+        db[:projects].insert name: 'GIMPS', uuid: 'pUUID'
+        db[:registrations].insert client_uuid: 'cUUID', host: 'localhost',
+                                  port: 1979, project_uuid: 'pUUID',
+                                  prot: 'UDP', uuid: 'rUUID'
+        db[:tasks].insert done: false, data: 'data', project_uuid: 'pUUID',
+                          uuid: 'tUUID'
+        project = repo.fetch_with_clients_and_tasks('pUUID')
+        _(project).must_equal Project.new(uuid: 'pUUID')
+        _(project.clients).must_equal [Client.new(uuid: 'cUUID')]
+        _(project.tasks).must_equal [Task.new(uuid: 'tUUID')]
+      end
+    end
   end
 end
