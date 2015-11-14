@@ -1,8 +1,10 @@
 require 'nokogiri'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/http_api'
 require_relative '../../lib/kamerling/project'
+require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_dispatcher'
@@ -10,12 +12,18 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe HTTPAPI do
-    let(:app)   { HTTPAPI.set(repos: repos, task_dispatcher: task_dispatcher) }
-    let(:doc)   { Nokogiri::HTML(last_response.body)                          }
-    let(:ecc)   { Project.new                                                 }
-    let(:gimps) { Project.new                                                 }
-    let(:repos) { fake(:repos, as: :class, projects: [gimps, ecc])            }
-    let(:task_dispatcher) { fake(:task_dispatcher) }
+    let(:app) { HTTPAPI.set(repos: repos, task_dispatcher: task_dispatcher) }
+    let(:client_repo)     { fake(ClientRepo)                     }
+    let(:doc)             { Nokogiri::HTML(last_response.body)   }
+    let(:ecc)             { Project.new                          }
+    let(:gimps)           { Project.new                          }
+    let(:project_repo)    { fake(ProjectRepo, all: [gimps, ecc]) }
+    let(:task_dispatcher) { fake(:task_dispatcher)               }
+
+    let(:repos) do
+      fake(:repos, as: :class, client_repo: client_repo,
+                   project_repo: project_repo)
+    end
 
     describe 'GET /' do
       it 'contains links to clients and projects' do
@@ -29,7 +37,7 @@ module Kamerling
       it 'contains information on clients' do
         addr = Addr['127.0.0.1', 1981, :TCP]
         fpga = Client.new(addr: addr, busy: true, type: :FPGA)
-        stub(repos).clients { [fpga] }
+        stub(client_repo).all { [fpga] }
         get '/clients'
         links = doc.css('#clients a[data-class=client]')
         _(links.first['data-addr']).must_equal 'tcp://127.0.0.1:1981'
@@ -57,9 +65,9 @@ module Kamerling
       let(:seven) { Task.new(done: true)  }
 
       before do
-        stub(repos).project(gimps.uuid) { gimps          }
-        stub(repos).clients_for(gimps)  { [cpu, gpu]     }
-        stub(repos).tasks_for(gimps)    { [three, seven] }
+        stub(project_repo).fetch_with_clients_and_tasks(gimps.uuid) do
+          Project.new(clients: [cpu, gpu], tasks: [three, seven])
+        end
       end
 
       it 'contains links to and info on the project’s clients' do
@@ -90,7 +98,7 @@ module Kamerling
     describe 'POST /projects' do
       it 'creates a new project with the given name and UUID' do
         post '/projects', name: 'ECC', uuid: uuid = UUID.new
-        _(repos).must_have_received :<<, [Project.new(name: 'ECC', uuid: uuid)]
+        _(project_repo).must_have_received :<<, [Project.new(uuid: uuid)]
       end
 
       it 'redirects to /projects' do
