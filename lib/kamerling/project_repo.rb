@@ -27,7 +27,7 @@ module Kamerling
 
     def client_hashes(uuid)
       db[:registrations].join(:clients, uuid: :client_uuid)
-        .where(project_uuid: uuid).all
+                        .where(project_uuid: uuid).all
     end
 
     def task_hashes(uuid)
