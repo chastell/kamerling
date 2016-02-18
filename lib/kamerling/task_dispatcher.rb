@@ -23,7 +23,7 @@ module Kamerling
 
     private
 
-    private_attr_reader :net_dispatcher, :repos
+    attr_reader :net_dispatcher, :repos
 
     def dispatch_task(client:, project:, task:)
       message = Message.data(client: client, project: project, task: task)

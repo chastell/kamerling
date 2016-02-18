@@ -19,7 +19,7 @@ module Kamerling
 
     private
 
-    private_attr_reader :logger
+    attr_reader :logger
 
     def log_dispatcher
       NetDispatcher.singleton_class.extend AfterDo

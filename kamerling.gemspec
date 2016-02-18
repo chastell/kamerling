@@ -23,14 +23,13 @@ Gem::Specification.new do |gem|
     gem.signing_key = Pathname.new('~/.ssh/gem-private_key.pem').expand_path
   end
 
-  gem.add_dependency 'after_do',     '~> 0.3.0'
-  gem.add_dependency 'equalizer',    '~> 0.0.9'
-  gem.add_dependency 'private_attr', '~> 1.1'
-  gem.add_dependency 'sequel',       '~> 4.4'
-  gem.add_dependency 'sinatra',      '~> 1.4'
-  gem.add_dependency 'slim',         '~> 3.0'
-  gem.add_dependency 'sqlite3',      '~> 1.3'
-  gem.add_dependency 'virtus',       '~> 1.0'
+  gem.add_dependency 'after_do',  '~> 0.3.0'
+  gem.add_dependency 'equalizer', '~> 0.0.9'
+  gem.add_dependency 'sequel',    '~> 4.4'
+  gem.add_dependency 'sinatra',   '~> 1.4'
+  gem.add_dependency 'slim',      '~> 3.0'
+  gem.add_dependency 'sqlite3',   '~> 1.3'
+  gem.add_dependency 'virtus',    '~> 1.0'
 
   gem.add_development_dependency 'bogus',               '~> 0.1.3'
   gem.add_development_dependency 'minitest',            '~> 5.6'

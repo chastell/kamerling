@@ -29,7 +29,7 @@ module Kamerling
 
       private
 
-      private_attr_reader :handler, :thread
+      attr_reader :handler, :thread
 
       def handle(input, addr:)
         handler.handle Message.parse(input), addr: addr

@@ -30,7 +30,7 @@ module Kamerling
 
       private
 
-      private_attr_reader :thread
+      attr_reader :thread
     end
   end
 end

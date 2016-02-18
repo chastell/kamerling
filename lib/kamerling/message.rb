@@ -70,6 +70,8 @@ module Kamerling
       raw[0..3].to_sym
     end
 
-    protected_attr_reader :raw
+    protected
+
+    attr_reader :raw
   end
 end

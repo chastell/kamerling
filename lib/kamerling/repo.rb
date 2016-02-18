@@ -37,6 +37,6 @@ module Kamerling
 
     private
 
-    private_attr_reader :klass, :mapper, :source
+    attr_reader :klass, :mapper, :source
   end
 end

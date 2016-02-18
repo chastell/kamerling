@@ -25,7 +25,7 @@ module Kamerling
 
     private
 
-    private_attr_reader :db, :table
+    attr_reader :db, :table
 
     def client_hashes(uuid)
       db[:registrations].join(:clients, uuid: :client_uuid)

@@ -26,7 +26,7 @@ module Kamerling
 
     private
 
-    private_attr_reader :addr, :message, :repos
+    attr_reader :addr, :message, :repos
 
     def client
       @client ||= repos.client_repo.fetch(message.client_uuid) do
