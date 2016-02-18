@@ -3,7 +3,7 @@ require_relative 'uuid'
 
 module Kamerling
   class Message
-    KNOWN_TYPES = %i(DATA PING RGST RSLT)
+    KNOWN_TYPES = %i(DATA PING RGST RSLT).freeze
     UnknownType = Class.new(RuntimeError)
 
     include Equalizer.new(:raw)
