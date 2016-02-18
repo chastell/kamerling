@@ -21,8 +21,8 @@ module Kamerling
         result_repo = fake(ResultRepo)
         task        = Task.new(done: false, project: Project.new)
         task_repo   = fake(TaskRepo, fetch: task)
-        repos  = fake(Repos, as: :class, client_repo: client_repo,
-                             result_repo: result_repo, task_repo: task_repo)
+        repos = fake(Repos, as: :class, client_repo: client_repo,
+                            result_repo: result_repo, task_repo: task_repo)
         message = Message.rslt(client: client, payload: 'data', task: task)
         Receiver.receive addr: addr, message: message, repos: repos
         refute client.busy
