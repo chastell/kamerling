@@ -20,7 +20,7 @@ module Kamerling
 
     def [](uuid)
       hash = source[uuid: uuid]
-      fail NotFound, "#{klass} with UUID #{uuid}" unless hash
+      raise NotFound, "#{klass} with UUID #{uuid}" unless hash
       mapper.from_h(klass, hash)
     end
 

@@ -15,7 +15,7 @@ module Kamerling
       case
       when hash = table[uuid: uuid] then klass.new(hash)
       when block_given?             then yield
-      else fail NotFound
+      else raise NotFound
       end
     end
 
