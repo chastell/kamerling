@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'client'
 require_relative 'new_repo'
 require_relative 'project'

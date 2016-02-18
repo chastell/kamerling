@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kamerling
   module NewRepoBehaviour
     def self.included(spec_class)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'equalizer'
 require 'virtus'
 require_relative 'uuid'

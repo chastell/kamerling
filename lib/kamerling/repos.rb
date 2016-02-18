@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sequel'
 require_relative 'client'
 require_relative 'client_repo'

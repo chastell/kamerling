@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'nokogiri'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/client'

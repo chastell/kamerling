@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'dispatch'
 require_relative 'message'
 require_relative 'net_dispatcher'

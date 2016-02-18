@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'receiver'
 require_relative 'registrar'
 
