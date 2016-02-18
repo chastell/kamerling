@@ -27,9 +27,9 @@ module Kamerling
     end
 
     def to_h
-      attributes.map do |key, value|
-        value.is_a?(Entity) ? [key, value.to_h] : [key, value]
-      end.to_h
+      attributes.map do |(key, value)|
+        { key => value.is_a?(Entity) ? value.to_h : value }
+      end.reduce({}, :merge)
     end
   end
 end
