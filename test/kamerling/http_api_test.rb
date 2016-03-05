@@ -20,7 +20,7 @@ module Kamerling
     let(:ecc)             { Project.new                          }
     let(:gimps)           { Project.new                          }
     let(:project_repo)    { fake(ProjectRepo, all: [gimps, ecc]) }
-    let(:task_dispatcher) { fake(:task_dispatcher)               }
+    let(:task_dispatcher) { fake(TaskDispatcher)                 }
 
     let(:repos) do
       fake(:repos, as: :class, client_repo: client_repo,
