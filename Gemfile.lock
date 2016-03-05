@@ -67,7 +67,7 @@ GEM
       unicode-display_width (~> 0.3)
     ruby-progressbar (1.7.5)
     ruby_warning_filter (1.0.1)
-    sequel (4.31.0)
+    sequel (4.32.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
