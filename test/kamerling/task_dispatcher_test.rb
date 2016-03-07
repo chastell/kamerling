@@ -14,12 +14,12 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe TaskDispatcher do
-    let(:addr)           { Addr.new                                      }
-    let(:client)         { Client.new(addr: addr)                        }
-    let(:net_dispatcher) { fake(:net_dispatcher, as: :class)             }
-    let(:project)        { Project.new                                   }
-    let(:repos)          { fake(:repos, as: :class, projects: [project]) }
-    let(:task)           { Task.new(data: 'data')                        }
+    let(:addr)           { Addr.new                                     }
+    let(:client)         { Client.new(addr: addr)                       }
+    let(:net_dispatcher) { fake(:net_dispatcher, as: :class)            }
+    let(:project)        { Project.new                                  }
+    let(:repos)          { fake(Repos, as: :class, projects: [project]) }
+    let(:task)           { Task.new(data: 'data')                       }
 
     before do
       stub(repos).next_task_for(project) { task }

@@ -34,7 +34,7 @@ module Kamerling
         db    = fake { Sequel::SQLite::Database }
         orm   = fake(:sequel, as: :class)
         stub(orm).connect('sqlite::memory:') { db }
-        repos = fake(:repos, as: :class)
+        repos = fake(Repos, as: :class)
         ServerRunner.new args, classes: classes, orm: orm, repos: repos
         _(repos).must_have_received :db=, [db]
       end

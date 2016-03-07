@@ -23,8 +23,8 @@ module Kamerling
     let(:task_dispatcher) { fake(TaskDispatcher)                 }
 
     let(:repos) do
-      fake(:repos, as: :class, client_repo: client_repo,
-                   project_repo: project_repo)
+      fake(Repos, as: :class, client_repo: client_repo,
+                  project_repo: project_repo)
     end
 
     describe 'GET /' do

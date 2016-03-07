@@ -23,9 +23,9 @@ module Kamerling
       let(:registration_repo) { fake(RegistrationRepo)                         }
 
       let(:repos) do
-        fake(:repos, as: :class, client_repo: client_repo,
-                     project_repo: project_repo,
-                     registration_repo: registration_repo)
+        fake(Repos, as: :class, client_repo: client_repo,
+                    project_repo: project_repo,
+                    registration_repo: registration_repo)
       end
 
       it 'registers that the given client can do the given project' do
