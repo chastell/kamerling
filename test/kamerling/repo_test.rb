@@ -36,7 +36,7 @@ module Kamerling
         tune   = Tune.new(genre: :chap_hop)
         hash   = { genre: :chap_hop, uuid: tune.uuid }
         source = { { uuid: tune.uuid } => hash }
-        mapper = fake(:mapper, as: :class)
+        mapper = fake(Mapper, as: :class)
         stub(mapper).from_h(Tune, hash) { tune }
         retrieved = Repo.new(Tune, source, mapper: mapper)[tune.uuid]
         _(retrieved.to_h).must_equal tune.to_h
@@ -51,7 +51,7 @@ module Kamerling
       it 'returns all objects via a mapper' do
         tune = Tune.new(genre: :chap_hop)
         source = fake(Sequel::Dataset, all: [genre: :chap_hop, uuid: tune.uuid])
-        mapper = fake(:mapper, as: :class, from_h: tune)
+        mapper = fake(Mapper, as: :class, from_h: tune)
         _(Repo.new(Tune, source, mapper: mapper).all).must_equal [tune]
       end
     end
@@ -67,7 +67,7 @@ module Kamerling
         ]
         source = fake(Sequel::Dataset)
         stub(source).where(project_uuid: project.uuid) { results }
-        mapper = fake(:mapper, as: :class)
+        mapper = fake(Mapper, as: :class)
         stub(mapper).from_h(Tune, genre: :ragga,  uuid: ragga.uuid)  { ragga  }
         stub(mapper).from_h(Tune, genre: :reggae, uuid: reggae.uuid) { reggae }
         repo = Repo.new(Tune, source, mapper: mapper)
