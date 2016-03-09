@@ -21,14 +21,14 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
   describe Repos do
     describe '.<<' do
       it 'shuffles the object into the right repo' do
-        Repos.repos = { Object => repo = fake(:repo) }
+        Repos.repos = { Object => repo = fake(Repo) }
         Repos.<< object = Object.new
         _(repo).must_have_received :<<, [object]
       end
 
       it 'can be chained' do
-        str_repo = fake(:repo)
-        sym_repo = fake(:repo)
+        str_repo = fake(Repo)
+        sym_repo = fake(Repo)
         Repos.repos = { String => str_repo, Symbol => sym_repo }
         Repos << 'str' << :sym
         _(str_repo).must_have_received :<<, ['str']
@@ -54,7 +54,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
 
     describe '.clients' do
       it 'returns all clients' do
-        Repos.repos = { Client => fake(:repo, all: all_clients = fake) }
+        Repos.repos = { Client => fake(Repo, all: all_clients = fake) }
         Repos.clients.must_equal all_clients
       end
     end
@@ -64,7 +64,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         clients  = [Client.new, Client.new]
         project  = Project.new
         regs     = clients.map { |client| Registration.new(client: client) }
-        reg_repo = fake(:repo)
+        reg_repo = fake(Repo)
         stub(reg_repo).related_to(project) { regs }
         Repos.repos = { Registration => reg_repo }
         _(Repos.clients_for(project)).must_equal clients
@@ -87,7 +87,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         busy_reg    = Registration.new(client: busy_client)
         free_reg    = Registration.new(client: free_client)
         project     = Project.new
-        repo        = fake(:repo)
+        repo        = fake(Repo)
         stub(repo).related_to(project) { [busy_reg, free_reg] }
         Repos.repos = { Registration => repo }
         _(Repos.free_clients_for(project)).must_equal [free_client]
@@ -99,7 +99,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         project   = Project.new
         done_task = Task.new(done: true)
         new_task  = Task.new(done: false)
-        repo      = fake(:repo)
+        repo      = fake(Repo)
         stub(repo).related_to(project) { [done_task, new_task] }
         Repos.repos = { Task => repo }
         _(Repos.next_task_for(project)).must_equal new_task
@@ -122,7 +122,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
 
     describe '.projects' do
       it 'returns all projects' do
-        Repos.repos = { Project => fake(:repo, all: all_projects = fake) }
+        Repos.repos = { Project => fake(Repo, all: all_projects = fake) }
         Repos.projects.must_equal all_projects
       end
     end
@@ -149,7 +149,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       it 'returns all tasks for the given project' do
         project   = Project.new
         tasks     = [Task.new, Task.new]
-        task_repo = fake(:repo)
+        task_repo = fake(Repo)
         stub(task_repo).related_to(project) { tasks }
         Repos.repos = { Task => task_repo }
         _(Repos.tasks_for(project)).must_equal tasks
