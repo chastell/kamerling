@@ -13,7 +13,7 @@ module Kamerling
 
     describe '#start' do
       it 'listens on an UDP port and passes received inputs to the handler' do
-        server = Server::UDP.new(addr: addr, handler: handler = fake(:handler))
+        server = Server::UDP.new(addr: addr, handler: handler = fake(Handler))
         server.start
         foo = UDPSocket.new
         bar = UDPSocket.new
