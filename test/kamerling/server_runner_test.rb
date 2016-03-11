@@ -32,7 +32,7 @@ module Kamerling
       it 'hooks to the given database' do
         args  = %w(--host 0.0.0.0 --db sqlite::memory:)
         db    = fake { Sequel::SQLite::Database }
-        orm   = fake(:sequel, as: :class)
+        orm   = fake(Sequel, as: :class)
         stub(orm).connect('sqlite::memory:') { db }
         repos = fake(Repos, as: :class)
         ServerRunner.new args, classes: classes, orm: orm, repos: repos
