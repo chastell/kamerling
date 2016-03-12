@@ -16,7 +16,7 @@ module Kamerling
   describe TaskDispatcher do
     let(:addr)           { Addr.new                                     }
     let(:client)         { Client.new(addr: addr)                       }
-    let(:net_dispatcher) { fake(:net_dispatcher, as: :class)            }
+    let(:net_dispatcher) { fake(NetDispatcher, as: :class)              }
     let(:project)        { Project.new                                  }
     let(:repos)          { fake(Repos, as: :class, projects: [project]) }
     let(:task)           { Task.new(data: 'data')                       }
