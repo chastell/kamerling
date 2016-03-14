@@ -13,6 +13,10 @@ module Kamerling
       table.where(uuid: object.uuid).update hash
     end
 
+    def all
+      table.all.map(&klass.method(:new))
+    end
+
     def fetch(uuid)
       case
       when hash = table[uuid: uuid] then klass.new(hash)

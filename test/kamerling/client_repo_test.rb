@@ -39,16 +39,5 @@ module Kamerling
         _(table.first).must_equal row
       end
     end
-
-    describe '#all' do
-      it 'returns all Clients' do
-        table.insert busy: false, host: 'localhost', port: 1979, prot: 'UDP',
-                     type: 'CPU', uuid: 'CPU id'
-        table.insert busy: true,  host: 'localhost', port: 1981, prot: 'TCP',
-                     type: 'GPU', uuid: 'GPU id'
-        clients = [Client.new(uuid: 'CPU id'), Client.new(uuid: 'GPU id')]
-        _(repo.all).must_equal clients
-      end
-    end
   end
 end

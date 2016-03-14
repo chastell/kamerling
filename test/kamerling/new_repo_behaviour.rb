@@ -12,6 +12,13 @@ module Kamerling
           end
         end
 
+        describe '#all' do
+          it 'returns all of the entites' do
+            table.insert row
+            _(repo.all).must_equal [entity]
+          end
+        end
+
         describe '#fetch' do
           it 'returns the entity with the given UUID' do
             table.insert row

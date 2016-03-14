@@ -23,15 +23,6 @@ module Kamerling
       Sequel::Migrator.run db, path
     end
 
-    describe '#all' do
-      it 'returns all Projects' do
-        table.insert name: 'ECC',   uuid: 'ECC id'
-        table.insert name: 'GIMPS', uuid: 'GIMPS id'
-        projects = [Project.new(uuid: 'ECC id'), Project.new(uuid: 'GIMPS id')]
-        _(repo.all).must_equal projects
-      end
-    end
-
     describe '#fetch_with_clients_and_tasks' do
       it 'returns a Project with all of its Clients and Tasks' do
         db[:clients].insert busy: false, host: 'localhost', port: 1979,

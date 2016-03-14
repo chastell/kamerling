@@ -13,10 +13,6 @@ module Kamerling
       @table = db[:projects]
     end
 
-    def all
-      table.all.map(&Project.method(:new))
-    end
-
     def fetch_with_clients_and_tasks(uuid)
       clients = client_hashes(uuid).map(&Client.method(:new))
       tasks   = task_hashes(uuid).map(&Task.method(:new))
