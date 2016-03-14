@@ -36,7 +36,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'minitest-focus',      '~> 1.1'
   gem.add_development_dependency 'nokogiri',            '~> 1.6'
   gem.add_development_dependency 'rack-test',           '~> 0.6.2'
-  gem.add_development_dependency 'rake',                '~> 10.1'
+  gem.add_development_dependency 'rake',                '~> 11.0'
   gem.add_development_dependency 'reek',                '~> 3.1'
   gem.add_development_dependency 'rerun',               '~> 0.11.0'
   gem.add_development_dependency 'rubocop',             '~> 0.37.0'
