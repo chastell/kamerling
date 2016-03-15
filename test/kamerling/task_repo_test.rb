@@ -2,6 +2,8 @@
 
 require 'sequel'
 require_relative '../test_helper'
+require_relative '../../lib/kamerling/project'
+require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
 require_relative 'new_repo_behaviour'
 
@@ -26,6 +28,15 @@ module Kamerling
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
       db[:projects] << project.new_to_h
+    end
+
+    describe '#for_project' do
+      it 'returns all Tasks for the given Project UUID' do
+        db[:projects] << Project.new(name: 'another', uuid: 'other').new_to_h
+        table << { data: '', done: true, project_uuid: 'pUUID', uuid: 'tpUUID' }
+        table << { data: '', done: true, project_uuid: 'other', uuid: 'tother' }
+        _(repo.for_project('pUUID')).must_equal [Task.new(uuid: 'tpUUID')]
+      end
     end
   end
 end
