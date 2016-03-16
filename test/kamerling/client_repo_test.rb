@@ -39,5 +39,20 @@ module Kamerling
         _(table.first).must_equal row
       end
     end
+
+    describe '#for_project' do
+      it 'returns all Clients for the given Project UUID' do
+        db[:projects] << { name: 'ECC', uuid: 'ecc' }
+        db[:projects] << { name: 'GIMPS', uuid: 'gimps' }
+        db[:clients] << { busy: false, host: '1.2.3.4', port: 5, prot: 'TCP',
+                          uuid: 'ecc_client' }
+        db[:clients] << { busy: false, host: '1.2.3.4', port: 5, prot: 'TCP',
+                          uuid: 'gimps_client' }
+        db[:registrations] << { client_uuid: 'ecc_client', host: '1.2.3.4',
+                                port: 5, prot: 'TCP', project_uuid: 'ecc',
+                                uuid: 'reg' }
+        _(repo.for_project('ecc')).must_equal [Client.new(uuid: 'ecc_client')]
+      end
+    end
   end
 end
