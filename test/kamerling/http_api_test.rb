@@ -9,6 +9,7 @@ require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
+require_relative '../../lib/kamerling/task_repo'
 require_relative '../../lib/kamerling/task_dispatcher'
 require_relative '../../lib/kamerling/uuid'
 
@@ -21,10 +22,11 @@ module Kamerling
     let(:gimps)           { Project.new                          }
     let(:project_repo)    { fake(ProjectRepo, all: [gimps, ecc]) }
     let(:task_dispatcher) { fake(TaskDispatcher)                 }
+    let(:task_repo)       { fake(TaskRepo)                       }
 
     let(:repos) do
       fake(Repos, as: :class, client_repo: client_repo,
-                  project_repo: project_repo)
+                  project_repo: project_repo, task_repo: task_repo)
     end
 
     describe 'GET /' do
@@ -67,9 +69,8 @@ module Kamerling
       let(:seven) { Task.new(done: true)  }
 
       before do
-        stub(project_repo).fetch_with_clients_and_tasks(gimps.uuid) do
-          Project.new(clients: [cpu, gpu], tasks: [three, seven])
-        end
+        stub(client_repo).for_project(gimps.uuid) { [cpu, gpu] }
+        stub(task_repo).for_project(gimps.uuid) { [three, seven] }
       end
 
       it 'contains links to and info on the project’s clients' do
