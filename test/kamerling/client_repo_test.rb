@@ -40,6 +40,21 @@ module Kamerling
       end
     end
 
+    describe '#free_for_project' do
+      it 'returns free Clients for the given Project UUID' do
+        db[:projects] << { name: 'ECC', uuid: 'ecc' }
+        db[:clients] << { busy: false, host: '1.2.3.4', port: 5, prot: 'TCP',
+                          uuid: 'free' }
+        db[:clients] << { busy: true, host: '6.7.8.9', port: 10, prot: 'TCP',
+                          uuid: 'busy' }
+        db[:registrations] << { client_uuid: 'free', host: '1.2.3.4', port: 5,
+                                prot: 'TCP', project_uuid: 'ecc', uuid: 'freg' }
+        db[:registrations] << { client_uuid: 'busy', host: '6.7.8.9', port: 10,
+                                prot: 'TCP', project_uuid: 'ecc', uuid: 'breg' }
+        _(repo.free_for_project('ecc')).must_equal [Client.new(uuid: 'free')]
+      end
+    end
+
     describe '#for_project' do
       it 'returns all Clients for the given Project UUID' do
         db[:projects] << { name: 'ECC', uuid: 'ecc' }

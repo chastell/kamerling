@@ -13,6 +13,12 @@ module Kamerling
       @table = db[:clients]
     end
 
+    def free_for_project(project_uuid)
+      db[:registrations].join(:clients, uuid: :client_uuid)
+                        .where(busy: false, project_uuid: project_uuid).all
+                        .map(&Client.method(:new))
+    end
+
     def for_project(project_uuid)
       db[:registrations].join(:clients, uuid: :client_uuid)
                         .where(project_uuid: project_uuid).all
