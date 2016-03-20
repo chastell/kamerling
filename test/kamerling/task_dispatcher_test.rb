@@ -7,6 +7,7 @@ require_relative '../../lib/kamerling/dispatch'
 require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/net_dispatcher'
 require_relative '../../lib/kamerling/project'
+require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_dispatcher'
@@ -14,12 +15,13 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe TaskDispatcher do
-    let(:addr)           { Addr.new                                     }
-    let(:client)         { Client.new(addr: addr)                       }
-    let(:net_dispatcher) { fake(NetDispatcher, as: :class)              }
-    let(:project)        { Project.new                                  }
-    let(:repos)          { fake(Repos, as: :class, projects: [project]) }
-    let(:task)           { Task.new(data: 'data')                       }
+    let(:addr)           { Addr.new                                            }
+    let(:client)         { Client.new(addr: addr)                              }
+    let(:net_dispatcher) { fake(NetDispatcher, as: :class)                     }
+    let(:project)        { Project.new                                         }
+    let(:project_repo)   { fake(ProjectRepo, all: [project])                   }
+    let(:repos)          { fake(Repos, as: :class, project_repo: project_repo) }
+    let(:task)           { Task.new(data: 'data')                              }
 
     before do
       stub(repos).next_task_for(project) { task }

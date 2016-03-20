@@ -13,7 +13,7 @@ module Kamerling
     end
 
     def dispatch_all
-      repos.projects.each do |project|
+      repos.project_repo.all.each do |project|
         repos.free_clients_for(project).each do |client|
           task = repos.next_task_for(project)
           dispatch_task client: client, project: project, task: task if task
