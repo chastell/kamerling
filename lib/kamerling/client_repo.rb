@@ -14,19 +14,20 @@ module Kamerling
     end
 
     def free_for_project(project_uuid)
-      db[:registrations].join(:clients, uuid: :client_uuid)
-                        .where(busy: false, project_uuid: project_uuid).all
-                        .map(&Client.method(:new))
+      scoped_clients(project_uuid: project_uuid, busy: false)
     end
 
     def for_project(project_uuid)
-      db[:registrations].join(:clients, uuid: :client_uuid)
-                        .where(project_uuid: project_uuid).all
-                        .map(&Client.method(:new))
+      scoped_clients(project_uuid: project_uuid)
     end
 
     private
 
     attr_reader :db
+
+    def scoped_clients(scope)
+      db[:registrations].join(:clients, uuid: :client_uuid).where(scope).all
+                        .map(&Client.method(:new))
+    end
   end
 end
