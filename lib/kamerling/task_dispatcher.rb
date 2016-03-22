@@ -29,7 +29,7 @@ module Kamerling
       message = Message.data(client: client, project: project, task: task)
       dispatch = Dispatch.new(addr: client.addr, client: client,
                               project: project, task: task)
-      net_dispatcher.dispatch message, addr: client.addr
+      net_dispatcher.dispatch message.to_s, addr: client.addr
       client.busy = true
       repos << client
       repos << dispatch

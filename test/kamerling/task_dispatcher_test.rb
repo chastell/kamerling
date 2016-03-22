@@ -32,8 +32,8 @@ module Kamerling
 
     describe '#dispatch_all' do
       it 'dispatches tasks to free clients' do
-        message = Message.data(client: client, project: project, task: task)
-        _(net_dispatcher).must_have_received :dispatch, [message, addr: addr]
+        bytes = Message.data(client: client, project: project, task: task).to_s
+        _(net_dispatcher).must_have_received :dispatch, [bytes, addr: addr]
       end
 
       it 'marks clients as busy and persists the change' do

@@ -6,7 +6,6 @@ require 'stringio'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/logging'
-require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/net_dispatcher'
 require_relative '../../lib/kamerling/server/tcp'
 require_relative '../../lib/kamerling/server/udp'
@@ -105,7 +104,7 @@ module Kamerling
       it 'logs packet dispatches' do
         server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
         addr   = Addr[server.addr[3], server.addr[1], :UDP]
-        NetDispatcher.dispatch Message.parse('PING'), addr: addr
+        NetDispatcher.dispatch 'PING', addr: addr
         _(logged).must_include "sent #{addr} 50 49 4e 47"
       end
     end

@@ -23,8 +23,8 @@ module Kamerling
 
     def log_dispatcher
       NetDispatcher.singleton_class.extend AfterDo
-      NetDispatcher.singleton_class.before(:dispatch) do |message, kwargs|
-        logger.debug "sent #{kwargs[:addr]} #{message.to_hex}"
+      NetDispatcher.singleton_class.before(:dispatch) do |bytes, kwargs|
+        logger.debug "sent #{kwargs[:addr]} #{Message.parse(bytes).to_hex}"
       end
     end
 
