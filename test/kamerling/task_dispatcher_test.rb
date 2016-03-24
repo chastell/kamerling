@@ -17,15 +17,19 @@ module Kamerling
   describe TaskDispatcher do
     let(:addr)           { Addr.new                                            }
     let(:client)         { Client.new(addr: addr)                              }
+    let(:client_repo)    { fake(ClientRepo, free_for_project: [client])        }
     let(:net_dispatcher) { fake(NetDispatcher, as: :class)                     }
     let(:project)        { Project.new                                         }
     let(:project_repo)   { fake(ProjectRepo, all: [project])                   }
-    let(:repos)          { fake(Repos, as: :class, project_repo: project_repo) }
     let(:task)           { Task.new(data: 'data')                              }
+
+    let(:repos) do
+      fake(Repos, as: :class, client_repo: client_repo,
+                  project_repo: project_repo)
+    end
 
     before do
       stub(repos).next_task_for(project) { task }
-      stub(repos).free_clients_for(project) { [client] }
       td = TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos)
       td.dispatch_all
     end
