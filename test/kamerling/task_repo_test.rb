@@ -38,5 +38,13 @@ module Kamerling
         _(repo.for_project('pUUID')).must_equal [Task.new(uuid: 'tpUUID')]
       end
     end
+
+    describe '#next_for_project' do
+      it 'returns the first pending Task for the given Project UUID' do
+        table << { data: '', done: true,  project_uuid: 'pUUID', uuid: 'done' }
+        table << { data: '', done: false, project_uuid: 'pUUID', uuid: 'pend' }
+        _(repo.next_for_project('pUUID')).must_equal Task.new(uuid: 'pend')
+      end
+    end
   end
 end

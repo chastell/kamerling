@@ -13,5 +13,9 @@ module Kamerling
     def for_project(project_uuid)
       table.where(project_uuid: project_uuid).all.map(&Task.method(:new))
     end
+
+    def next_for_project(project_uuid)
+      Task.new(table.where(done: false, project_uuid: project_uuid).first)
+    end
   end
 end
