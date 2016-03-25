@@ -15,7 +15,12 @@ module Kamerling
     end
 
     def next_for_project(project_uuid)
-      Task.new(table.where(done: false, project_uuid: project_uuid).first)
+      case
+      when hash = table[done: false, project_uuid: project_uuid]
+        Task.new(hash)
+      else
+        raise NotFound
+      end
     end
   end
 end

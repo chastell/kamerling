@@ -45,6 +45,10 @@ module Kamerling
         table << { data: '', done: false, project_uuid: 'pUUID', uuid: 'pend' }
         _(repo.next_for_project('pUUID')).must_equal Task.new(uuid: 'pend')
       end
+
+      it 'raises NotFound if there’s no free Task' do
+        _(-> { repo.next_for_project('pUUID') }).must_raise TaskRepo::NotFound
+      end
     end
   end
 end
