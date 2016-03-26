@@ -10,13 +10,13 @@ module Kamerling
       @table = db[:tasks]
     end
 
-    def for_project(project_uuid)
-      table.where(project_uuid: project_uuid).all.map(&Task.method(:new))
+    def for_project(project)
+      table.where(project_uuid: project.uuid).all.map(&Task.method(:new))
     end
 
-    def next_for_project(project_uuid)
+    def next_for_project(project)
       case
-      when hash = table[done: false, project_uuid: project_uuid]
+      when hash = table[done: false, project_uuid: project.uuid]
         Task.new(hash)
       else
         raise NotFound

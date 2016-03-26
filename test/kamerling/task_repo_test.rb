@@ -31,23 +31,23 @@ module Kamerling
     end
 
     describe '#for_project' do
-      it 'returns all Tasks for the given Project UUID' do
+      it 'returns all Tasks for the given Project' do
         db[:projects] << Project.new(name: 'another', uuid: 'other').new_to_h
         table << { data: '', done: true, project_uuid: 'pUUID', uuid: 'tpUUID' }
         table << { data: '', done: true, project_uuid: 'other', uuid: 'tother' }
-        _(repo.for_project('pUUID')).must_equal [Task.new(uuid: 'tpUUID')]
+        _(repo.for_project(project)).must_equal [Task.new(uuid: 'tpUUID')]
       end
     end
 
     describe '#next_for_project' do
-      it 'returns the first pending Task for the given Project UUID' do
+      it 'returns the first pending Task for the given Project' do
         table << { data: '', done: true,  project_uuid: 'pUUID', uuid: 'done' }
         table << { data: '', done: false, project_uuid: 'pUUID', uuid: 'pend' }
-        _(repo.next_for_project('pUUID')).must_equal Task.new(uuid: 'pend')
+        _(repo.next_for_project(project)).must_equal Task.new(uuid: 'pend')
       end
 
       it 'raises NotFound if there’s no free Task' do
-        _(-> { repo.next_for_project('pUUID') }).must_raise TaskRepo::NotFound
+        _(-> { repo.next_for_project(project) }).must_raise TaskRepo::NotFound
       end
     end
   end

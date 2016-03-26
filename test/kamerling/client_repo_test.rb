@@ -4,6 +4,7 @@ require 'sequel'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
+require_relative '../../lib/kamerling/project'
 require_relative 'new_repo_behaviour'
 
 module Kamerling
@@ -12,9 +13,10 @@ module Kamerling
 
     Sequel.extension :migration
 
-    let(:db)    { Sequel.sqlite      }
-    let(:repo)  { ClientRepo.new(db) }
-    let(:table) { db[:clients]       }
+    let(:db)    { Sequel.sqlite              }
+    let(:project) { Project.new(uuid: 'ecc') }
+    let(:repo)  { ClientRepo.new(db)         }
+    let(:table) { db[:clients]               }
 
     let(:entity) do
       addr = Addr['localhost', 1981, :TCP]
@@ -41,7 +43,7 @@ module Kamerling
     end
 
     describe '#free_for_project' do
-      it 'returns free Clients for the given Project UUID' do
+      it 'returns free Clients for the given Project' do
         db[:projects] << { name: 'ECC', uuid: 'ecc' }
         db[:clients] << { busy: false, host: '1.2.3.4', port: 5, prot: 'TCP',
                           uuid: 'free' }
@@ -51,12 +53,12 @@ module Kamerling
                                 prot: 'TCP', project_uuid: 'ecc', uuid: 'freg' }
         db[:registrations] << { client_uuid: 'busy', host: '6.7.8.9', port: 10,
                                 prot: 'TCP', project_uuid: 'ecc', uuid: 'breg' }
-        _(repo.free_for_project('ecc')).must_equal [Client.new(uuid: 'free')]
+        _(repo.free_for_project(project)).must_equal [Client.new(uuid: 'free')]
       end
     end
 
     describe '#for_project' do
-      it 'returns all Clients for the given Project UUID' do
+      it 'returns all Clients for the given Project' do
         db[:projects] << { name: 'ECC', uuid: 'ecc' }
         db[:projects] << { name: 'GIMPS', uuid: 'gimps' }
         db[:clients] << { busy: false, host: '1.2.3.4', port: 5, prot: 'TCP',
@@ -66,7 +68,7 @@ module Kamerling
         db[:registrations] << { client_uuid: 'ecc_client', host: '1.2.3.4',
                                 port: 5, prot: 'TCP', project_uuid: 'ecc',
                                 uuid: 'reg' }
-        _(repo.for_project('ecc')).must_equal [Client.new(uuid: 'ecc_client')]
+        _(repo.for_project(project)).must_equal [Client.new(uuid: 'ecc_client')]
       end
     end
   end

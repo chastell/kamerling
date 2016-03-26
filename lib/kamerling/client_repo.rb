@@ -13,12 +13,12 @@ module Kamerling
       @table = db[:clients]
     end
 
-    def free_for_project(project_uuid)
-      scoped_clients(project_uuid: project_uuid, busy: false)
+    def free_for_project(project)
+      scoped_clients(project_uuid: project.uuid, busy: false)
     end
 
-    def for_project(project_uuid)
-      scoped_clients(project_uuid: project_uuid)
+    def for_project(project)
+      scoped_clients(project_uuid: project.uuid)
     end
 
     private

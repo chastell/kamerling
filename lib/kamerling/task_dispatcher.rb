@@ -14,7 +14,7 @@ module Kamerling
 
     def dispatch_all
       repos.project_repo.all.each do |project|
-        repos.client_repo.free_for_project(project.uuid).each do |client|
+        repos.client_repo.free_for_project(project).each do |client|
           task = repos.next_task_for(project)
           dispatch_task client: client, project: project, task: task if task
         end

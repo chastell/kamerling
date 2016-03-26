@@ -30,8 +30,8 @@ module Kamerling
 
     get '/projects/:project_uuid' do
       project_uuid = params['project_uuid']
-      clients = repos.client_repo.for_project(project_uuid)
-      tasks   = repos.task_repo.for_project(project_uuid)
+      clients = repos.client_repo.for_project(Project.new(uuid: project_uuid))
+      tasks   = repos.task_repo.for_project(Project.new(uuid: project_uuid))
       render_template :project, locals: { clients: clients, tasks: tasks }
     end
 

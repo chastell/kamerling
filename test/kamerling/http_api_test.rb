@@ -69,8 +69,8 @@ module Kamerling
       let(:seven) { Task.new(done: true)  }
 
       before do
-        stub(client_repo).for_project(gimps.uuid) { [cpu, gpu] }
-        stub(task_repo).for_project(gimps.uuid) { [three, seven] }
+        stub(client_repo).for_project(gimps) { [cpu, gpu] }
+        stub(task_repo).for_project(gimps) { [three, seven] }
       end
 
       it 'contains links to and info on the project’s clients' do
