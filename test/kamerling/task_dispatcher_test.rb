@@ -11,25 +11,26 @@ require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_dispatcher'
+require_relative '../../lib/kamerling/task_repo'
 require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe TaskDispatcher do
-    let(:addr)           { Addr.new                                            }
-    let(:client)         { Client.new(addr: addr)                              }
-    let(:client_repo)    { fake(ClientRepo, free_for_project: [client])        }
-    let(:net_dispatcher) { fake(NetDispatcher, as: :class)                     }
-    let(:project)        { Project.new                                         }
-    let(:project_repo)   { fake(ProjectRepo, all: [project])                   }
-    let(:task)           { Task.new(data: 'data')                              }
+    let(:addr)           { Addr.new                                     }
+    let(:client)         { Client.new(addr: addr)                       }
+    let(:client_repo)    { fake(ClientRepo, free_for_project: [client]) }
+    let(:net_dispatcher) { fake(NetDispatcher, as: :class)              }
+    let(:project)        { Project.new                                  }
+    let(:project_repo)   { fake(ProjectRepo, all: [project])            }
+    let(:task)           { Task.new(data: 'data')                       }
+    let(:task_repo)      { fake(TaskRepo, next_for_project: task)       }
 
     let(:repos) do
       fake(Repos, as: :class, client_repo: client_repo,
-                  project_repo: project_repo)
+                  project_repo: project_repo, task_repo: task_repo)
     end
 
     before do
-      stub(repos).next_task_for(project) { task }
       td = TaskDispatcher.new(net_dispatcher: net_dispatcher, repos: repos)
       td.dispatch_all
     end

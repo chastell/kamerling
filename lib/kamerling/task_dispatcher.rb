@@ -3,6 +3,7 @@
 require_relative 'dispatch'
 require_relative 'message'
 require_relative 'net_dispatcher'
+require_relative 'task_repo'
 require_relative 'repos'
 
 module Kamerling
@@ -15,8 +16,12 @@ module Kamerling
     def dispatch_all
       repos.project_repo.all.each do |project|
         repos.client_repo.free_for_project(project).each do |client|
-          task = repos.next_task_for(project)
-          dispatch_task client: client, project: project, task: task if task
+          begin
+            task = repos.task_repo.next_for_project(project)
+            dispatch_task client: client, project: project, task: task
+          rescue TaskRepo::NotFound
+            next
+          end
         end
       end
     end
