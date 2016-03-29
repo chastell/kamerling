@@ -16,12 +16,7 @@ module Kamerling
     def dispatch_all
       repos.project_repo.all.each do |project|
         repos.client_repo.free_for_project(project).each do |client|
-          begin
-            task = repos.task_repo.next_for_project(project)
-            dispatch_task client: client, project: project, task: task
-          rescue TaskRepo::NotFound
-            next
-          end
+          dispatch_task client: client, project: project
         end
       end
     end
@@ -30,7 +25,8 @@ module Kamerling
 
     attr_reader :net_dispatcher, :repos
 
-    def dispatch_task(client:, project:, task:)
+    def dispatch_task(client:, project:)
+      task = repos.task_repo.next_for_project(project)
       message = Message.data(client: client, project: project, task: task)
       dispatch = Dispatch.new(addr: client.addr, client: client,
                               project: project, task: task)
@@ -38,6 +34,8 @@ module Kamerling
       client.busy = true
       repos << client
       repos << dispatch
+    rescue TaskRepo::NotFound
+      return
     end
   end
 end
