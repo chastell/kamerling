@@ -52,13 +52,6 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '.clients' do
-      it 'returns all clients' do
-        Repos.repos = { Client => fake(Repo, all: all_clients = fake) }
-        Repos.clients.must_equal all_clients
-      end
-    end
-
     describe '.clients_for' do
       it 'returns all clients for the given project' do
         clients  = [Client.new, Client.new]

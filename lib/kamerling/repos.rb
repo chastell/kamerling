@@ -32,10 +32,6 @@ module Kamerling
         @client_repo ||= ClientRepo.new
       end
 
-      def clients
-        repos[Client].all
-      end
-
       def clients_for(project)
         repos[Registration].related_to(project).map(&:client)
       end
