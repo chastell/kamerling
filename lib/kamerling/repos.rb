@@ -42,10 +42,6 @@ module Kamerling
         @db    = db
       end
 
-      def free_clients_for(project)
-        clients_for(project).reject(&:busy)
-      end
-
       def next_task_for(project)
         repos[Task].related_to(project).reject(&:done).first
       end

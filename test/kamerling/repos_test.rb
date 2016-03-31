@@ -73,20 +73,6 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '.free_clients_for' do
-      it 'returns free clients for the given project' do
-        busy_client = Client.new(busy: true)
-        free_client = Client.new(busy: false)
-        busy_reg    = Registration.new(client: busy_client)
-        free_reg    = Registration.new(client: free_client)
-        project     = Project.new
-        repo        = fake(Repo)
-        stub(repo).related_to(project) { [busy_reg, free_reg] }
-        Repos.repos = { Registration => repo }
-        _(Repos.free_clients_for(project)).must_equal [free_client]
-      end
-    end
-
     describe '.next_task_for' do
       it 'returns the next task for the given project' do
         project   = Project.new
