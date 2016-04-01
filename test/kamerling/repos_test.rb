@@ -52,18 +52,6 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '.clients_for' do
-      it 'returns all clients for the given project' do
-        clients  = [Client.new, Client.new]
-        project  = Project.new
-        regs     = clients.map { |client| Registration.new(client: client) }
-        reg_repo = fake(Repo)
-        stub(reg_repo).related_to(project) { regs }
-        Repos.repos = { Registration => reg_repo }
-        _(Repos.clients_for(project)).must_equal clients
-      end
-    end
-
     describe '.db=' do
       it 'auto-migrates the passed db' do
         db = Sequel.sqlite

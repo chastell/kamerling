@@ -32,10 +32,6 @@ module Kamerling
         @client_repo ||= ClientRepo.new
       end
 
-      def clients_for(project)
-        repos[Registration].related_to(project).map(&:client)
-      end
-
       def db=(db)
         Sequel::Migrator.run db, "#{__dir__}/migrations"
         @repos = nil
