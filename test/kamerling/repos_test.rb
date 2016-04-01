@@ -61,18 +61,6 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '.next_task_for' do
-      it 'returns the next task for the given project' do
-        project   = Project.new
-        done_task = Task.new(done: true)
-        new_task  = Task.new(done: false)
-        repo      = fake(Repo)
-        stub(repo).related_to(project) { [done_task, new_task] }
-        Repos.repos = { Task => repo }
-        _(Repos.next_task_for(project)).must_equal new_task
-      end
-    end
-
     describe '.project' do
       it 'returns the project with the given UUID' do
         gimps = Project.new

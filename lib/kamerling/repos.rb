@@ -38,10 +38,6 @@ module Kamerling
         @db    = db
       end
 
-      def next_task_for(project)
-        repos[Task].related_to(project).reject(&:done).first
-      end
-
       def project_repo
         @project_repo ||= ProjectRepo.new
       end
