@@ -17,7 +17,7 @@ require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
 require_relative '../../lib/kamerling/uuid'
 
-module Kamerling                          # rubocop:disable Metrics/ModuleLength
+module Kamerling
   describe Repos do
     describe '.<<' do
       it 'shuffles the object into the right repo' do
@@ -72,13 +72,6 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
     describe '.project_repo' do
       it 'returns a ProjectRepo' do
         _(Repos.project_repo).must_be_kind_of ProjectRepo
-      end
-    end
-
-    describe '.projects' do
-      it 'returns all projects' do
-        Repos.repos = { Project => fake(Repo, all: all_projects = fake) }
-        Repos.projects.must_equal all_projects
       end
     end
 
