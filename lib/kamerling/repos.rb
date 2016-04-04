@@ -42,10 +42,6 @@ module Kamerling
         @project_repo ||= ProjectRepo.new
       end
 
-      def project(project_uuid)
-        repos[Project][project_uuid]
-      end
-
       def registration_repo
         @registration_repo ||= RegistrationRepo.new
       end

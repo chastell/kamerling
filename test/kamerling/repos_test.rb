@@ -61,14 +61,6 @@ module Kamerling
       end
     end
 
-    describe '.project' do
-      it 'returns the project with the given UUID' do
-        gimps = Project.new
-        Repos.repos = { Project => { gimps.uuid => gimps } }
-        _(Repos.project(gimps.uuid)).must_equal gimps
-      end
-    end
-
     describe '.project_repo' do
       it 'returns a ProjectRepo' do
         _(Repos.project_repo).must_be_kind_of ProjectRepo
