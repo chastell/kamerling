@@ -85,17 +85,6 @@ module Kamerling
       end
     end
 
-    describe '.tasks_for' do
-      it 'returns all tasks for the given project' do
-        project   = Project.new
-        tasks     = [Task.new, Task.new]
-        task_repo = fake(Repo)
-        stub(task_repo).related_to(project) { tasks }
-        Repos.repos = { Task => task_repo }
-        _(Repos.tasks_for(project)).must_equal tasks
-      end
-    end
-
     describe 'when working on actual database' do
       before { Repos.db = Sequel.sqlite }
 

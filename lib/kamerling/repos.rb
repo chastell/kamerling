@@ -54,10 +54,6 @@ module Kamerling
         @task_repo ||= TaskRepo.new
       end
 
-      def tasks_for(project)
-        repos[Task].related_to(project)
-      end
-
       private
 
       def db
