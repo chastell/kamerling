@@ -36,16 +36,6 @@ module Kamerling
       end
     end
 
-    describe '.[]' do
-      it 'allows querying for repository objects' do
-        client = Client.new
-        Repos.repos = { Client => {} }
-        _(Repos[Client][client.uuid]).must_be_nil
-        Repos.repos = { Client => { client.uuid => client } }
-        _(Repos[Client][client.uuid]).must_equal client
-      end
-    end
-
     describe '.client_repo' do
       it 'returns a ClientRepo' do
         _(Repos.client_repo).must_be_kind_of ClientRepo
@@ -82,33 +72,6 @@ module Kamerling
     describe '.task_repo' do
       it 'returns a TaskRepo' do
         _(Repos.task_repo).must_be_kind_of TaskRepo
-      end
-    end
-
-    describe 'when working on actual database' do
-      before { Repos.db = Sequel.sqlite }
-
-      it 'makes sure objects can be stored and retrieved' do
-        addr    = Addr['127.0.0.1', 1981, :TCP]
-        client  = Client.new(addr: addr)
-        project = Project.new(name: 'project name', uuid: UUID.new)
-        task    = Task.new(data: 'data', project: project, uuid: UUID.new)
-        reg     = Registration.new(addr: addr, client: client, project: project)
-        res     = Result.new(addr: addr, client: client, data: 'da', task: task)
-        Repos << client << project << task << reg << res
-        _(Repos[Client][client.uuid]).must_equal client
-        _(Repos[Project][project.uuid]).must_equal project
-        _(Repos[Registration][reg.uuid]).must_equal reg
-        _(Repos[Result][res.uuid]).must_equal res
-        _(Repos[Task][task.uuid]).must_equal task
-      end
-
-      it 'makes sure objects can be updated' do
-        client = Client.new(addr: Addr['127.0.0.1', 1979, :TCP])
-        Repos << client
-        client.busy = true
-        Repos << client
-        assert Repos[Client][client.uuid].busy
       end
     end
   end

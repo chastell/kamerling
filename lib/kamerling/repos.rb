@@ -24,10 +24,6 @@ module Kamerling
         self
       end
 
-      def [](klass)
-        repos[klass]
-      end
-
       def client_repo
         @client_repo ||= ClientRepo.new
       end
