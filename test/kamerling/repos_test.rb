@@ -5,6 +5,7 @@ require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
+require_relative '../../lib/kamerling/dispatch_repo'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/registration'
@@ -48,6 +49,12 @@ module Kamerling
         _(db.tables).wont_include :schema_info
         Repos.db = db
         _(db.tables).must_include :schema_info
+      end
+    end
+
+    describe '.dispatch_repo' do
+      it 'returns a DispatchRepo' do
+        _(Repos.dispatch_repo).must_be_kind_of DispatchRepo
       end
     end
 

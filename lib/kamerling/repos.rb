@@ -3,6 +3,7 @@
 require 'sequel'
 require_relative 'client'
 require_relative 'client_repo'
+require_relative 'dispatch_repo'
 require_relative 'project'
 require_relative 'project_repo'
 require_relative 'registration'
@@ -32,6 +33,10 @@ module Kamerling
         Sequel::Migrator.run db, "#{__dir__}/migrations"
         @repos = nil
         @db    = db
+      end
+
+      def dispatch_repo
+        @dispatch_repo ||= DispatchRepo.new
       end
 
       def project_repo
