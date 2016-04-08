@@ -3,7 +3,9 @@
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/dispatch'
+require_relative '../../lib/kamerling/dispatch_repo'
 require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/net_dispatcher'
 require_relative '../../lib/kamerling/project'
@@ -19,6 +21,7 @@ module Kamerling
     let(:addr)           { Addr.new                                     }
     let(:client)         { Client.new(addr: addr)                       }
     let(:client_repo)    { fake(ClientRepo, free_for_project: [client]) }
+    let(:dispatch_repo)  { fake(DispatchRepo)                           }
     let(:net_dispatcher) { fake(NetDispatcher, as: :class)              }
     let(:project)        { Project.new                                  }
     let(:project_repo)   { fake(ProjectRepo, all: [project])            }
@@ -27,7 +30,8 @@ module Kamerling
 
     let(:repos) do
       fake(Repos, as: :class, client_repo: client_repo,
-                  project_repo: project_repo, task_repo: task_repo)
+                  dispatch_repo: dispatch_repo, project_repo: project_repo,
+                  task_repo: task_repo)
     end
 
     before do
@@ -43,11 +47,11 @@ module Kamerling
 
       it 'marks clients as busy and persists the change' do
         assert client.busy
-        _(repos).must_have_received :<<, [client]
+        _(client_repo).must_have_received :<<, [client]
       end
 
       it 'creates and stores a Dispatch object along the way' do
-        _(repos).must_have_received :<<, [any(Dispatch)]
+        _(dispatch_repo).must_have_received :<<, [any(Dispatch)]
       end
     end
   end

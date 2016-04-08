@@ -25,15 +25,15 @@ module Kamerling
 
     attr_reader :net_dispatcher, :repos
 
-    def dispatch_task(client:, project:)
+    def dispatch_task(client:, project:) # rubocop:disable Metrics/AbcSize
       task = repos.task_repo.next_for_project(project)
       message = Message.data(client: client, project: project, task: task)
       dispatch = Dispatch.new(addr: client.addr, client: client,
                               project: project, task: task)
       net_dispatcher.dispatch message.to_s, addr: client.addr
       client.busy = true
-      repos << client
-      repos << dispatch
+      repos.client_repo << client
+      repos.dispatch_repo << dispatch
     rescue TaskRepo::NotFound
       return
     end
