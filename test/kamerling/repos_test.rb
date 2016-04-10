@@ -20,23 +20,6 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe Repos do
-    describe '.<<' do
-      it 'shuffles the object into the right repo' do
-        Repos.repos = { Object => repo = fake(Repo) }
-        Repos.<< object = Object.new
-        _(repo).must_have_received :<<, [object]
-      end
-
-      it 'can be chained' do
-        str_repo = fake(Repo)
-        sym_repo = fake(Repo)
-        Repos.repos = { String => str_repo, Symbol => sym_repo }
-        Repos << 'str' << :sym
-        _(str_repo).must_have_received :<<, ['str']
-        _(sym_repo).must_have_received :<<, [:sym]
-      end
-    end
-
     describe '.client_repo' do
       it 'returns a ClientRepo' do
         _(Repos.client_repo).must_be_kind_of ClientRepo

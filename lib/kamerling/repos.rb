@@ -20,11 +20,6 @@ module Kamerling
     class << self
       attr_writer :repos
 
-      def <<(object)
-        repos[object.class] << object
-        self
-      end
-
       def client_repo
         @client_repo ||= ClientRepo.new
       end
