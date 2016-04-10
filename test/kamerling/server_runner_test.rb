@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'sequel'
 require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
-require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/server_runner'
 require_relative '../../lib/kamerling/server/http'
 require_relative '../../lib/kamerling/server/tcp'
@@ -26,18 +24,6 @@ module Kamerling
       stub(http_cl).new(addr: http_addr) { http }
       stub(tcp_cl).new(addr:  tcp_addr)  { tcp  }
       stub(udp_cl).new(addr:  udp_addr)  { udp  }
-    end
-
-    describe '.new' do
-      it 'hooks to the given database' do
-        args  = %w(--host 0.0.0.0 --db sqlite::memory:)
-        db    = fake { Sequel::SQLite::Database }
-        orm   = fake(Sequel, as: :class)
-        stub(orm).connect('sqlite::memory:') { db }
-        repos = fake(Repos, as: :class)
-        ServerRunner.new args, classes: classes, orm: orm, repos: repos
-        _(repos).must_have_received :db=, [db]
-      end
     end
 
     describe '#join' do
