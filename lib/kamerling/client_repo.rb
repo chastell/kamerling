@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'client'
-require_relative 'mapper'
 require_relative 'repo'
 require_relative 'settings'
 
