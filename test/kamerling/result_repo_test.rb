@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
+require 'sequel'
 require_relative '../test_helper'
+require_relative '../../lib/kamerling/addr'
+require_relative '../../lib/kamerling/client'
+require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/result_repo'
+require_relative '../../lib/kamerling/task'
+require_relative 'repo_behaviour'
 
 module Kamerling
   describe ResultRepo do
-    include NewRepoBehaviour
+    include RepoBehaviour
 
     let(:addr)    { Addr['localhost', 1981, :TCP]                           }
     let(:client)  { Client.new(addr: addr, uuid: 'cUUID')                   }

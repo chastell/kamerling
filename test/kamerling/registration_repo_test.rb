@@ -7,11 +7,11 @@ require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/registration_repo'
-require_relative 'new_repo_behaviour'
+require_relative 'repo_behaviour'
 
 module Kamerling
   describe RegistrationRepo do
-    include NewRepoBehaviour
+    include RepoBehaviour
 
     Sequel.extension :migration
 

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'new_repo'
+require_relative 'repo'
+require_relative 'settings'
 require_relative 'task'
 
 module Kamerling
-  class TaskRepo < NewRepo
+  class TaskRepo < Repo
     def initialize(db = Settings.new.db_conn)
       @klass = Task
       @table = db[:tasks]

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Kamerling
-  module NewRepoBehaviour
+  module RepoBehaviour
     def self.included(spec_class)
       spec_class.class_eval do
         describe '#<<' do
@@ -32,7 +32,7 @@ module Kamerling
           end
 
           it 'raises NotFound if the UUID is missing and there is no block' do
-            _(-> { repo.fetch('an UUID') }).must_raise NewRepo::NotFound
+            _(-> { repo.fetch('an UUID') }).must_raise Repo::NotFound
           end
         end
       end

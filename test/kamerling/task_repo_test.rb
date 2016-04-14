@@ -5,11 +5,11 @@ require_relative '../test_helper'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
-require_relative 'new_repo_behaviour'
+require_relative 'repo_behaviour'
 
 module Kamerling
   describe TaskRepo do
-    include NewRepoBehaviour
+    include RepoBehaviour
 
     let(:db)      { Sequel.sqlite                             }
     let(:project) { Project.new(name: 'GIMPS', uuid: 'pUUID') }

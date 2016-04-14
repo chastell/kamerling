@@ -3,7 +3,7 @@
 require 'sequel'
 
 module Kamerling
-  class NewRepo
+  class Repo
     NotFound = Class.new(RuntimeError)
 
     def <<(object)

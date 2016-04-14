@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative 'dispatch'
-require_relative 'new_repo'
+require_relative 'repo'
 require_relative 'settings'
 
 module Kamerling
-  class DispatchRepo < NewRepo
+  class DispatchRepo < Repo
     def initialize(db = Settings.new.db_conn)
       @klass = Dispatch
       @table = db[:dispatches]

@@ -2,11 +2,11 @@
 
 require_relative 'client'
 require_relative 'mapper'
-require_relative 'new_repo'
+require_relative 'repo'
 require_relative 'settings'
 
 module Kamerling
-  class ClientRepo < NewRepo
+  class ClientRepo < Repo
     def initialize(db = Settings.new.db_conn)
       @db    = db
       @klass = Client

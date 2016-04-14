@@ -5,11 +5,11 @@ require_relative '../test_helper'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/project'
-require_relative 'new_repo_behaviour'
+require_relative 'repo_behaviour'
 
 module Kamerling
   describe ClientRepo do
-    include NewRepoBehaviour
+    include RepoBehaviour
 
     Sequel.extension :migration
 

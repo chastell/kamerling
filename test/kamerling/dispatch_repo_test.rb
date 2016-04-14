@@ -7,11 +7,11 @@ require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/dispatch'
 require_relative '../../lib/kamerling/dispatch_repo'
-require_relative 'new_repo_behaviour'
+require_relative 'repo_behaviour'
 
 module Kamerling
   describe DispatchRepo do
-    include NewRepoBehaviour
+    include RepoBehaviour
 
     Sequel.extension :migration
 
