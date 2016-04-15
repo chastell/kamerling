@@ -10,7 +10,7 @@ module Kamerling
     attrs addr: Addr, client: Client, project: Project, registered_at: Time
     defaults registered_at: -> (*) { Time.now.utc }
 
-    def new_to_h
+    def to_h
       addr.to_h.merge(client_uuid: client.uuid, project_uuid: project.uuid,
                       registered_at: registered_at.iso8601, uuid: uuid)
     end

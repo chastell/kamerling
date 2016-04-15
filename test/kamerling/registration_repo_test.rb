@@ -39,8 +39,8 @@ module Kamerling
     before do
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
-      db[:clients] << client.new_to_h
-      db[:projects] << project.new_to_h
+      db[:clients] << client.to_h
+      db[:projects] << project.to_h
     end
   end
 end

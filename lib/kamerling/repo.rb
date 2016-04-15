@@ -7,7 +7,7 @@ module Kamerling
     NotFound = Class.new(RuntimeError)
 
     def <<(object)
-      hash = object.new_to_h
+      hash = object.to_h
       table << hash
     rescue Sequel::UniqueConstraintViolation
       table.where(uuid: object.uuid).update hash

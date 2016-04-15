@@ -8,8 +8,9 @@ module Kamerling
     attrs data: String, done: Boolean, project: Project
     defaults done: false
 
-    def new_to_h
-      to_h.reject { |key, _| key == :project }.merge(project_uuid: project.uuid)
+    def to_h
+      super.reject { |key, _| key == :project }
+           .merge(project_uuid: project.uuid)
     end
   end
 end

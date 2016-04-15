@@ -27,12 +27,12 @@ module Kamerling
     before do
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
-      db[:projects] << project.new_to_h
+      db[:projects] << project.to_h
     end
 
     describe '#for_project' do
       it 'returns all Tasks for the given Project' do
-        db[:projects] << Project.new(name: 'another', uuid: 'other').new_to_h
+        db[:projects] << Project.new(name: 'another', uuid: 'other').to_h
         table << { data: '', done: true, project_uuid: 'pUUID', uuid: 'tpUUID' }
         table << { data: '', done: true, project_uuid: 'other', uuid: 'tother' }
         _(repo.for_project(project)).must_equal [Task.new(uuid: 'tpUUID')]
