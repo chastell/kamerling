@@ -60,7 +60,7 @@ module Kamerling
         _(hash).must_equal param: :val, uuid: any(String)
       end
 
-      it 'serialises related UUIDEntities' do
+      it 'serialises related Entities' do
         child  = Class.new(Entity) { attrs name: String }
         parent = Class.new(Entity) { attrs child: child, name: String }
         zosia  = child.new(name: 'Zosia')
@@ -68,6 +68,15 @@ module Kamerling
         zosia_hash = { name: 'Zosia', uuid: zosia.uuid }
         marta_hash = { child: zosia_hash, name: 'Marta', uuid: marta.uuid }
         _(marta.to_h).must_equal marta_hash
+      end
+
+      it 'serialises related Values' do
+        addr   = Class.new(Value) { vals host: String, port: Integer }
+        client = Class.new(Entity) { attrs addr: addr, name: String }
+        home   = addr.new(host: 'localhost', port: 1981)
+        unit   = client.new(addr: home, name: 'sweet')
+        _(unit.to_h).must_equal host: 'localhost', name: 'sweet', port: 1981,
+                                uuid: unit.uuid
       end
     end
   end
