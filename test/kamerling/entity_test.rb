@@ -56,8 +56,14 @@ module Kamerling
     describe '#to_h' do
       it 'serialises the object to a Hash' do
         hashble = Class.new(Entity) { attrs param: Symbol }
-        hash = hashble.new(param: :val).to_h
-        _(hash).must_equal param: :val, uuid: any(String)
+        hash = hashble.new(param: 'val').to_h
+        _(hash).must_equal param: 'val', uuid: any(String)
+      end
+
+      it 'serialises Symbols to Strings' do
+        symbolic  = Class.new(Entity) { attrs symbol: Symbol }
+        valentine = symbolic.new(symbol: :♥)
+        _(valentine.to_h).must_equal symbol: '♥', uuid: valentine.uuid
       end
 
       it 'serialises related Entities' do

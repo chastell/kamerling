@@ -30,6 +30,7 @@ module Kamerling
       attributes.map do |(key, value)|
         case value
         when Entity then { key => value.to_h }
+        when Symbol then { key => value.to_s }
         when Value  then value.to_h
         else { key => value }
         end
