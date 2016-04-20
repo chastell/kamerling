@@ -66,13 +66,12 @@ module Kamerling
         _(valentine.to_h).must_equal symbol: '♥', uuid: valentine.uuid
       end
 
-      it 'serialises related Entities' do
-        child  = Class.new(Entity) { attrs name: String }
-        parent = Class.new(Entity) { attrs child: child, name: String }
-        zosia  = child.new(name: 'Zosia')
-        marta  = parent.new(child: zosia, name: 'Marta')
-        zosia_hash = { name: 'Zosia', uuid: zosia.uuid }
-        marta_hash = { child: zosia_hash, name: 'Marta', uuid: marta.uuid }
+      it 'keeps only related Entities’ UUIDs' do
+        Child  = Class.new(Entity) { attrs name: String }
+        Parent = Class.new(Entity) { attrs child: Child, name: String }
+        zosia  = Child.new(name: 'Zosia')
+        marta  = Parent.new(child: zosia, name: 'Marta')
+        marta_hash = { child_uuid: zosia.uuid, name: 'Marta', uuid: marta.uuid }
         _(marta.to_h).must_equal marta_hash
       end
 

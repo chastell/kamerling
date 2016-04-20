@@ -29,12 +29,18 @@ module Kamerling
     def to_h
       attributes.map do |(key, value)|
         case value
-        when Entity then { key => value.to_h }
+        when Entity then { uuid_key(value) => value.uuid }
         when Symbol then { key => value.to_s }
         when Value  then value.to_h
         else { key => value }
         end
       end.reduce({}, :merge)
+    end
+
+    private
+
+    def uuid_key(value)
+      "#{value.class.name.split('::').last.downcase}_uuid".to_sym
     end
   end
 end
