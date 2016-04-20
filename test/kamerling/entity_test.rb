@@ -82,7 +82,7 @@ module Kamerling
         _(marta.to_h).must_equal marta_hash
       end
 
-      it 'serialises related Values' do
+      it 'embeds related Values' do
         addr   = Class.new(Value) { vals host: String, port: Integer }
         client = Class.new(Entity) { attrs addr: addr, name: String }
         home   = addr.new(host: 'localhost', port: 1981)
