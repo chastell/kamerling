@@ -31,6 +31,7 @@ module Kamerling
         case value
         when Entity then { uuid_key(value) => value.uuid }
         when Symbol then { key => value.to_s }
+        when Time   then { key => value.utc.iso8601 }
         when Value  then value.to_h
         else { key => value }
         end

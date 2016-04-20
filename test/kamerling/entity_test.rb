@@ -66,6 +66,13 @@ module Kamerling
         _(valentine.to_h).must_equal symbol: '♥', uuid: valentine.uuid
       end
 
+      it 'serialises Times to UTC, ISO 8601' do
+        timely  = Class.new(Entity) { attrs happened_at: Time }
+        arrival = timely.new(happened_at: Time.parse('2014-12-23 05:00+01'))
+        _(arrival.to_h).must_equal happened_at: '2014-12-23T04:00:00Z',
+                                   uuid: arrival.uuid
+      end
+
       it 'keeps only related Entities’ UUIDs' do
         Child  = Class.new(Entity) { attrs name: String }
         Parent = Class.new(Entity) { attrs child: Child, name: String }
