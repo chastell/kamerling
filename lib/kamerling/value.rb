@@ -17,5 +17,11 @@ module Kamerling
         hash.each { |name, klass| attribute name, klass }
       end
     end
+
+    def to_h
+      attributes.map do |(key, value)|
+        { key => value.is_a?(Symbol) ? value.to_s : value }
+      end.reduce({}, :merge)
+    end
   end
 end

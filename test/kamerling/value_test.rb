@@ -30,5 +30,13 @@ module Kamerling
         _(address.attribute_set.map(&:name)).must_equal %i(street country)
       end
     end
+
+    describe '#to_h' do
+      it 'serialises Symbols to Strings' do
+        addr = Class.new(Value) { vals host: String, prot: Symbol }
+        localhost = addr.new(host: 'localhost', prot: :UDP)
+        _(localhost.to_h).must_equal host: 'localhost', prot: 'UDP'
+      end
+    end
   end
 end
