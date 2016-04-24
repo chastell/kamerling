@@ -23,10 +23,6 @@ module Kamerling
       [host, port]
     end
 
-    def to_h
-      attributes.merge(prot: prot.to_s)
-    end
-
     def to_s
       uri.to_s
     end
