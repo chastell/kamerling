@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     kamerling (0.0.3)
-      after_do (~> 0.3.0)
+      after_do (~> 0.4.0)
       equalizer (~> 0.0.9)
       sequel (~> 4.4)
       sinatra (~> 1.4)
@@ -13,7 +13,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    after_do (0.3.1)
+    after_do (0.4.0)
     ast (2.2.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)

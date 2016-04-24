@@ -47,8 +47,8 @@ module Kamerling
     end
 
     def log_server_lifecycle
-      Server::Sock.before(:start) { |srv| logger.info "start #{srv.addr}" }
-      Server::Sock.after(:stop)   { |srv| logger.info "stop #{srv.addr}"  }
+      Server::Sock.before(:start) { |*_, srv| logger.info "start #{srv.addr}" }
+      Server::Sock.after(:stop)   { |*_, srv| logger.info "stop #{srv.addr}"  }
     end
   end
 end

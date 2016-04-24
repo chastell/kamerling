@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
     gem.signing_key = Pathname.new('~/.ssh/gem-private_key.pem').expand_path
   end
 
-  gem.add_dependency 'after_do',  '~> 0.3.0'
+  gem.add_dependency 'after_do',  '~> 0.4.0'
   gem.add_dependency 'equalizer', '~> 0.0.9'
   gem.add_dependency 'sequel',    '~> 4.4'
   gem.add_dependency 'sinatra',   '~> 1.4'
