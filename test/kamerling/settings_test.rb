@@ -7,6 +7,7 @@ require_relative '../../lib/kamerling/settings'
 module Kamerling
   describe Settings do
     let(:args) { %w(--db db --host 0.0.0.0 --http 2009 --tcp 1981 --udp 1979) }
+    let(:settings) { Settings.from_args(args) }
 
     describe '.from_args' do
       it 'has minimal defaults' do
@@ -34,6 +35,13 @@ module Kamerling
     describe '#db_conn' do
       it 'returns a db connection for repos' do
         _(Settings.new.db_conn).must_be_kind_of Sequel::Database
+      end
+    end
+
+    describe '#http_addr' do
+      it 'returns the HTTP server Addr' do
+        _(Settings.from_args([]).http_addr).must_be_nil
+        _(settings.http_addr).must_equal Addr['0.0.0.0', 2009, :TCP]
       end
     end
 

@@ -18,6 +18,10 @@ module Kamerling
       Sequel.connect(db)
     end
 
+    def http_addr
+      Addr[host, http, :TCP] if http
+    end
+
     def server_addrs
       {
         http: Addr[host, http, :TCP],
