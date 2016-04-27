@@ -55,5 +55,12 @@ module Kamerling
         )
       end
     end
+
+    describe '#tcp_addr' do
+      it 'returns the TCP server Addr' do
+        _(Settings.from_args([]).tcp_addr).must_be_nil
+        _(settings.tcp_addr).must_equal Addr['0.0.0.0', 1981, :TCP]
+      end
+    end
   end
 end

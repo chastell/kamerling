@@ -30,6 +30,10 @@ module Kamerling
       }.select { |_, addr| addr.port }
     end
 
+    def tcp_addr
+      Addr[host, tcp, :TCP] if tcp
+    end
+
     private_class_method def self.default_db
       attribute_set[:db].default_value.value
     end
