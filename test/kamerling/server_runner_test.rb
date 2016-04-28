@@ -12,19 +12,10 @@ module Kamerling
     let(:http)    { fake { Server::HTTP }                       }
     let(:tcp)     { fake { Server::TCP  }                       }
     let(:udp)     { fake { Server::UDP  }                       }
-    let(:http_cl) { fake(as: :class) { Server::HTTP }           }
-    let(:tcp_cl)  { fake(as: :class) { Server::TCP  }           }
-    let(:udp_cl)  { fake(as: :class) { Server::UDP  }           }
+    let(:http_cl) { fake(Server::HTTP, as: :class, new: http)   }
+    let(:tcp_cl)  { fake(Server::TCP,  as: :class, new: tcp)    }
+    let(:udp_cl)  { fake(Server::UDP,  as: :class, new: udp)    }
     let(:classes) { { http: http_cl, tcp: tcp_cl, udp: udp_cl } }
-
-    before do
-      http_addr = Addr['0.0.0.0', 1234, :TCP]
-      tcp_addr  = Addr['0.0.0.0', 3456, :TCP]
-      udp_addr  = Addr['0.0.0.0', 5678, :UDP]
-      stub(http_cl).new(addr: http_addr) { http }
-      stub(tcp_cl).new(addr:  tcp_addr)  { tcp  }
-      stub(udp_cl).new(addr:  udp_addr)  { udp  }
-    end
 
     describe '#join' do
       it 'joins all the created servers' do
