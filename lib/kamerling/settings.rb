@@ -34,6 +34,10 @@ module Kamerling
       Addr[host, tcp, :TCP] if tcp
     end
 
+    def udp_addr
+      Addr[host, udp, :UDP] if udp
+    end
+
     private_class_method def self.default_db
       attribute_set[:db].default_value.value
     end

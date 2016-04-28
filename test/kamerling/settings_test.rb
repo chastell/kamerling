@@ -62,5 +62,12 @@ module Kamerling
         _(settings.tcp_addr).must_equal Addr['0.0.0.0', 1981, :TCP]
       end
     end
+
+    describe '#udp_addr' do
+      it 'returns the UDP server Addr' do
+        _(Settings.from_args([]).udp_addr).must_be_nil
+        _(settings.udp_addr).must_equal Addr['0.0.0.0', 1979, :UDP]
+      end
+    end
   end
 end
