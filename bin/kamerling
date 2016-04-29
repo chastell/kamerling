@@ -7,4 +7,5 @@ Thread.abort_on_exception = true
 
 Kamerling::Logging.log_to Logger.new($stdout)
 
-Kamerling::ServerRunner.new(ARGV).start.join
+settings = Kamerling::Settings.from_args(ARGV)
+Kamerling::ServerRunner.new(settings).start.join
