@@ -13,6 +13,10 @@ module Kamerling
         @handler = handler
       end
 
+      def ==(other)
+        addr == other.addr
+      end
+
       def join
         thread.join
       end
