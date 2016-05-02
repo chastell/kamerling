@@ -10,10 +10,18 @@ require_relative '../../../lib/kamerling/server/tcp'
 module Kamerling
   describe Server::TCP do
     let(:addr) { Addr['localhost', 1981, :TCP] }
+    let(:tcp)  { Server::TCP.new(addr: addr)   }
+
+    describe '#==' do
+      it 'compares servers by their addresses' do
+        assert tcp == Server::TCP.new(addr: Addr['localhost', 1981, :TCP])
+        refute tcp == Server::TCP.new(addr: Addr['localhost', 1982, :TCP])
+      end
+    end
 
     describe '#addr' do
       it 'returns the server’s host + port as a TCP addr' do
-        _(Server::TCP.new(addr: addr).addr).must_equal addr
+        _(tcp.addr).must_equal addr
       end
     end
 
@@ -38,17 +46,15 @@ module Kamerling
       end
 
       it 'doesn’t blow up on unknown inputs' do
-        server = Server::TCP.new(addr: addr)
-        server.start
-        TCPSocket.open(*server.addr) { |socket| socket << 'foo' }
-        server.stop
+        tcp.start
+        TCPSocket.open(*tcp.addr) { |socket| socket << 'foo' }
+        tcp.stop
       end
     end
 
     describe '#stop' do
       it 'stops the server' do
-        server = Server::TCP.new(addr: addr).start
-        server.stop
+        tcp.start.stop
         _(-> { TCPSocket.open(*addr).close }).must_raise Errno::ECONNREFUSED
       end
     end
