@@ -10,6 +10,20 @@ require_relative '../../../lib/kamerling/server/udp'
 module Kamerling
   describe Server::UDP do
     let(:addr) { Addr['localhost', 1979, :UDP] }
+    let(:udp)  { Server::UDP.new(addr: addr)   }
+
+    describe '#==' do
+      it 'compares servers by their addresses' do
+        assert udp == Server::TCP.new(addr: Addr['localhost', 1979, :UDP])
+        refute udp == Server::TCP.new(addr: Addr['localhost', 1980, :UDP])
+      end
+    end
+
+    describe '#addr' do
+      it 'returns the server’s host + port as an UDP addr' do
+        _(udp.addr).must_equal addr
+      end
+    end
 
     describe '#start' do
       it 'listens on an UDP port and passes received inputs to the handler' do
@@ -30,24 +44,17 @@ module Kamerling
       end
 
       it 'doesn’t blow up on unknown inputs' do
-        server = Server::UDP.new(addr: addr)
-        server.start
-        UDPSocket.new.send 'foo', 0, *server.addr
+        udp.start
+        UDPSocket.new.send 'foo', 0, *udp.addr
         run_all_threads
-        server.stop
+        udp.stop
       end
     end
 
     describe '#stop' do
       it 'closes the socket (and thus allows rebinding to it)' do
-        Server::UDP.new(addr: addr).start.stop
+        udp.start.stop
         UDPSocket.new.tap { |socket| socket.bind(*addr) }.close
-      end
-    end
-
-    describe '#addr' do
-      it 'returns the server’s host + port as an UDP addr' do
-        _(Server::UDP.new(addr: addr).addr).must_equal addr
       end
     end
   end
