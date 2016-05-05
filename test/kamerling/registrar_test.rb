@@ -22,19 +22,17 @@ module Kamerling
       let(:project_repo)      { fake(ProjectRepo, fetch: project)              }
       let(:registration_repo) { fake(RegistrationRepo)                         }
 
-      let(:repos) do
-        fake(Repos, as: :class, client_repo: client_repo,
-                    project_repo: project_repo,
-                    registration_repo: registration_repo)
-      end
-
       it 'registers that the given client can do the given project' do
-        Registrar.register addr: addr, message: mess, repos: repos
+        Registrar.register addr: addr, client_repo: client_repo, message: mess,
+                           project_repo: project_repo,
+                           registration_repo: registration_repo
         _(registration_repo).must_have_received :<<, [any(Registration)]
       end
 
       it 'updates the client’s addr' do
-        Registrar.register addr: addr, message: mess, repos: repos
+        Registrar.register addr: addr, client_repo: client_repo, message: mess,
+                           project_repo: project_repo,
+                           registration_repo: registration_repo
         _(client_repo).must_have_received :<<, [client]
       end
     end
