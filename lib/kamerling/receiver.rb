@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
-require_relative 'repos'
+require_relative 'client_repo'
 require_relative 'result'
+require_relative 'result_repo'
+require_relative 'task_repo'
 
 module Kamerling
   class Receiver
-    def self.receive(addr:, message:, repos: Repos)
-      new(addr: addr, message: message, repos: repos).receive
+    def self.receive(addr:, client_repo: ClientRepo.new, message:,
+                     result_repo: ResultRepo.new, task_repo: TaskRepo.new)
+      new(addr: addr, client_repo: client_repo, message: message,
+          result_repo: result_repo, task_repo: task_repo).receive
     end
 
-    def initialize(addr:, message:, repos:)
-      @addr    = addr
-      @message = message
-      @repos   = repos
+    def initialize(addr:, client_repo:, message:, result_repo:, task_repo:)
+      @addr        = addr
+      @client_repo = client_repo
+      @message     = message
+      @result_repo = result_repo
+      @task_repo   = task_repo
     end
 
     def receive
@@ -23,16 +29,16 @@ module Kamerling
 
     private
 
-    attr_reader :addr, :message, :repos
+    attr_reader :addr, :client_repo, :message, :result_repo, :task_repo
 
     def client
-      @client ||= repos.client_repo.fetch(message.client_uuid)
+      @client ||= client_repo.fetch(message.client_uuid)
     end
 
     def persist
-      repos.client_repo << client
-      repos.result_repo << result
-      repos.task_repo << task
+      client_repo << client
+      result_repo << result
+      task_repo << task
     end
 
     def result
@@ -40,7 +46,7 @@ module Kamerling
     end
 
     def task
-      @task ||= repos.task_repo.fetch(message.task_uuid)
+      @task ||= task_repo.fetch(message.task_uuid)
     end
   end
 end
