@@ -7,7 +7,6 @@ require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/http_api'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
-require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
 require_relative '../../lib/kamerling/task_dispatcher'
@@ -15,7 +14,6 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe HTTPAPI do
-    let(:app) { HTTPAPI.set(repos: repos, task_dispatcher: task_dispatcher) }
     let(:client_repo)     { fake(ClientRepo)                     }
     let(:doc)             { Nokogiri::HTML(last_response.body)   }
     let(:ecc)             { Project.new                          }
@@ -24,9 +22,9 @@ module Kamerling
     let(:task_dispatcher) { fake(TaskDispatcher)                 }
     let(:task_repo)       { fake(TaskRepo)                       }
 
-    let(:repos) do
-      fake(Repos, as: :class, client_repo: client_repo,
-                  project_repo: project_repo, task_repo: task_repo)
+    let(:app) do
+      HTTPAPI.set(client_repo: client_repo, project_repo: project_repo,
+                  task_dispatcher: task_dispatcher, task_repo: task_repo)
     end
 
     describe 'GET /' do
