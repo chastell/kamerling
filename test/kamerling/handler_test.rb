@@ -20,8 +20,7 @@ module Kamerling
       it 'handles RGST inputs' do
         message = Message.parse('RGST')
         handler.handle message, addr: addr
-        _(registrar).must_have_received :register,
-                                        [addr: addr, message: message]
+        _(registrar).must_have_received :call, [addr: addr, message: message]
       end
 
       it 'handles RSLT inputs' do

@@ -10,12 +10,12 @@ require_relative 'uuid'
 
 module Kamerling
   class Registrar
-    def self.register(addr:, client_repo: ClientRepo.new, message:,
-                      project_repo: ProjectRepo.new,
-                      registration_repo: RegistrationRepo.new)
+    def self.call(addr:, client_repo: ClientRepo.new, message:,
+                  project_repo: ProjectRepo.new,
+                  registration_repo: RegistrationRepo.new)
       new(addr: addr, client_repo: client_repo, message: message,
           project_repo: project_repo,
-          registration_repo: registration_repo).register
+          registration_repo: registration_repo).call
     end
 
     def initialize(addr:, client_repo:, message:, project_repo:,
@@ -27,7 +27,7 @@ module Kamerling
       @registration_repo = registration_repo
     end
 
-    def register
+    def call
       client.addr = addr
       client_repo << client
       registration_repo << registration
