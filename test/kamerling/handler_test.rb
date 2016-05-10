@@ -26,7 +26,7 @@ module Kamerling
       it 'handles RSLT inputs' do
         message = Message.parse('RSLT')
         handler.handle message, addr: addr
-        _(receiver).must_have_received :receive, [addr: addr, message: message]
+        _(receiver).must_have_received :call, [addr: addr, message: message]
       end
     end
   end

@@ -14,7 +14,7 @@ require_relative '../../lib/kamerling/task_repo'
 
 module Kamerling
   describe Receiver do
-    describe '.receive' do
+    describe '.call' do
       it 'saves the result and updates client and task' do
         addr        = Addr.new
         client      = Client.new(busy: true)
@@ -23,8 +23,8 @@ module Kamerling
         task        = Task.new(done: false, project: Project.new)
         task_repo   = fake(TaskRepo, fetch: task)
         message = Message.rslt(client: client, payload: 'data', task: task)
-        Receiver.receive addr: addr, client_repo: client_repo, message: message,
-                         result_repo: result_repo, task_repo: task_repo
+        Receiver.call addr: addr, client_repo: client_repo, message: message,
+                      result_repo: result_repo, task_repo: task_repo
         refute client.busy
         assert task.done
         _(client_repo).must_have_received :<<, [client]

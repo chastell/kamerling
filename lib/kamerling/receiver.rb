@@ -7,10 +7,10 @@ require_relative 'task_repo'
 
 module Kamerling
   class Receiver
-    def self.receive(addr:, client_repo: ClientRepo.new, message:,
-                     result_repo: ResultRepo.new, task_repo: TaskRepo.new)
+    def self.call(addr:, client_repo: ClientRepo.new, message:,
+                  result_repo: ResultRepo.new, task_repo: TaskRepo.new)
       new(addr: addr, client_repo: client_repo, message: message,
-          result_repo: result_repo, task_repo: task_repo).receive
+          result_repo: result_repo, task_repo: task_repo).call
     end
 
     def initialize(addr:, client_repo:, message:, result_repo:, task_repo:)
@@ -21,7 +21,7 @@ module Kamerling
       @task_repo   = task_repo
     end
 
-    def receive
+    def call
       client.busy = false
       task.done   = true
       persist

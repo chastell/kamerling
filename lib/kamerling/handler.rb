@@ -13,7 +13,7 @@ module Kamerling
     def handle(message, addr:)
       case message.type
       when :RGST then registrar.call addr: addr, message: message
-      when :RSLT then receiver.receive addr: addr, message: message
+      when :RSLT then receiver.call addr: addr, message: message
       end
     end
 
