@@ -4,6 +4,7 @@ PATH
     kamerling (0.0.3)
       after_do (~> 0.4.0)
       equalizer (~> 0.0.9)
+      procto (~> 0.0.3)
       sequel (~> 4.4)
       sinatra (~> 1.4)
       slim (~> 3.0)
@@ -44,6 +45,7 @@ GEM
     parser (2.3.1.0)
       ast (~> 2.2)
     powerpack (0.1.1)
+    procto (0.0.3)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
