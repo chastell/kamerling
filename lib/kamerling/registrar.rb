@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'procto'
 require_relative 'client'
 require_relative 'client_repo'
 require_relative 'project'
@@ -10,16 +11,11 @@ require_relative 'uuid'
 
 module Kamerling
   class Registrar
-    def self.call(addr:, client_repo: ClientRepo.new, message:,
-                  project_repo: ProjectRepo.new,
-                  registration_repo: RegistrationRepo.new)
-      new(addr: addr, client_repo: client_repo, message: message,
-          project_repo: project_repo,
-          registration_repo: registration_repo).call
-    end
+    include Procto.call
 
-    def initialize(addr:, client_repo:, message:, project_repo:,
-                   registration_repo:)
+    def initialize(addr:, client_repo: ClientRepo.new, message:,
+                   project_repo: ProjectRepo.new,
+                   registration_repo: RegistrationRepo.new)
       @addr              = addr
       @client_repo       = client_repo
       @message           = message
