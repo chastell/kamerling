@@ -45,17 +45,6 @@ module Kamerling
       end
     end
 
-    describe '#server_addrs' do
-      it 'returns the server Addrs' do
-        _(Settings.from_args([]).server_addrs).must_equal({})
-        _(Settings.from_args(args).server_addrs).must_equal(
-          http: Addr['0.0.0.0', 2009, :TCP],
-          tcp:  Addr['0.0.0.0', 1981, :TCP],
-          udp:  Addr['0.0.0.0', 1979, :UDP],
-        )
-      end
-    end
-
     describe '#servers' do
       it 'returns the requested servers' do
         _(Settings.from_args([]).servers).must_equal []

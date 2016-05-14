@@ -22,14 +22,6 @@ module Kamerling
       Addr[host, http, :TCP] if http
     end
 
-    def server_addrs
-      {
-        http: Addr[host, http, :TCP],
-        tcp:  Addr[host, tcp,  :TCP],
-        udp:  Addr[host, udp,  :UDP],
-      }.select { |_, addr| addr.port }
-    end
-
     def servers
       [].tap do |servers|
         servers << Server::HTTP.new(addr: http_addr) if http_addr
