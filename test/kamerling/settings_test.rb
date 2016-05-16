@@ -38,13 +38,6 @@ module Kamerling
       end
     end
 
-    describe '#http_addr' do
-      it 'returns the HTTP server Addr' do
-        _(Settings.from_args([]).http_addr).must_be_nil
-        _(settings.http_addr).must_equal Addr['0.0.0.0', 2009, :TCP]
-      end
-    end
-
     describe '#servers' do
       it 'returns the requested servers' do
         _(Settings.from_args([]).servers).must_equal []
@@ -53,20 +46,6 @@ module Kamerling
           Server::TCP.new(addr:  Addr['0.0.0.0', 1981, :TCP]),
           Server::UDP.new(addr:  Addr['0.0.0.0', 1979, :UDP]),
         ]
-      end
-    end
-
-    describe '#tcp_addr' do
-      it 'returns the TCP server Addr' do
-        _(Settings.from_args([]).tcp_addr).must_be_nil
-        _(settings.tcp_addr).must_equal Addr['0.0.0.0', 1981, :TCP]
-      end
-    end
-
-    describe '#udp_addr' do
-      it 'returns the UDP server Addr' do
-        _(Settings.from_args([]).udp_addr).must_be_nil
-        _(settings.udp_addr).must_equal Addr['0.0.0.0', 1979, :UDP]
       end
     end
   end

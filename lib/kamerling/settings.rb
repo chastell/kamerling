@@ -18,24 +18,12 @@ module Kamerling
       Sequel.connect(db)
     end
 
-    def http_addr
-      Addr[host, http, :TCP] if http
-    end
-
     def servers
-      [].tap do |servers|
-        servers << Server::HTTP.new(addr: http_addr) if http_addr
-        servers << Server::TCP.new(addr:  tcp_addr)  if tcp_addr
-        servers << Server::UDP.new(addr:  udp_addr)  if udp_addr
-      end
-    end
-
-    def tcp_addr
-      Addr[host, tcp, :TCP] if tcp
-    end
-
-    def udp_addr
-      Addr[host, udp, :UDP] if udp
+      [
+        Server::HTTP.new(addr: Addr[host, http, :TCP]),
+        Server::TCP.new(addr:  Addr[host, tcp, :TCP]),
+        Server::UDP.new(addr:  Addr[host, udp, :UDP]),
+      ].select { |server| server.addr.port }
     end
 
     private_class_method def self.default_db
