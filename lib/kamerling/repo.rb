@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 require 'sequel'
+require_relative 'settings'
 
 module Kamerling
   class Repo
     NotFound = Class.new(RuntimeError)
+
+    def initialize(db = Settings.new.db_conn)
+      @db = db
+    end
 
     def <<(object)
       hash = object.to_h
@@ -27,6 +32,6 @@ module Kamerling
 
     private
 
-    attr_reader :klass, :table
+    attr_reader :db, :klass, :table
   end
 end
