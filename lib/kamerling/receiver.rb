@@ -9,6 +9,7 @@ require_relative 'task_repo'
 module Kamerling
   class Receiver
     include Procto.call
+
     def initialize(addr:, client_repo: ClientRepo.new, message:,
                    result_repo: ResultRepo.new, task_repo: TaskRepo.new)
       @addr        = addr
