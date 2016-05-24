@@ -32,6 +32,6 @@ module Kamerling
 
     private
 
-    attr_reader :db, :klass, :table
+    attr_reader :db
   end
 end
