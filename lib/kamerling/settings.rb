@@ -3,6 +3,12 @@
 require 'optparse'
 require 'sequel'
 require_relative 'addr'
+require_relative 'client_repo'
+require_relative 'dispatch_repo'
+require_relative 'project_repo'
+require_relative 'registration_repo'
+require_relative 'result_repo'
+require_relative 'task_repo'
 require_relative 'value'
 
 module Kamerling
@@ -14,8 +20,28 @@ module Kamerling
       new(parse(args))
     end
 
+    def client_repo
+      ClientRepo.new(db_conn)
+    end
+
     def db_conn
       Sequel.connect(db)
+    end
+
+    def dispatch_repo
+      DispatchRepo.new(db_conn)
+    end
+
+    def project_repo
+      ProjectRepo.new(db_conn)
+    end
+
+    def registration_repo
+      RegistrationRepo.new(db_conn)
+    end
+
+    def result_repo
+      ResultRepo.new(db_conn)
     end
 
     def servers
@@ -24,6 +50,10 @@ module Kamerling
         Server::TCP.new(addr:  Addr[host, tcp, :TCP]),
         Server::UDP.new(addr:  Addr[host, udp, :UDP]),
       ].select { |server| server.addr.port }
+    end
+
+    def task_repo
+      TaskRepo.new(db_conn)
     end
 
     private_class_method def self.default_db

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'sequel'
-require_relative 'settings'
 
 module Kamerling
   class Repo
