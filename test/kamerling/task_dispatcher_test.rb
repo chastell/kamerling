@@ -10,6 +10,7 @@ require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/net_dispatcher'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
+require_relative '../../lib/kamerling/settings'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_dispatcher'
 require_relative '../../lib/kamerling/task_repo'
@@ -27,11 +28,14 @@ module Kamerling
     let(:task)           { Task.new(data: 'data')                       }
     let(:task_repo)      { fake(TaskRepo, next_for_project: task)       }
 
+    let(:settings) do
+      fake(Settings, client_repo: client_repo, dispatch_repo: dispatch_repo,
+                     project_repo: project_repo, task_repo: task_repo)
+    end
+
     before do
-      td = TaskDispatcher.new(client_repo: client_repo,
-                              dispatch_repo: dispatch_repo,
-                              net_dispatcher: net_dispatcher,
-                              project_repo: project_repo, task_repo: task_repo)
+      td = TaskDispatcher.new(net_dispatcher: net_dispatcher,
+                              settings: settings)
       td.dispatch_all
     end
 
