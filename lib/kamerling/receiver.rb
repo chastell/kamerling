@@ -1,22 +1,17 @@
 # frozen_string_literal: true
 
 require 'procto'
-require_relative 'client_repo'
 require_relative 'result'
-require_relative 'result_repo'
-require_relative 'task_repo'
+require_relative 'settings'
 
 module Kamerling
   class Receiver
     include Procto.call
 
-    def initialize(addr:, client_repo: ClientRepo.new, message:,
-                   result_repo: ResultRepo.new, task_repo: TaskRepo.new)
-      @addr        = addr
-      @client_repo = client_repo
-      @message     = message
-      @result_repo = result_repo
-      @task_repo   = task_repo
+    def initialize(addr:, message:, settings: Settings.new)
+      @addr     = addr
+      @message  = message
+      @settings = settings
     end
 
     def call
@@ -27,16 +22,16 @@ module Kamerling
 
     private
 
-    attr_reader :addr, :client_repo, :message, :result_repo, :task_repo
+    attr_reader :addr, :message, :settings
 
     def client
-      @client ||= client_repo.fetch(message.client_uuid)
+      @client ||= settings.client_repo.fetch(message.client_uuid)
     end
 
     def persist
-      client_repo << client
-      result_repo << result
-      task_repo << task
+      settings.client_repo << client
+      settings.result_repo << result
+      settings.task_repo << task
     end
 
     def result
@@ -44,7 +39,7 @@ module Kamerling
     end
 
     def task
-      @task ||= task_repo.fetch(message.task_uuid)
+      @task ||= settings.task_repo.fetch(message.task_uuid)
     end
   end
 end
