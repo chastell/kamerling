@@ -21,7 +21,7 @@ module Kamerling
     end
 
     def client_repo
-      ClientRepo.new(db_conn)
+      Repos.new(db_conn).client_repo
     end
 
     def db_conn
@@ -29,19 +29,19 @@ module Kamerling
     end
 
     def dispatch_repo
-      DispatchRepo.new(db_conn)
+      Repos.new(db_conn).dispatch_repo
     end
 
     def project_repo
-      ProjectRepo.new(db_conn)
+      Repos.new(db_conn).project_repo
     end
 
     def registration_repo
-      RegistrationRepo.new(db_conn)
+      Repos.new(db_conn).registration_repo
     end
 
     def result_repo
-      ResultRepo.new(db_conn)
+      Repos.new(db_conn).result_repo
     end
 
     def servers
@@ -53,7 +53,7 @@ module Kamerling
     end
 
     def task_repo
-      TaskRepo.new(db_conn)
+      Repos.new(db_conn).task_repo
     end
 
     private_class_method def self.default_db
@@ -74,6 +74,40 @@ module Kamerling
           opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  hash[:udp]  = udp  }
         end.parse args
       end
+    end
+
+    class Repos
+      def initialize(db_conn)
+        @db_conn = db_conn
+      end
+
+      def client_repo
+        ClientRepo.new(db_conn)
+      end
+
+      def dispatch_repo
+        DispatchRepo.new(db_conn)
+      end
+
+      def project_repo
+        ProjectRepo.new(db_conn)
+      end
+
+      def registration_repo
+        RegistrationRepo.new(db_conn)
+      end
+
+      def result_repo
+        ResultRepo.new(db_conn)
+      end
+
+      def task_repo
+        TaskRepo.new(db_conn)
+      end
+
+      private
+
+      attr_reader :db_conn
     end
   end
 end
