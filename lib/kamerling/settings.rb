@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'forwardable'
 require 'optparse'
 require 'sequel'
 require_relative 'addr'
@@ -16,32 +17,17 @@ module Kamerling
     vals db: String, host: String, http: Integer, tcp: Integer, udp: Integer
     defaults db: 'sqlite::memory:', host: '127.0.0.1'
 
+    extend Forwardable
+
     def self.from_args(args)
       new(parse(args))
     end
 
-    def client_repo
-      Repos.new(db_conn).client_repo
-    end
+    delegate %i(client_repo dispatch_repo project_repo registration_repo
+                result_repo task_repo) => :repos
 
     def db_conn
       Sequel.connect(db)
-    end
-
-    def dispatch_repo
-      Repos.new(db_conn).dispatch_repo
-    end
-
-    def project_repo
-      Repos.new(db_conn).project_repo
-    end
-
-    def registration_repo
-      Repos.new(db_conn).registration_repo
-    end
-
-    def result_repo
-      Repos.new(db_conn).result_repo
     end
 
     def servers
@@ -50,10 +36,6 @@ module Kamerling
         Server::TCP.new(addr:  Addr[host, tcp, :TCP]),
         Server::UDP.new(addr:  Addr[host, udp, :UDP]),
       ].select { |server| server.addr.port }
-    end
-
-    def task_repo
-      Repos.new(db_conn).task_repo
     end
 
     private_class_method def self.default_db
@@ -74,6 +56,12 @@ module Kamerling
           opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  hash[:udp]  = udp  }
         end.parse args
       end
+    end
+
+    private
+
+    def repos
+      @repos ||= Repos.new(db_conn)
     end
 
     class Repos
