@@ -26,10 +26,6 @@ module Kamerling
     delegate %i(client_repo dispatch_repo project_repo registration_repo
                 result_repo task_repo) => :repos
 
-    def db_conn
-      Sequel.connect(db)
-    end
-
     def servers
       [
         Server::HTTP.new(addr: Addr[host, http, :TCP]),
@@ -61,12 +57,12 @@ module Kamerling
     private
 
     def repos
-      @repos ||= Repos.new(db_conn)
+      @repos ||= Repos.new(db)
     end
 
     class Repos
-      def initialize(db_conn)
-        @db_conn = db_conn
+      def initialize(db)
+        @db_conn = Sequel.connect(db)
       end
 
       def client_repo

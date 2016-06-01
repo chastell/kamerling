@@ -44,12 +44,6 @@ module Kamerling
       end
     end
 
-    describe '#db_conn' do
-      it 'returns a db connection for repos' do
-        _(Settings.new.db_conn).must_be_kind_of Sequel::Database
-      end
-    end
-
     describe '#dispatch_repo' do
       it 'returns a DispatchRepo for the db connection' do
         _(Settings.new.dispatch_repo).must_be_kind_of DispatchRepo
