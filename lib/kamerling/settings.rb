@@ -61,7 +61,7 @@ module Kamerling
     end
 
     class Repos
-      def initialize(db)
+      def initialize(db = 'sqlite::memory:')
         @db_conn = Sequel.connect(db)
       end
 
