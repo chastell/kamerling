@@ -7,7 +7,7 @@ require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/http_api'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
-require_relative '../../lib/kamerling/settings'
+require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
 require_relative '../../lib/kamerling/task_dispatcher'
@@ -23,11 +23,11 @@ module Kamerling
     let(:task_dispatcher) { fake(TaskDispatcher)                 }
     let(:task_repo)       { fake(TaskRepo)                       }
 
-    let(:app) { HTTPAPI.set(config: config, task_dispatcher: task_dispatcher) }
+    let(:app) { HTTPAPI.set(repos: repos, task_dispatcher: task_dispatcher) }
 
-    let(:config) do
-      fake(Settings, client_repo: client_repo, project_repo: project_repo,
-                     task_repo: task_repo)
+    let(:repos) do
+      fake(Repos, client_repo: client_repo, project_repo: project_repo,
+                  task_repo: task_repo)
     end
 
     describe 'GET /' do
