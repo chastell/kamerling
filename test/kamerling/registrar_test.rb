@@ -10,7 +10,7 @@ require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/registrar'
 require_relative '../../lib/kamerling/registration'
 require_relative '../../lib/kamerling/registration_repo'
-require_relative '../../lib/kamerling/settings'
+require_relative '../../lib/kamerling/repos'
 
 module Kamerling
   describe Registrar do
@@ -23,18 +23,18 @@ module Kamerling
       let(:project_repo)      { fake(ProjectRepo, fetch: project)              }
       let(:registration_repo) { fake(RegistrationRepo)                         }
 
-      let(:settings) do
-        fake(Settings, client_repo: client_repo, project_repo: project_repo,
-                       registration_repo: registration_repo)
+      let(:repos) do
+        fake(Repos, client_repo: client_repo, project_repo: project_repo,
+                    registration_repo: registration_repo)
       end
 
       it 'registers that the given client can do the given project' do
-        Registrar.call addr: addr, message: mess, settings: settings
+        Registrar.call addr: addr, message: mess, repos: repos
         _(registration_repo).must_have_received :<<, [any(Registration)]
       end
 
       it 'updates the client’s addr' do
-        Registrar.call addr: addr, message: mess, settings: settings
+        Registrar.call addr: addr, message: mess, repos: repos
         _(client_repo).must_have_received :<<, [client]
       end
     end

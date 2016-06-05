@@ -4,37 +4,37 @@ require 'procto'
 require_relative 'client'
 require_relative 'project'
 require_relative 'registration'
-require_relative 'settings'
+require_relative 'repos'
 require_relative 'uuid'
 
 module Kamerling
   class Registrar
     include Procto.call
 
-    def initialize(addr:, message:, settings: Settings.new)
-      @addr     = addr
-      @message  = message
-      @settings = settings
+    def initialize(addr:, message:, repos: Repos.new)
+      @addr    = addr
+      @message = message
+      @repos   = repos
     end
 
     def call
       client.addr = addr
-      settings.client_repo << client
-      settings.registration_repo << registration
+      repos.client_repo << client
+      repos.registration_repo << registration
     end
 
     private
 
-    attr_reader :addr, :message, :settings
+    attr_reader :addr, :message, :repos
 
     def client
-      @client ||= settings.client_repo.fetch(message.client_uuid) do
+      @client ||= repos.client_repo.fetch(message.client_uuid) do
         Client.new(addr: addr, uuid: message.client_uuid)
       end
     end
 
     def project
-      @project ||= settings.project_repo.fetch(message.project_uuid)
+      @project ||= repos.project_repo.fetch(message.project_uuid)
     end
 
     def registration
