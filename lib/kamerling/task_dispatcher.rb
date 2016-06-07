@@ -3,18 +3,18 @@
 require_relative 'dispatch'
 require_relative 'message'
 require_relative 'net_dispatcher'
-require_relative 'settings'
+require_relative 'repos'
 
 module Kamerling
   class TaskDispatcher
-    def initialize(net_dispatcher: NetDispatcher, settings: Settings.new)
+    def initialize(net_dispatcher: NetDispatcher, repos: Repos.new)
       @net_dispatcher = net_dispatcher
-      @settings       = settings
+      @repos          = repos
     end
 
     def dispatch_all
-      settings.project_repo.all.each do |project|
-        settings.client_repo.free_for_project(project).each do |client|
+      repos.project_repo.all.each do |project|
+        repos.client_repo.free_for_project(project).each do |client|
           dispatch_task client: client, project: project
         end
       end
@@ -22,17 +22,17 @@ module Kamerling
 
     private
 
-    attr_reader :net_dispatcher, :settings
+    attr_reader :net_dispatcher, :repos
 
     def dispatch_task(client:, project:)
-      task = settings.task_repo.next_for_project(project)
+      task = repos.task_repo.next_for_project(project)
       message = Message.data(client: client, project: project, task: task)
       dispatch = Dispatch.new(addr: client.addr, client: client,
                               project: project, task: task)
       net_dispatcher.dispatch message.to_s, addr: client.addr
       client.busy = true
-      settings.client_repo << client
-      settings.dispatch_repo << dispatch
+      repos.client_repo << client
+      repos.dispatch_repo << dispatch
     rescue TaskRepo::NotFound
       return
     end
