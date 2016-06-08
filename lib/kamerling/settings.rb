@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'forwardable'
 require 'optparse'
 require_relative 'addr'
 require_relative 'repos'
@@ -11,14 +10,9 @@ module Kamerling
     vals db: String, host: String, http: Integer, tcp: Integer, udp: Integer
     defaults db: 'sqlite::memory:', host: '127.0.0.1'
 
-    extend Forwardable
-
     def self.from_args(args)
       new(parse(args))
     end
-
-    delegate %i(client_repo dispatch_repo project_repo registration_repo
-                result_repo task_repo) => :repos
 
     def servers
       [
@@ -46,12 +40,6 @@ module Kamerling
           opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  hash[:udp]  = udp  }
         end.parse args
       end
-    end
-
-    private
-
-    def repos
-      @repos ||= Repos.new(db)
     end
   end
 end
