@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'dotenv'
+Dotenv.load
+
 require 'sequel'
 require_relative 'client_repo'
 require_relative 'dispatch_repo'
@@ -10,7 +13,7 @@ require_relative 'task_repo'
 
 module Kamerling
   class Repos
-    def initialize(db = 'sqlite::memory:')
+    def initialize(db = ENV.fetch('DB', 'sqlite::memory:'))
       @db_conn = Sequel.connect(db)
     end
 
