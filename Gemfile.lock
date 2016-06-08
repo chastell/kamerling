@@ -3,6 +3,7 @@ PATH
   specs:
     kamerling (0.0.3)
       after_do (~> 0.4.0)
+      dotenv (~> 2.1)
       equalizer (~> 0.0.9)
       procto (~> 0.0.3)
       sequel (~> 4.4)
@@ -29,6 +30,7 @@ GEM
     dependor (1.0.1)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    dotenv (2.1.1)
     equalizer (0.0.11)
     ffi (1.9.10)
     ice_nine (0.11.2)
