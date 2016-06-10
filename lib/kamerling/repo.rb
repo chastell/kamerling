@@ -6,7 +6,7 @@ module Kamerling
   class Repo
     NotFound = Class.new(RuntimeError)
 
-    def initialize(db = Settings.new.db_conn)
+    def initialize(db = Sequel.sqlite)
       @db = db
     end
 
