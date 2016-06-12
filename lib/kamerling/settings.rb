@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'dotenv'
+Dotenv.load
+
 require 'optparse'
 require_relative 'addr'
 require_relative 'repos'
@@ -8,7 +11,8 @@ require_relative 'value'
 module Kamerling
   class Settings < Value
     vals host: String, http: Integer, tcp: Integer, udp: Integer
-    defaults host: '127.0.0.1'
+    defaults host: '127.0.0.1', http: ENV['HTTP'], tcp: ENV['TCP'],
+             udp: ENV['UDP']
 
     def self.from_args(args)
       new(parse(args))
