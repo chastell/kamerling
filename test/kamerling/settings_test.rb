@@ -10,22 +10,12 @@ module Kamerling
     let(:settings) { Settings.from_args(args) }
 
     describe '.from_args' do
-      it 'has minimal defaults' do
-        _(Settings.from_args([]).host).must_equal '127.0.0.1'
-      end
-
       it 'parses the passed settings' do
         settings = Settings.from_args(args)
         _(settings.host).must_equal '0.0.0.0'
         _(settings.http).must_equal 2009
         _(settings.tcp).must_equal 1981
         _(settings.udp).must_equal 1979
-      end
-    end
-
-    describe '.new' do
-      it 'has minimal defaults' do
-        _(Settings.new.host).must_equal '127.0.0.1'
       end
     end
 

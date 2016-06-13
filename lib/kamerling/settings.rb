@@ -11,7 +11,7 @@ require_relative 'value'
 module Kamerling
   class Settings < Value
     vals host: String, http: Integer, tcp: Integer, udp: Integer
-    defaults host: '127.0.0.1', http: ENV['HTTP'], tcp: ENV['TCP'],
+    defaults host: ENV['HOST'], http: ENV['HTTP'], tcp: ENV['TCP'],
              udp: ENV['UDP']
 
     def self.from_args(args)
