@@ -4,7 +4,7 @@ require_relative 'settings'
 
 module Kamerling
   class ServerRunner
-    def initialize(settings)
+    def initialize(settings = Settings.new)
       @servers = settings.servers
     end
 
