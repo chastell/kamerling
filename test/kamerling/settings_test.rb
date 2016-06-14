@@ -6,23 +6,14 @@ require_relative '../../lib/kamerling/settings'
 
 module Kamerling
   describe Settings do
-    let(:args) { %w(--host 0.0.0.0 --http 2009 --tcp 1981 --udp 1979) }
-    let(:settings) { Settings.from_args(args) }
-
-    describe '.from_args' do
-      it 'parses the passed settings' do
-        settings = Settings.from_args(args)
-        _(settings.host).must_equal '0.0.0.0'
-        _(settings.http).must_equal 2009
-        _(settings.tcp).must_equal 1981
-        _(settings.udp).must_equal 1979
-      end
-    end
-
     describe '#servers' do
       it 'returns the requested servers' do
-        _(Settings.from_args([]).servers).must_equal []
-        _(Settings.from_args(args).servers).must_equal [
+        _(Settings.new.servers).must_equal []
+        ENV['HOST'] = '0.0.0.0'
+        ENV['HTTP'] = '2009'
+        ENV['TCP']  = '1981'
+        ENV['UDP']  = '1979'
+        _(Settings.new.servers).must_equal [
           Server::HTTP.new(addr: Addr['0.0.0.0', 2009, :TCP]),
           Server::TCP.new(addr:  Addr['0.0.0.0', 1981, :TCP]),
           Server::UDP.new(addr:  Addr['0.0.0.0', 1979, :UDP]),

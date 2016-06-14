@@ -3,21 +3,13 @@
 require 'dotenv'
 Dotenv.load
 
-require 'optparse'
 require_relative 'addr'
-require_relative 'repos'
-require_relative 'value'
+require_relative 'server/http'
+require_relative 'server/tcp'
+require_relative 'server/udp'
 
 module Kamerling
-  class Settings < Value
-    vals host: String, http: Integer, tcp: Integer, udp: Integer
-    defaults host: ENV['HOST'], http: ENV['HTTP'], tcp: ENV['TCP'],
-             udp: ENV['UDP']
-
-    def self.from_args(args)
-      new(parse(args))
-    end
-
+  class Settings
     def servers
       [
         Server::HTTP.new(addr: Addr[host, http, :TCP]),
@@ -26,19 +18,22 @@ module Kamerling
       ].select { |server| server.addr.port }
     end
 
-    private_class_method def self.default_host
-      attribute_set[:host].default_value.value
+    private
+
+    def host
+      ENV['HOST']
     end
 
-    private_class_method def self.parse(args)
-      {}.tap do |hash|
-        OptionParser.new do |opt|
-          opt.on("--host #{default_host}", String) { |host| hash[:host] = host }
-          opt.on('--http 0', Integer, 'HTTP port') { |http| hash[:http] = http }
-          opt.on('--tcp 0',  Integer, 'TCP port')  { |tcp|  hash[:tcp]  = tcp  }
-          opt.on('--udp 0',  Integer, 'UDP port')  { |udp|  hash[:udp]  = udp  }
-        end.parse args
-      end
+    def http
+      ENV['HTTP']
+    end
+
+    def tcp
+      ENV['TCP']
+    end
+
+    def udp
+      ENV['UDP']
     end
   end
 end
