@@ -18,13 +18,13 @@ module Kamerling
       let(:handler) { Handler.new(receiver: receiver, registrar: registrar) }
 
       it 'handles RGST inputs' do
-        message = Message.parse('RGST')
+        message = Message.new('RGST')
         handler.handle message, addr: addr
         _(registrar).must_have_received :call, [addr: addr, message: message]
       end
 
       it 'handles RSLT inputs' do
-        message = Message.parse('RSLT')
+        message = Message.new('RSLT')
         handler.handle message, addr: addr
         _(receiver).must_have_received :call, [addr: addr, message: message]
       end

@@ -24,7 +24,7 @@ module Kamerling
     def log_dispatcher
       NetDispatcher.singleton_class.extend AfterDo
       NetDispatcher.singleton_class.before(:dispatch) do |bytes, kwargs|
-        logger.debug "sent #{kwargs[:addr]} #{Message.parse(bytes).to_hex}"
+        logger.debug "sent #{kwargs[:addr]} #{Message.new(bytes).to_hex}"
       end
     end
 
@@ -39,7 +39,7 @@ module Kamerling
         addr = kwargs[:addr]
         begin
           logger.info "connect #{addr}"
-          logger.debug "received #{addr} #{Message.parse(input).to_hex}"
+          logger.debug "received #{addr} #{Message.new(input).to_hex}"
         rescue Message::UnknownType
           logger.debug "received #{addr} unknown message type"
         end

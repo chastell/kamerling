@@ -10,7 +10,7 @@ require_relative '../../lib/kamerling/uuid'
 module Kamerling                          # rubocop:disable Metrics/ModuleLength
   describe Message do
     let(:mess) do
-      Message.parse("DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
+      Message.new("DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
         '16B client  UUID16B project UUID16B task    UUIDsome payload')
     end
 
@@ -43,9 +43,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '.parse' do
+    describe '.new' do
       it 'raises on unknown message types' do
-        _(-> { Message.parse('MESS age') }).must_raise Message::UnknownType
+        _(-> { Message.new('MESS age') }).must_raise Message::UnknownType
       end
     end
 
@@ -75,9 +75,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
     describe '#client_type' do
       it 'returns the client’s type' do
         _(mess.client_type).must_equal :"\0\0\0\0"
-        fpga_mess = Message.parse("RGSTFPGA\0\0\0\0\0\0\0\0" \
-                                  '16B client  UUID16B project UUID' \
-                                  '16B task    UUID')
+        fpga_mess = Message.new("RGSTFPGA\0\0\0\0\0\0\0\0" \
+                                '16B client  UUID16B project UUID' \
+                                '16B task    UUID')
         _(fpga_mess.client_type).must_equal :FPGA
       end
     end

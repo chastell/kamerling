@@ -20,10 +20,6 @@ module Kamerling
             type: :DATA)
     end
 
-    def self.parse(raw)
-      new(raw)
-    end
-
     def self.rgst(client:, project:)
       build(client: client, project: project, type: :RGST)
     end

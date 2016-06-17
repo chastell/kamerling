@@ -36,7 +36,7 @@ module Kamerling
       attr_reader :handler, :thread
 
       def handle(input, addr:)
-        handler.handle Message.parse(input), addr: addr
+        handler.handle Message.new(input), addr: addr
       rescue Message::UnknownType
         nil
       end

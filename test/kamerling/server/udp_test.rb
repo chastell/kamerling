@@ -38,9 +38,9 @@ module Kamerling
         run_all_threads
         server.stop
         _(handler).must_have_received :handle,
-                                      [Message.parse('DATA'), addr: any(Addr)]
+                                      [Message.new('DATA'), addr: any(Addr)]
         _(handler).must_have_received :handle,
-                                      [Message.parse('PING'), addr: any(Addr)]
+                                      [Message.new('PING'), addr: any(Addr)]
       end
 
       it 'doesn’t blow up on unknown inputs' do
