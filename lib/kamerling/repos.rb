@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'dotenv'
-Dotenv.load
-
 require 'sequel'
 require_relative 'client_repo'
 require_relative 'dispatch_repo'

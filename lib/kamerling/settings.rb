@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'dotenv'
-Dotenv.load
-
 require_relative 'addr'
 require_relative 'value'
 require_relative 'server/http'
