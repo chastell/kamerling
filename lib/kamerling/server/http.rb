@@ -8,7 +8,7 @@ module Kamerling
     class HTTP
       attr_reader :addr
 
-      def initialize(addr:)
+      def initialize(addr: Addr[ENV['HOST'], ENV['HTTP'], :TCP])
         @addr = addr
       end
 
