@@ -9,6 +9,10 @@ module Kamerling
     class TCP < Sock
       private
 
+      def default_addr
+        Addr[ENV['HOST'], ENV['TCP'], :TCP]
+      end
+
       def handle_connection(socket)
         addr  = Addr[*socket.remote_address.ip_unpack, :TCP]
         input = socket.read
