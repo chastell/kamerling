@@ -9,9 +9,11 @@ module Kamerling
     describe '#servers' do
       it 'returns the requested servers' do
         _(Settings.new.servers).must_equal []
-        settings = Settings.new(host: '0.0.0.0', http: 2009, tcp: 1981,
-                                udp: 1979)
-        _(settings.servers).must_equal [
+        ENV['HOST'] = '0.0.0.0'
+        ENV['HTTP'] = '2009'
+        ENV['TCP']  = '1981'
+        ENV['UDP']  = '1979'
+        _(Settings.new.servers).must_equal [
           Server::HTTP.new(addr: Addr['0.0.0.0', 2009, :TCP]),
           Server::TCP.new(addr:  Addr['0.0.0.0', 1981, :TCP]),
           Server::UDP.new(addr:  Addr['0.0.0.0', 1979, :UDP]),
