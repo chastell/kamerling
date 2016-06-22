@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
+require 'forwardable'
 require 'rack'
+require_relative '../addr'
 require_relative '../http_api'
 
 module Kamerling
   module Server
     class HTTP
+      extend Forwardable
+
       attr_reader :addr
 
       def initialize(addr: Addr[ENV['HOST'], ENV['HTTP'], :TCP])
@@ -16,9 +20,7 @@ module Kamerling
         addr == other.addr
       end
 
-      def join
-        thread.join
-      end
+      delegate join: :thread
 
       def start
         @thread = Thread.new do
