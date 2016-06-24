@@ -3,12 +3,11 @@
 require_relative 'server/http'
 require_relative 'server/tcp'
 require_relative 'server/udp'
-require_relative 'settings'
 
 module Kamerling
   class ServerRunner
-    def initialize(settings = Settings.new)
-      @servers = settings.servers || default_servers
+    def initialize(servers: default_servers)
+      @servers = servers
     end
 
     def join

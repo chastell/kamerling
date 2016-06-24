@@ -5,7 +5,6 @@ require_relative '../../lib/kamerling/server/http'
 require_relative '../../lib/kamerling/server/tcp'
 require_relative '../../lib/kamerling/server/udp'
 require_relative '../../lib/kamerling/server_runner'
-require_relative '../../lib/kamerling/settings'
 
 module Kamerling
   describe ServerRunner do
@@ -13,12 +12,9 @@ module Kamerling
     let(:tcp)  { fake { Server::TCP  } }
     let(:udp)  { fake { Server::UDP  } }
 
-    let(:settings) { fake(Settings, servers: [http, tcp, udp]) }
-
     describe '#join' do
       it 'joins all the created servers' do
-        stub(settings).servers { [http] }
-        ServerRunner.new(settings).join
+        ServerRunner.new(servers: [http]).join
         http.must_have_received :join, []
         tcp.wont_have_received :join,  []
         udp.wont_have_received :join,  []
@@ -27,22 +23,21 @@ module Kamerling
 
     describe '#start' do
       it 'starts the servers based on the given command-line parameters' do
-        ServerRunner.new(settings).start
+        ServerRunner.new(servers: [http, tcp, udp]).start
         http.must_have_received :start, []
         tcp.must_have_received :start,  []
         udp.must_have_received :start,  []
       end
 
       it 'starts only the servers for which the port was given' do
-        stub(settings).servers { [http] }
-        ServerRunner.new(settings).start
+        ServerRunner.new(servers: [http]).start
         http.must_have_received :start, []
         tcp.wont_have_received :start,  []
         udp.wont_have_received :start,  []
       end
 
       it 'returns self' do
-        server_runner = ServerRunner.new(settings)
+        server_runner = ServerRunner.new
         _(server_runner.start).must_equal server_runner
       end
     end
