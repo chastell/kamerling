@@ -15,27 +15,27 @@ module Kamerling
     end
 
     def client_repo
-      ClientRepo.new(db_conn)
+      @client_repo ||= ClientRepo.new(db_conn)
     end
 
     def dispatch_repo
-      DispatchRepo.new(db_conn)
+      @dispatch_repo ||= DispatchRepo.new(db_conn)
     end
 
     def project_repo
-      ProjectRepo.new(db_conn)
+      @project_repo ||= ProjectRepo.new(db_conn)
     end
 
     def registration_repo
-      RegistrationRepo.new(db_conn)
+      @registration_repo ||= RegistrationRepo.new(db_conn)
     end
 
     def result_repo
-      ResultRepo.new(db_conn)
+      @result_repo ||= ResultRepo.new(db_conn)
     end
 
     def task_repo
-      TaskRepo.new(db_conn)
+      @task_repo ||= TaskRepo.new(db_conn)
     end
 
     private
