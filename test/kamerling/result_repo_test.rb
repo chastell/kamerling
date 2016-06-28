@@ -13,23 +13,23 @@ module Kamerling
   describe ResultRepo do
     include RepoBehaviour
 
-    let(:addr)    { Addr['localhost', 1981, :TCP]                           }
-    let(:client)  { Client.new(addr: addr, uuid: 'cUUID')                   }
-    let(:db)      { Sequel.sqlite                                           }
-    let(:project) { Project.new(name: 'GIMPS', uuid: 'pUUID')               }
-    let(:repo)    { ResultRepo.new(db)                                      }
-    let(:table)   { db[:results]                                            }
-    let(:task)    { Task.new(data: 'data', project: project, uuid: 'tUUID') }
+    let(:addr)    { Addr['localhost', 1981, :TCP]                       }
+    let(:client)  { Client.new(addr: addr, id: 'cid')                   }
+    let(:db)      { Sequel.sqlite                                       }
+    let(:project) { Project.new(id: 'pid', name: 'GIMPS')               }
+    let(:repo)    { ResultRepo.new(db)                                  }
+    let(:table)   { db[:results]                                        }
+    let(:task)    { Task.new(data: 'data', id: 'tid', project: project) }
 
     let(:entity) do
-      Result.new(addr: addr, client: client, data: 'data', task: task,
-                 received_at: Time.new('2015-01-01'), uuid: 'an UUID')
+      Result.new(addr: addr, client: client, data: 'data', id: 'an id',
+                 received_at: Time.new('2015-01-01'), task: task)
     end
 
     let(:row) do
-      { client_uuid: 'cUUID', data: 'data', host: 'localhost', port: 1981,
-        prot: 'TCP', received_at: Time.new('2015-01-01'), task_uuid: 'tUUID',
-        uuid: 'an UUID' }
+      { client_id: 'cid', data: 'data', host: 'localhost', id: 'an id',
+        port: 1981, prot: 'TCP', received_at: Time.new('2015-01-01'),
+        task_id: 'tid' }
     end
 
     before do

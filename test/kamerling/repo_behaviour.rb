@@ -20,19 +20,19 @@ module Kamerling
         end
 
         describe '#fetch' do
-          it 'returns the entity with the given UUID' do
+          it 'returns the entity with the given id' do
             table.insert row
-            _(repo.fetch('an UUID')).must_equal entity
+            _(repo.fetch('an id')).must_equal entity
           end
 
-          it 'evaluates the block if the given UUID is missing' do
+          it 'evaluates the block if the given id is missing' do
             evaluated = false
-            repo.fetch('an UUID') { evaluated = true }
+            repo.fetch('an id') { evaluated = true }
             assert evaluated
           end
 
-          it 'raises NotFound if the UUID is missing and there is no block' do
-            _(-> { repo.fetch('an UUID') }).must_raise Repo::NotFound
+          it 'raises NotFound if the id is missing and there is no block' do
+            _(-> { repo.fetch('an id') }).must_raise Repo::NotFound
           end
         end
       end

@@ -14,10 +14,10 @@ module Kamerling
 
     describe '#to_h' do
       it 'returns a Hash representation of the Task' do
-        project = Project.new(uuid: 'project UUID')
+        project = Project.new(id: 'project id')
         task    = Task.new(data: 'data', done: true, project: project)
-        _(task.to_h).must_equal data: 'data', done: true,
-                                project_uuid: 'project UUID', uuid: any(String)
+        _(task.to_h).must_equal data: 'data', done: true, id: any(String),
+                                project_id: 'project id'
       end
     end
   end

@@ -6,11 +6,11 @@ require_relative 'uuid'
 
 module Kamerling
   class Entity
-    include Equalizer.new(:uuid)
+    include Equalizer.new(:id)
 
     include Virtus.model
 
-    attribute :uuid, String, default: -> (*) { UUID.new }
+    attribute :id, String, default: -> (*) { UUID.new }
 
     def self.attrs(hash = {})
       hash.each { |name, klass| attribute name, klass }
@@ -23,13 +23,13 @@ module Kamerling
     end
 
     def self.null
-      new(uuid: '00000000-0000-0000-0000-000000000000')
+      new(id: '00000000-0000-0000-0000-000000000000')
     end
 
     def to_h
       attributes.map do |(key, value)|
         case value
-        when Entity then { uuid_key(value) => value.uuid }
+        when Entity then { id_key(value) => value.id }
         when Symbol then { key => value.to_s }
         when Time   then { key => value.utc.iso8601 }
         when Value  then value.to_h
@@ -40,8 +40,8 @@ module Kamerling
 
     private
 
-    def uuid_key(value)
-      "#{value.class.name.split('::').last.downcase}_uuid".to_sym
+    def id_key(value)
+      "#{value.class.name.split('::').last.downcase}_id".to_sym
     end
   end
 end

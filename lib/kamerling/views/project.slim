@@ -3,13 +3,13 @@ nav
     - clients.each do |client|
       li
         a(data-busy=client.busy.to_s data-class='client' data-type=client.type
-          data-uuid=client.uuid href="/clients/#{client.uuid}")
-          = client.uuid
+          data-id=client.id href="/clients/#{client.id}")
+          = client.id
         = "busy: #{client.busy.to_s}"
   ul#tasks
     - tasks.each do |task|
       li
-        a(data-class='task' data-done=task.done.to_s data-uuid=task.uuid
-          href="/tasks/#{task.uuid}")
-          = task.uuid
+        a(data-class='task' data-done=task.done.to_s data-id=task.id
+          href="/tasks/#{task.id}")
+          = task.id
         = "done: #{task.done.to_s}"

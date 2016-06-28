@@ -14,17 +14,17 @@ module Kamerling
       hash = object.to_h
       table << hash
     rescue Sequel::UniqueConstraintViolation
-      table.where(uuid: object.uuid).update hash
+      table.where(id: object.id).update hash
     end
 
     def all
       table.all.map(&klass.method(:new))
     end
 
-    def fetch(uuid)
+    def fetch(id)
       case
-      when hash = table[uuid: uuid] then klass.new(hash)
-      when block_given?             then yield
+      when hash = table[id: id] then klass.new(hash)
+      when block_given?         then yield
       else raise NotFound
       end
     end

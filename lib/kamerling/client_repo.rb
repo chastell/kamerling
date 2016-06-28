@@ -6,11 +6,11 @@ require_relative 'repo'
 module Kamerling
   class ClientRepo < Repo
     def free_for_project(project)
-      scoped_clients(project_uuid: project.uuid, busy: false)
+      scoped_clients(project_id: project.id, busy: false)
     end
 
     def for_project(project)
-      scoped_clients(project_uuid: project.uuid)
+      scoped_clients(project_id: project.id)
     end
 
     private
@@ -20,7 +20,7 @@ module Kamerling
     end
 
     def scoped_clients(scope)
-      db[:registrations].join(:clients, uuid: :client_uuid).where(scope).all
+      db[:registrations].join(:clients, id: :client_id).where(scope).all
                         .map(&Client.method(:new))
     end
 

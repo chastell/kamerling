@@ -12,11 +12,11 @@ module Kamerling
 
     Sequel.extension :migration
 
-    let(:db)     { Sequel.sqlite                               }
-    let(:entity) { Project.new(name: 'GIMPS', uuid: 'an UUID') }
-    let(:repo)   { ProjectRepo.new(db)                         }
-    let(:row)    { { name: 'GIMPS', uuid: 'an UUID' }          }
-    let(:table)  { db[:projects]                               }
+    let(:db)     { Sequel.sqlite                           }
+    let(:entity) { Project.new(id: 'an id', name: 'GIMPS') }
+    let(:repo)   { ProjectRepo.new(db)                     }
+    let(:row)    { { id: 'an id', name: 'GIMPS' }          }
+    let(:table)  { db[:projects]                           }
 
     before do
       path = "#{__dir__}/../../lib/kamerling/migrations"

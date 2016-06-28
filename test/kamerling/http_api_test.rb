@@ -48,22 +48,22 @@ module Kamerling
         _(links.first['data-addr']).must_equal 'tcp://127.0.0.1:1981'
         _(links.first['data-busy']).must_equal 'true'
         _(links.first['data-type']).must_equal 'FPGA'
-        _(links.first['data-uuid']).must_equal fpga.uuid
-        _(links.first['href']).must_equal "/clients/#{fpga.uuid}"
+        _(links.first['data-id']).must_equal fpga.id
+        _(links.first['href']).must_equal "/clients/#{fpga.id}"
       end
     end
 
     describe 'GET /projects' do
-      it 'contains links to and UUIDs of projects' do
+      it 'contains links to and ids of projects' do
         get '/projects'
         links = doc.css('#projects a[data-class=project]')
         _(links.size).must_equal 2
-        _(links.at("[data-uuid='#{gimps.uuid}']")['href'])
-          .must_equal "/projects/#{gimps.uuid}"
+        _(links.at("[data-id='#{gimps.id}']")['href'])
+          .must_equal "/projects/#{gimps.id}"
       end
     end
 
-    describe 'GET /projects/{uuid}' do
+    describe 'GET /projects/{id}' do
       let(:cpu) { Client.new(busy: false, type: :CPU) }
       let(:gpu) { Client.new(busy: true,  type: :GPU) }
       let(:three) { Task.new(done: false) }
@@ -75,38 +75,38 @@ module Kamerling
       end
 
       it 'contains links to and info on the project’s clients' do
-        get "/projects/#{gimps.uuid}"
+        get "/projects/#{gimps.id}"
         links = doc.css('#clients a[data-class=client]')
         _(links.size).must_equal 2
-        _(links.at("[data-uuid='#{cpu.uuid}']")['href'])
-          .must_equal "/clients/#{cpu.uuid}"
-        _(links.at("[data-uuid='#{cpu.uuid}']")['data-busy']).must_equal 'false'
-        _(links.at("[data-uuid='#{gpu.uuid}']")['data-busy']).must_equal 'true'
-        _(links.at("[data-uuid='#{cpu.uuid}']")['data-type']).must_equal 'CPU'
-        _(links.at("[data-uuid='#{gpu.uuid}']")['data-type']).must_equal 'GPU'
+        _(links.at("[data-id='#{cpu.id}']")['href'])
+          .must_equal "/clients/#{cpu.id}"
+        _(links.at("[data-id='#{cpu.id}']")['data-busy']).must_equal 'false'
+        _(links.at("[data-id='#{gpu.id}']")['data-busy']).must_equal 'true'
+        _(links.at("[data-id='#{cpu.id}']")['data-type']).must_equal 'CPU'
+        _(links.at("[data-id='#{gpu.id}']")['data-type']).must_equal 'GPU'
       end
 
       it 'contains links to and info on the project’s tasks' do
-        get "/projects/#{gimps.uuid}"
+        get "/projects/#{gimps.id}"
         links = doc.css('#tasks a[data-class=task]')
         _(links.size).must_equal 2
-        _(links.at("[data-uuid='#{three.uuid}']")['href'])
-          .must_equal "/tasks/#{three.uuid}"
-        _(links.at("[data-uuid='#{three.uuid}']")['data-done'])
+        _(links.at("[data-id='#{three.id}']")['href'])
+          .must_equal "/tasks/#{three.id}"
+        _(links.at("[data-id='#{three.id}']")['data-done'])
           .must_equal 'false'
-        _(links.at("[data-uuid='#{seven.uuid}']")['data-done'])
+        _(links.at("[data-id='#{seven.id}']")['data-done'])
           .must_equal 'true'
       end
     end
 
     describe 'POST /projects' do
-      it 'creates a new project with the given name and UUID' do
-        post '/projects', name: 'ECC', uuid: uuid = UUID.new
-        _(project_repo).must_have_received :<<, [Project.new(uuid: uuid)]
+      it 'creates a new project with the given name and id' do
+        post '/projects', id: id = UUID.new, name: 'ECC'
+        _(project_repo).must_have_received :<<, [Project.new(id: id)]
       end
 
       it 'redirects to /projects' do
-        post '/projects', name: 'ECC', uuid: UUID.new
+        post '/projects', id: UUID.new, name: 'ECC'
         follow_redirect!
         _(URI(last_request.url).path).must_equal '/projects'
       end

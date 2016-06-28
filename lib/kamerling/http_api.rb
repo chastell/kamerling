@@ -30,17 +30,17 @@ module Kamerling
       render_template :projects, locals: { projects: repos.project_repo.all }
     end
 
-    get '/projects/:project_uuid' do
-      project_uuid = params['project_uuid']
-      clients = repos.client_repo.for_project(Project.new(uuid: project_uuid))
-      tasks   = repos.task_repo.for_project(Project.new(uuid: project_uuid))
+    get '/projects/:project_id' do
+      project_id = params['project_id']
+      clients = repos.client_repo.for_project(Project.new(id: project_id))
+      tasks   = repos.task_repo.for_project(Project.new(id: project_id))
       render_template :project, locals: { clients: clients, tasks: tasks }
     end
 
     post '/projects' do
       name = params.fetch('name')
-      uuid = params.fetch('uuid')
-      repos.project_repo << Project.new(name: name, uuid: uuid)
+      id   = params.fetch('id')
+      repos.project_repo << Project.new(id: id, name: name)
       redirect '/projects'
     end
 

@@ -6,12 +6,12 @@ require_relative 'task'
 module Kamerling
   class TaskRepo < Repo
     def for_project(project)
-      table.where(project_uuid: project.uuid).all.map(&Task.method(:new))
+      table.where(project_id: project.id).all.map(&Task.method(:new))
     end
 
     def next_for_project(project)
       case
-      when hash = table[done: false, project_uuid: project.uuid]
+      when hash = table[done: false, project_id: project.id]
         Task.new(hash)
       else
         raise NotFound

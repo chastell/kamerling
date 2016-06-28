@@ -5,7 +5,6 @@ require_relative 'client'
 require_relative 'project'
 require_relative 'registration'
 require_relative 'repos'
-require_relative 'uuid'
 
 module Kamerling
   class Registrar
@@ -28,13 +27,13 @@ module Kamerling
     attr_reader :addr, :message, :repos
 
     def client
-      @client ||= repos.client_repo.fetch(message.client_uuid) do
-        Client.new(addr: addr, uuid: message.client_uuid)
+      @client ||= repos.client_repo.fetch(message.client_id) do
+        Client.new(addr: addr, id: message.client_id)
       end
     end
 
     def project
-      @project ||= repos.project_repo.fetch(message.project_uuid)
+      @project ||= repos.project_repo.fetch(message.project_id)
     end
 
     def registration

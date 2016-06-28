@@ -10,8 +10,8 @@ module Kamerling
       bin.unpack('H8H4H4H4H12').join('-')
     end
 
-    def bin(uuid)
-      [uuid.tr('-', '')].pack('H*')
+    def bin(string)
+      [string.tr('-', '')].pack('H*')
     end
 
     def new

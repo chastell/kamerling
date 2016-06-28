@@ -15,27 +15,27 @@ module Kamerling
 
     Sequel.extension :migration
 
-    let(:addr)    { Addr['localhost', 1981, :TCP]                           }
-    let(:db)      { Sequel.sqlite                                           }
-    let(:project) { Project.new(name: 'GIMPS', uuid: 'pUUID')               }
-    let(:repo)    { DispatchRepo.new(db)                                    }
-    let(:table)   { db[:dispatches]                                         }
-    let(:task)    { Task.new(data: 'data', project: project, uuid: 'tUUID') }
+    let(:addr)    { Addr['localhost', 1981, :TCP]                       }
+    let(:db)      { Sequel.sqlite                                       }
+    let(:project) { Project.new(id: 'pid', name: 'GIMPS')               }
+    let(:repo)    { DispatchRepo.new(db)                                }
+    let(:table)   { db[:dispatches]                                     }
+    let(:task)    { Task.new(data: 'data', id: 'tid', project: project) }
 
     let(:client) do
-      Client.new(addr: addr, busy: true, type: :FPGA, uuid: 'cUUID')
+      Client.new(addr: addr, busy: true, id: 'cid', type: :FPGA)
     end
 
     let(:entity) do
       Dispatch.new(addr: addr, client: client,
-                   dispatched_at: Time.new('2015-01-01'), project: project,
-                   task: task, uuid: 'an UUID')
+                   dispatched_at: Time.new('2015-01-01'), id: 'an id',
+                   project: project, task: task)
     end
 
     let(:row) do
-      { client_uuid: 'cUUID', dispatched_at: Time.new('2015-01-01'),
-        host: 'localhost', port: 1981, project_uuid: 'pUUID', prot: 'TCP',
-        task_uuid: 'tUUID', uuid: 'an UUID' }
+      { client_id: 'cid', dispatched_at: Time.new('2015-01-01'),
+        host: 'localhost', id: 'an id', port: 1981, project_id: 'pid',
+        prot: 'TCP', task_id: 'tid' }
     end
 
     before do

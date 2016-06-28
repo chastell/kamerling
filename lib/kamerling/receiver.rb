@@ -25,7 +25,7 @@ module Kamerling
     attr_reader :addr, :message, :repos
 
     def client
-      @client ||= repos.client_repo.fetch(message.client_uuid)
+      @client ||= repos.client_repo.fetch(message.client_id)
     end
 
     def persist
@@ -39,7 +39,7 @@ module Kamerling
     end
 
     def task
-      @task ||= repos.task_repo.fetch(message.task_uuid)
+      @task ||= repos.task_repo.fetch(message.task_id)
     end
   end
 end

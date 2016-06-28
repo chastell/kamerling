@@ -15,25 +15,24 @@ module Kamerling
 
     Sequel.extension :migration
 
-    let(:addr)    { Addr['localhost', 1981, :TCP]             }
-    let(:db)      { Sequel.sqlite                             }
-    let(:project) { Project.new(name: 'GIMPS', uuid: 'pUUID') }
-    let(:repo)    { RegistrationRepo.new(db)                  }
-    let(:table)   { db[:registrations]                        }
+    let(:addr)    { Addr['localhost', 1981, :TCP]         }
+    let(:db)      { Sequel.sqlite                         }
+    let(:project) { Project.new(id: 'pid', name: 'GIMPS') }
+    let(:repo)    { RegistrationRepo.new(db)              }
+    let(:table)   { db[:registrations]                    }
 
     let(:client) do
-      Client.new(addr: addr, busy: true, type: :FPGA, uuid: 'cUUID')
+      Client.new(addr: addr, busy: true, id: 'cid', type: :FPGA)
     end
 
     let(:entity) do
-      Registration.new(addr: addr, client: client, project: project,
-                       registered_at: Time.new('2015-01-01'), uuid: 'an UUID')
+      Registration.new(addr: addr, client: client, id: 'an id',
+                       project: project, registered_at: Time.new('2015-01-01'))
     end
 
     let(:row) do
-      { client_uuid: 'cUUID', host: 'localhost', port: 1981,
-        project_uuid: 'pUUID', prot: 'TCP',
-        registered_at: Time.new('2015-01-01'), uuid: 'an UUID' }
+      { client_id: 'cid', host: 'localhost', id: 'an id', port: 1981,
+        project_id: 'pid', prot: 'TCP', registered_at: Time.new('2015-01-01') }
     end
 
     before do

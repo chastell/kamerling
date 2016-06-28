@@ -24,14 +24,14 @@ module Kamerling
     describe '#to_h' do
       it 'returns a Hash representation of the Registration' do
         addr    = Addr['127.0.0.1', 1979, :UDP]
-        client  = Client.new(uuid: 'client UUID')
-        project = Project.new(uuid: 'project UUID')
+        client  = Client.new(id: 'client id')
+        project = Project.new(id: 'project id')
         reg     = Registration.new(addr: addr, client: client, project: project)
         iso8601 = ->(time) { time[/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\z/] }
-        _(reg.to_h).must_equal client_uuid: 'client UUID', host: '127.0.0.1',
-                               port: 1979, project_uuid: 'project UUID',
-                               prot: 'UDP', registered_at: matches(&iso8601),
-                               uuid: any(String)
+        _(reg.to_h).must_equal client_id: 'client id', host: '127.0.0.1',
+                               id: any(String), port: 1979,
+                               project_id: 'project id', prot: 'UDP',
+                               registered_at: matches(&iso8601)
       end
     end
   end

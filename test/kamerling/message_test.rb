@@ -21,9 +21,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         task    = Task.new
         message = Message.build(client: client, payload: 'pay',
                                 project: project, task: task, type: :DATA)
-        _(message.client_uuid).must_equal client.uuid
-        _(message.project_uuid).must_equal project.uuid
-        _(message.task_uuid).must_equal task.uuid
+        _(message.client_id).must_equal client.id
+        _(message.project_id).must_equal project.id
+        _(message.task_id).must_equal task.id
         _(message.payload).must_equal 'pay'
         _(message.type).must_equal :DATA
       end
@@ -35,9 +35,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         project = Project.new
         task    = Task.new(data: 'pay')
         message = Message.data(client: client, project: project, task: task)
-        _(message.client_uuid).must_equal client.uuid
-        _(message.project_uuid).must_equal project.uuid
-        _(message.task_uuid).must_equal task.uuid
+        _(message.client_id).must_equal client.id
+        _(message.project_id).must_equal project.id
+        _(message.task_id).must_equal task.id
         _(message.payload).must_equal 'pay'
         _(message.type).must_equal :DATA
       end
@@ -54,8 +54,8 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         client  = Client.new
         project = Project.new
         message = Message.rgst(client: client, project: project)
-        _(message.client_uuid).must_equal client.uuid
-        _(message.project_uuid).must_equal project.uuid
+        _(message.client_id).must_equal client.id
+        _(message.project_id).must_equal project.id
         _(message.type).must_equal :RGST
       end
     end
@@ -65,9 +65,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         client  = Client.new
         task    = Task.new(project: Project.new)
         message = Message.rslt(client: client, payload: 'data', task: task)
-        _(message.client_uuid).must_equal client.uuid
+        _(message.client_id).must_equal client.id
         _(message.payload).must_equal 'data'
-        _(message.task_uuid).must_equal task.uuid
+        _(message.task_id).must_equal task.id
         _(message.type).must_equal :RSLT
       end
     end
@@ -82,9 +82,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '#client_uuid' do
-      it 'returns the client UUID' do
-        _(mess.client_uuid).must_equal '31364220-636c-6965-6e74-202055554944'
+    describe '#client_id' do
+      it 'returns the client id' do
+        _(mess.client_id).must_equal '31364220-636c-6965-6e74-202055554944'
       end
     end
 
@@ -94,15 +94,15 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '#project_uuid' do
-      it 'returns the project UUID' do
-        _(mess.project_uuid).must_equal '31364220-7072-6f6a-6563-742055554944'
+    describe '#project_id' do
+      it 'returns the project id' do
+        _(mess.project_id).must_equal '31364220-7072-6f6a-6563-742055554944'
       end
     end
 
-    describe '#task_uuid' do
-      it 'returns the task UUID' do
-        _(mess.task_uuid).must_equal '31364220-7461-736b-2020-202055554944'
+    describe '#task_id' do
+      it 'returns the task id' do
+        _(mess.task_id).must_equal '31364220-7461-736b-2020-202055554944'
       end
     end
 

@@ -8,7 +8,7 @@ module Kamerling
     describe '#to_h' do
       it 'returns a Hash representation of the Project' do
         gimps = Project.new(name: 'GIMPS')
-        _(gimps.to_h).must_equal name: 'GIMPS', uuid: any(String)
+        _(gimps.to_h).must_equal id: any(String), name: 'GIMPS'
       end
     end
   end

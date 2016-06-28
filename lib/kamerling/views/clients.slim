@@ -3,6 +3,6 @@ nav
     - clients.each do |client|
       li
         a(data-addr=client.addr data-busy=client.busy.to_s data-class='client'
-          data-type=client.type data-uuid=client.uuid
-          href="/clients/#{client.uuid}")
+          data-type=client.type data-id=client.id
+          href="/clients/#{client.id}")
           = client.busy
