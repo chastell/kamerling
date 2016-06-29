@@ -24,11 +24,11 @@ module Kamerling
     end
 
     def to_s
-      uri.to_s
+      "#{prot.downcase}://#{host}:#{port}"
     end
 
     def uri
-      URI.parse("#{prot.downcase}://#{host}:#{port}")
+      URI.parse(to_s)
     end
   end
 end
