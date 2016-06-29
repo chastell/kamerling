@@ -26,9 +26,5 @@ module Kamerling
     def to_s
       "#{prot.downcase}://#{host}:#{port}"
     end
-
-    def uri
-      URI.parse(to_s)
-    end
   end
 end

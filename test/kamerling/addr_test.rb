@@ -35,11 +35,5 @@ module Kamerling
         _(addr.to_s).must_equal 'tcp://localhost:1981'
       end
     end
-
-    describe '#uri' do
-      it 'returns and URI representation of the Addr' do
-        _(addr.uri).must_equal URI.parse('tcp://localhost:1981')
-      end
-    end
   end
 end
