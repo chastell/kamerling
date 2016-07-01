@@ -26,6 +26,10 @@ module Kamerling
       @project_repo ||= ProjectRepo.new(db_conn)
     end
 
+    def record_dispatch(dispatch)
+      dispatch_repo << dispatch
+    end
+
     def registration_repo
       @registration_repo ||= RegistrationRepo.new(db_conn)
     end

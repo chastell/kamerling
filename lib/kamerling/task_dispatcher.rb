@@ -36,7 +36,7 @@ module Kamerling
       net_dispatcher.dispatch message.to_s, addr: client.addr
       client.busy = true
       repos.client_repo << client
-      repos.dispatch_repo << dispatch
+      repos.record_dispatch dispatch
     end
   end
 end
