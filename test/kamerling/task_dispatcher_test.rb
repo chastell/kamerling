@@ -4,7 +4,6 @@ require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
-require_relative '../../lib/kamerling/dispatch'
 require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/net_dispatcher'
 require_relative '../../lib/kamerling/project'
@@ -47,8 +46,9 @@ module Kamerling
         _(client_repo).must_have_received :<<, [client]
       end
 
-      it 'creates and stores a Dispatch object along the way' do
-        _(repos).must_have_received :record_dispatch, [any(Dispatch)]
+      it 'records the dispatch' do
+        params = [{ client: client, project: project, task: task }]
+        _(repos).must_have_received :record_dispatch, params
       end
     end
   end

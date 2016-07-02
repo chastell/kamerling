@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'dispatch'
 require_relative 'message'
 require_relative 'net_dispatcher'
 require_relative 'repos'
@@ -31,12 +30,10 @@ module Kamerling
 
     def dispatch_task(client:, project:, task:)
       message = Message.data(client: client, project: project, task: task)
-      dispatch = Dispatch.new(addr: client.addr, client: client,
-                              project: project, task: task)
       net_dispatcher.dispatch message.to_s, addr: client.addr
       client.busy = true
       repos.client_repo << client
-      repos.record_dispatch dispatch
+      repos.record_dispatch client: client, project: project, task: task
     end
   end
 end

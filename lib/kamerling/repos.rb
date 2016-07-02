@@ -2,6 +2,7 @@
 
 require 'sequel'
 require_relative 'client_repo'
+require_relative 'dispatch'
 require_relative 'dispatch_repo'
 require_relative 'project_repo'
 require_relative 'registration_repo'
@@ -26,8 +27,9 @@ module Kamerling
       @project_repo ||= ProjectRepo.new(db_conn)
     end
 
-    def record_dispatch(dispatch)
-      dispatch_repo << dispatch
+    def record_dispatch(client:, project:, task:)
+      dispatch_repo << Dispatch.new(addr: client.addr, client: client,
+                                    project: project, task: task)
     end
 
     def registration_repo
