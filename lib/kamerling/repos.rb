@@ -11,8 +11,8 @@ require_relative 'task_repo'
 
 module Kamerling
   class Repos
-    def initialize(db = ENV.fetch('DB', 'sqlite::memory:'))
-      @db_conn = Sequel.connect(db)
+    def initialize(db = ENV.fetch('DB', 'sqlite::memory:'), db_conn: nil)
+      @db_conn = db_conn || Sequel.connect(db)
     end
 
     def client_repo
