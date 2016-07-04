@@ -48,7 +48,7 @@ module Kamerling
         db[:clients]  << client.to_h
         db[:projects] << project.to_h
         db[:tasks]    << task.to_h
-        repos = Repos.new(db_conn: db)
+        repos = Repos.new(db: db)
         repos.record_dispatch client: client, project: project, task: task
         row = { client_id: 'cid', dispatched_at: any(Time), host: 'localhost',
                 id: any(String), port: 1981, project_id: 'pid', prot: 'TCP',

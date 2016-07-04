@@ -11,20 +11,20 @@ require_relative 'task_repo'
 
 module Kamerling
   class Repos
-    def initialize(db = ENV.fetch('DB', 'sqlite::memory:'), db_conn: nil)
-      @db_conn = db_conn || Sequel.connect(db)
+    def initialize(conn_str = ENV.fetch('DB', 'sqlite::memory:'), db: nil)
+      @db = db || Sequel.connect(conn_str)
     end
 
     def client_repo
-      @client_repo ||= ClientRepo.new(db_conn)
+      @client_repo ||= ClientRepo.new(db)
     end
 
     def dispatch_repo
-      @dispatch_repo ||= DispatchRepo.new(db_conn)
+      @dispatch_repo ||= DispatchRepo.new(db)
     end
 
     def project_repo
-      @project_repo ||= ProjectRepo.new(db_conn)
+      @project_repo ||= ProjectRepo.new(db)
     end
 
     def record_dispatch(client:, project:, task:)
@@ -33,19 +33,19 @@ module Kamerling
     end
 
     def registration_repo
-      @registration_repo ||= RegistrationRepo.new(db_conn)
+      @registration_repo ||= RegistrationRepo.new(db)
     end
 
     def result_repo
-      @result_repo ||= ResultRepo.new(db_conn)
+      @result_repo ||= ResultRepo.new(db)
     end
 
     def task_repo
-      @task_repo ||= TaskRepo.new(db_conn)
+      @task_repo ||= TaskRepo.new(db)
     end
 
     private
 
-    attr_reader :db_conn
+    attr_reader :db
   end
 end
