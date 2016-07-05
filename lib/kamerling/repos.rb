@@ -28,8 +28,8 @@ module Kamerling
     end
 
     def record_dispatch(client:, project:, task:)
-      dispatch_repo << Dispatch.new(addr: client.addr, client: client,
-                                    project: project, task: task)
+      db[:dispatches] << Dispatch.new(addr: client.addr, client: client,
+                                      project: project, task: task).to_h
     end
 
     def registration_repo
