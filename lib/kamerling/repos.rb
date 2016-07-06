@@ -3,7 +3,6 @@
 require 'sequel'
 require_relative 'client_repo'
 require_relative 'dispatch'
-require_relative 'dispatch_repo'
 require_relative 'project_repo'
 require_relative 'registration_repo'
 require_relative 'result_repo'
@@ -17,10 +16,6 @@ module Kamerling
 
     def client_repo
       @client_repo ||= ClientRepo.new(db)
-    end
-
-    def dispatch_repo
-      @dispatch_repo ||= DispatchRepo.new(db)
     end
 
     def project_repo

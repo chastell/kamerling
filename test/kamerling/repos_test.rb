@@ -5,7 +5,6 @@ require_relative '../test_helper'
 require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
-require_relative '../../lib/kamerling/dispatch_repo'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/registration_repo'
@@ -21,12 +20,6 @@ module Kamerling
     describe '#client_repo' do
       it 'returns a ClientRepo for the db connection' do
         _(Repos.new.client_repo).must_be_kind_of ClientRepo
-      end
-    end
-
-    describe '#dispatch_repo' do
-      it 'returns a DispatchRepo for the db connection' do
-        _(Repos.new.dispatch_repo).must_be_kind_of DispatchRepo
       end
     end
 
