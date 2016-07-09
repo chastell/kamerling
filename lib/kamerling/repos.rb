@@ -2,11 +2,11 @@
 
 require 'sequel'
 require_relative 'client_repo'
-require_relative 'dispatch'
 require_relative 'project_repo'
 require_relative 'registration_repo'
 require_relative 'result_repo'
 require_relative 'task_repo'
+require_relative 'uuid'
 
 module Kamerling
   class Repos
@@ -23,8 +23,11 @@ module Kamerling
     end
 
     def record_dispatch(client:, project:, task:)
-      db[:dispatches] << Dispatch.new(addr: client.addr, client: client,
-                                      project: project, task: task).to_h
+      db[:dispatches] << client.addr.to_h.merge(client_id: client.id,
+                                                dispatched_at: Time.now.utc,
+                                                id: UUID.new,
+                                                project_id: project.id,
+                                                task_id: task.id)
     end
 
     def registration_repo
