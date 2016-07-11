@@ -102,7 +102,8 @@ module Kamerling
     describe 'POST /projects' do
       it 'creates a new project with the given name and id' do
         post '/projects', id: id = UUID.new, name: 'ECC'
-        _(project_repo).must_have_received :<<, [Project.new(id: id)]
+        project = Project.new(id: id, name: 'ECC')
+        _(project_repo).must_have_received :<<, [project]
       end
 
       it 'redirects to /projects' do
