@@ -35,7 +35,8 @@ module Kamerling
         db[:projects] << Project.new(id: 'other', name: 'another').to_h
         table << { data: '', done: true, id: 'tpid',   project_id: 'pid'   }
         table << { data: '', done: true, id: 'tother', project_id: 'other' }
-        _(repo.for_project(project)).must_equal [Task.new(id: 'tpid')]
+        task = Task.new(data: '', done: true, id: 'tpid')
+        _(repo.for_project(project)).must_equal [task]
       end
     end
 
@@ -43,7 +44,8 @@ module Kamerling
       it 'returns the first pending Task for the given Project' do
         table << { data: '', done: true,  id: 'done', project_id: 'pid' }
         table << { data: '', done: false, id: 'pend', project_id: 'pid' }
-        _(repo.next_for_project(project)).must_equal Task.new(id: 'pend')
+        task = Task.new(data: '', done: false, id: 'pend')
+        _(repo.next_for_project(project)).must_equal task
       end
 
       it 'raises NotFound if there’s no free Task' do
