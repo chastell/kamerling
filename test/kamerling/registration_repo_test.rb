@@ -13,8 +13,6 @@ module Kamerling
   describe RegistrationRepo do
     include RepoBehaviour
 
-    Sequel.extension :migration
-
     let(:addr)    { Addr['localhost', 1981, :TCP]         }
     let(:db)      { Sequel.sqlite                         }
     let(:project) { Project.new(id: 'pid', name: 'GIMPS') }

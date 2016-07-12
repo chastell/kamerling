@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
+require 'sequel'
+
 module Kamerling
   module RepoBehaviour
     def self.included(spec_class)
       spec_class.class_eval do
+        Sequel.extension :migration
+
         describe '#<<' do
           it 'adds a new entity to the repo' do
             assert table.empty?

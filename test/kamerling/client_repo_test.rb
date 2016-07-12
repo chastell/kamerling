@@ -11,8 +11,6 @@ module Kamerling
   describe ClientRepo do
     include RepoBehaviour
 
-    Sequel.extension :migration
-
     let(:db)    { Sequel.sqlite            }
     let(:project) { Project.new(id: 'ecc') }
     let(:repo)  { ClientRepo.new(db)       }

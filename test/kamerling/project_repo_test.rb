@@ -10,8 +10,6 @@ module Kamerling
   describe ProjectRepo do
     include RepoBehaviour
 
-    Sequel.extension :migration
-
     let(:db)     { Sequel.sqlite                           }
     let(:entity) { Project.new(id: 'an id', name: 'GIMPS') }
     let(:repo)   { ProjectRepo.new(db)                     }
