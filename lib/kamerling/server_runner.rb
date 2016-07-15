@@ -6,7 +6,13 @@ require_relative 'server/udp'
 
 module Kamerling
   class ServerRunner
-    def initialize(servers: default_servers)
+    def self.default_servers
+      [Server::HTTP.new, Server::TCP.new, Server::UDP.new].select do |server|
+        server.addr.host and server.addr.port
+      end
+    end
+
+    def initialize(servers: self.class.default_servers)
       @servers = servers
     end
 
@@ -22,11 +28,5 @@ module Kamerling
     private
 
     attr_reader :servers
-
-    def default_servers
-      [Server::HTTP.new, Server::TCP.new, Server::UDP.new].select do |server|
-        server.addr.host and server.addr.port
-      end
-    end
   end
 end
