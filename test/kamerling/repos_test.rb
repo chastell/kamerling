@@ -50,6 +50,24 @@ module Kamerling
       end
     end
 
+    describe '#record_registration' do
+      it 'records a registration' do
+        db   = Sequel.sqlite
+        path = "#{__dir__}/../../lib/kamerling/migrations"
+        Sequel::Migrator.run db, path
+        addr    = Addr['localhost', 1981, :TCP]
+        client  = Client.new(addr: addr, busy: true, id: 'cid', type: :FPGA)
+        project = Project.new(id: 'pid', name: 'GIMPS')
+        db[:clients]  << client.to_h
+        db[:projects] << project.to_h
+        repos = Repos.new(db: db)
+        repos.record_registration addr: addr, client: client, project: project
+        row = { client_id: 'cid', registered_at: any(Time), host: 'localhost',
+                id: any(String), port: 1981, project_id: 'pid', prot: 'TCP' }
+        _(db[:registrations].first).must_equal row
+      end
+    end
+
     describe '#registration_repo' do
       it 'returns a RegistrationRepo for the db connection' do
         _(Repos.new.registration_repo).must_be_kind_of RegistrationRepo

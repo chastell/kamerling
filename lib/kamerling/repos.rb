@@ -30,6 +30,13 @@ module Kamerling
                                                 task_id: task.id)
     end
 
+    def record_registration(addr:, client:, project:)
+      db[:registrations] << addr.to_h.merge(client_id: client.id,
+                                            id: UUID.new,
+                                            project_id: project.id,
+                                            registered_at: Time.now.utc)
+    end
+
     def registration_repo
       @registration_repo ||= RegistrationRepo.new(db)
     end
