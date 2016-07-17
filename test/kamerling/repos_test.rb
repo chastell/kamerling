@@ -17,6 +17,18 @@ module Kamerling
   describe Repos do
     Sequel.extension :migration
 
+    let(:addr)    { Addr['localhost', 1981, :TCP]                              }
+    let(:client)  { Client.new(addr: addr, busy: true, id: 'cid', type: :FPGA) }
+    let(:db)      { Sequel.sqlite                                              }
+    let(:project) { Project.new(id: 'pid', name: 'GIMPS')                      }
+    let(:repos)   { Repos.new(db: db)                                          }
+
+    before do
+      Sequel::Migrator.run db, "#{__dir__}/../../lib/kamerling/migrations"
+      db[:clients]  << client.to_h
+      db[:projects] << project.to_h
+    end
+
     describe '#client_repo' do
       it 'returns a ClientRepo for the db connection' do
         _(Repos.new.client_repo).must_be_kind_of ClientRepo
@@ -31,17 +43,8 @@ module Kamerling
 
     describe '#record_dispatch' do
       it 'records a dispatch' do
-        db   = Sequel.sqlite
-        path = "#{__dir__}/../../lib/kamerling/migrations"
-        Sequel::Migrator.run db, path
-        addr    = Addr['localhost', 1981, :TCP]
-        client  = Client.new(addr: addr, busy: true, id: 'cid', type: :FPGA)
-        project = Project.new(id: 'pid', name: 'GIMPS')
-        task    = Task.new(data: 'data', id: 'tid', project: project)
-        db[:clients]  << client.to_h
-        db[:projects] << project.to_h
-        db[:tasks]    << task.to_h
-        repos = Repos.new(db: db)
+        task = Task.new(data: 'data', id: 'tid', project: project)
+        db[:tasks] << task.to_h
         repos.record_dispatch client: client, project: project, task: task
         row = { client_id: 'cid', dispatched_at: any(Time), host: 'localhost',
                 id: any(String), port: 1981, project_id: 'pid', prot: 'TCP',
@@ -52,15 +55,6 @@ module Kamerling
 
     describe '#record_registration' do
       it 'records a registration' do
-        db   = Sequel.sqlite
-        path = "#{__dir__}/../../lib/kamerling/migrations"
-        Sequel::Migrator.run db, path
-        addr    = Addr['localhost', 1981, :TCP]
-        client  = Client.new(addr: addr, busy: true, id: 'cid', type: :FPGA)
-        project = Project.new(id: 'pid', name: 'GIMPS')
-        db[:clients]  << client.to_h
-        db[:projects] << project.to_h
-        repos = Repos.new(db: db)
         repos.record_registration addr: addr, client: client, project: project
         row = { client_id: 'cid', registered_at: any(Time), host: 'localhost',
                 id: any(String), port: 1981, project_id: 'pid', prot: 'TCP' }
