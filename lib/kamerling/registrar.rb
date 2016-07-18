@@ -2,8 +2,6 @@
 
 require 'procto'
 require_relative 'client'
-require_relative 'project'
-require_relative 'registration'
 require_relative 'repos'
 
 module Kamerling
@@ -19,7 +17,7 @@ module Kamerling
     def call
       client.addr = addr
       repos.client_repo << client
-      repos.registration_repo << registration
+      repos.record_registration addr: addr, client: client, project: project
     end
 
     private
@@ -34,10 +32,6 @@ module Kamerling
 
     def project
       @project ||= repos.project_repo.fetch(message.project_id)
-    end
-
-    def registration
-      Registration.new(addr: addr, client: client, project: project)
     end
   end
 end

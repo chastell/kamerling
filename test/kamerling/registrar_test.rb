@@ -8,8 +8,6 @@ require_relative '../../lib/kamerling/message'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/registrar'
-require_relative '../../lib/kamerling/registration'
-require_relative '../../lib/kamerling/registration_repo'
 require_relative '../../lib/kamerling/repos'
 
 module Kamerling
@@ -21,16 +19,15 @@ module Kamerling
       let(:mess)              { Message.rgst(client: client, project: project) }
       let(:project)           { Project.new                                    }
       let(:project_repo)      { fake(ProjectRepo, fetch: project)              }
-      let(:registration_repo) { fake(RegistrationRepo)                         }
 
       let(:repos) do
-        fake(Repos, client_repo: client_repo, project_repo: project_repo,
-                    registration_repo: registration_repo)
+        fake(Repos, client_repo: client_repo, project_repo: project_repo)
       end
 
-      it 'registers that the given client can do the given project' do
+      it 'records the registration' do
         Registrar.call addr: addr, message: mess, repos: repos
-        _(registration_repo).must_have_received :<<, [any(Registration)]
+        params = [{ addr: addr, client: client, project: project }]
+        _(repos).must_have_received :record_registration, params
       end
 
       it 'updates the client’s addr' do
