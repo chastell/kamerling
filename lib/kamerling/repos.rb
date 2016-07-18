@@ -3,7 +3,6 @@
 require 'sequel'
 require_relative 'client_repo'
 require_relative 'project_repo'
-require_relative 'registration_repo'
 require_relative 'result_repo'
 require_relative 'task_repo'
 require_relative 'uuid'
@@ -35,10 +34,6 @@ module Kamerling
                                             id: UUID.new,
                                             project_id: project.id,
                                             registered_at: Time.now.utc)
-    end
-
-    def registration_repo
-      @registration_repo ||= RegistrationRepo.new(db)
     end
 
     def result_repo

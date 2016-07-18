@@ -7,7 +7,6 @@ require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
-require_relative '../../lib/kamerling/registration_repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/result_repo'
 require_relative '../../lib/kamerling/task'
@@ -59,12 +58,6 @@ module Kamerling
         row = { client_id: 'cid', registered_at: any(Time), host: 'localhost',
                 id: any(String), port: 1981, project_id: 'pid', prot: 'TCP' }
         _(db[:registrations].first).must_equal row
-      end
-    end
-
-    describe '#registration_repo' do
-      it 'returns a RegistrationRepo for the db connection' do
-        _(Repos.new.registration_repo).must_be_kind_of RegistrationRepo
       end
     end
 
