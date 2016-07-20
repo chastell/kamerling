@@ -20,7 +20,7 @@ module Kamerling
     end
 
     describe '#to_h' do
-      it 'returns a Hash representation of the Registration' do
+      it 'returns a Hash representation of the Result' do
         addr    = Addr['127.0.0.1', 1979, :UDP]
         client  = Client.new(id: 'client id')
         task    = Task.new(id: 'task id')
