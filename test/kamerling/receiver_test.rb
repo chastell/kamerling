@@ -26,7 +26,7 @@ module Kamerling
         repos       = fake(Repos, client_repo: client_repo,
                                   result_repo: result_repo,
                                   task_repo:   task_repo)
-        message = Message.rslt(client: client, payload: 'data', task: task)
+        message = Message.rslt(client: client, data: 'data', task: task)
         Receiver.call addr: addr, message: message, repos: repos
         refute client.busy
         assert task.done

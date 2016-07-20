@@ -11,7 +11,7 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
   describe Message do
     let(:mess) do
       Message.new("DATA\0\0\0\0\0\0\0\0\0\0\0\0" \
-        '16B client  UUID16B project UUID16B task    UUIDsome payload')
+        '16B client  UUID16B project UUID16B task    UUIDsome data')
     end
 
     describe '.build' do
@@ -19,12 +19,12 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         client  = Client.new
         project = Project.new
         task    = Task.new
-        message = Message.build(client: client, payload: 'pay',
-                                project: project, task: task, type: :DATA)
+        message = Message.build(client: client, data: 'pay', project: project,
+                                task: task, type: :DATA)
         _(message.client_id).must_equal client.id
+        _(message.data).must_equal 'pay'
         _(message.project_id).must_equal project.id
         _(message.task_id).must_equal task.id
-        _(message.payload).must_equal 'pay'
         _(message.type).must_equal :DATA
       end
     end
@@ -36,9 +36,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
         task    = Task.new(data: 'pay')
         message = Message.data(client: client, project: project, task: task)
         _(message.client_id).must_equal client.id
+        _(message.data).must_equal 'pay'
         _(message.project_id).must_equal project.id
         _(message.task_id).must_equal task.id
-        _(message.payload).must_equal 'pay'
         _(message.type).must_equal :DATA
       end
     end
@@ -64,9 +64,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       it 'constructs a new RSLT message' do
         client  = Client.new
         task    = Task.new(project: Project.new)
-        message = Message.rslt(client: client, payload: 'data', task: task)
+        message = Message.rslt(client: client, data: 'data', task: task)
         _(message.client_id).must_equal client.id
-        _(message.payload).must_equal 'data'
+        _(message.data).must_equal 'data'
         _(message.task_id).must_equal task.id
         _(message.type).must_equal :RSLT
       end
@@ -88,9 +88,9 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    describe '#payload' do
-      it 'returns the result payload' do
-        _(mess.payload).must_equal 'some payload'
+    describe '#data' do
+      it 'returns the result data' do
+        _(mess.data).must_equal 'some data'
       end
     end
 
@@ -109,14 +109,14 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
     describe '#to_hex' do
       it 'returns a hex representation of the message' do
         assert mess.to_hex.start_with?('44 41 54 41')
-        assert mess.to_hex.end_with?('70 61 79 6c 6f 61 64')
+        assert mess.to_hex.end_with?('64 61 74 61')
       end
     end
 
     describe '#to_s' do
       it 'returns the raw bytes' do
         _(mess.to_s).must_equal "#{mess.type}\0\0\0\0\0\0\0\0\0\0\0\0" \
-          '16B client  UUID16B project UUID16B task    UUIDsome payload'
+          '16B client  UUID16B project UUID16B task    UUIDsome data'
       end
     end
 

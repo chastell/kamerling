@@ -35,7 +35,7 @@ module Kamerling
     end
 
     def result
-      Result.new(addr: addr, client: client, data: message.payload, task: task)
+      Result.new(addr: addr, client: client, data: message.data, task: task)
     end
 
     def task

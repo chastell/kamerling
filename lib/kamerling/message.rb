@@ -10,13 +10,13 @@ module Kamerling
 
     include Equalizer.new(:raw)
 
-    def self.build(client:, payload: '', project:, task: Task.null, type:)
+    def self.build(client:, data: '', project:, task: Task.null, type:)
       new([type, "\0\0\0\0\0\0\0\0\0\0\0\0", UUID.bin(client.id),
-           UUID.bin(project.id), UUID.bin(task.id), payload].join)
+           UUID.bin(project.id), UUID.bin(task.id), data].join)
     end
 
     def self.data(client:, project:, task:)
-      build(client: client, payload: task.data, project: project, task: task,
+      build(client: client, data: task.data, project: project, task: task,
             type: :DATA)
     end
 
@@ -24,8 +24,8 @@ module Kamerling
       build(client: client, project: project, type: :RGST)
     end
 
-    def self.rslt(client:, payload:, task:)
-      build(client: client, payload: payload, project: task.project, task: task,
+    def self.rslt(client:, data:, task:)
+      build(client: client, data: data, project: task.project, task: task,
             type: :RSLT)
     end
 
@@ -42,7 +42,7 @@ module Kamerling
       UUID[raw[16..31]]
     end
 
-    def payload
+    def data
       raw[64..-1]
     end
 
