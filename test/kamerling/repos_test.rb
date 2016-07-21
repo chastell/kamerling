@@ -21,11 +21,13 @@ module Kamerling
     let(:db)      { Sequel.sqlite                                              }
     let(:project) { Project.new(id: 'pid', name: 'GIMPS')                      }
     let(:repos)   { Repos.new(db: db)                                          }
+    let(:task)    { Task.new(data: 'data', id: 'tid', project: project)        }
 
     before do
       Sequel::Migrator.run db, "#{__dir__}/../../lib/kamerling/migrations"
       db[:clients]  << client.to_h
       db[:projects] << project.to_h
+      db[:tasks]    << task.to_h
     end
 
     describe '#client_repo' do
@@ -42,8 +44,6 @@ module Kamerling
 
     describe '#record_dispatch' do
       it 'records a dispatch' do
-        task = Task.new(data: 'data', id: 'tid', project: project)
-        db[:tasks] << task.to_h
         repos.record_dispatch client: client, project: project, task: task
         row = { client_id: 'cid', dispatched_at: any(Time), host: 'localhost',
                 id: any(String), port: 1981, project_id: 'pid', prot: 'TCP',
@@ -58,6 +58,16 @@ module Kamerling
         row = { client_id: 'cid', registered_at: any(Time), host: 'localhost',
                 id: any(String), port: 1981, project_id: 'pid', prot: 'TCP' }
         _(db[:registrations].first).must_equal row
+      end
+    end
+
+    describe '#record_result' do
+      it 'records a result' do
+        repos.record_result addr: addr, client: client, data: 'data', task: task
+        row = { client_id: 'cid', data: 'data', host: 'localhost',
+                id: any(String), port: 1981, prot: 'TCP',
+                received_at: any(Time), task_id: 'tid' }
+        _(db[:results].first).must_equal row
       end
     end
 

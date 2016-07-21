@@ -36,6 +36,12 @@ module Kamerling
                                             registered_at: Time.now.utc)
     end
 
+    def record_result(addr:, client:, data:, task:)
+      db[:results] << addr.to_h.merge(client_id: client.id, data: data,
+                                      id: UUID.new, received_at: Time.now.utc,
+                                      task_id: task.id)
+    end
+
     def result_repo
       @result_repo ||= ResultRepo.new(db)
     end
