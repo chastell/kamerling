@@ -29,8 +29,9 @@ module Kamerling
     end
 
     def persist
+      repos.record_result addr: addr, client: client, data: message.data,
+                          task: task
       repos.client_repo << client
-      repos.result_repo << result
       repos.task_repo << task
     end
 
