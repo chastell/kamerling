@@ -3,7 +3,6 @@
 require 'sequel'
 require_relative 'client_repo'
 require_relative 'project_repo'
-require_relative 'result_repo'
 require_relative 'task_repo'
 require_relative 'uuid'
 
@@ -40,10 +39,6 @@ module Kamerling
       db[:results] << addr.to_h.merge(client_id: client.id, data: data,
                                       id: UUID.new, received_at: Time.now.utc,
                                       task_id: task.id)
-    end
-
-    def result_repo
-      @result_repo ||= ResultRepo.new(db)
     end
 
     def task_repo

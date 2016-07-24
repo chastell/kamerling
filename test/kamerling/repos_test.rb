@@ -8,7 +8,6 @@ require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/project'
 require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/repos'
-require_relative '../../lib/kamerling/result_repo'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
 
@@ -68,12 +67,6 @@ module Kamerling
                 id: any(String), port: 1981, prot: 'TCP',
                 received_at: any(Time), task_id: 'tid' }
         _(db[:results].first).must_equal row
-      end
-    end
-
-    describe '#result_repo' do
-      it 'returns a ResultRepo for the db connection' do
-        _(Repos.new.result_repo).must_be_kind_of ResultRepo
       end
     end
 
