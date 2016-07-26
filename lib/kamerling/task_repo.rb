@@ -12,6 +12,13 @@ module Kamerling
       @project_repo = project_repo
     end
 
+    def all
+      projects = project_repo.all.group_by(&:id)
+      table.all.map do |hash|
+        klass.new(hash.merge(project: projects[hash[:project_id]].first))
+      end
+    end
+
     def for_project(project)
       table.where(project_id: project.id).all.map(&Task.method(:new))
     end
