@@ -43,13 +43,13 @@ module Kamerling
     end
 
     describe '#==' do
-      it 'reports id-based euqality' do
+      it 'reports all-attribute-based euqality' do
         actor = Class.new(Entity) { attrs name: Symbol }
         _(actor.new(name: :laurel)).wont_equal actor.new(name: :laurel)
         id     = UUID.new
         laurel = actor.new(id: id, name: :laurel)
         hardy  = actor.new(id: id, name: :hardy)
-        _(laurel).must_equal hardy
+        _(laurel).wont_equal hardy
       end
     end
 

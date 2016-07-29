@@ -6,7 +6,7 @@ require_relative 'uuid'
 
 module Kamerling
   class Entity
-    include Equalizer.new(:id)
+    include Equalizer.new(:attributes)
 
     include Virtus.model
 
