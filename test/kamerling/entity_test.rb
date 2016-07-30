@@ -91,5 +91,16 @@ module Kamerling
                                 port: 1981
       end
     end
+
+    describe '#update' do
+      it 'returns an object with the given attribute(s) updated' do
+        project = Class.new(Entity) { attrs name: String }
+        gimps   = project.new(name: 'GIMPS')
+        ecc     = gimps.update(name: 'ECC')
+        _(ecc.id).must_equal gimps.id
+        _(gimps.name).must_equal 'GIMPS'
+        _(ecc.name).must_equal 'ECC'
+      end
+    end
   end
 end

@@ -38,6 +38,10 @@ module Kamerling
       end.reduce({}, :merge)
     end
 
+    def update(values)
+      self.class.new(attributes.merge(values))
+    end
+
     private
 
     def id_key(value)
