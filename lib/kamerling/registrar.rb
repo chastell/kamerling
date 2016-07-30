@@ -15,7 +15,6 @@ module Kamerling
     end
 
     def call
-      client.addr = addr
       repos.client_repo << client
       repos.record_registration addr: addr, client: client, project: project
     end
@@ -27,7 +26,7 @@ module Kamerling
     def client
       @client ||= repos.client_repo.fetch(message.client_id) do
         Client.new(addr: addr, id: message.client_id)
-      end
+      end.update(addr: addr)
     end
 
     def project

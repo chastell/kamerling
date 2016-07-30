@@ -13,12 +13,13 @@ require_relative '../../lib/kamerling/repos'
 module Kamerling
   describe Registrar do
     describe '.call' do
-      let(:addr)              { Addr.new                                       }
-      let(:client)            { Client.new                                     }
-      let(:client_repo)       { fake(ClientRepo, fetch: client)                }
-      let(:mess)              { Message.rgst(client: client, project: project) }
-      let(:project)           { Project.new                                    }
-      let(:project_repo)      { fake(ProjectRepo, fetch: project)              }
+      let(:addr)         { Addr.new                                           }
+      let(:client)       { old_client.update(addr: addr)                      }
+      let(:client_repo)  { fake(ClientRepo, fetch: old_client)                }
+      let(:mess)         { Message.rgst(client: old_client, project: project) }
+      let(:old_client)   { Client.new                                         }
+      let(:project)      { Project.new                                        }
+      let(:project_repo) { fake(ProjectRepo, fetch: project)                  }
 
       let(:repos) do
         fake(Repos, client_repo: client_repo, project_repo: project_repo)
