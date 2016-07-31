@@ -16,16 +16,16 @@ module Kamerling
     describe '.call' do
       it 'saves the result and updates client and task' do
         addr        = Addr.new
-        client      = Client.new(busy: true)
-        client_repo = fake(ClientRepo, fetch: client)
-        task        = Task.new(done: false, project: Project.new)
-        task_repo   = fake(TaskRepo, fetch: task)
+        old_client  = Client.new(busy: true)
+        client      = old_client.update(busy: false)
+        client_repo = fake(ClientRepo, fetch: old_client)
+        old_task    = Task.new(done: false, project: Project.new)
+        task        = old_task.update(done: true)
+        task_repo   = fake(TaskRepo, fetch: old_task)
         repos       = fake(Repos, client_repo: client_repo,
                                   task_repo:   task_repo)
-        message = Message.rslt(client: client, data: 'data', task: task)
+        message = Message.rslt(client: old_client, data: 'data', task: old_task)
         Receiver.call addr: addr, message: message, repos: repos
-        refute client.busy
-        assert task.done
         params = [{ addr: addr, client: client, data: 'data', task: task }]
         _(repos).must_have_received :record_result, params
         _(client_repo).must_have_received :<<, [client]

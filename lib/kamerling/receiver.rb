@@ -15,9 +15,10 @@ module Kamerling
     end
 
     def call
-      client.busy = false
-      task.done   = true
-      persist
+      repos.record_result addr: addr, client: client, data: message.data,
+                          task: task
+      repos.client_repo << client
+      repos.task_repo << task
     end
 
     private
@@ -25,14 +26,7 @@ module Kamerling
     attr_reader :addr, :message, :repos
 
     def client
-      @client ||= repos.client_repo.fetch(message.client_id)
-    end
-
-    def persist
-      repos.record_result addr: addr, client: client, data: message.data,
-                          task: task
-      repos.client_repo << client
-      repos.task_repo << task
+      @client ||= repos.client_repo.fetch(message.client_id).update(busy: false)
     end
 
     def result
@@ -40,7 +34,7 @@ module Kamerling
     end
 
     def task
-      @task ||= repos.task_repo.fetch(message.task_id)
+      @task ||= repos.task_repo.fetch(message.task_id).update(done: true)
     end
   end
 end
