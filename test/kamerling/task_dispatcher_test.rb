@@ -16,14 +16,15 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe TaskDispatcher do
-    let(:addr)           { Addr.new                                     }
-    let(:client)         { Client.new(addr: addr)                       }
-    let(:client_repo)    { fake(ClientRepo, free_for_project: [client]) }
-    let(:net_dispatcher) { fake(NetDispatcher, as: :class)              }
-    let(:project)        { Project.new                                  }
-    let(:project_repo)   { fake(ProjectRepo, all: [project])            }
-    let(:task)           { Task.new(data: 'data')                       }
-    let(:task_repo)      { fake(TaskRepo, next_for_project: task)       }
+    let(:addr)           { Addr.new                                         }
+    let(:old_client)     { Client.new(addr: addr)                           }
+    let(:client)         { old_client.update(busy: true)                    }
+    let(:client_repo)    { fake(ClientRepo, free_for_project: [old_client]) }
+    let(:net_dispatcher) { fake(NetDispatcher, as: :class)                  }
+    let(:project)        { Project.new                                      }
+    let(:project_repo)   { fake(ProjectRepo, all: [project])                }
+    let(:task)           { Task.new(data: 'data')                           }
+    let(:task_repo)      { fake(TaskRepo, next_for_project: task)           }
 
     let(:repos) do
       fake(Repos, client_repo: client_repo, project_repo: project_repo,
@@ -37,12 +38,11 @@ module Kamerling
 
     describe '#dispatch_all' do
       it 'dispatches tasks to free clients' do
-        bytes = Message.data(client: client, project: project, task: task).to_s
-        _(net_dispatcher).must_have_received :dispatch, [bytes, addr: addr]
+        mess = Message.data(client: old_client, project: project, task: task)
+        _(net_dispatcher).must_have_received :dispatch, [mess.to_s, addr: addr]
       end
 
       it 'marks clients as busy and persists the change' do
-        assert client.busy
         _(client_repo).must_have_received :<<, [client]
       end
 
