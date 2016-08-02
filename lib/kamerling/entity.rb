@@ -8,7 +8,7 @@ module Kamerling
   class Entity
     include Equalizer.new(:attributes)
 
-    include Virtus.model
+    include Virtus.value_object
 
     attribute :id, String, default: -> (*) { UUID.new }
 
