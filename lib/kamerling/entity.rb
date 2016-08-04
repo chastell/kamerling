@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
-require 'equalizer'
 require 'virtus'
 require_relative 'uuid'
 
 module Kamerling
   class Entity
-    include Equalizer.new(:attributes)
-
     include Virtus.value_object
 
-    attribute :id, String, default: -> (*) { UUID.new }
+    values { attribute :id, String, default: -> (*) { UUID.new } }
 
     def self.attrs(hash = {})
-      hash.each { |name, klass| attribute name, klass }
+      values { hash.each { |name, klass| attribute name, klass } }
     end
 
     def self.defaults(hash = {})
