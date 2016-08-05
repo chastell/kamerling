@@ -25,5 +25,11 @@ module Kamerling
         _(UUID.new).wont_equal UUID.new
       end
     end
+
+    describe '.zero' do
+      it 'returns an all-zero UUID' do
+        _(UUID.zero).must_equal '00000000-0000-0000-0000-000000000000'
+      end
+    end
   end
 end

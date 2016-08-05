@@ -17,5 +17,9 @@ module Kamerling
     def new
       SecureRandom.uuid
     end
+
+    def zero
+      self["\0" * 16]
+    end
   end
 end
