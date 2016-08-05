@@ -2,21 +2,14 @@
 
 require 'virtus'
 require_relative 'uuid'
+require_relative 'value'
 
 module Kamerling
-  class Entity
-    include Virtus.value_object
-
+  class Entity < Value
     values { attribute :id, String, default: -> (*) { UUID.new } }
 
     def self.attrs(hash = {})
       values { hash.each { |name, klass| attribute name, klass } }
-    end
-
-    def self.defaults(hash = {})
-      hash.each do |name, default|
-        attribute name, attribute_set[name].type, default: default
-      end
     end
 
     def self.null
