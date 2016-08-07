@@ -8,8 +8,8 @@ module Kamerling
   class Entity < Value
     values { attribute :id, String, default: -> (*) { UUID.new } }
 
-    def self.attrs(hash = {})
-      values { hash.each { |name, klass| attribute name, klass } }
+    class << self
+      alias attrs vals
     end
 
     def self.null
