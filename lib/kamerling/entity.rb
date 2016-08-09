@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'virtus'
 require_relative 'uuid'
 require_relative 'value'
 
 module Kamerling
   class Entity < Value
-    values { attribute :id, String, default: -> (*) { UUID.new } }
+    vals id: String
+    defaults id: -> (*) { UUID.new }
 
     class << self
       alias attrs vals
