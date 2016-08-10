@@ -5,13 +5,6 @@ require_relative '../../lib/kamerling/entity'
 
 module Kamerling
   describe Entity do
-    describe '.attrs' do
-      it 'allows defining attributes in a key → class manner' do
-        person = Class.new(Entity) { attrs name: String, born: Integer }
-        _(person.attribute_set.map(&:name)).must_equal %i(id name born)
-      end
-    end
-
     describe '.defaults' do
       it 'allows defining attribute defaults' do
         song = Class.new(Entity) do

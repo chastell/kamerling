@@ -8,10 +8,6 @@ module Kamerling
     vals id: String
     defaults id: -> (*) { UUID.new }
 
-    class << self
-      alias attrs vals
-    end
-
     def self.null
       new(id: UUID.zero)
     end
