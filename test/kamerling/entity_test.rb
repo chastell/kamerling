@@ -15,7 +15,7 @@ module Kamerling
     describe '.defaults' do
       it 'allows defining attribute defaults' do
         song = Class.new(Entity) do
-          attrs title: String, genre: Symbol
+          vals title: String, genre: Symbol
           defaults genre: :ragga
         end
         _(song.new.genre).must_equal :ragga
@@ -30,7 +30,7 @@ module Kamerling
       end
 
       it 'deserialises the object from a Hash' do
-        trivial = Class.new(Entity) { attrs question: Symbol }
+        trivial = Class.new(Entity) { vals question: Symbol }
         _(trivial.new(question: :answer).question).must_equal :answer
       end
     end
@@ -44,7 +44,7 @@ module Kamerling
 
     describe '#==' do
       it 'reports all-attribute-based euqality' do
-        actor = Class.new(Entity) { attrs name: Symbol }
+        actor = Class.new(Entity) { vals name: Symbol }
         _(actor.new(name: :laurel)).wont_equal actor.new(name: :laurel)
         id     = UUID.new
         laurel = actor.new(id: id, name: :laurel)
@@ -55,27 +55,27 @@ module Kamerling
 
     describe '#to_h' do
       it 'serialises the object to a Hash' do
-        hashble = Class.new(Entity) { attrs param: Symbol }
+        hashble = Class.new(Entity) { vals param: Symbol }
         hash = hashble.new(param: 'val').to_h
         _(hash).must_equal id: any(String), param: 'val'
       end
 
       it 'serialises Symbols to Strings' do
-        symbolic  = Class.new(Entity) { attrs symbol: Symbol }
+        symbolic  = Class.new(Entity) { vals symbol: Symbol }
         valentine = symbolic.new(symbol: :♥)
         _(valentine.to_h).must_equal id: valentine.id, symbol: '♥'
       end
 
       it 'serialises Times to UTC, ISO 8601' do
-        timely  = Class.new(Entity) { attrs happened_at: Time }
+        timely  = Class.new(Entity) { vals happened_at: Time }
         arrival = timely.new(happened_at: Time.parse('2014-12-23 05:00+01'))
         _(arrival.to_h).must_equal happened_at: '2014-12-23T04:00:00Z',
                                    id: arrival.id
       end
 
       it 'keeps only related Entities’ ids' do
-        Child  = Class.new(Entity) { attrs name: String }
-        Parent = Class.new(Entity) { attrs child: Child, name: String }
+        Child  = Class.new(Entity) { vals name: String }
+        Parent = Class.new(Entity) { vals child: Child, name: String }
         zosia  = Child.new(name: 'Zosia')
         marta  = Parent.new(child: zosia, name: 'Marta')
         marta_hash = { child_id: zosia.id, id: marta.id, name: 'Marta' }
@@ -84,7 +84,7 @@ module Kamerling
 
       it 'embeds related Values' do
         addr   = Class.new(Value) { vals host: String, port: Integer }
-        client = Class.new(Entity) { attrs addr: addr, name: String }
+        client = Class.new(Entity) { vals addr: addr, name: String }
         home   = addr.new(host: 'localhost', port: 1981)
         unit   = client.new(addr: home, name: 'sweet')
         _(unit.to_h).must_equal host: 'localhost', id: unit.id, name: 'sweet',
@@ -94,7 +94,7 @@ module Kamerling
 
     describe '#update' do
       it 'returns an object with the given attribute(s) updated' do
-        project = Class.new(Entity) { attrs name: String }
+        project = Class.new(Entity) { vals name: String }
         gimps   = project.new(name: 'GIMPS')
         ecc     = gimps.update(name: 'ECC')
         _(ecc.id).must_equal gimps.id

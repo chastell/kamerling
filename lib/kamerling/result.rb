@@ -7,8 +7,7 @@ require_relative 'task'
 
 module Kamerling
   class Result < Entity
-    attrs addr: Addr, client: Client, data: String, received_at: Time,
-          task: Task
+    vals addr: Addr, client: Client, data: String, received_at: Time, task: Task
     defaults received_at: -> (*) { Time.now.utc }
   end
 end
