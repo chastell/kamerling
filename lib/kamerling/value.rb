@@ -13,9 +13,7 @@ module Kamerling
     end
 
     def self.vals(hash = {})
-      values do
-        hash.each { |name, klass| attribute name, klass }
-      end
+      values { hash.each { |name, klass| attribute name, klass } }
     end
 
     def to_h
