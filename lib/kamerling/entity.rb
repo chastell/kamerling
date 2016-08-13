@@ -13,7 +13,7 @@ module Kamerling
     end
 
     def to_h
-      attributes.map do |(key, value)|
+      attributes.map do |key, value|
         case value
         when Entity then { id_key(value) => value.id }
         when Symbol then { key => value.to_s }
