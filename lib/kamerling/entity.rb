@@ -13,15 +13,7 @@ module Kamerling
     end
 
     def to_h
-      attributes.map do |key, value|
-        case value
-        when Entity then { id_key(value) => value.id }
-        when Symbol then { key => value.to_s }
-        when Time   then { key => value.utc.iso8601 }
-        when Value  then value.to_h
-        else { key => value }
-        end
-      end.reduce({}, :merge)
+      attributes.map(&method(:hashify)).reduce({}, :merge)
     end
 
     def update(values)
@@ -29,6 +21,16 @@ module Kamerling
     end
 
     private
+
+    def hashify((key, value))
+      case value
+      when Entity then { id_key(value) => value.id }
+      when Symbol then { key => value.to_s }
+      when Time   then { key => value.utc.iso8601 }
+      when Value  then value.to_h
+      else { key => value }
+      end
+    end
 
     def id_key(value)
       "#{value.class.name.split('::').last.downcase}_id".to_sym
