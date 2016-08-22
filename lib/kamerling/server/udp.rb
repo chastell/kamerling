@@ -7,11 +7,11 @@ require_relative 'sock'
 module Kamerling
   module Server
     class UDP < Sock
-      private
-
-      def default_addr
+      def self.default_addr
         Addr[ENV['HOST'], ENV['UDP'], :UDP]
       end
+
+      private
 
       def handle_connection(socket)
         input, conn = socket.recvfrom 2**16

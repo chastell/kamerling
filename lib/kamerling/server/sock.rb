@@ -8,7 +8,7 @@ module Kamerling
     class Sock
       attr_reader :addr
 
-      def initialize(addr: default_addr, handler: Handler.new)
+      def initialize(addr: self.class.default_addr, handler: Handler.new)
         @addr    = addr
         @handler = handler
       end

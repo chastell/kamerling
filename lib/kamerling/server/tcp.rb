@@ -7,11 +7,11 @@ require_relative 'sock'
 module Kamerling
   module Server
     class TCP < Sock
-      private
-
-      def default_addr
+      def self.default_addr
         Addr[ENV['HOST'], ENV['TCP'], :TCP]
       end
+
+      private
 
       def handle_connection(socket)
         addr  = Addr[*socket.remote_address.ip_unpack, :TCP]
