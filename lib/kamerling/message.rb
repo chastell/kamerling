@@ -24,8 +24,8 @@ module Kamerling
       build(client: client, project: project, type: :RGST)
     end
 
-    def self.rslt(client:, data:, task:)
-      build(client: client, data: data, project: task.project, task: task,
+    def self.rslt(client:, data:, project:, task:)
+      build(client: client, data: data, project: project, task: task,
             type: :RSLT)
     end
 

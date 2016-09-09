@@ -63,8 +63,10 @@ module Kamerling                          # rubocop:disable Metrics/ModuleLength
     describe '.rslt' do
       it 'constructs a new RSLT message' do
         client  = Client.new
-        task    = Task.new(project: Project.new)
-        message = Message.rslt(client: client, data: 'data', task: task)
+        project = Project.new
+        task    = Task.new
+        message = Message.rslt(client: client, data: 'data', project: project,
+                               task: task)
         _(message.client_id).must_equal client.id
         _(message.data).must_equal 'data'
         _(message.task_id).must_equal task.id

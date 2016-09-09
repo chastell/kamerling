@@ -19,12 +19,14 @@ module Kamerling
         old_client  = Client.new(busy: true)
         client      = old_client.update(busy: false)
         client_repo = fake(ClientRepo, fetch: old_client)
-        old_task    = Task.new(done: false, project: Project.new)
+        old_task    = Task.new(done: false)
+        project     = Project.new
         task        = old_task.update(done: true)
         task_repo   = fake(TaskRepo, fetch: old_task)
         repos       = fake(Repos, client_repo: client_repo,
                                   task_repo:   task_repo)
-        message = Message.rslt(client: old_client, data: 'data', task: old_task)
+        message = Message.rslt(client: old_client, data: 'data',
+                               project: project, task: old_task)
         Receiver.call addr: addr, message: message, repos: repos
         params = [{ addr: addr, client: client, data: 'data', task: task }]
         _(repos).must_have_received :record_result, params
