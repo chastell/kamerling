@@ -40,6 +40,15 @@ module Kamerling
       end
     end
 
+    describe '#mark_done' do
+      it 'marks the given Task as done' do
+        db[:tasks] << { data: '', done: false, id: 'undone', project_id: 'pid' }
+        refute repo.fetch('undone').done?
+        repo.mark_done(id: 'undone')
+        assert repo.fetch('undone').done?
+      end
+    end
+
     describe '#next_for_project' do
       it 'returns the first pending Task for the given Project' do
         table << { data: '', done: true,  id: 'done', project_id: 'pid' }

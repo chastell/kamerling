@@ -34,6 +34,10 @@ module Kamerling
       table.where(project_id: project.id).all.map(&Task.method(:new))
     end
 
+    def mark_done(id:)
+      table.where(id: id).update(done: true)
+    end
+
     def next_for_project(project)
       case
       when hash = table[done: false, project_id: project.id]
