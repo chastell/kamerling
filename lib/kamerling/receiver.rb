@@ -29,10 +29,6 @@ module Kamerling
       @client ||= repos.client_repo.fetch(message.client_id).update(busy: false)
     end
 
-    def result
-      Result.new(addr: addr, client: client, data: message.data, task: task)
-    end
-
     def task
       @task ||= repos.task_repo.fetch(message.task_id).update(done: true)
     end
