@@ -69,5 +69,15 @@ module Kamerling
         _(repo.for_project(project)).must_equal [Client.new(id: 'ecc_client')]
       end
     end
+
+    describe '#mark_free' do
+      it 'marks the given Client as free' do
+        db[:clients] << { busy: true, host: '1.2.3.4', id: 'busy', port: 5,
+                          prot: 'TCP' }
+        assert repo.fetch('busy').busy?
+        repo.mark_free(id: 'busy')
+        refute repo.fetch('busy').busy?
+      end
+    end
   end
 end
