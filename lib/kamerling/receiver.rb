@@ -18,7 +18,7 @@ module Kamerling
       repos.record_result addr: addr, client: client, data: message.data,
                           task: task
       repos.client_repo << client
-      repos.task_repo << task
+      repos.task_repo.mark_done(id: task.id)
     end
 
     private

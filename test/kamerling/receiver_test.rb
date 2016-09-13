@@ -31,7 +31,7 @@ module Kamerling
         params = [{ addr: addr, client: client, data: 'data', task: task }]
         _(repos).must_have_received :record_result, params
         _(client_repo).must_have_received :<<, [client]
-        _(task_repo).must_have_received :<<, [task]
+        _(task_repo).must_have_received :mark_done, [{ id: task.id }]
       end
     end
   end
