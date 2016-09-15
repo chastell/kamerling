@@ -30,7 +30,7 @@ module Kamerling
         Receiver.call addr: addr, message: message, repos: repos
         params = [{ addr: addr, client: client, data: 'data', task: task }]
         _(repos).must_have_received :record_result, params
-        _(client_repo).must_have_received :<<, [client]
+        _(client_repo).must_have_received :mark_free, [{ id: client.id }]
         _(task_repo).must_have_received :mark_done, [{ id: task.id }]
       end
     end

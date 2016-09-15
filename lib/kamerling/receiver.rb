@@ -17,7 +17,7 @@ module Kamerling
     def call
       repos.record_result addr: addr, client: client, data: message.data,
                           task: task
-      repos.client_repo << client
+      repos.client_repo.mark_free(id: client.id)
       repos.task_repo.mark_done(id: task.id)
     end
 
