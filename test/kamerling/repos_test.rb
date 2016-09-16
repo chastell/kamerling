@@ -20,13 +20,13 @@ module Kamerling
     let(:db)      { Sequel.sqlite                                              }
     let(:project) { Project.new(id: 'pid', name: 'GIMPS')                      }
     let(:repos)   { Repos.new(db: db)                                          }
-    let(:task)    { Task.new(data: 'data', id: 'tid', project: project)        }
+    let(:task)    { Task.new(data: 'data', id: 'tid')                          }
 
     before do
       Sequel::Migrator.run db, "#{__dir__}/../../lib/kamerling/migrations"
       db[:clients]  << client.to_h
       db[:projects] << project.to_h
-      db[:tasks]    << task.to_h
+      db[:tasks]    << task.to_h.merge(project_id: project.id)
     end
 
     describe '#client_repo' do

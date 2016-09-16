@@ -17,7 +17,7 @@ module Kamerling
     let(:table)   { db[:tasks]                            }
 
     let(:entity) do
-      Task.new(data: 'data', done: true, id: 'an id', project: project)
+      Task.new(data: 'data', done: true, id: 'an id')
     end
 
     let(:row) do
