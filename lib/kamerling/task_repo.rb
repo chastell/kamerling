@@ -12,6 +12,10 @@ module Kamerling
       @project_repo = project_repo
     end
 
+    def <<(_object)
+      raise NotImplementedError
+    end
+
     def all
       projects = project_repo.all.group_by(&:id)
       table.all.map do |hash|
