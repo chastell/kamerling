@@ -16,13 +16,6 @@ module Kamerling
       raise NotImplementedError
     end
 
-    def all
-      projects = project_repo.all.group_by(&:id)
-      table.all.map do |hash|
-        klass.new(hash.merge(project: projects[hash[:project_id]].first))
-      end
-    end
-
     def fetch(id)
       case
       when hash = table[id: id]
