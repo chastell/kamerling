@@ -16,17 +16,6 @@ module Kamerling
       raise NotImplementedError
     end
 
-    def fetch(id)
-      case
-      when hash = table[id: id]
-        klass.new(hash.merge(project: project_repo.fetch(hash[:project_id])))
-      when block_given?
-        yield
-      else
-        raise NotFound
-      end
-    end
-
     def for_project(project)
       table.where(project_id: project.id).all.map(&Task.method(:new))
     end
