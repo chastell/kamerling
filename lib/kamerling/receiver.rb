@@ -2,7 +2,6 @@
 
 require 'procto'
 require_relative 'repos'
-require_relative 'result'
 
 module Kamerling
   class Receiver
