@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
 require 'sequel'
-require_relative 'project_repo'
 require_relative 'repo'
 require_relative 'task'
 
 module Kamerling
   class TaskRepo < Repo
-    def initialize(db = Sequel.sqlite, project_repo: ProjectRepo.new(db))
-      super(db)
-      @project_repo = project_repo
-    end
-
     def <<(_object)
       raise NotImplementedError
     end
@@ -34,8 +28,6 @@ module Kamerling
     end
 
     private
-
-    attr_reader :project_repo
 
     def klass
       Task

@@ -42,7 +42,7 @@ module Kamerling
     end
 
     def task_repo
-      @task_repo ||= TaskRepo.new(db, project_repo: project_repo)
+      @task_repo ||= TaskRepo.new(db)
     end
 
     private
