@@ -8,10 +8,6 @@ module Kamerling
     vals id: String
     defaults id: -> (*) { UUID.new }
 
-    def self.id_key(value)
-      "#{value.class.name.split('::').last.downcase}_id".to_sym
-    end
-
     def self.null
       new(id: UUID.zero)
     end
@@ -28,7 +24,6 @@ module Kamerling
 
     def hashify((key, value))
       case value
-      when Entity then { self.class.id_key(value) => value.id }
       when Symbol then { key => value.to_s }
       when Time   then { key => value.utc.iso8601 }
       when Value  then value.to_h

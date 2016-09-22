@@ -66,15 +66,6 @@ module Kamerling
                                    id: arrival.id
       end
 
-      it 'keeps only related Entities’ ids' do
-        Child  = Class.new(Entity) { vals name: String }
-        Parent = Class.new(Entity) { vals child: Child, name: String }
-        zosia  = Child.new(name: 'Zosia')
-        marta  = Parent.new(child: zosia, name: 'Marta')
-        marta_hash = { child_id: zosia.id, id: marta.id, name: 'Marta' }
-        _(marta.to_h).must_equal marta_hash
-      end
-
       it 'embeds related Values' do
         addr   = Class.new(Value) { vals host: String, port: Integer }
         client = Class.new(Entity) { vals addr: addr, name: String }
