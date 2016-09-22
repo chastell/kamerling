@@ -11,19 +11,17 @@ module Kamerling
   describe ClientRepo do
     include RepoBehaviour
 
-    let(:db)    { Sequel.sqlite            }
+    let(:addr)    { Addr['localhost', 1981, :TCP] }
+    let(:db)      { Sequel.sqlite          }
     let(:project) { Project.new(id: 'ecc') }
-    let(:repo)  { ClientRepo.new(db)       }
-    let(:table) { db[:clients]             }
+    let(:repo)    { ClientRepo.new(db)     }
+    let(:table)   { db[:clients]           }
 
-    let(:entity) do
-      addr = Addr['localhost', 1981, :TCP]
-      Client.new(addr: addr, busy: true, id: 'an id', type: :FPGA)
-    end
+    let(:entity) { Client.new(addr: addr, busy: true, id: 'an id', type: :GPU) }
 
     let(:row) do
       { busy: true, host: 'localhost', id: 'an id', port: 1981, prot: 'TCP',
-        type: 'FPGA' }
+        type: 'GPU' }
     end
 
     before do
