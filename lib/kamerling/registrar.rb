@@ -24,9 +24,7 @@ module Kamerling
     attr_reader :addr, :message, :repos
 
     def client
-      @client ||= repos.client_repo.fetch(message.client_id) do
-        Client.new(addr: addr, id: message.client_id)
-      end.update(addr: addr)
+      @client ||= Client.new(addr: addr, id: message.client_id)
     end
 
     def project
