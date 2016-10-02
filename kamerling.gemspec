@@ -40,7 +40,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rack-test',           '~> 0.6.2'
   gem.add_development_dependency 'rake',                '~> 11.0'
   gem.add_development_dependency 'reek',                '~> 4.0'
-  gem.add_development_dependency 'rerun',               '~> 0.11.0'
   gem.add_development_dependency 'rubocop',             '~> 0.43.0'
   gem.add_development_dependency 'ruby_warning_filter', '~> 1.0'
 end
