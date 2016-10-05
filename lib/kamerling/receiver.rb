@@ -14,10 +14,8 @@ module Kamerling
     end
 
     def call
-      repos.record_result addr: addr, client: client, data: message.data,
-                          task: task
-      repos.client_repo.mark_free(id: client.id)
-      repos.task_repo.mark_done(id: task.id)
+      record_result
+      update_flags
     end
 
     private
@@ -28,8 +26,18 @@ module Kamerling
       @client ||= repos.client_repo.fetch(message.client_id).update(busy: false)
     end
 
+    def record_result
+      repos.record_result addr: addr, client: client, data: message.data,
+                          task: task
+    end
+
     def task
       @task ||= repos.task_repo.fetch(message.task_id).update(done: true)
+    end
+
+    def update_flags
+      repos.client_repo.mark_free(id: client.id)
+      repos.task_repo.mark_done(id: task.id)
     end
   end
 end
