@@ -31,8 +31,8 @@ module Kamerling
     def dispatch_task(client:, project:, task:)
       message = Message.data(client: client, project: project, task: task)
       net_dispatcher.dispatch message.to_s, addr: client.addr
+      repos.client_repo.mark_busy(id: client.id)
       new_client = client.update(busy: true)
-      repos.client_repo << new_client
       repos.record_dispatch client: new_client, project: project, task: task
     end
   end

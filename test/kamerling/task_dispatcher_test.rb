@@ -43,7 +43,7 @@ module Kamerling
       end
 
       it 'marks clients as busy and persists the change' do
-        _(client_repo).must_have_received :<<, [client]
+        _(client_repo).must_have_received :mark_busy, [{ id: client.id }]
       end
 
       it 'records the dispatch' do
