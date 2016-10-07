@@ -25,6 +25,10 @@ module Kamerling
       scoped_clients(project_id: project.id)
     end
 
+    def mark_busy(id:)
+      table.where(id: id).update(busy: true)
+    end
+
     def mark_free(id:)
       table.where(id: id).update(busy: false)
     end

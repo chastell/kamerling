@@ -68,6 +68,16 @@ module Kamerling
       end
     end
 
+    describe '#mark_busy' do
+      it 'marks the given Client as busy' do
+        db[:clients] << { busy: false, host: '1.2.3.4', id: 'free', port: 5,
+                          prot: 'TCP' }
+        refute repo.fetch('free').busy?
+        repo.mark_busy(id: 'free')
+        assert repo.fetch('free').busy?
+      end
+    end
+
     describe '#mark_free' do
       it 'marks the given Client as free' do
         db[:clients] << { busy: true, host: '1.2.3.4', id: 'busy', port: 5,
