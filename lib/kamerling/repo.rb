@@ -10,13 +10,6 @@ module Kamerling
       @db = db
     end
 
-    def <<(object)
-      hash = object.to_h
-      table << hash
-    rescue Sequel::UniqueConstraintViolation
-      table.where(id: object.id).update hash
-    end
-
     def all
       table.all.map(&klass.method(:new))
     end

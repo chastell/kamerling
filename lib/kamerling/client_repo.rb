@@ -5,6 +5,13 @@ require_relative 'repo'
 
 module Kamerling
   class ClientRepo < Repo
+    def <<(object)
+      hash = object.to_h
+      table << hash
+    rescue Sequel::UniqueConstraintViolation
+      table.where(id: object.id).update hash
+    end
+
     def all
       table.all.map { |hash| klass.new(hash.merge(addr: hash)) }
     end
