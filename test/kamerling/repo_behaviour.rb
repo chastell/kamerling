@@ -8,17 +8,6 @@ module Kamerling
       spec_class.class_eval do
         Sequel.extension :migration
 
-        describe '#<<' do
-          it 'adds a new entity to the repo' do
-            begin
-              assert table.empty?
-              repo << entity
-              _(table.first).must_equal row
-            rescue NotImplementedError
-            end
-          end
-        end
-
         describe '#all' do
           it 'returns all of the entites' do
             table.insert row

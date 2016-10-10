@@ -20,5 +20,13 @@ module Kamerling
       path = "#{__dir__}/../../lib/kamerling/migrations"
       Sequel::Migrator.run db, path
     end
+
+    describe '#<<' do
+      it 'adds a new Project to the repo' do
+        assert table.empty?
+        repo << entity
+        _(table.first).must_equal row
+      end
+    end
   end
 end

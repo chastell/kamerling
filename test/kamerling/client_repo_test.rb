@@ -30,6 +30,12 @@ module Kamerling
     end
 
     describe '#<<' do
+      it 'adds a new Client to the repo' do
+        assert table.empty?
+        repo << entity
+        _(table.first).must_equal row
+      end
+
       it 'updates the row if the Client exists' do
         table.insert(busy: false, host: '127.0.0.1', id: 'an id', port: 1979,
                      prot: 'UDP')
