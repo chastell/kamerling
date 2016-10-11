@@ -6,10 +6,6 @@ require_relative 'task'
 
 module Kamerling
   class TaskRepo < Repo
-    def <<(_object)
-      raise NotImplementedError
-    end
-
     def for_project(project)
       table.where(project_id: project.id).all.map(&Task.method(:new))
     end
