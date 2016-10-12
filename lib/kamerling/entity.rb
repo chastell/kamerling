@@ -13,16 +13,14 @@ module Kamerling
     end
 
     def to_h
-      attributes.map(&method(:hashify)).reduce({}, :merge)
+      attributes.map(&self.class.method(:hashify)).reduce({}, :merge)
     end
 
     def update(values)
       self.class.new(attributes.merge(values))
     end
 
-    private
-
-    def hashify((key, value))
+    private_class_method def self.hashify((key, value))
       case value
       when Symbol then { key => value.to_s }
       when Time   then { key => value.utc.iso8601 }
