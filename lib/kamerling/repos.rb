@@ -8,8 +8,9 @@ require_relative 'uuid'
 
 module Kamerling
   class Repos
-    def initialize(conn_str = ENV.fetch('DB', 'sqlite::memory:'), db: nil)
-      @db = db || Sequel.connect(conn_str)
+    def initialize(conn_str = ENV.fetch('DB', 'sqlite::memory:'),
+                   db: Sequel.connect(conn_str))
+      @db = db
     end
 
     def client_repo
