@@ -23,7 +23,7 @@ module Kamerling
         socket = UDPSocket.new.tap { |server| server.bind(*addr) }
         loop { handle_connection socket if IO.select [socket] }
       ensure
-        socket&.close
+        socket.close if socket.respond_to?(:close)
       end
 
       def wait_till_started
