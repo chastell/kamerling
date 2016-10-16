@@ -10,6 +10,7 @@ module Kamerling
 
     include Equalizer.new(:raw)
 
+    # :reek:LongParameterList
     def self.build(client:, data: '', project:, task: Task.null, type:)
       new([type, "\0\0\0\0\0\0\0\0\0\0\0\0", UUID.bin(client.id),
            UUID.bin(project.id), UUID.bin(task.id), data].join)
@@ -24,6 +25,7 @@ module Kamerling
       build(client: client, project: project, type: :RGST)
     end
 
+    # :reek:LongParameterList
     def self.rslt(client:, data:, project:, task:)
       build(client: client, data: data, project: project, task: task,
             type: :RSLT)
