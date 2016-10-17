@@ -36,6 +36,7 @@ module Kamerling
                                             registered_at: Time.now.utc)
     end
 
+    # :reek:LongParameterList
     def record_result(addr:, client:, data:, task:)
       db[:results] << addr.to_h.merge(client_id: client.id, data: data,
                                       id: UUID.new, received_at: Time.now.utc,
