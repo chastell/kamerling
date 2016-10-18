@@ -19,6 +19,7 @@ module Kamerling
         handle input, addr: addr
       end
 
+      # :reek:ManualDispatch
       def run_loop
         socket = UDPSocket.new.tap { |server| server.bind(*addr) }
         loop { handle_connection socket if IO.select [socket] }
