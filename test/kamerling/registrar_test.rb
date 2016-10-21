@@ -14,11 +14,11 @@ module Kamerling
   describe Registrar do
     describe '.call' do
       let(:addr)         { Addr.new                                           }
-      let(:client)       { old_client.update(addr: addr)                      }
       let(:client_repo)  { fake(ClientRepo, fetch: old_client)                }
       let(:mess)         { Message.rgst(client: old_client, project: project) }
       let(:old_client)   { Client.new                                         }
       let(:project)      { Project.new                                        }
+      let(:updtd_client) { old_client.update(addr: addr)                      }
 
       let(:repos) do
         project_repo = fake(ProjectRepo, fetch: project)
@@ -27,13 +27,13 @@ module Kamerling
 
       it 'records the registration' do
         Registrar.call addr: addr, message: mess, repos: repos
-        params = [{ addr: addr, client: client, project: project }]
+        params = [{ addr: addr, client: updtd_client, project: project }]
         _(repos).must_have_received :record_registration, params
       end
 
       it 'updates the client’s addr' do
         Registrar.call addr: addr, message: mess, repos: repos
-        _(client_repo).must_have_received :<<, [client]
+        _(client_repo).must_have_received :<<, [updtd_client]
       end
     end
   end
