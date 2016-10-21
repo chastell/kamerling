@@ -19,9 +19,9 @@ module Kamerling
       let(:mess)         { Message.rgst(client: old_client, project: project) }
       let(:old_client)   { Client.new                                         }
       let(:project)      { Project.new                                        }
-      let(:project_repo) { fake(ProjectRepo, fetch: project)                  }
 
       let(:repos) do
+        project_repo = fake(ProjectRepo, fetch: project)
         fake(Repos, client_repo: client_repo, project_repo: project_repo)
       end
 
