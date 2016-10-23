@@ -21,6 +21,7 @@ module Kamerling
       @project_repo ||= ProjectRepo.new(db)
     end
 
+    # :reek:FeatureEnvy
     def record_dispatch(client:, project:, task:)
       db[:dispatches] << client.addr.to_h.merge(client_id: client.id,
                                                 dispatched_at: Time.now.utc,
