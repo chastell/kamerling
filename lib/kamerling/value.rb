@@ -17,9 +17,13 @@ module Kamerling
     end
 
     def to_h
-      attributes.map do |(key, value)|
-        { key => value.is_a?(Symbol) ? value.to_s : value }
-      end.reduce({}, :merge)
+      attributes.map { |(key, val)| { key => serialise(val) } }.reduce(:merge)
+    end
+
+    private
+
+    def serialise(value)
+      value.is_a?(Symbol) ? value.to_s : value
     end
   end
 end
