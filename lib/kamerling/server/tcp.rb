@@ -13,6 +13,7 @@ module Kamerling
 
       private
 
+      # :reek:FeatureEnvy
       def handle_connection(socket)
         addr  = Addr[*socket.remote_address.ip_unpack, :TCP]
         input = socket.read
