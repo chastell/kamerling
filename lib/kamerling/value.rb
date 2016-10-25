@@ -22,6 +22,7 @@ module Kamerling
 
     private
 
+    # :reek:UtilityFunction
     def serialise(value)
       value.is_a?(Symbol) ? value.to_s : value
     end
