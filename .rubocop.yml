@@ -7,6 +7,12 @@ Metrics/AbcSize:
   Exclude:
     - test/kamerling/*_behaviour.rb
 
+Metrics/BlockLength:
+  Exclude:
+    - kamerling.gemspec
+    - lib/kamerling/migrations/**/*.rb
+    - test/**/*.rb
+
 Metrics/MethodLength:
   Exclude:
     - test/kamerling/*_behaviour.rb
@@ -26,6 +32,9 @@ Style/ExtraSpacing:
 Style/SpaceBeforeFirstArg:
   Exclude:
     - lib/kamerling/migrations/**/*
+
+Style/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
