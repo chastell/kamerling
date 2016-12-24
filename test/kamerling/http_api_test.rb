@@ -15,6 +15,8 @@ require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
   describe HTTPAPI do
+    include Rack::Test::Methods
+
     let(:client_repo)     { fake(ClientRepo)                     }
     let(:doc)             { Nokogiri::HTML(last_response.body)   }
     let(:ecc)             { Project.new                          }

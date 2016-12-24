@@ -13,12 +13,6 @@ require 'kamerling'
 
 Bogus.configure { |config| config.search_modules << Kamerling }
 
-module Minitest
-  class Spec
-    include Rack::Test::Methods
-  end
-end
-
 def run_all_threads
   2.times { Thread.list.each(&:run) }
 end
