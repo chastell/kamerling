@@ -37,7 +37,7 @@ GEM
     minitest (5.10.1)
     minitest-focus (1.1.2)
       minitest (>= 4, < 6)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.0)
       mini_portile2 (~> 2.1.0)
     parser (2.3.3.1)
       ast (~> 2.2)
@@ -52,7 +52,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rainbow (2.1.0)
+    rainbow (2.2.1)
     rake (12.0.0)
     reek (4.5.3)
       codeclimate-engine-rb (~> 0.4.0)
@@ -103,4 +103,4 @@ DEPENDENCIES
   ruby_warning_filter (~> 1.0)
 
 BUNDLED WITH
-   1.13.6
+   1.13.7
