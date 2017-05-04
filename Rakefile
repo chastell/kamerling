@@ -4,7 +4,7 @@ require 'rake/testtask'
 require 'reek/rake/task'
 require 'rubocop/rake_task'
 
-task default: %i(test rubocop reek)
+task default: %i[test rubocop reek]
 
 Rake::TestTask.new do |task|
   task.pattern = 'test/**/*_test.rb'

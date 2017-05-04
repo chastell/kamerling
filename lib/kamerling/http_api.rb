@@ -12,7 +12,7 @@ module Kamerling
   class HTTPAPI < Sinatra::Base
     extend Forwardable
 
-    delegate %i(repos task_dispatcher) => :settings
+    delegate %i[repos task_dispatcher] => :settings
 
     configure do
       set repos: Repos.new, task_dispatcher: TaskDispatcher.new
