@@ -98,7 +98,7 @@ module Kamerling
         end
         run_all_threads
         log_lines = addrs.map { |addr| "received #{addr} unknown message type" }
-        assert log_lines.any? { |line| logged.include?(line) }
+        assert(log_lines.any? { |line| logged.include?(line) })
       end
 
       it 'logs packet dispatches' do
