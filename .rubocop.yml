@@ -3,6 +3,16 @@ AllCops:
     - tmp/**/*
   TargetRubyVersion: 2.3
 
+Layout/ExtraSpacing:
+  Enabled: false
+
+Layout/SpaceBeforeFirstArg:
+  Exclude:
+    - lib/kamerling/migrations/**/*
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
 Metrics/AbcSize:
   Exclude:
     - test/kamerling/*_behaviour.rb
@@ -25,16 +35,6 @@ Style/Documentation:
 
 Style/EmptyCaseCondition:
   Enabled: false
-
-Style/ExtraSpacing:
-  Enabled: false
-
-Style/SpaceBeforeFirstArg:
-  Exclude:
-    - lib/kamerling/migrations/**/*
-
-Style/SpaceInLambdaLiteral:
-  EnforcedStyle: require_space
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
