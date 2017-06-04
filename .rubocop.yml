@@ -1,14 +1,9 @@
 AllCops:
   Exclude:
     - tmp/**/*
-  TargetRubyVersion: 2.3
 
 Layout/ExtraSpacing:
   Enabled: false
-
-Layout/SpaceBeforeFirstArg:
-  Exclude:
-    - lib/kamerling/migrations/**/*
 
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
@@ -36,8 +31,5 @@ Style/Documentation:
 Style/EmptyCaseCondition:
   Enabled: false
 
-Style/TrailingCommaInArguments:
-  EnforcedStyleForMultiline: comma
-
-Style/TrailingCommaInLiteral:
-  EnforcedStyleForMultiline: comma
+Style/FrozenStringLiteralComment:
+  Enabled: false
