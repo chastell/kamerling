@@ -14,5 +14,5 @@ require 'kamerling'
 Bogus.configure { |config| config.search_modules << Kamerling }
 
 def run_all_threads
-  2.times { Thread.list.each(&:run) }
+  3.times { Thread.list.each(&:run) }
 end
