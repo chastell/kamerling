@@ -1,4 +1,3 @@
 PreCommit:
-  RakeTarget:
+  RuboCop:
     enabled: true
-    targets: [default]
