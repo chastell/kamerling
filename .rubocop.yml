@@ -2,9 +2,6 @@ AllCops:
   Exclude:
     - tmp/**/*
 
-Layout/ExtraSpacing:
-  Enabled: false
-
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 
