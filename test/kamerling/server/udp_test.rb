@@ -31,7 +31,7 @@ module Kamerling
         server.start
         foo = UDPSocket.new
         bar = UDPSocket.new
-        3.times do
+        100.times do
           foo.send 'DATA', 0, *server.addr
           bar.send 'PING', 0, *server.addr
         end
