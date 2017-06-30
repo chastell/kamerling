@@ -84,7 +84,7 @@ module Kamerling
 
       it 'logs UDP server receives' do
         udp_client = UDPSocket.new
-        udp_client.send 'PING', 0, *udp_server.addr
+        100.times { udp_client.send 'PING', 0, *udp_server.addr }
         udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
         run_all_threads
         _(logged).must_include "received #{udp_addr} 50 49 4e 47"
