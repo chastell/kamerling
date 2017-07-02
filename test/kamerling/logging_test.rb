@@ -17,6 +17,7 @@ module Kamerling
     let(:stream)     { StringIO.new                                         }
     let(:tcp_server) { Server::TCP.new(addr: Addr['localhost', 1981, :TCP]) }
     let(:udp_server) { Server::UDP.new(addr: Addr['localhost', 1979, :UDP]) }
+    let(:udp_client) { UDPSocket.new                                        }
 
     before do
       Logging.log_to logger
@@ -75,7 +76,6 @@ module Kamerling
       end
 
       it 'logs UDP server connects' do
-        udp_client = UDPSocket.new
         100.times { udp_client.send 'PING', 0, *udp_server.addr }
         udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
         run_all_threads
@@ -83,7 +83,6 @@ module Kamerling
       end
 
       it 'logs UDP server receives' do
-        udp_client = UDPSocket.new
         100.times { udp_client.send 'PING', 0, *udp_server.addr }
         udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
         run_all_threads
@@ -91,7 +90,6 @@ module Kamerling
       end
 
       it 'logs UDP unknown message types' do
-        udp_client = UDPSocket.new
         100.times { udp_client.send 'foo', 0, *udp_server.addr }
         udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
         run_all_threads
