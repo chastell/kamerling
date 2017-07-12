@@ -83,6 +83,7 @@ module Kamerling
       end
 
       it 'logs UDP server receives' do
+        run_all_threads
         100.times { udp_client.send 'PING', 0, *udp_server.addr }
         udp_addr = Addr['127.0.0.1', udp_client.addr[1], :UDP]
         run_all_threads
