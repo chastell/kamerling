@@ -38,7 +38,7 @@ GEM
     iniparse (1.4.4)
     method_source (0.8.2)
     mini_portile2 (2.2.0)
-    minitest (5.10.2)
+    minitest (5.10.3)
     minitest-focus (1.1.2)
       minitest (>= 4, < 6)
     mustermann (1.0.0)
@@ -116,4 +116,4 @@ DEPENDENCIES
   ruby_warning_filter (~> 1.0)
 
 BUNDLED WITH
-   1.15.1
+   1.15.3
