@@ -8,7 +8,7 @@ module Kamerling
   describe TCPAddr do
     describe '.[]' do
       it 'creates a TCP Addr from the given string' do
-        _(TCPAddr['localhost:1981']).must_equal Addr['localhost', 1981, :TCP]
+        _(TCPAddr['localhost', 1981]).must_equal Addr['localhost', 1981, :TCP]
       end
     end
   end

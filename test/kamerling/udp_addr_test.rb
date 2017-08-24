@@ -8,7 +8,7 @@ module Kamerling
   describe UDPAddr do
     describe '.[]' do
       it 'creates an UDP Addr from the given string' do
-        _(UDPAddr['localhost:1979']).must_equal Addr['localhost', 1979, :UDP]
+        _(UDPAddr['localhost', 1979]).must_equal Addr['localhost', 1979, :UDP]
       end
     end
   end
