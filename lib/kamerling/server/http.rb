@@ -2,8 +2,8 @@
 
 require 'forwardable'
 require 'rack'
-require_relative '../addr'
 require_relative '../http_api'
+require_relative '../tcp_addr'
 
 module Kamerling
   module Server
@@ -12,7 +12,7 @@ module Kamerling
 
       attr_reader :addr
 
-      def initialize(addr: Addr[ENV['HOST'], ENV['HTTP'], :TCP])
+      def initialize(addr: TCPAddr[ENV['HOST'], ENV['HTTP']])
         @addr = addr
       end
 
