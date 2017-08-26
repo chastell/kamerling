@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 require 'socket'
-require_relative '../addr'
+require_relative '../tcp_addr'
 require_relative 'sock'
 
 module Kamerling
   module Server
     class TCP < Sock
       def self.default_addr
-        Addr[ENV['HOST'], ENV['TCP'], :TCP]
+        TCPAddr[ENV['HOST'], ENV['TCP']]
       end
 
       private
 
       # :reek:FeatureEnvy
       def handle_connection(socket)
-        addr  = Addr[*socket.remote_address.ip_unpack, :TCP]
+        addr  = TCPAddr[*socket.remote_address.ip_unpack]
         input = socket.read
         handle input, addr: addr
       ensure
