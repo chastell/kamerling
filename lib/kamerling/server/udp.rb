@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require 'socket'
-require_relative '../addr'
+require_relative '../udp_addr'
 require_relative 'sock'
 
 module Kamerling
   module Server
     class UDP < Sock
       def self.default_addr
-        Addr[ENV['HOST'], ENV['UDP'], :UDP]
+        UDPAddr[ENV['HOST'], ENV['UDP']]
       end
 
       private
@@ -16,7 +16,7 @@ module Kamerling
       # :reek:FeatureEnvy
       def handle_connection(socket)
         input, conn = socket.recvfrom 2**16
-        addr = Addr[conn[3], conn[1], :UDP]
+        addr = UDPAddr[conn[3], conn[1]]
         handle input, addr: addr
       end
 
