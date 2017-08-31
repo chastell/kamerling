@@ -4,16 +4,17 @@ require 'net/http'
 require 'uri'
 require_relative '../../test_helper'
 require_relative '../../../lib/kamerling/server/http'
+require_relative '../../../lib/kamerling/tcp_addr'
 
 module Kamerling
   describe Server::HTTP do
-    let(:addr) { Addr['localhost', 2009, :TCP] }
-    let(:http) { Server::HTTP.new(addr: addr)  }
+    let(:addr) { TCPAddr['localhost', 2009]   }
+    let(:http) { Server::HTTP.new(addr: addr) }
 
     describe '#==' do
       it 'compares servers by their addresses' do
-        assert http == Server::HTTP.new(addr: Addr['localhost', 2009, :TCP])
-        refute http == Server::HTTP.new(addr: Addr['localhost', 2010, :TCP])
+        assert http == Server::HTTP.new(addr: TCPAddr['localhost', 2009])
+        refute http == Server::HTTP.new(addr: TCPAddr['localhost', 2010])
       end
     end
 
