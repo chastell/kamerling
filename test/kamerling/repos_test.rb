@@ -2,7 +2,6 @@
 
 require 'sequel'
 require_relative '../test_helper'
-require_relative '../../lib/kamerling/addr'
 require_relative '../../lib/kamerling/client'
 require_relative '../../lib/kamerling/client_repo'
 require_relative '../../lib/kamerling/project'
@@ -10,12 +9,13 @@ require_relative '../../lib/kamerling/project_repo'
 require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
+require_relative '../../lib/kamerling/tcp_addr'
 
 module Kamerling
   describe Repos do
     Sequel.extension :migration
 
-    let(:addr)    { Addr['localhost', 1981, :TCP]                              }
+    let(:addr)    { TCPAddr['localhost', 1981]                                 }
     let(:client)  { Client.new(addr: addr, busy: true, id: 'cid', type: :FPGA) }
     let(:db)      { Sequel.sqlite                                              }
     let(:project) { Project.new(id: 'pid', name: 'GIMPS')                      }
