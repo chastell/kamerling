@@ -2,20 +2,20 @@
 
 require 'socket'
 require_relative '../../test_helper'
-require_relative '../../../lib/kamerling/addr'
 require_relative '../../../lib/kamerling/handler'
 require_relative '../../../lib/kamerling/message'
 require_relative '../../../lib/kamerling/server/tcp'
+require_relative '../../../lib/kamerling/tcp_addr'
 
 module Kamerling
   describe Server::TCP do
-    let(:addr) { Addr['localhost', 1981, :TCP] }
-    let(:tcp)  { Server::TCP.new(addr: addr)   }
+    let(:addr) { TCPAddr['localhost', 1981]  }
+    let(:tcp)  { Server::TCP.new(addr: addr) }
 
     describe '#==' do
       it 'compares servers by their addresses' do
-        assert tcp == Server::TCP.new(addr: Addr['localhost', 1981, :TCP])
-        refute tcp == Server::TCP.new(addr: Addr['localhost', 1982, :TCP])
+        assert tcp == Server::TCP.new(addr: TCPAddr['localhost', 1981])
+        refute tcp == Server::TCP.new(addr: TCPAddr['localhost', 1982])
       end
     end
 
@@ -31,11 +31,11 @@ module Kamerling
         server.start
         s_addr_foo = TCPSocket.open(*server.addr) do |socket|
           socket << 'DATA'
-          Addr[*socket.local_address.ip_unpack, :TCP]
+          TCPAddr[*socket.local_address.ip_unpack]
         end
         s_addr_bar = TCPSocket.open(*server.addr) do |socket|
           socket << 'PING'
-          Addr[*socket.local_address.ip_unpack, :TCP]
+          TCPAddr[*socket.local_address.ip_unpack]
         end
         run_all_threads
         server.stop
