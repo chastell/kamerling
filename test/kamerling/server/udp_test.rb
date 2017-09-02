@@ -6,16 +6,17 @@ require_relative '../../../lib/kamerling/addr'
 require_relative '../../../lib/kamerling/handler'
 require_relative '../../../lib/kamerling/message'
 require_relative '../../../lib/kamerling/server/udp'
+require_relative '../../../lib/kamerling/udp_addr'
 
 module Kamerling
   describe Server::UDP do
-    let(:addr) { Addr['localhost', 1979, :UDP] }
-    let(:udp)  { Server::UDP.new(addr: addr)   }
+    let(:addr) { UDPAddr['localhost', 1979]  }
+    let(:udp)  { Server::UDP.new(addr: addr) }
 
     describe '#==' do
       it 'compares servers by their addresses' do
-        assert udp == Server::TCP.new(addr: Addr['localhost', 1979, :UDP])
-        refute udp == Server::TCP.new(addr: Addr['localhost', 1980, :UDP])
+        assert udp == Server::UDP.new(addr: UDPAddr['localhost', 1979])
+        refute udp == Server::UDP.new(addr: UDPAddr['localhost', 1980])
       end
     end
 
