@@ -11,6 +11,7 @@ require_relative '../../lib/kamerling/repos'
 require_relative '../../lib/kamerling/task'
 require_relative '../../lib/kamerling/task_repo'
 require_relative '../../lib/kamerling/task_dispatcher'
+require_relative '../../lib/kamerling/tcp_addr'
 require_relative '../../lib/kamerling/uuid'
 
 module Kamerling
@@ -42,7 +43,7 @@ module Kamerling
 
     describe 'GET /clients' do
       it 'contains information on clients' do
-        addr = Addr['127.0.0.1', 1981, :TCP]
+        addr = TCPAddr['127.0.0.1', 1981]
         fpga = Client.new(addr: addr, busy: true, type: :FPGA)
         stub(client_repo).all { [fpga] }
         get '/clients'
