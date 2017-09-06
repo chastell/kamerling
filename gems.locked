@@ -26,7 +26,7 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     codeclimate-engine-rb (0.4.0)
       virtus (~> 1.0)
-    coderay (1.1.1)
+    coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     dependor (1.0.1)
@@ -41,7 +41,7 @@ GEM
     minitest (5.10.3)
     minitest-focus (1.1.2)
       minitest (>= 4, < 6)
-    mustermann (1.0.0)
+    mustermann (1.0.1)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
     overcommit (0.40.0)
@@ -116,4 +116,4 @@ DEPENDENCIES
   ruby_warning_filter (~> 1.0)
 
 BUNDLED WITH
-   1.15.3
+   1.15.4
