@@ -36,7 +36,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'minitest',            '~> 5.6'
   gem.add_development_dependency 'minitest-focus',      '~> 1.1'
   gem.add_development_dependency 'nokogiri',            '~> 1.6'
-  gem.add_development_dependency 'overcommit',          '~> 0.40.0'
+  gem.add_development_dependency 'overcommit',          '~> 0.41.0'
   gem.add_development_dependency 'pry',                 '~> 0.10.3'
   gem.add_development_dependency 'rack-test',           '~> 0.7.0'
   gem.add_development_dependency 'rake',                '~> 12.0'
