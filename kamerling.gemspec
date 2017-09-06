@@ -26,7 +26,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'after_do',  '~> 0.4.0'
   gem.add_dependency 'equalizer', '~> 0.0.9'
   gem.add_dependency 'procto',    '~> 0.0.3'
-  gem.add_dependency 'sequel',    '~> 4.4'
+  gem.add_dependency 'sequel',    '~> 5.0'
   gem.add_dependency 'sinatra',   '~> 2.0'
   gem.add_dependency 'slim',      '~> 3.0'
   gem.add_dependency 'sqlite3',   '~> 1.3'
