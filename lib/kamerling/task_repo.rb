@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'sequel'
 require_relative 'repo'
 require_relative 'task'

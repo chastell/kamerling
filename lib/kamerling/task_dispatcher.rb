@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'message'
 require_relative 'net_dispatcher'
 require_relative 'repos'

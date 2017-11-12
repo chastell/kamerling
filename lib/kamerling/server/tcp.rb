@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'socket'
 require_relative '../tcp_addr'
 require_relative 'sock'

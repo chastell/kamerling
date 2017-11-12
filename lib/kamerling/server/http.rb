@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'forwardable'
 require 'rack'
 require_relative '../http_api'

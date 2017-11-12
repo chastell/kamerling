@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'ruby_warning_filter'
 $stderr = RubyWarningFilter.new($stderr)
 ENV['MT_NO_EXPECTATIONS'] = 'true'

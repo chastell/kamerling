@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'uuid'
 require_relative 'value'
 

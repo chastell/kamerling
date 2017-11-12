@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'server/http'
 require_relative 'server/tcp'
 require_relative 'server/udp'

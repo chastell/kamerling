@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'socket'
 require 'uri'
 require_relative 'value'

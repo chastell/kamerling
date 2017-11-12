@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'after_do'
 require 'logger'
 require_relative 'net_dispatcher'
