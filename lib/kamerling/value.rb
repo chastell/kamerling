@@ -15,7 +15,7 @@ module Kamerling
     end
 
     def to_h
-      attributes.map { |key, val| { key => serialise(val) } }.reduce(:merge)
+      attributes.transform_values(&method(:serialise))
     end
 
     private
