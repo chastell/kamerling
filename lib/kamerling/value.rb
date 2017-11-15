@@ -14,15 +14,9 @@ module Kamerling
       values { hash.each { |name, klass| attribute name, klass } }
     end
 
+    # :reek:FeatureEnvy
     def to_h
-      attributes.transform_values(&method(:serialise))
-    end
-
-    private
-
-    # :reek:UtilityFunction
-    def serialise(value)
-      value.is_a?(Symbol) ? value.to_s : value
+      attributes.transform_values { |val| val.is_a?(Symbol) ? val.to_s : val }
     end
   end
 end
