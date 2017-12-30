@@ -1,6 +1,8 @@
 before_install:
+  - gem update --system
   - bundle
 language: ruby
 rvm:
   - 2.4
+  - 2.5
   - ruby-head
