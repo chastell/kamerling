@@ -12,12 +12,10 @@ module Kamerling
     def dispatch_all
       repos.project_repo.all.each do |project|
         repos.client_repo.free_for_project(project).each do |client|
-          begin
-            task = repos.task_repo.next_for_project(project)
-            dispatch_task client: client, project: project, task: task
-          rescue TaskRepo::NotFound
-            next
-          end
+          task = repos.task_repo.next_for_project(project)
+          dispatch_task client: client, project: project, task: task
+        rescue TaskRepo::NotFound
+          next
         end
       end
     end
