@@ -3,6 +3,5 @@ before_install:
   - bundle
 language: ruby
 rvm:
-  - 2.4
   - 2.5
   - ruby-head
