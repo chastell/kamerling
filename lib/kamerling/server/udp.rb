@@ -13,7 +13,7 @@ module Kamerling
 
       # :reek:FeatureEnvy
       def handle_connection(socket)
-        input, conn = socket.recvfrom 2**16
+        input, conn = socket.recvfrom(2**16)
         addr = UDPAddr[conn[3], conn[1]]
         handle input, addr: addr
       end
