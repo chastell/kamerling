@@ -21,7 +21,7 @@ module Kamerling
       # :reek:ManualDispatch
       def run_loop
         socket = UDPSocket.new.tap { |server| server.bind(*addr) }
-        loop { handle_connection socket if IO.select [socket] }
+        loop { handle_connection socket if IO.select([socket]) }
       ensure
         socket.close if socket.respond_to?(:close)
       end
