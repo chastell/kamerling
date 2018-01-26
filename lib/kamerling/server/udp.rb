@@ -27,7 +27,7 @@ module Kamerling
       end
 
       def wait_till_started
-        200.times { thread.run }
+        100.times { thread.run }
       end
     end
   end
