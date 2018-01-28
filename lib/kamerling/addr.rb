@@ -5,6 +5,7 @@ require_relative 'value'
 module Kamerling
   class Addr < Value
     vals host: String, port: Integer, prot: Symbol
+    defaults port: 0
 
     def self.[](host, port, prot)
       new(host: host, port: port, prot: prot)

@@ -15,6 +15,12 @@ module Kamerling
       end
     end
 
+    describe '#port' do
+      it 'defaults to 0' do
+        _(Addr.new(host: 'localhost', prot: :TCP).port).must_equal 0
+      end
+    end
+
     describe '#to_a' do
       it 'returns host + port for splat use' do
         splat = *addr
