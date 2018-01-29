@@ -15,7 +15,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     after_do (0.4.0)
-    ast (2.3.0)
+    ast (2.4.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -36,11 +36,11 @@ GEM
     ice_nine (0.11.2)
     iniparse (1.4.4)
     mini_portile2 (2.3.0)
-    minitest (5.11.1)
+    minitest (5.11.3)
     minitest-focus (1.1.2)
       minitest (>= 4, < 6)
     mustermann (1.0.1)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     overcommit (0.41.0)
       childprocess (~> 0.6, >= 0.6.3)
