@@ -4,12 +4,14 @@ require_relative 'value'
 
 module Kamerling
   class Addr < Value
+    class << self
+      def [](host, port, prot)
+        new(host: host, port: port, prot: prot)
+      end
+    end
+
     vals host: String, port: Integer, prot: Symbol
     defaults port: 0
-
-    def self.[](host, port, prot)
-      new(host: host, port: port, prot: prot)
-    end
 
     def connectable?
       TCPSocket.open(*self).close
