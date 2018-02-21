@@ -2,6 +2,9 @@ before_install:
   - gem update --system
   - bundle
 language: ruby
+matrix:
+  allow_failures:
+    - rvm: ruby-head
 rvm:
   - 2.5
   - ruby-head
