@@ -5,8 +5,10 @@ require_relative 'sock'
 module Kamerling
   module Server
     class UDP < Sock
-      def self.default_addr
-        UDPAddr[ENV['HOST'], ENV['UDP']]
+      class << self
+        def default_addr
+          UDPAddr[ENV['HOST'], ENV['UDP']]
+        end
       end
 
       private
