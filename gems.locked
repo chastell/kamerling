@@ -32,7 +32,7 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     equalizer (0.0.11)
-    ffi (1.9.22)
+    ffi (1.9.23)
     ice_nine (0.11.2)
     iniparse (1.4.4)
     mini_portile2 (2.3.0)
@@ -53,7 +53,7 @@ GEM
     rack (2.0.4)
     rack-protection (2.0.1)
       rack
-    rack-test (0.8.2)
+    rack-test (0.8.3)
       rack (>= 1.0, < 3)
     rainbow (2.2.2)
       rake
@@ -71,7 +71,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
     ruby_warning_filter (1.0.1)
-    sequel (5.5.0)
+    sequel (5.6.0)
     sinatra (2.0.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
