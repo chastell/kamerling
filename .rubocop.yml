@@ -19,6 +19,11 @@ Metrics/MethodLength:
   Exclude:
     - test/kamerling/*_behaviour.rb
 
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - db
+    - id
+
 Style/AndOr:
   Enabled: false
 
