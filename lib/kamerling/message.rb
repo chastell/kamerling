@@ -55,7 +55,7 @@ module Kamerling
     end
 
     def to_hex
-      raw.unpack('H*').first.scan(/../).join(' ')
+      raw.unpack1('H*').scan(/../).join(' ')
     end
 
     def to_s
