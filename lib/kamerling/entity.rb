@@ -4,7 +4,7 @@ require_relative 'value'
 module Kamerling
   class Entity < Value
     vals id: String
-    defaults id: -> (*) { UUID.new }
+    defaults id: ->(*) { UUID.new }
 
     def self.null
       new(id: UUID.zero)

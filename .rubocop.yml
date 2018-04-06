@@ -2,9 +2,6 @@ AllCops:
   Exclude:
     - tmp/**/*
 
-Layout/SpaceInLambdaLiteral:
-  EnforcedStyle: require_space
-
 Metrics/AbcSize:
   Exclude:
     - test/kamerling/*_behaviour.rb
