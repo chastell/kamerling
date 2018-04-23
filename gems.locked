@@ -50,7 +50,7 @@ GEM
       ast (~> 2.4.0)
     powerpack (0.1.1)
     procto (0.0.3)
-    rack (2.0.4)
+    rack (2.0.5)
     rack-protection (2.0.1)
       rack
     rack-test (1.0.0)
