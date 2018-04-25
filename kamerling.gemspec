@@ -37,6 +37,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'overcommit',          '~> 0.45.0'
   gem.add_development_dependency 'rack-test',           '~> 1.0'
   gem.add_development_dependency 'reek',                '~> 4.0'
-  gem.add_development_dependency 'rubocop',             '~> 0.54.0'
+  gem.add_development_dependency 'rubocop',             '~> 0.55.0'
   gem.add_development_dependency 'ruby_warning_filter', '~> 1.0'
 end
