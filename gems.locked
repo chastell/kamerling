@@ -69,7 +69,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
     ruby_warning_filter (1.0.1)
-    sequel (5.7.1)
+    sequel (5.8.0)
     sinatra (2.0.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
