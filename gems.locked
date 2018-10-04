@@ -56,6 +56,7 @@ GEM
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
+    rake (12.3.1)
     reek (4.8.1)
       codeclimate-engine-rb (~> 0.4.0)
       parser (>= 2.5.0.0, < 2.6)
@@ -100,9 +101,10 @@ DEPENDENCIES
   nokogiri (~> 1.6)
   overcommit (~> 0.45.0)
   rack-test (~> 1.0)
+  rake (~> 12.0)
   reek (~> 4.0)
   rubocop (~> 0.55.0)
   ruby_warning_filter (~> 1.0)
 
 BUNDLED WITH
-   1.16.1
+   1.16.5
