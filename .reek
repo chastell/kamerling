@@ -1,8 +1,0 @@
-DuplicateMethodCall:
-  max_calls: 2
-
-IrresponsibleModule:
-  enabled: false
-
-NestedIterators:
-  max_allowed_nesting: 2
