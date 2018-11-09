@@ -2,6 +2,9 @@ AllCops:
   Exclude:
     - tmp/**/*
 
+Layout/AlignHash:
+  Enabled: false
+
 Metrics/AbcSize:
   Exclude:
     - test/kamerling/*_behaviour.rb
