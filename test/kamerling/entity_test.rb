@@ -61,7 +61,7 @@ module Kamerling
         timely  = Class.new(Entity) { vals happened_at: Time }
         arrival = timely.new(happened_at: Time.parse('2014-12-23 05:00+01'))
         _(arrival.to_h).must_equal happened_at: '2014-12-23T04:00:00Z',
-                                   id: arrival.id
+                                   id:          arrival.id
       end
 
       it 'embeds related Values' do

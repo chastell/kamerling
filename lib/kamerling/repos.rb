@@ -21,17 +21,17 @@ module Kamerling
 
     # :reek:FeatureEnvy
     def record_dispatch(client:, project:, task:)
-      db[:dispatches] << client.addr.to_h.merge(client_id: client.id,
+      db[:dispatches] << client.addr.to_h.merge(client_id:     client.id,
                                                 dispatched_at: Time.now.utc,
-                                                id: UUID.new,
-                                                project_id: project.id,
-                                                task_id: task.id)
+                                                id:            UUID.new,
+                                                project_id:    project.id,
+                                                task_id:       task.id)
     end
 
     def record_registration(addr:, client:, project:)
-      db[:registrations] << addr.to_h.merge(client_id: client.id,
-                                            id: UUID.new,
-                                            project_id: project.id,
+      db[:registrations] << addr.to_h.merge(client_id:     client.id,
+                                            id:            UUID.new,
+                                            project_id:    project.id,
                                             registered_at: Time.now.utc)
     end
 

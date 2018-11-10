@@ -3,7 +3,8 @@ AllCops:
     - tmp/**/*
 
 Layout/AlignHash:
-  Enabled: false
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
 
 Metrics/AbcSize:
   Exclude:
