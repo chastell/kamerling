@@ -16,7 +16,7 @@ module Kamerling
       end
 
       it 'dispatches messages to UDP clients' do
-        server = UDPSocket.new.tap { |s| s.bind '127.0.0.1', 0 }
+        server = UDPSocket.new.tap { |sock| sock.bind '127.0.0.1', 0 }
         thread = Thread.new { server.recvfrom(2**16).first }
         addr   = UDPAddr[server.addr[3], server.addr[1]]
         NetDispatcher.dispatch 'PING', addr: addr
