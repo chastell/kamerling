@@ -11,6 +11,12 @@ require 'kamerling'
 
 Bogus.configure { |config| config.search_modules << Kamerling }
 
-def run_all_threads
-  Thread.list.each(&:run)
+module Minitest
+  class Spec
+    private
+
+    def run_all_threads
+      Thread.list.each(&:run)
+    end
+  end
 end
