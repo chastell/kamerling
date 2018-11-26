@@ -15,6 +15,7 @@ module Minitest
   class Spec
     private
 
+    # :reek:UtilityFunction
     def run_all_threads
       Thread.list.each(&:run)
     end
