@@ -1,5 +1,7 @@
 detectors:
   DuplicateMethodCall:
+    exclude:
+      - Kamerling::RepoBehaviour
     max_calls: 2
 
   IrresponsibleModule:
