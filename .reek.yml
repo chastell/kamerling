@@ -9,3 +9,7 @@ detectors:
 
   NestedIterators:
     max_allowed_nesting: 2
+
+  TooManyStatements:
+    exclude:
+      - Kamerling::RepoBehaviour
