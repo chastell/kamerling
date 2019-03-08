@@ -20,4 +20,4 @@ Minimal docs on the HTTP API (which happens to use XHTML and so should be mostly
 
 `POST /projects/dispatch` dispatches tasks to all free clients.
 
-© MMXIII-MMXIV Piotr Szotkowski <p.szotkowski@tele.pw.edu.pl>, licensed under AGPL 3 (see LICENCE)
+© MMXIII-MMXIX Piotr Szotkowski <p.szotkowski@tele.pw.edu.pl>, licensed under AGPL 3 (see LICENCE)
